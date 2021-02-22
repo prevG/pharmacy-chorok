@@ -13,4 +13,12 @@
 	]]>	
 	</select>
 	
+	 <select id="getUserList" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommUser">	
+	/** UserDetailRepository.getUserList */
+	<![CDATA[    
+	SELECT *
+	  FROM TB_COMM_USER
+	]]>	
+	</select>
+	
 </mapper>
