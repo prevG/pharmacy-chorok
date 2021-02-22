@@ -1,0 +1,28 @@
+server:
+    port: 8080
+
+
+### spring ############################################################
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://sunja.asuscomm.com/chorok?characterEncoding=UTF-8&serverTimezone=UTC
+    username: chorok
+    password: Tower@150510m
+#        
+#    datasource:
+#        driver-class-name: oracle.jdbc.driver.OracleDriver
+#        url: jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
+#        username: CHOROK
+#        password: tower0814
+
+  banner:
+    location: banner_account.txt    
+        
+       
+### MyBatis ############################################################
+
+mybatis:
+  mapper-locations: mapper/**/*.xml # mapper.xml 위치 지정
+  configuration:
+    map-underscore-to-camel-case: true # model 프로퍼티 camel case 설정
