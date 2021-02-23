@@ -1,13 +1,13 @@
 server:
     port: 8080
 
-logging:  level:    root: warn
+logging:  level:    root: info
 
 ### spring ############################################################
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
     username: CHOROK
     password: tower0814
 
