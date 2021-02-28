@@ -1,6 +1,8 @@
 package com.pharm.chorok.domain.table;
 
 import java.util.Date;
+
+
 public class TbCommColumn {
 
 	private String dataOwnrId;

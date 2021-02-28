@@ -15,10 +15,9 @@ spring:
       max-lifetime: 1800000
       pool-name: HikariCP
       read-only: false
-      connection-test-query: SELECT 1 FROM DUAL
-
+      connection-test-query: SELECT 1 FROM DUAL  thymeleaf:    cache: false
   banner:
-    location: banner_account.txt    
+    location: banner_account.txt
         
        
 ### MyBatis ############################################################
