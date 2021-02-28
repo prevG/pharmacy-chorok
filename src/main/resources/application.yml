@@ -10,6 +10,12 @@ spring:
     url: jdbc:log4jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
     username: CHOROK
     password: tower0814
+    hikari:       connection-timeout: 30000
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+      pool-name: HikariCP
+      read-only: false
+      connection-test-query: SELECT 1 FROM DUAL
 
   banner:
     location: banner_account.txt    
