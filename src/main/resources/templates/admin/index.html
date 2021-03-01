@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<div th:text="${usr}+'님'"></div>
-	<table>
-		<tr th:each="usr : ${usrList}">
-			<td th:text="${usr.usrNm}"></td>
-		</tr>
-	</table>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
+
+    <div style="border: 1px solid red">
+        admin/index.html 입니다.
+    </div>
+
+</div>
+
 </html>
