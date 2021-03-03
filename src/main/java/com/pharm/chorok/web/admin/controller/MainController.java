@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.domain.table.LomboTest;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.main.service.UserService;
 
@@ -35,6 +36,7 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		mv.addAllObjects(data);
 		mv.setViewName("/admin/index");
+		
 		
 		return mv;
 	}
