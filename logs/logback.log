@@ -95,3 +95,11 @@
 [2021-03-01 04:24:48:93424][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 6664 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
 [2021-03-01 04:24:48:93425][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
 [2021-03-01 04:24:48:93882][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.498 seconds (JVM running for 94.475)
+[2021-03-01 13:26:54:560][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 17400 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-01 13:26:54:562][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-01 13:26:56:2711][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 2.503 seconds (JVM running for 3.242)
+[2021-03-01 13:47:22:1228376][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 17400 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-01 13:47:22:1228376][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-01 13:48:12:1278857][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 17400 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-01 13:48:12:1278858][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-01 13:48:12:1279192][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.364 seconds (JVM running for 1279.722)
