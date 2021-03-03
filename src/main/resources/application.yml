@@ -19,7 +19,14 @@ spring:
       connection-test-query: SELECT 1 FROM DUAL  thymeleaf:    cache: false
   banner:
     location: banner_account.txt
-        
+    mvc:
+      contentnegotiation: 
+        favor-parameter: true 
+        favor-path-extension: true 
+        media-types: 
+          xls: application/vnd.ms-excel
+
+
        
 ### MyBatis ############################################################
 
