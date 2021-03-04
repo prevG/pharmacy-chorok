@@ -9,7 +9,7 @@
 	<![CDATA[    
 	SELECT *
 	  FROM TB_COMM_USER
-	 WHERE USR_EML = #{usrEml}
+	 WHERE USR_EML = #{usrEml} OR USR_PHN_NO = #{usrEml}
 	]]>	
 	</select>
 	

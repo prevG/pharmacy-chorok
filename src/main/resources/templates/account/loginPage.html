@@ -4,77 +4,78 @@
 	<title>초록한약국</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/vendor/Login_v14/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/vendor/Login_v14/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/vendor/Login_v14/css/util.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/vendor/Login_v14/css/main.css}">
+	<link rel="stylesheet" th:href="@{/vendor/login-form-08/fonts/icomoon/style.css}">
+    <link rel="stylesheet" th:href="@{/vendor/login-form-08/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/login-form-08/css/style.css}">
 </head>
 <body>
 	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w"
-				     action="/account/doLogin" method="POST">
-					<span class="login100-form-title p-b-32">
-						Account Login
-					</span>
+  
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-md-6 order-md-2">
+          <img th:src="@{/vendor/login-form-08/images/undraw_file_sync_ot38.svg}" alt="Image" class="img-fluid">
+        </div> -->
+        <div class="col-md-12 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <div class="mb-4">
+              <h3>초록건강한약국</h3>
+            </div>
+            <form action="/account/doLogin" method="POST">
+              <div class="form-group">
+                <label for="usrEml">이메일</label>
+                <input type="text" class="form-control" id="usrEml" name="usrEml">
 
-					<span class="txt1 p-b-11">
-						Username
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<input class="input100" type="text" id="usrEml" name="usrEml" >
-						<span class="focus-input100"></span>
-					</div>
-					
-					<span class="txt1 p-b-11">
-						Password
-					</span>
-					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
-						<span class="btn-show-pass">
-							<i class="fa fa-eye"></i>
-						</span>
-						<input class="input100" type="password" id="usrPwd" name="usrPwd" >
-						<span class="focus-input100"></span>
-					</div>
-					
-					<div class="flex-sb-m w-full p-b-48">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								Remember me
-							</label>
-						</div>
+              </div>
+              <div class="form-group mt10">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="usrPwd" name="usrPwd">
+                
+              </div>
+              
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label>
+                <span class="ml-auto"><a href="#" class="forgot-pass">비밀번호 찾기</a></span> 
+              </div>
 
-						<div>
-							<a href="#" class="txt3">
-								Forgot Password?
-							</a>
-						</div>
-					</div>
+              <input type="submit" value="Log In" class="btn text-white btn-block btn-primary">
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
-					
-					<input type="submit" name="login" class="invisible"/>
-				</form>
-			</div>
-		</div>
-	</div>
-	
+              <span class="d-block text-left my-4 text-muted"> or sign in with</span>
+              
+              <div class="social-login">
+                <a href="#" class="facebook">
+                  <span class="icon-facebook mr-3"></span> 
+                </a>
+                <a href="#" class="twitter">
+                  <span class="icon-twitter mr-3"></span> 
+                </a>
+                <a href="#" class="google">
+                  <span class="icon-google mr-3"></span> 
+                </a>
+              </div>
 
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
+			  <input type="submit" name="login" class="invisible"/>
+            </form>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
 	<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
-	<script th:src="@{/vendor/Login_v14/js/main.js}"></script>
-
-</body>
+  
+    <script th:src="@{/vendor/login-form-08/js/popper.min.js}"></script>
+    <script th:src="@{/vendor/login-form-08/js/main.js}"></script>
+  </body>
 </html>
