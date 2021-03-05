@@ -7,3 +7,4 @@ bin/
 logs/
 .vscode/
 logs/logback.log
+logs/logback.log
