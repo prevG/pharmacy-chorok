@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/chorok_include :: config"></head>
+
+<body class="layout-navbar-fixed sidebar-collapse text-sm">
+    
+    <div class="wrapper">
+        <nav th:replace="fragments/chorok_header :: header"></nav>
+
+        <div class="content-wrapper" layout:fragment="content"></div>
+
+        <footer th:replace="fragments/chorok_include :: footer"></footer>
+    </div>
+</body>
+</html>

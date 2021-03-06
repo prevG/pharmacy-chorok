@@ -24,7 +24,7 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/index")
+	@GetMapping("/manageUser")
 	public ModelAndView goManageUser( Model model ) throws Exception {
 		
 		ArrayList<TbCommUser> usrList = userService.getUserList();

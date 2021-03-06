@@ -8,7 +8,7 @@ import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.util.SecurityContextUtil;
 
 @Controller
-public class MainController {
+public class WebController {
 
 	@GetMapping("/")
 	public String goIndex(Model model) {
@@ -17,5 +17,14 @@ public class MainController {
 		
 		model.addAttribute("name", comUser.getUsrNm() );
 		return "/index";
+	}
+
+	@GetMapping("/home")
+	public String goHome(Model model) {
+		
+		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
+		
+		model.addAttribute("name", comUser.getUsrNm() );
+		return "/home/home";
 	}
 }

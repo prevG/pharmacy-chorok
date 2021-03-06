@@ -1,8 +1,12 @@
 server:
     port: 8080
-    error:      include-stacktrace: always      include-exception: true
+    error:
+      include-stacktrace: always
+      include-exception: true
 
-logging:  level:    root: info
+logging:
+  level:
+    root: info
 
 ### spring ############################################################
 spring:
@@ -11,12 +15,18 @@ spring:
     url: jdbc:log4jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
     username: CHOROK
     password: tower0814
-    hikari:       connection-timeout: 30000
+    hikari: 
+      connection-timeout: 30000
       maximum-pool-size: 10
       max-lifetime: 1800000
       pool-name: HikariCP
       read-only: false
-      connection-test-query: SELECT 1 FROM DUAL  thymeleaf:    cache: false
+      connection-test-query: SELECT 1 FROM DUAL
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
   banner:
     location: banner_account.txt
     mvc:
