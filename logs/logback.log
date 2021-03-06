@@ -26,3 +26,21 @@
 [2021-03-06 22:56:23:4515276][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.364 seconds (JVM running for 4515.736)
 [2021-03-06 22:56:44:4537112][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
 [2021-03-06 22:56:44:4537113][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:02:59:4911558][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:02:59:4911558][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:02:59:4911922][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.391 seconds (JVM running for 4912.382)
+[2021-03-06 23:03:35:4947557][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:03:35:4947557][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:03:35:4947888][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.36 seconds (JVM running for 4948.348)
+[2021-03-06 23:05:40:5072570][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:05:40:5072570][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:05:40:5072885][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.341 seconds (JVM running for 5073.344)
+[2021-03-06 23:20:01:5934005][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:20:01:5934005][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:20:02:5934664][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.708 seconds (JVM running for 5935.123)
+[2021-03-06 23:21:41:6034048][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:21:41:6034048][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:21:42:6034710][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.706 seconds (JVM running for 6035.169)
+[2021-03-06 23:23:13:6126018][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 22372 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-06 23:23:13:6126019][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:23:14:6126756][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 0.779 seconds (JVM running for 6127.215)
