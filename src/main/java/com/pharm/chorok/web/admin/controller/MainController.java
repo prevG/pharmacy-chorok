@@ -42,18 +42,11 @@ public class MainController {
 	}
 	
 	
-	@GetMapping("/index")
+	@GetMapping("/adminPage")
 	public ModelAndView adminPage( Model model ) throws Exception {
 		
-		ArrayList<TbCommUser> usrList = userService.getUserList();
-	
-		Map data = new HashMap<>();
-		
-		data.put("usrList", usrList );
-		data.put("usr","곽경준");
 		ModelAndView mv = new ModelAndView();
-		mv.addAllObjects(data);
-		mv.setViewName("/admin/index");
+		mv.setViewName("/admin/admin-page");
 		
 		
 		return mv;
