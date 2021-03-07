@@ -27,3 +27,6 @@
 [2021-03-06 16:49:40:6805][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 1.8.0_275 on funahae-mbp.local with PID 9545 (/Users/jaehoon.park/git/pharmacy-chorok/bin/main started by jaehoon.park in /Users/jaehoon.park/git/pharmacy-chorok)
 [2021-03-06 16:49:40:6808][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
 [2021-03-06 16:49:49:15518][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 14.993 seconds (JVM running for 15.77)
+[2021-03-06 23:11:59:2230][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 1.8.0_275 on funahae-mbp with PID 12543 (/Users/jaehoon.park/git/pharmacy-chorok/bin/main started by jaehoon.park in /Users/jaehoon.park/git/pharmacy-chorok)
+[2021-03-06 23:11:59:2238][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-06 23:12:10:13518][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 12.902 seconds (JVM running for 13.809)

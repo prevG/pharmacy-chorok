@@ -1,10 +1,10 @@
+logs/log*
 .settings/
 .project
 .classpath
 .gradle
 build/
 bin/
-logs/
+logs/*
 .vscode/
-logs/logback.log
-logs/logback.log
+

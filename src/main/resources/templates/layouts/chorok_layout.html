@@ -3,10 +3,18 @@
 
 <head th:replace="fragments/chorok_include :: config"></head>
 
-<body class="layout-navbar-fixed sidebar-collapse text-sm">
+<body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse control-sidebar-slide-open text-sm" style="height:auto;">
     
     <div class="wrapper">
         <nav th:replace="fragments/chorok_header :: header"></nav>
+
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+              <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+              <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+        </aside>
 
         <div class="content-wrapper" layout:fragment="content"></div>
 
