@@ -6,5 +6,6 @@ logs/log*
 build/
 bin/
 logs/*
+logs/logback.log
 .vscode/
 
