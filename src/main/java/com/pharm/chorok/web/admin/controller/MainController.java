@@ -24,8 +24,8 @@ public class MainController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/manageUser")
-	public ModelAndView goManageUser( Model model ) throws Exception {
+	@GetMapping("/index")
+	public ModelAndView index( Model model ) throws Exception {
 		
 		ArrayList<TbCommUser> usrList = userService.getUserList();
 	
@@ -40,4 +40,18 @@ public class MainController {
 		
 		return mv;
 	}
+	
+	
+
+	@GetMapping("/admin")
+	public ModelAndView admin( Model model ) throws Exception {
+	
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/admin");
+		
+		
+		return mv;
+	}
+	
+	
 }
