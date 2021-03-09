@@ -30,7 +30,6 @@ public class MainController {
 		ArrayList<TbCommUser> usrList = userService.getUserList();
 	
 		Map data = new HashMap<>();
-		
 		data.put("usrList", usrList );
 		data.put("usr","곽경준");
 		ModelAndView mv = new ModelAndView();
