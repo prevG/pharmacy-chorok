@@ -67,3 +67,6 @@
 [2021-03-06 23:11:59:2238][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
 [2021-03-06 23:12:10:13518][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 12.902 seconds (JVM running for 13.809)
 >>>>>>> branch 'master' of https://github.com/prevG/pharmacy-chorok.git
+[2021-03-09 22:51:35:984][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Starting PharmacyChorokApplication using Java 15.0.1 on LAPTOP-EP09Q8Q3 with PID 2072 (C:\workspace\pharmacy-chorok\bin\main started by jjang in C:\workspace\pharmacy-chorok)
+[2021-03-09 22:51:35:988][restartedMain] INFO  c.p.c.PharmacyChorokApplication - No active profile set, falling back to default profiles: default
+[2021-03-09 22:51:40:6163][restartedMain] INFO  c.p.c.PharmacyChorokApplication - Started PharmacyChorokApplication in 5.838 seconds (JVM running for 7.379)
