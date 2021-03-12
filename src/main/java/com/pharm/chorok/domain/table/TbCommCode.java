@@ -1,5 +1,7 @@
 package com.pharm.chorok.domain.table;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -14,5 +16,9 @@ public class TbCommCode {
 	private String cdExpEng;
 	private long vOrder;
 	private String lockYn;
-	
+	private String useYn;
+	private String regId;
+	private Date regDttm;
+	private String updId;
+	private Date updDttm;
 }
