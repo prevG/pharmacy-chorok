@@ -27,4 +27,13 @@ public class WebController {
 		model.addAttribute("name", comUser.getUsrNm() );
 		return "/home/home";
 	}
+
+	@GetMapping("/schedule_weekly")
+	public String goScheduleWeekly(Model model) {
+		
+		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
+		
+		model.addAttribute("name", comUser.getUsrNm() );
+		return "/home/schedule_weekly";
+	}
 }
