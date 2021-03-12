@@ -7,33 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.web.admin.service.ADCodeService;
 import com.pharm.chorok.web.main.service.UserService;
 
 @RequestMapping(value = "/admin")
 @Controller
-public class ADMainController {
+public class ADSMSController {
 
 	@Autowired
-	private UserService userService;
+	private ADCodeService codeService;
 	
-	@GetMapping("/index")
-	public ModelAndView index( Model model ) throws Exception {
+	
+	@GetMapping("/sms")
+	public ModelAndView sms( Model model ) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		/*ArrayList<TbCommUser> usrList = userService.getUserList();
-	
-		
-		 * Map data = new HashMap<>(); data.put("usrList", usrList );
-		 * data.put("usr","곽경준"); mv.addAllObjects(data);
-		 */
-		mv.setViewName("/admin/index");
-		
-		
+		mv.setViewName("/admin/sms");
 		return mv;
 	}
-	
-	
-	
-
-	
-	
 }
