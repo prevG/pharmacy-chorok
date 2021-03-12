@@ -5,6 +5,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Data;
+
+@Data
 public class TbCommUser extends TbCommColumn implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -14,30 +17,7 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrPhnNo;
 	private String usrEml;
 	
-	public long getUsrNo() {
-		return usrNo;
-	}
-	public void setUsrNo(long usrNo) {
-		this.usrNo = usrNo;
-	}
-	public String getUsrNm() {
-		return usrNm;
-	}
-	public void setUsrNm(String usrNm) {
-		this.usrNm = usrNm;
-	}
-	public String getUsrPhnNo() {
-		return usrPhnNo;
-	}
-	public void setUsrPhnNo(String usrPhnNo) {
-		this.usrPhnNo = usrPhnNo;
-	}
-	public String getUsrEml() {
-		return usrEml;
-	}
-	public void setUsrEml(String usrEml) {
-		this.usrEml = usrEml;
-	}
+	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
