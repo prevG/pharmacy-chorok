@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin_layout">
+<table>
+	<form method="POST" enctype="multipart/form-data" action="#" th:action="@{'/project/'+${nickname}+'/'+${title}+'/cloud/upload'}">
+		<tr>
+			<td>File to upload:</td>
+			<td>
+				<input type="file" name="file" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="submit" value="Upload" />
+			</td>
+		</tr>
+	</form>
+</table>
+</html>
