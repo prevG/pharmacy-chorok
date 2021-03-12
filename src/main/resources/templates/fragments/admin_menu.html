@@ -5,7 +5,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:fragment="menuFragment">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>
@@ -37,11 +37,14 @@
 		</div></li>
 
 	<!-- Nav Item - menuSideMenu Menu -->
-	<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuSideMenu" aria-expanded="true" aria-controls="menuSideMenu"> <i class="fas fa-fw fa-wrench"></i> <span>메뉴 관리</span>
+	<li class="nav-item">
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuSideMenu" aria-expanded="true" aria-controls="menuSideMenu"> 
+		<i class="fas fa-fw fa-wrench"></i> <span>메뉴 관리</span>
 	</a>
 		<div id="menuSideMenu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="menu.html">메뉴 관리</a> <a class="collapse-item" href="menuAuth.html">메뉴권한 관리</a>
+				<a class="collapse-item" href="menu">메뉴 관리</a> 
+				<a class="collapse-item" href="menuAuth">메뉴권한 관리</a>
 			</div>
 		</div></li>
 
@@ -51,7 +54,7 @@
 	</a>
 		<div id="codeSideMenu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="code.html">공통코드 관리</a>
+				<a class="collapse-item" href="code">공통코드 관리</a>
 			</div>
 		</div></li>
 
@@ -67,12 +70,13 @@
 	</a>
 		<div id="quesitonSideMenu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="survey.html">설문조사 정보</a> <a class="collapse-item" href="survey-mng-page.html">설문조사 관리</a>
+				<a class="collapse-item" href="survey">설문조사 정보</a> 
+				<a class="collapse-item" href="surveyMng">설문조사 관리</a>
 			</div>
 		</div></li>
 
 	<!-- Nav Item - Charts -->
-	<li class="nav-item"><a class="nav-link" href="sms.html"> <i class="fas fa-fw fa-chart-area"></i> <span>SMS 관리</span></a></li>
+	<li class="nav-item"><a class="nav-link" href="sms"> <i class="fas fa-fw fa-chart-area"></i> <span>SMS 관리</span></a></li>
 
 
 	<!-- Divider -->

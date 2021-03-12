@@ -15,7 +15,7 @@
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">Home</a></li>
 			<li class="breadcrumb-item"><a href="#">사용자 관리</a></li>
-			<li class="breadcrumb-item active" aria-current="page">회원 관리</li>
+			<li class="breadcrumb-item active" aria-current="page">관리자 관리</li>
 		</ol>
 	</nav>
 
@@ -30,28 +30,48 @@
 				<div class="card-body">
 					<form class="form-inline">
 						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">구분</span>
+							<span class="align-middle font-weight-bold" style="width: 80px;">검색어</span>
+							<select class="form-control-sm custom-select-sm custom-select mr-3">
+								<option selected>선택...</option>
+								<option value="1">아이디</option>
+								<option value="2">이메일</option>
+							</select>
+							<input type="search" class="form-control form-control-sm mr-3" placeholder="" aria-controls="dataTable">
+						</div>
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
+						<div class="form-group">
+							<span class="align-middle font-weight-bold" style="width: 80px;">권한</span>
 							<select class="form-control-sm custom-select-sm custom-select mr-3" style="width: 270px;">
 								<option selected>선택...</option>
-								<option value="1">예약고객</option>
-								<option value="2">구매고객</option>
+								<option value="1">관리자</option>
+								<option value="2">사용자</option>
 							</select>
 						</div>
 					</form>
 					<hr class="mt-2 mb-2" />
 					<form class="form-inline">
 						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">검색어</span>
-							<select class="form-control-sm custom-select-sm custom-select mr-3">
-								<option selected>선택...</option>
-								<option value="1">이름</option>
-								<option value="2">전화번호</option>
-							</select>
-							<input type="search" class="form-control form-control-sm mr-3" placeholder="" aria-controls="dataTable">
+							<span class="align-middle font-weight-bold" style="width: 80px;">승인여부</span>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"> <label class="form-check-label" for="flexRadioDefault1"> 전체 </label>
+							</div>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked> <label class="form-check-label" for="flexRadioDefault2"> 승인 </label>
+							</div>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked> <label class="form-check-label" for="flexRadioDefault3"> 미승인 </label>
+							</div>
 						</div>
 					</form>
+					<hr class="mt-2 mb-2" />
+					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="regBtn">등록</button>
 					<button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
+
 				</div>
+
+
 			</div>
 			<!-- DataTales -->
 			<div class="card shadow mb-4">
@@ -64,45 +84,40 @@
 							<thead>
 								<tr>
 									<th class="text-center">no</th>
-									<th class="text-center">체크</th>
-									<th class="text-center">구분</th>
+									<th class="text-center">관리자 아이디</th>
 									<th class="text-center">이름</th>
-									<th class="text-center">전화번호</th>
-									<th class="text-center">최근예약(구매) 날짜</th>
+									<th class="text-center">이메일</th>
+									<th class="text-center">권한</th>
+									<th class="text-center">소속</th>
+									<th class="text-center">승인여부</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td class="text-center pt-4">1</td>
+									<td class="text-center pt-4">piao1234</td>
+									<td class="text-center pt-4">곽경준</td>
+									<td class="text-center pt-4">jjanggu3470@gmail.com</td>
+									<td class="text-center pt-4">관리자권한</td>
+									<td class="text-center pt-4">케리스</td>
 									<td class="text-center pt-4">
 										<div class="custom-control custom-control-sm custom-checkbox custom-checkbox-sm">
 											<input type="checkbox" class="custom-control-input" id="customCheck1"> <label class="custom-control-label" for="customCheck1"></label>
 										</div>
 									</td>
-									<td class="text-center pt-4">예약고객</td>
-									<td class="text-center pt-4">곽경준</td>
-									<td class="text-center pt-4">01030038397</td>
-									<td class="text-center pt-4">2012-11-01</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-
-					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="smsBtn">문자 보내기</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="delBtn">삭제</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
 				</div>
 			</div>
+
 		</div>
 		<!-- /.container-fluid -->
 	</div>
 	<!-- End of Main Content -->
 	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
 </div>
-<!-- End of Content Wrapper -->
-
-
-
 
 
 <div class="modal fade" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
