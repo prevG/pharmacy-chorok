@@ -25,6 +25,13 @@ spring:
       pool-name: HikariCP
       read-only: false
       connection-test-query: SELECT 1 FROM DUAL
+  servlet:
+      multipart:
+        enabled: true
+        location: C:/Temp
+        file-size-threshold: 1M
+        max-file-size: 100M
+        max-request-size: 100M
   devtools:
     livereload:
       enabled: true
