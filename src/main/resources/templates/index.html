@@ -1,52 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorator="layouts/chorok_layout">
-  
-	<!-- index.html 고유 CSS 추가 -->
-  	<th:block layout:fragment="css"> 
-	</th:block>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/chorok_layout">
 
-	<!-- index.html 고유 스크립트 추가 -->
-	<th:block layout:fragment="script">
-	</th:block>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
 
-	<div layout:fragment="content">
-		인덱스 화면
-		<a href="/account/logout">logout</a>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
+	인덱스 화면 <a href="/account/logout">logout</a>
+	<ul>
+		<li>메인화면</li>
 		<ul>
-			<li>메인화면</li>
-			<ul>
-				<li><a href="/home">HOME 화면</a></li>
-				<li><a href="#">예약 스케쥴표 (주간별)</a></li>
-				<li><a href="#">예약 스케쥴표 (월별)</a></li>
-				<li><a href="#">고객 화면</a></li>
-				<li><a href="#">상담 차트</a></li>
-				<li><a href="#">복용 차트</a></li>
-				<li></li>
-			</ul>
-			<li>조회성 화면</li>
-			<ul>
-				<li><a href="#">복용전화상담목록 </a></li>
-				<li><a href="#">복용문자알림결과 목록</a></li>
-				<li><a href="#">택배배송출력 목록</a></li>
-				<li><a href="#">복용일시중지고객 목록</a></li>
-				<li><a href="#">마일리지 목록</a></li>
-				<li></li>
-			</ul>		
-			<li>관리자 화면</li>
-			<ul>
-				<li><a href="#">문자발송 메세지 관리</a></li>
-				<li><a href="#">상담지 관리</a></li>
-				<li></li>
-			</ul>
-			<li>관리자 화면</li>
-			<ul>
-				<li><a href="/manageUser">사용자 관리</a></li>
-				<li><a href="#">프로그램 관리</a></li>
-				<li><a href="#">권한 관리</a></li>
-				<li><a href="#">메뉴 관리</a></li>
-			</ul>
+			<li><a href="/home">HOME 화면</a></li>
+			<li><a href="#">예약 스케쥴표 (주간별)</a></li>
+			<li><a href="#">예약 스케쥴표 (월별)</a></li>
+			<li><a href="#">고객 화면</a></li>
+			<li><a href="#">상담 차트</a></li>
+			<li><a href="#">복용 차트</a></li>
+			<li></li>
 		</ul>
-	</div>
-</html> 
+		<li>조회성 화면</li>
+		<ul>
+			<li><a href="#">복용전화상담목록 </a></li>
+			<li><a href="#">복용문자알림결과 목록</a></li>
+			<li><a href="#">택배배송출력 목록</a></li>
+			<li><a href="#">복용일시중지고객 목록</a></li>
+			<li><a href="#">마일리지 목록</a></li>
+			<li></li>
+		</ul>
+		<li>관리자 화면</li>
+		<ul>
+			<li><a href="#">문자발송 메세지 관리</a></li>
+			<li><a href="#">상담지 관리</a></li>
+			<li></li>
+		</ul>
+		<li>관리자 화면</li>
+		<ul>
+			<li><a href="/manageUser">사용자 관리</a></li>
+			<li><a href="#">프로그램 관리</a></li>
+			<li><a href="#">권한 관리</a></li>
+			<li><a href="#">메뉴 관리</a></li>
+		</ul>
+	</ul>
+</div>
+</html>

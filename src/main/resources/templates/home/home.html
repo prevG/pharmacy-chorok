@@ -1,34 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorator="layouts/chorok_layout">
-  
-	<!-- index.html 고유 CSS 추가 -->
-  <th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/bootstrap/easyui.css}">
-    <link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/icon.css}">
-    <link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/demo/demo.css}">
-	</th:block>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/chorok_layout">
 
-	<!-- index.html 고유 스크립트 추가 -->
-	<th:block layout:fragment="script">
-    <script type="text/javascript" th:src="@{/vendor/jquery-easyui-1.9.12/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/tabs-easyui.js}"></script>
-	</th:block>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/bootstrap/easyui.css}">
+	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/icon.css}">
+	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/demo/demo.css}">
+</th:block>
 
-	<div layout:fragment="content">
-    <div style="margin-bottom:10px">
-      <a href="#" class="easyui-linkbutton" onclick="addTabMenu('google','http://www.google.com')">google</a>
-      <a href="#" class="easyui-linkbutton" onclick="addTabMenu('jquery','http://jquery.com/')">jquery</a>
-      <a href="#" class="easyui-linkbutton" onclick="addTabMenu('easyui','http://jeasyui.com/')">easyui</a>
-    </div>
-    <div id="tt" class="easyui-tabs" data-options="tabWidth:112" style="width:100%;height:100%;">
-        <div title="Home">
-        </div>
-    </div>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript" th:src="@{/vendor/jquery-easyui-1.9.12/jquery.easyui.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/tabs-easyui.js}"></script>
+</th:block>
+
+<div layout:fragment="content">
+	<div style="margin-bottom: 10px">
+		<a href="#" class="easyui-linkbutton" onclick="addTabMenu('google','http://www.google.com')">google</a> <a href="#" class="easyui-linkbutton" onclick="addTabMenu('jquery','http://jquery.com/')">jquery</a> <a href="#" class="easyui-linkbutton" onclick="addTabMenu('easyui','http://jeasyui.com/')">easyui</a>
 	</div>
+	<div id="tt" class="easyui-tabs" data-options="tabWidth:112" style="width: 100%; height: 100%;">
+		<div title="Home"></div>
+	</div>
+</div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
     function setTabs(){
         $('#tt').tabs({
             plain: $('#plain').is(':checked'),
@@ -36,4 +31,4 @@
         })
     }
   </script>
-</html> 
+</html>

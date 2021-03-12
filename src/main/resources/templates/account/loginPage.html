@@ -1,82 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>초록한약국</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.4.0/font/bootstrap-icons.css}">
-	<link rel="stylesheet" th:href="@{/vendor/login-form-08/fonts/icomoon/style.css}">
-  <link rel="stylesheet" th:href="@{/vendor/login-form-08/css/owl.carousel.min.css}">
-  <link rel="stylesheet" th:href="@{/vendor/login-form-08/css/style.css}">
+<title>초록한약국</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.4.0/font/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/fonts/icomoon/style.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/css/owl.carousel.min.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/css/style.css}">
 
-	<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
-  <!--script th:src="@{/vendor/login-form-08/js/popper.min.js}"></script-->
-  <script th:src="@{/vendor/login-form-08/js/main.js}"></script>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+<!--script th:src="@{/vendor/login-form-08/js/popper.min.js}"></script-->
+<script th:src="@{/vendor/login-form-08/js/main.js}"></script>
 </head>
 <body>
-	
-  
-  <div class="content">
-    <div class="container">
-      <div class="row">
-        <!-- <div class="col-md-6 order-md-2">
+
+
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<!-- <div class="col-md-6 order-md-2">
           <img th:src="@{/vendor/login-form-08/images/undraw_file_sync_ot38.svg}" alt="Image" class="img-fluid">
         </div> -->
-        <div class="col-md-12 contents">
-          <div class="row justify-content-center">
-            <div class="col-md-4">
-              <div class="mb-4">
-              <h3>초록건강한약국</h3>
-            </div>
-            <form action="/account/doLogin" method="POST">
-              <div class="form-group">
-                <label for="usrEml">이메일 또는 휴대전화번호</label>
-                <input type="text" class="form-control" id="usrEml" name="usrEml">
+				<div class="col-md-12 contents">
+					<div class="row justify-content-center">
+						<div class="col-md-4">
+							<div class="mb-4">
+								<h3>초록건강한약국</h3>
+							</div>
+							<form action="/account/doLogin" method="POST">
+								<div class="form-group">
+									<label for="usrEml">이메일 또는 휴대전화번호</label> <input type="text" class="form-control" id="usrEml" name="usrEml">
 
-              </div>
-              <div class="form-group">
-                <label for="usrPwd">비밀번호</label>
-                <div class="input-group">
-                  <input type="password" class="form-control" id="usrPwd" name="usrPwd">
-                  <div class="input-group-append" style='height:100%;align:center;'>
-                    <i class="bi-eye" style="margin-left:-15px;cursor:pointer;"></i>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="d-flex mb-5 align-items-center">
-                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                  <input type="checkbox" checked="checked"/>
-                  <div class="control__indicator"></div>
-                </label>
-                <span class="ml-auto"><a href="#" class="forgot-pass">비밀번호 찾기</a></span> 
-              </div>
+								</div>
+								<div class="form-group">
+									<label for="usrPwd">비밀번호</label>
+									<div class="input-group">
+										<input type="password" class="form-control" id="usrPwd" name="usrPwd">
+										<div class="input-group-append" style='height: 100%; align: center;'>
+											<i class="bi-eye" style="margin-left: -15px; cursor: pointer;"></i>
+										</div>
+									</div>
+								</div>
 
-              <input type="submit" value="로그인" class="btn text-white btn-block btn-primary">
+								<div class="d-flex mb-5 align-items-center">
+									<label class="control control--checkbox mb-0"><span class="caption">Remember me</span> <input type="checkbox" checked="checked" />
+										<div class="control__indicator"></div> </label> <span class="ml-auto"><a href="#" class="forgot-pass">비밀번호 찾기</a></span>
+								</div>
 
-              <span class="d-block text-left my-4 text-muted"> or sign in with</span>
-              
-              <div class="social-login">
-                <a href="#" class="facebook">
-                  <span class="icon-facebook mr-3"></span> 
-                </a>
-                <a href="#" class="twitter">
-                  <span class="icon-twitter mr-3"></span> 
-                </a>
-                <a href="#" class="google">
-                  <span class="icon-google mr-3"></span> 
-                </a>
-              </div>
-            </form>
-            </div>
-          </div>
-          
-        </div>
-        
-      </div>
-    </div>
-  </div>
+								<input type="submit" value="로그인" class="btn text-white btn-block btn-primary"> <span class="d-block text-left my-4 text-muted"> or sign in with</span>
+
+								<div class="social-login">
+									<a href="#" class="facebook"> <span class="icon-facebook mr-3"></span>
+									</a> <a href="#" class="twitter"> <span class="icon-twitter mr-3"></span>
+									</a> <a href="#" class="google"> <span class="icon-google mr-3"></span>
+									</a>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>
