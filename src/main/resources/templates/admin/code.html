@@ -9,12 +9,15 @@
 <th:block layout:fragment="script">
 <script>
 
-	$("#dg").datagrid({
-		url: '/admin/getCodes',
-		pagination:true
-	});
+	
 
+	function fnSearch(){
+		$("#dg").datagrid({
+			url: '/admin/getCodes',
+			pagination:true
+		});
 
+	}
 
 </script>
 </th:block>
@@ -85,7 +88,7 @@
 					
 					
 					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-save'">Save</a>
-					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
+					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:80px" onClick="fnSearch();"_>Search</a>
 
 				</div>
 			</div>

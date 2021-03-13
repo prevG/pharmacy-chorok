@@ -30,14 +30,14 @@ public class ADCodeController {
 	}
 	
 	
-	@PostMapping("/getCode")
+	@PostMapping("/getCodes")
 	@ResponseBody
 	public ModelAndView getCode( TbCommCode tbCommCode ) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		//String ditcCdKind = tbCommCode.getDitcCdKind();
 
-		ArrayList<TbCommCode> tbCommCodes = codeService.selectCode(tbCommCode);
+		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodes(tbCommCode);
 		
 		mv.addObject("codeList", tbCommCodes);
 		mv.setViewName("/admin/code");
