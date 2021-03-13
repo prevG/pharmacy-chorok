@@ -21,4 +21,7 @@ public class TbCommCode {
 	private Date regDttm;
 	private String updId;
 	private Date updDttm;
+	
+	private String ditcCdKind;
+	
 }

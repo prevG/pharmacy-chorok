@@ -22,12 +22,16 @@ public class ADCodeService{
 	@Autowired
 	private ADCodeRepository codeRepository;
 
-    public ArrayList<TbCommCode> selectCommCode(String grpCd) throws Exception {
-    	return codeRepository.selectCommCode(grpCd);
-    }
-    
     public void insertCommCode() throws Exception{
     	//codeRepository.insertCommCode()
+    }
+    
+    public ArrayList<TbCommCode> selectCode(TbCommCode tbCommCode){
+    	return codeRepository.selectCode(tbCommCode);
+    }
+    
+    public ArrayList<TbCommCode> selectGrpCd(){
+    	return codeRepository.selectGrpCd();
     }
 
 }

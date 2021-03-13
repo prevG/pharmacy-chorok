@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/admin_layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/admin_layout">
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -7,6 +7,16 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+<script>
+
+	$("#dg").datagrid({
+		url: '/admin/getCodes',
+		pagination:true
+	});
+
+
+
+</script>
 </th:block>
 
 <div id="content-wrapper" class="d-flex flex-column" layout:fragment="content">
@@ -20,240 +30,222 @@
 	</nav>
 
 	<!-- Main Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                    <div class="container-fluid">
+	<div id="content">
+		<!-- Begin Page Content -->
+		<div class="container-fluid">
 
-                        <!-- Top Content -->
-                        <div class="card shadow mb-1">
-                            <div class="card-header">
-                                <h5 class="m-0 font-weight-bold text-primary">검색</h5>
-                            </div>
-                            <div class="card-body">
-                                <form class="form-inline">
-                                    <div class="form-group">    
-                                            <span class="align-middle font-weight-bold" style="width:80px;">검색어</span>
-                                        
-                                            <select class="form-control-sm custom-select-sm custom-select ml-3" id="codeSel">
-                                                <option selected>선택...</option>
-                                                <option value="#">코드명</option>
-                                                <option value="#">코드</option>
-                                            </select>
-                                            <input type="search" class="form-control form-control-sm ml-3" placeholder="" aria-controls="dataTable">
-                                    </div>
-                                </form>
-                                <hr class="mt-2 mb-2"/>
-                                <form class="form-inline">
-                                    <div class="form-group">    
-                                            <span class="align-middle font-weight-bold" style="width:80px;">그룹코드</span>
-                                        
-                                            <select class="form-control-sm custom-select-sm custom-select ml-3" id="grpCodeSel">
-                                                <option selected>선택...</option>
-                                                <option value="#">사용자그룹</option>
-                                                <option value="#">전화번호그룹</option>
-                                            </select>
-                                    </div>
-                                </form>
-                                <hr  class="mt-2 mb-2"/>
-                                <form class="form-inline">
-                                    <div class="form-group">    
-                                        <span class="align-middle font-weight-bold" style="width:80px;">사용여부</span>
-                                        <div class="form-check ml-3">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                              전체
-                                            </label>
-                                        </div>
-                                        <div class="form-check ml-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            사용
-                                        </label>
-                                        </div>
-                                        <div class="form-check ml-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
-                                        <label class="form-check-label" for="flexRadioDefault3">
-                                            미사용
-                                        </label>
-                                        </div>
-                                    </div>
-                                </form>
-                                <hr  class="mt-3 mb-3"/>
-                                <button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
-                                <button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="regBtn">등록</button>
-                                
-                            </div>
-                        </div>
-                    
-                    <!-- DataTales -->
-                    <div class="card shadow">
-                        <div class="card-header">
-                            <h5 class="m-0 font-weight-bold text-primary">조회내역</h5>
-                        </div>
-                        <div class="card-body" style="min-height:530px;">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">no</th>
-                                            <th class="text-center">코드명</th>
-                                            <th class="text-center">코드</th>
-                                            <th class="text-center">상위코드</th>
-                                            <th class="text-center">상위코드명</th>
-                                            <th class="text-center">정렬순서</th>
-                                            <th class="text-center">사용여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center pt-4">
-                                                <!-- <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                    <label class="custom-control-label" for="customCheck1"></label>
-                                                </div> -->
-                                                1
-                                            </td>
-                                            <td class="text-center pt-4">관리자</td>
-                                            <td class="text-center pt-4">C0000001</td>
-                                            <td class="text-center pt-4">PC000001</td>
-                                            <td class="text-center pt-4">사용자구분코드</td>
-                                            <td class="text-center pt-4">1</td>
-                                            <td class="text-center pt-4">사용</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">위로이동</button>
-                            <button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">아래로이동</button>
-                            <button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->
+			<!-- Top Content -->
+			<div class="card shadow mb-1">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">검색</h5>
+				</div>
+				<div class="card-body">
+					<form class="form-inline">
+						<div class="form-group">
+							<span class="align-middle font-weight-bold" style="width: 80px;">검색어</span>
 
-            <!-- Footer -->
-         	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
-            <!-- End of Footer -->
+							<select class="form-control-sm custom-select-sm custom-select ml-3" id="codeSel">
+								<option selected>선택...</option>
+								<option value="#">코드명</option>
+								<option value="#">코드</option>
+							</select>
+							<input type="search" class="form-control form-control-sm ml-3" placeholder="" aria-controls="dataTable">
+						</div>
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
+						<div class="form-group">
+							<span class="align-middle font-weight-bold" style="width: 80px;">그룹코드</span>
 
-        </div>
-        <!-- End of Content Wrapper -->
+							<select class="form-control-sm custom-select-sm custom-select ml-3" id="grpCodeSel">
+								<option selected>선택...</option>
+								<option value="#">사용자그룹</option>
+								<option value="#">전화번호그룹</option>
+							</select>
+						</div>
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
+						<div class="form-group">
+							<span class="align-middle font-weight-bold" style="width: 80px;">사용여부</span>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"> <label class="form-check-label" for="flexRadioDefault1"> 전체 </label>
+							</div>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked> <label class="form-check-label" for="flexRadioDefault2"> 사용 </label>
+							</div>
+							<div class="form-check ml-3">
+								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked> <label class="form-check-label" for="flexRadioDefault3"> 미사용 </label>
+							</div>
+						</div>
+					</form>
+					<hr class="mt-3 mb-3" />
+					<!-- <button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
+					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="regBtn">등록</button> -->
+					
+					
+					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-save'">Save</a>
+					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
 
-    </div>
-    <!-- End of Page Wrapper -->
+				</div>
+			</div>
 
 
-   <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+
+
+			<!-- DataTales -->
+			<div class="card shadow">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">조회내역</h5>
+				</div>
+
+				<div class="card-body" style="min-height: 530px;">
+
+			<!-- 		<div id="tb">
+						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
+						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"></a>
+						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"></a>
+					</div> -->
+					
+					<p>Basic Buttons</p>
+					    <div style="padding:5px 0;">
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Add</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
+					        <a href="#" class="easyui-linkbutton">Text Button</a>
+					    </div>
+					    <p>Fixed Width Buttons</p>
+					    <div style="padding:5px 0;">
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
+					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
+					    </div>
+					<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg">
+						<thead>
+							<tr>
+								<th data-options="field:'code',width:100">NO</th>
+								<th data-options="field:'ditcNm',width:300">코드명</th>
+								<th data-options="field:'ditcCd',width:150">코드</th>
+								<th data-options="field:'grpCd',width:150">상위코드</th>
+								<th data-options="field:'price',width:300">상위코드명</th>
+								<th data-options="field:'vOrder',width:150">정렬순서</th>
+								<th data-options="field:'useYn',width:100">사용여부</th>
+							</tr>
+						</thead>
+					</table>
+					
+					
+	
+					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">위로이동</button>
+					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">아래로이동</button>
+					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- End of Main Content -->
+
+	<!-- Footer -->
+	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
+	<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i></a>
 
 <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="width:680px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>코드등록</b></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="codeNm" class="col-2">코드명 : </label>
-                            <div class="col-4">
-                                <input type="text" class="form-control" required/>
-                            </div>
-                            <label for="codeNm" class="col-2">코드 : </label>
-                            <div class="col-4">
-                                <input type="text" class="form-control" disabled/>
-                            </div>
-                        </div>
-                        <div class="form-group"></div>
-                        <div class="form-group"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="login.html">등록</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="width: 680px;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<b>코드등록</b>
+				</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="codeNm" class="col-2">코드명 : </label>
+						<div class="col-4">
+							<input type="text" class="form-control" required />
+						</div>
+						<label for="codeNm" class="col-2">코드 : </label>
+						<div class="col-4">
+							<input type="text" class="form-control" disabled />
+						</div>
+					</div>
+					<div class="form-group"></div>
+					<div class="form-group"></div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+				<a class="btn btn-primary" href="login.html">등록</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 
-    <div class="modal fade" id="modModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="width:680px;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>코드등록</b></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="codeNm" class="col-2">코드명 : </label>
-                            <div class="col-4">
-                                <input type="text" class="form-control" required/>
-                            </div>
-                            <label for="codeNm" class="col-2">코드 : </label>
-                            <div class="col-4">
-                                <input type="text" class="form-control" disabled/>
-                            </div>
-                        </div>
-                        <div class="form-group"></div>
-                        <div class="form-group"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="login.html">등록</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="modModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="width: 680px;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<b>코드등록</b>
+				</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="codeNm" class="col-2">코드명 : </label>
+						<div class="col-4">
+							<input type="text" class="form-control" required />
+						</div>
+						<label for="codeNm" class="col-2">코드 : </label>
+						<div class="col-4">
+							<input type="text" class="form-control" disabled />
+						</div>
+					</div>
+					<div class="form-group"></div>
+					<div class="form-group"></div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+				<a class="btn btn-primary" href="login.html">등록</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;">
-        <div class="toast-header">
-            <strong class="mr-auto"><i class="fa fa-grav"></i> We miss you!</strong>
-            <small>11 mins ago</small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            <div>It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a></div>
-        </div>
-    </div>
-
-
-
-    <script>
-        $("#regBtn").on('click',function(e){
-            //$("#regModal").modal();
-            location.href="code-reg-page.html";
-        });
-
-        $("#modBtn").on('click',function(e){
-            $("#modModal").modal();
-        });
-
-        $("#srchBtn").on('click',function(e){
-           $("#myToast").toast("show");
-        });
-
-
-        $(document).ready(function(){
-            $("#dataTable").on('click', 'tr', function() {
-                //alert($(this).find("td").eq(1).text());
-                location.href="code-mod-page.html";
-            });
-        });
-    </script>
-
+<div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;">
+	<div class="toast-header">
+		<strong class="mr-auto"><i class="fa fa-grav"></i> We miss you!</strong> <small>11 mins ago</small>
+		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="toast-body">
+		<div>
+			It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
+		</div>
+	</div>
+</div>
 
 
 </html>
