@@ -1,7 +1,14 @@
 plugins {
+	id 'com.gradle.build-scan' version '1.16'
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+}
+
+
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
 }
 
 group = 'com.pharm.chorok'
@@ -11,6 +18,7 @@ sourceCompatibility = '1.8'
 repositories {
 	mavenCentral()
 }
+
 
 dependencies {
 	/** webjar */
