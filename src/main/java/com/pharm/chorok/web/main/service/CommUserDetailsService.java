@@ -21,8 +21,6 @@ public class CommUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usrEml) throws UsernameNotFoundException {
-    	TbCommUser usrParams = new TbCommUser();
-    	usrParams.setUsrEml(usrEml);
     	
         TbCommUser comUsr = comUsrRepo.selectComUsrByUsrEml( usrEml );
         if( comUsr == null ) {
