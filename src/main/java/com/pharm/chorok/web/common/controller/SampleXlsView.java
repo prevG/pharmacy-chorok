@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -15,6 +14,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
+//import groovyjarjarpicocli.CommandLine.Help.TextTable.Cell;
+
+import org.apache.poi.ss.usermodel.Cell;
 @Component("sampleXls")
 public class SampleXlsView extends AbstractXlsView {
 	@Override
@@ -37,9 +39,9 @@ public class SampleXlsView extends AbstractXlsView {
 		cell1 = row1.createCell(1);
 		cell1.setCellValue("홍길동");
 		cell2 = row1.createCell(2);
-		cell2.setCellType(CellType.NUMERIC);
-		cell2.setCellValue(1000000);
-		cell2.setCellStyle(numberCellStyle);
+		// cell2.setCellType(CellType.NUMERIC);
+		// cell2.setCellValue(1000000);
+		// cell2.setCellStyle(numberCellStyle);
 	}
 
 }
