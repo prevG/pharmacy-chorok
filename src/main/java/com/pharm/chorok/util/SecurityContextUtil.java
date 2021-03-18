@@ -8,8 +8,8 @@ public class SecurityContextUtil {
 	
 
     public static TbCommUser getAuthenticatedUser() {
-		TbCommUser comUsr = (TbCommUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return comUsr;
+		  TbCommUser comUsr = (TbCommUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		  return comUsr;
     }
 
 }
