@@ -16,7 +16,7 @@ public class WebController {
 		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
 		
 		model.addAttribute("name", comUser.getUsrNm() );
-		return "/index";
+		return "index";
 	}
 
 	@GetMapping("/home")
@@ -25,7 +25,7 @@ public class WebController {
 		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
 		
 		model.addAttribute("name", comUser.getUsrNm() );
-		return "/home/home";
+		return "home/home";
 	}
 
 	@GetMapping("/schedule_weekly")
@@ -34,6 +34,6 @@ public class WebController {
 		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
 		
 		model.addAttribute("name", comUser.getUsrNm() );
-		return "/home/schedule_weekly";
+		return "home/schedule_weekly";
 	}
 }

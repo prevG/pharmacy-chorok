@@ -11,6 +11,6 @@ public class AccountController {
 
 	@GetMapping("/login")
 	public String goLoginPage(Model model) {
-		return "/account/loginPage";
+		return "account/loginPage";
 	}
 }

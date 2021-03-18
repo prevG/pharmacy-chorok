@@ -1,0 +1,48 @@
+server:
+    port: 8080
+    error:
+      include-stacktrace: always
+      include-exception: true
+logging:
+  level:
+    root: info
+
+### spring ############################################################
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://bazzarmall.cafe24.com:3306/bazzarmall
+    username: bazzarmall
+    password: Tower@545271   
+#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    url: jdbc:log4jdbc:oracle:thin:@sunja.asuscomm.com:1521/xe
+#    username: CHOROK
+#    password: tower0814
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+      pool-name: HikariCP
+      read-only: false
+      connection-test-query: SELECT 1 FROM DUAL
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+  banner:
+    location: banner_account.txt
+    mvc:
+      contentnegotiation: 
+        favor-parameter: true 
+        favor-path-extension: true 
+        media-types: 
+          xls: application/vnd.ms-excel
+
+
+       
+### MyBatis ############################################################
+mybatis:
+  mapper-locations: mapper/**/*.xml # mapper.xml 위치 지정
+  configuration:
+    map-underscore-to-camel-case: true # model 프로퍼티 camel case 설정
