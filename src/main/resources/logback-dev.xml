@@ -2,7 +2,7 @@
 <configuration>
 
     <!--로그 파일 저장 위치-->
-    <property name="LOGS_PATH" value="./logs"/>
+    <property name="LOGS_PATH" value="/home/app/pharmacy-chorok/logs"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -21,7 +21,7 @@
             <fileNamePattern>${LOGS_PATH}/logback.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 100MB -->
-                <maxFileSize>1MB</maxFileSize>
+                <maxFileSize>10MB</maxFileSize>
                 <!-- kb, mb, gb -->
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>30</maxHistory>
