@@ -4,6 +4,7 @@ server:
       include-stacktrace: always
       include-exception: true
 logging:
+  config: classpath:logback-${spring.profiles.active}.xml
   level:
     root: info
 
