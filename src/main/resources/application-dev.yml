@@ -1,5 +1,5 @@
 server:
-    port: 8080
+    port: 80
     error:
       include-stacktrace: always
       include-exception: true
