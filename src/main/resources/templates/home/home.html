@@ -5,7 +5,6 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/bootstrap/easyui.css}">
 	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/themes/icon.css}">
-	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.12/demo/demo.css}">
 </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
@@ -14,7 +13,8 @@
 	<script type="text/javascript" th:src="@{/js/tabs-easyui.js}"></script>
 </th:block>
 
-<div layout:fragment="content" class="wrapper">
+
+<div layout:fragment="content" class="content-wrapper">
 	<div style="margin-bottom: 10px">
 		<a href="#" class="easyui-linkbutton" onclick="addTabMenu('google','http://www.google.com')">google</a> <a href="#" class="easyui-linkbutton" onclick="addTabMenu('jquery','http://jquery.com/')">jquery</a> <a href="#" class="easyui-linkbutton" onclick="addTabMenu('easyui','http://jeasyui.com/')">easyui</a>
 	</div>
@@ -24,6 +24,7 @@
 </div>
 
 <script type="text/javascript">
+	alert("12345")
     function setTabs(){
         $('#tt').tabs({
             plain: $('#plain').is(':checked'),
