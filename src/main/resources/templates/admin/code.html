@@ -10,12 +10,56 @@
 	<script>
 
 	function fnSearch(){
-		$("#dg").datagrid({
-			url: '/admin/getCodes',
-			pagination:true
-		});
-
+	
+		
+		$.ajax({
+	      type: "POST",
+	      url: '/admin/getCodes',
+	      dataType: 'json',
+	      data:$('#searchUser').serialize(),    
+	    }).done(function( responseJson ) {
+          	$('#dg').datagrid('loadData', responseJson ); 
+        });
+	
 	}
+	
+	
+	$(document).ready(function(){
+		/*
+		$('#dg').datagrid({
+	        url:'/admin/getCodes',
+	        contentType: 'application/json; charset=utf-8',
+	        dataType: 'json',
+			method:'post',
+	        fitColumns:true,
+	        halign:'center',
+	        columns:[[{
+	            title:'Sl No.',
+	            field:'slNo',
+	            width:100
+	        },{
+	            title:'Person Id',
+	            field:'personId',
+	            width:100
+	
+	        },{
+	            title:'Name',
+	            field:'userName',
+	            width:100
+	
+	        },{
+	            title:'Email Id',
+	            field:'emailId',
+	            width:100
+	
+	        }]] 
+	    });
+	*/
+	});
+
+	
+	
+	
 	
 	
 	function addCode(){
@@ -174,12 +218,12 @@
 					<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
 						<thead>
 							<tr>
-								<th data-options="field:'TbCommCode.code',width:100">NO</th>
+								<!-- <th data-options="field:'code',width:100">NO</th> -->
 								<th data-options="field:'ditcNm',width:300">코드명</th>
 								<th data-options="field:'ditcCd',width:150">코드</th>
 								<th data-options="field:'grpCd',width:150">상위코드</th>
-								<th data-options="field:'price',width:300">상위코드명</th>
-								<th data-options="field:'vOrder',width:150">정렬순서</th>
+								<!-- <th data-options="field:'price',width:300">상위코드명</th> -->
+								<th data-options="field:'vorder',width:150">정렬순서</th>
 								<th data-options="field:'useYn',width:100">사용여부</th>
 							</tr>
 						</thead>
