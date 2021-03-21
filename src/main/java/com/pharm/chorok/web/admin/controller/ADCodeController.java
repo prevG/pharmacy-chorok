@@ -31,15 +31,17 @@ public class ADCodeController {
 	
 	
 	@PostMapping("/getCodes")
-	@ResponseBody
+	/* @ResponseBody */
 	public ModelAndView getCode( TbCommCode tbCommCode ) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
 		//String ditcCdKind = tbCommCode.getDitcCdKind();
 
+		tbCommCode.setDitcCd("00000");
 		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodes(tbCommCode);
 		
-		mv.addObject("codeList", tbCommCodes);
+		mv.addObject(tbCommCodes);
+		//mv.addObject("codeList", tbCommCodes);
 		mv.setViewName("/admin/code");
 		return mv;
 	}

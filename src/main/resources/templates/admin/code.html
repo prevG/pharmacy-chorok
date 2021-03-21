@@ -7,9 +7,7 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-<script>
-
-	
+	<script>
 
 	function fnSearch(){
 		$("#dg").datagrid({
@@ -18,7 +16,65 @@
 		});
 
 	}
+	
+	
+	function addCode(){
+		 $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
+         $('#fm').form('clear');
+         url = '/admin/addCode';
+	}
+	
+	function removeCode(){
+		var row = $("#dg").datagrid("getSelected");
+		
+		if(row){
+			$.messager.confirm('Confirm','코드를 삭제하겠습니까?',function(r){
+                    if (r){
+                        $.post('/admin/removeCode',{id:row.id},function(result){
+                            if (result.success){
+                                $('#dg').datagrid('reload');    // reload the user data
+                            } else {
+                                $.messager.show({    // show error message
+                                    title: 'Error',
+                                    msg: result.errorMsg
+                                });
+                            }
+                        },'json');
+                    }
+           });
+		}
+	}
 
+	function editCode(){
+		 var row = $('#dg').datagrid('getSelected');
+         if (row){
+             $('#dlg').dialog('open').dialog('center').dialog('setTitle','코드수정');
+             $('#fm').form('load',row);
+             //url = 'update_user.php?id='+row.id;
+         }
+	}
+	
+	function saveCode(){
+		 $('#fm').form('submit',{
+              url: url,
+              iframe: false,
+              onSubmit: function(){
+                  return $(this).form('validate');
+              },
+              success: function(result){
+                  var result = eval('('+result+')');
+                  if (result.errorMsg){
+                      $.messager.show({
+                          title: 'Error',
+                          msg: result.errorMsg
+                      });
+                  } else {
+                      $('#dlg').dialog('close');        // close the dialog
+                      $('#dg').datagrid('reload');    // reload the user data
+                  }
+              }
+          });
+	}
 </script>
 </th:block>
 
@@ -85,10 +141,9 @@
 					<hr class="mt-3 mb-3" />
 					<!-- <button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
 					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="regBtn">등록</button> -->
-					
-					
-					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-save'">Save</a>
-					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:80px" onClick="fnSearch();"_>Search</a>
+
+
+					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 
 				</div>
 			</div>
@@ -104,31 +159,22 @@
 
 				<div class="card-body" style="min-height: 530px;">
 
-			<!-- 		<div id="tb">
-						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"></a>
-						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"></a>
-						<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"></a>
-					</div> -->
-					
-					<p>Basic Buttons</p>
-					    <div style="padding:5px 0;">
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Add</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
-					        <a href="#" class="easyui-linkbutton">Text Button</a>
-					    </div>
-					    <p>Fixed Width Buttons</p>
-					    <div style="padding:5px 0;">
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
-					        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
-					    </div>
-					<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg">
+					<div style="padding: 5px 0;">
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
+						<!-- 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
+				        <a href="javascript:void(0)" class="easyui-linkbutton">Text Button</a> -->
+					</div>
+					<!--  <p>Fixed Width Buttons</p>
+				    <div style="padding:5px 0;">
+				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
+				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
+				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
+				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
+				    </div> -->
+					<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
 						<thead>
 							<tr>
-								<th data-options="field:'code',width:100">NO</th>
+								<th data-options="field:'TbCommCode.code',width:100">NO</th>
 								<th data-options="field:'ditcNm',width:300">코드명</th>
 								<th data-options="field:'ditcCd',width:150">코드</th>
 								<th data-options="field:'grpCd',width:150">상위코드</th>
@@ -138,9 +184,9 @@
 							</tr>
 						</thead>
 					</table>
-					
-					
-	
+
+
+
 					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">위로이동</button>
 					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">아래로이동</button>
 					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
@@ -150,6 +196,24 @@
 		<!-- /.container-fluid -->
 	</div>
 	<!-- End of Main Content -->
+
+	<div id="dlg" class="easyui-dialog" style="width: 400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="fm" method="post" novalidate style="margin: 0; padding: 20px 50px">
+			<h3>User Information</h3>
+			<div style="margin-bottom: 10px">
+				<input name="firstname" class="easyui-textbox" required="true" label="First Name:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input name="lastname" class="easyui-textbox" required="true" label="Last Name:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input name="phone" class="easyui-textbox" required="true" label="Phone:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input name="email" class="easyui-textbox" required="true" validType="email" label="Email:" style="width: 100%">
+			</div>
+		</form>
+	</div>
 
 	<!-- Footer -->
 	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
@@ -165,7 +229,7 @@
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i></a>
 
-<div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" style="width: 680px;">
 			<div class="modal-header">
@@ -250,5 +314,5 @@
 	</div>
 </div>
 
-
+ -->
 </html>
