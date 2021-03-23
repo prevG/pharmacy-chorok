@@ -8,10 +8,36 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 	<script>
+	
+	 var data = {"total":12,"rows":[
+		{"id":160550,"itemid":"1","1productid":"11111","listprice":"kom","unitcost": "7.3","attr1":"122.18000000","status":"940.62","attr2":"25.00"},
+		{"id":160769,"itemid":"2","1productid":"22222","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":160770,"itemid":"3","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192648,"itemid":"4","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192649,"itemid":"5","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192650,"itemid":"6","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192651,"itemid":"7","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192652,"itemid":"8","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192653,"itemid":"9","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192654,"itemid":"10","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192655,"itemid":"11","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
+		{"id":192656,"itemid":"12","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"}
+		]};
+		
+		
+	function loadMe(){
+      $('#dg').datagrid('loadData',data);
+      //$('#dg').datagrid('load', 'file.json');  
+    }
+    
+    function onLoadSuccess(data){  
+      $('#dg').datagrid('enableDnd');
+    }   
 
 	function fnSearch(){
+		loadMe();
 	
-		
+	/*
 		$.ajax({
 	      type: "POST",
 	      url: '/admin/getCodes',
@@ -19,42 +45,14 @@
 	      data:$('#searchUser').serialize(),    
 	    }).done(function( responseJson ) {
           	$('#dg').datagrid('loadData', responseJson ); 
+          	
         });
-	
+	*/
 	}
 	
 	
 	$(document).ready(function(){
-		/*
-		$('#dg').datagrid({
-	        url:'/admin/getCodes',
-	        contentType: 'application/json; charset=utf-8',
-	        dataType: 'json',
-			method:'post',
-	        fitColumns:true,
-	        halign:'center',
-	        columns:[[{
-	            title:'Sl No.',
-	            field:'slNo',
-	            width:100
-	        },{
-	            title:'Person Id',
-	            field:'personId',
-	            width:100
 	
-	        },{
-	            title:'Name',
-	            field:'userName',
-	            width:100
-	
-	        },{
-	            title:'Email Id',
-	            field:'emailId',
-	            width:100
-	
-	        }]] 
-	    });
-	*/
 	});
 
 	
@@ -215,19 +213,40 @@
 				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
 				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
 				    </div> -->
-					<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
+				<!-- 	<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
 						<thead>
 							<tr>
-								<!-- <th data-options="field:'code',width:100">NO</th> -->
+								<th data-options="field:'code',width:100">NO</th>
 								<th data-options="field:'ditcNm',width:300">코드명</th>
 								<th data-options="field:'ditcCd',width:150">코드</th>
 								<th data-options="field:'grpCd',width:150">상위코드</th>
-								<!-- <th data-options="field:'price',width:300">상위코드명</th> -->
+								<th data-options="field:'price',width:300">상위코드명</th>
 								<th data-options="field:'vorder',width:150">정렬순서</th>
 								<th data-options="field:'useYn',width:100">사용여부</th>
 							</tr>
 						</thead>
-					</table>
+					</table> -->
+					
+					 <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:700px;height:250px" data-options="
+				          singleSelect:false, 
+				          ctrlSelect:true,
+				          idField:'id',
+				          pagination:true,pageSize:50,pageList:[50],
+				          dragSelection: true,
+				          onLoadSuccess: onLoadSuccess
+				        ">
+				      <thead>
+				        <tr>
+				          <th data-options="field:'itemid',width:80">Item ID</th>
+				          <th data-options="field:'1productid',width:90">Product</th>
+				          <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
+				          <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+				          <th data-options="field:'attr1',width:150">Attribute</th>
+				          <th data-options="field:'status',width:60,align:'center'">Status</th>
+				          <th data-options="field:'attr2',width:120,align:'center'">Attr2</th>
+				        </tr>
+				      </thead>
+				    </table>
 
 
 
