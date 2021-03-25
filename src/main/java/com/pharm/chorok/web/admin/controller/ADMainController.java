@@ -25,7 +25,7 @@ public class ADMainController {
 		 * Map data = new HashMap<>(); data.put("usrList", usrList );
 		 * data.put("usr","곽경준"); mv.addAllObjects(data);
 		 */
-		mv.setViewName("/admin/index");
+		mv.setViewName("admin/index");
 		
 		
 		return mv;
