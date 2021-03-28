@@ -9,16 +9,52 @@
 <th:block layout:fragment="script">
 </th:block>
 
-
 <div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  <div class="row mb-2">
+			<div class="col-sm-6">
+			  <h1>예약일정표</h1>
+			</div>
+		  </div>
+		</div><!-- /.container-fluid -->
+	  </section>
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-8">
-				333
-				</div>
-				<div class="col-4">
-				5555555	555
+				<div class="col-12">
+					<div class="bd-example">
+						<table class="table-sm table table-bordered">
+							<thead>
+						  <tr>
+							<th scope="col">#</th>
+							<th scope="col">First</th>
+							<th scope="col">Last</th>
+							<th scope="col">Handle</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						  </tr>
+						  <tr>
+							<th scope="row">2</th>
+							<td><div><a href="#">Jacob</a></div><div><a href="#">Thornton</a></div></td>
+							<td>Thornton</td>
+							<td>@fat</td>
+						  </tr>
+						  <tr>
+							<th scope="row">3</th>
+							<td colspan="2">Larry the Bird</td>
+							<td>@twitter</td>
+						  </tr>
+						</tbody>
+					  
+						</table>
+					  </div>
 				</div>
 			</div>
 		</div>
