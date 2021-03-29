@@ -11,7 +11,9 @@ import com.pharm.chorok.domain.table.TbCommCode;
 @Repository
 public interface ADCodeRepository {
 
-	public ArrayList<TbCommCode> selectCodes(TbCommCode tbCommCode);
+	public ArrayList<TbCommCode> selectCodesByGroupCd(TbCommCode tbCommCode);
+	
+	
 	
 	public ArrayList<TbCommCode> selectGrpCd();
 	

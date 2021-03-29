@@ -26,8 +26,8 @@ public class ADCodeService{
     	//codeRepository.insertCommCode()
     }
     
-    public ArrayList<TbCommCode> selectCodes(TbCommCode tbCommCode){
-    	return codeRepository.selectCodes(tbCommCode);
+    public ArrayList<TbCommCode> selectCodesByGroupCd(TbCommCode tbCommCode){
+    	return codeRepository.selectCodesByGroupCd(tbCommCode);
     }
     
     public ArrayList<TbCommCode> selectGrpCd(){

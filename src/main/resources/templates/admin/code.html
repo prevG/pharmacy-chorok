@@ -9,59 +9,31 @@
 <th:block layout:fragment="script">
 	<script>
 	
-	 var data = {"total":12,"rows":[
-		{"id":160550,"itemid":"1","1productid":"11111","listprice":"kom","unitcost": "7.3","attr1":"122.18000000","status":"940.62","attr2":"25.00"},
-		{"id":160769,"itemid":"2","1productid":"22222","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":160770,"itemid":"3","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192648,"itemid":"4","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192649,"itemid":"5","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192650,"itemid":"6","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192651,"itemid":"7","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192652,"itemid":"8","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192653,"itemid":"9","1productid":"33333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192654,"itemid":"10","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192655,"itemid":"11","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"},
-		{"id":192656,"itemid":"12","1productid":"3333","listprice":"kom","unitcost": "7.2","attr1":"122.18000000","status":"879.70","attr2":"25.00"}
-		]};
-		
-		
-	function loadMe(){
-      $('#dg').datagrid('loadData',data);
-      //$('#dg').datagrid('load', 'file.json');  
-    }
-    
     function onLoadSuccess(data){  
       $('#dg').datagrid('enableDnd');
     }   
 
 	function fnSearch(){
-		loadMe();
-	
-	/*
 		$.ajax({
 	      type: "POST",
-	      url: '/admin/getCodes',
+	      url: '/admin/getCodesByGrpCd',
 	      dataType: 'json',
-	      data:$('#searchUser').serialize(),    
+	      //data:$('#searchUser').serialize(),    
 	    }).done(function( responseJson ) {
+	    	console.log(responseJson);
           	$('#dg').datagrid('loadData', responseJson ); 
           	
         });
-	*/
 	}
 	
 	
 	$(document).ready(function(){
-	
+		fnSearch();
 	});
 
 	
-	
-	
-	
-	
 	function addCode(){
-		 $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
+		 $('#dlg').dialog('open').dialog('center').dialog('setTitle','코드추가');
          $('#fm').form('clear');
          url = '/admin/addCode';
 	}
@@ -202,7 +174,10 @@
 				<div class="card-body" style="min-height: 530px;">
 
 					<div style="padding: 5px 0;">
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
 						<!-- 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
 				        <a href="javascript:void(0)" class="easyui-linkbutton">Text Button</a> -->
 					</div>
@@ -227,32 +202,31 @@
 						</thead>
 					</table> -->
 					
-					 <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:700px;height:250px" data-options="
+					 <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
 				          singleSelect:false, 
 				          ctrlSelect:true,
 				          idField:'id',
 				          pagination:true,pageSize:50,pageList:[50],
 				          dragSelection: true,
-				          onLoadSuccess: onLoadSuccess
-				        ">
+				          onLoadSuccess: onLoadSuccess">
 				      <thead>
 				        <tr>
-				          <th data-options="field:'itemid',width:80">Item ID</th>
-				          <th data-options="field:'1productid',width:90">Product</th>
-				          <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
-				          <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
-				          <th data-options="field:'attr1',width:150">Attribute</th>
-				          <th data-options="field:'status',width:60,align:'center'">Status</th>
-				          <th data-options="field:'attr2',width:120,align:'center'">Attr2</th>
+				          <th data-options="field:'grpCd',width:170,align:'center'">그룹코드</th>
+				          <th data-options="field:'ditcCd',width:170,align:'center'">상세코드</th>
+				          <th data-options="field:'ditcNm',width:350,align:'center'">상세코드이름</th>
+				          <th data-options="field:'cdExp',width:350,align:'center'">코드설명</th>
+				          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
+				          <th data-options="field:'lockYn',width:150,align:'center'">잠금여부</th>
+				          <th data-options="field:'useYn',width:150,align:'center'">사용여부</th>
 				        </tr>
 				      </thead>
 				    </table>
 
 
-
+<!-- 
 					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">위로이동</button>
 					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">아래로이동</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
+					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button> -->
 				</div>
 			</div>
 		</div>
@@ -260,22 +234,39 @@
 	</div>
 	<!-- End of Main Content -->
 
-	<div id="dlg" class="easyui-dialog" style="width: 400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="dlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="fm" method="post" novalidate style="margin: 0; padding: 20px 50px">
-			<h3>User Information</h3>
 			<div style="margin-bottom: 10px">
-				<input name="firstname" class="easyui-textbox" required="true" label="First Name:" style="width: 100%">
+				<input name="grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 100%">
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="lastname" class="easyui-textbox" required="true" label="Last Name:" style="width: 100%">
+				<input name="ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 100%">
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="phone" class="easyui-textbox" required="true" label="Phone:" style="width: 100%">
+				<input name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="email" class="easyui-textbox" required="true" validType="email" label="Email:" style="width: 100%">
+				<input name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
+					<option selected="selected">선택</option>
+				    <option value="Y">잠금</option>
+				    <option value="N">비잠금</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="useYn" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용여부">
+					<option selected="selected">선택</option>
+				    <option value="Y">사용</option>
+				    <option value="N">비사용</option>
+				</select>
 			</div>
 		</form>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
 	</div>
 
 	<!-- Footer -->
@@ -292,90 +283,4 @@
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i></a>
 
-<!-- <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" style="width: 680px;">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">
-					<b>코드등록</b>
-				</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-inline">
-					<div class="form-group">
-						<label for="codeNm" class="col-2">코드명 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" required />
-						</div>
-						<label for="codeNm" class="col-2">코드 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" disabled />
-						</div>
-					</div>
-					<div class="form-group"></div>
-					<div class="form-group"></div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-				<a class="btn btn-primary" href="login.html">등록</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="modModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" style="width: 680px;">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">
-					<b>코드등록</b>
-				</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-inline">
-					<div class="form-group">
-						<label for="codeNm" class="col-2">코드명 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" required />
-						</div>
-						<label for="codeNm" class="col-2">코드 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" disabled />
-						</div>
-					</div>
-					<div class="form-group"></div>
-					<div class="form-group"></div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-				<a class="btn btn-primary" href="login.html">등록</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;">
-	<div class="toast-header">
-		<strong class="mr-auto"><i class="fa fa-grav"></i> We miss you!</strong> <small>11 mins ago</small>
-		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<div class="toast-body">
-		<div>
-			It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
-		</div>
-	</div>
-</div>
-
- -->
 </html>

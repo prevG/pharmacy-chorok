@@ -4,13 +4,11 @@
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADCodeRepository">
 
 
-	<select id="selectCodes"
-		parameterType="com.pharm.chorok.domain.table.TbCommCode"
-		resultType="com.pharm.chorok.domain.table.TbCommCode">
+	<select id="selectCodesByGroupCd" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
 		<![CDATA[    
 		SELECT *
 		  FROM TB_COMM_CODE
-		 WHERE DITC_CD = #{ditcCd}
+		 WHERE GRP_CD = #{grpCd}
 		]]>
 	</select>
 
