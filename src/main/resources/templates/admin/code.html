@@ -34,8 +34,7 @@
 	
 	function addCode(){
 		 $('#dlg').dialog('open').dialog('center').dialog('setTitle','코드추가');
-         $('#fm').form('clear');
-         url = '/admin/addCode';
+         $('#addFrm').form('clear');
 	}
 	
 	function removeCode(){
@@ -69,25 +68,28 @@
 	}
 	
 	function saveCode(){
-		 $('#fm').form('submit',{
-              url: url,
-              iframe: false,
-              onSubmit: function(){
-                  return $(this).form('validate');
-              },
-              success: function(result){
-                  var result = eval('('+result+')');
-                  if (result.errorMsg){
-                      $.messager.show({
-                          title: 'Error',
-                          msg: result.errorMsg
-                      });
-                  } else {
-                      $('#dlg').dialog('close');        // close the dialog
-                      $('#dg').datagrid('reload');    // reload the user data
-                  }
-              }
-          });
+	 	var url = '/admin/saveCode';
+		
+		 $('#addFrm').form('submit',{
+             url: url,
+             iframe: false,
+             onSubmit: function(){
+                 return $(this).form('validate');
+             },
+             success: function(result){
+                 var result = eval('('+result+')');
+                 if (result.errorMsg){
+                     $.messager.show({
+                         title: 'Error',
+                         msg: result.errorMsg
+                     });
+                 } else {
+                     $('#dlg').dialog('close');        // close the dialog
+                     $('#dg').datagrid('reload');    // reload the user data
+                 }
+             }
+         });
+         
 	}
 </script>
 </th:block>
@@ -115,62 +117,44 @@
 				<div class="card-body">
 					<form class="form-inline">
 						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">검색어</span>
-
-							<select class="form-control-sm custom-select-sm custom-select ml-3" id="codeSel">
-								<option selected>선택...</option>
-								<option value="#">코드명</option>
-								<option value="#">코드</option>
+							<select id="codeSel" class="easyui-combobox" required="true" name="codeSel" style="width:200px;" label="검색어">
+								<option selected="selected">선택</option>
+							    <option value="Y">코드명</option>
+							    <option value="N">코드</option>
 							</select>
-							<input type="search" class="form-control form-control-sm ml-3" placeholder="" aria-controls="dataTable">
+							&nbsp;
+							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px">
+							&nbsp;
+							<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 						</div>
 					</form>
 					<hr class="mt-2 mb-2" />
 					<form class="form-inline">
 						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">그룹코드</span>
-
-							<select class="form-control-sm custom-select-sm custom-select ml-3" id="grpCodeSel">
-								<option selected>선택...</option>
-								<option value="#">사용자그룹</option>
-								<option value="#">전화번호그룹</option>
+							<select id="codeSel" class="easyui-combobox" required="true" name="codeSel" style="width:200px;" label="그룹코드">
+								<option selected="selected">선택</option>
+							    <option value="Y">사용자그룹</option>
+							    <option value="N">전화번호그룹</option>
 							</select>
 						</div>
-					</form>
-					<hr class="mt-2 mb-2" />
-					<form class="form-inline">
+						
 						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">사용여부</span>
-							<div class="form-check ml-3">
-								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"> <label class="form-check-label" for="flexRadioDefault1"> 전체 </label>
-							</div>
-							<div class="form-check ml-3">
-								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked> <label class="form-check-label" for="flexRadioDefault2"> 사용 </label>
-							</div>
-							<div class="form-check ml-3">
-								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked> <label class="form-check-label" for="flexRadioDefault3"> 미사용 </label>
-							</div>
-						</div>
+							<select id="codeSel" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용유무">
+								<option selected="selected">선택</option>
+							    <option value="Y">사용</option>
+							    <option value="N">비사용</option>
+							</select>
+						</div> 
 					</form>
-					<hr class="mt-3 mb-3" />
-					<!-- <button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="regBtn">등록</button> -->
-
-
-					<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 
 				</div>
 			</div>
 
 
-
-
-			<!-- DataTales -->
 			<div class="card shadow">
 				<div class="card-header">
 					<h5 class="m-0 font-weight-bold text-primary">조회내역</h5>
 				</div>
-
 				<div class="card-body" style="min-height: 530px;">
 
 					<div style="padding: 5px 0;">
@@ -178,8 +162,6 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> 
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> 
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
-						<!-- 	        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
-				        <a href="javascript:void(0)" class="easyui-linkbutton">Text Button</a> -->
 					</div>
 					<!--  <p>Fixed Width Buttons</p>
 				    <div style="padding:5px 0;">
@@ -188,19 +170,7 @@
 				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
 				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
 				    </div> -->
-				<!-- 	<table class="easyui-datagrid" style="width: 100%; height: 400px" id="dg" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
-						<thead>
-							<tr>
-								<th data-options="field:'code',width:100">NO</th>
-								<th data-options="field:'ditcNm',width:300">코드명</th>
-								<th data-options="field:'ditcCd',width:150">코드</th>
-								<th data-options="field:'grpCd',width:150">상위코드</th>
-								<th data-options="field:'price',width:300">상위코드명</th>
-								<th data-options="field:'vorder',width:150">정렬순서</th>
-								<th data-options="field:'useYn',width:100">사용여부</th>
-							</tr>
-						</thead>
-					</table> -->
+				
 					
 					 <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
 				          singleSelect:false, 
@@ -211,13 +181,13 @@
 				          onLoadSuccess: onLoadSuccess">
 				      <thead>
 				        <tr>
-				          <th data-options="field:'grpCd',width:170,align:'center'">그룹코드</th>
-				          <th data-options="field:'ditcCd',width:170,align:'center'">상세코드</th>
-				          <th data-options="field:'ditcNm',width:350,align:'center'">상세코드이름</th>
-				          <th data-options="field:'cdExp',width:350,align:'center'">코드설명</th>
+				          <th data-options="field:'grpCd',width:150,align:'center'">그룹코드</th>
+				          <th data-options="field:'ditcCd',width:150,align:'center'">상세코드</th>
+				          <th data-options="field:'ditcNm',width:300,align:'center'">상세코드이름</th>
+				          <th data-options="field:'cdExp',width:300,align:'center'">코드설명</th>
 				          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
-				          <th data-options="field:'lockYn',width:150,align:'center'">잠금여부</th>
-				          <th data-options="field:'useYn',width:150,align:'center'">사용여부</th>
+				          <th data-options="field:'lockYn',width:140,align:'center'">잠금여부</th>
+				          <th data-options="field:'useYn',width:140,align:'center'">사용여부</th>
 				        </tr>
 				      </thead>
 				    </table>
@@ -235,7 +205,7 @@
 	<!-- End of Main Content -->
 
 	<div id="dlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="fm" method="post" novalidate style="margin: 0; padding: 20px 50px">
+		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
 			<div style="margin-bottom: 10px">
 				<input name="grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 100%">
 			</div>

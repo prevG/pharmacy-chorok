@@ -13,11 +13,9 @@ public interface ADCodeRepository {
 
 	public ArrayList<TbCommCode> selectCodesByGroupCd(TbCommCode tbCommCode);
 	
-	
-	
 	public ArrayList<TbCommCode> selectGrpCd();
 	
-	
+	public void saveCode(TbCommCode tbCommCode);
 	
 }
 

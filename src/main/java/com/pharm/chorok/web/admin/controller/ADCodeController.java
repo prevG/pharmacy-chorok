@@ -35,7 +35,7 @@ public class ADCodeController {
 	
 	@PostMapping("/getCodesByGrpCd")
 	@ResponseBody
-	public String getCode(TbCommCode tbCommCode ) throws Exception {
+	public String getCodesByGrpCd(TbCommCode tbCommCode ) throws Exception {
 		//ObjectMapper objectMapper = new ObjectMapper();
 		tbCommCode.setGrpCd("00000");
 		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodesByGroupCd(tbCommCode);
@@ -62,7 +62,15 @@ public class ADCodeController {
 		return result.toString();
 	}
 	
-	
-	
+	@PostMapping("/saveCode")
+	public ModelAndView saveCode(TbCommCode tbCommCode ) throws Exception {
+		
+		codeService.saveCode(tbCommCode);
+		
+		
+		ModelAndView mv = new ModelAndView("redirect:/boardMain"); 
+		return mv;
+
+	}
 	
 }
