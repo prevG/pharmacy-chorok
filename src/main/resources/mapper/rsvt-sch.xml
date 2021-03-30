@@ -8,9 +8,13 @@
     SELECT WT.ID                  AS "wt.id"
          , WT.START_HM            AS "wt.startHm"
          , WT.END_HM              AS "wt.endHm"
+         , SCH.ID                 
          , SCH.RSVT_DT            
          , SCH.RSVT_USR_NM
-         , SCH.RSVT_PHN_NO
+         , CASE LENGTH(RSVT_PHN_NO)
+                WHEN 11 THEN CONCAT(LEFT(RSVT_PHN_NO, 3), '-', MID(RSVT_PHN_NO, 4, 4), '-', RIGHT(RSVT_PHN_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(RSVT_PHN_NO, 3), '-', MID(RSVT_PHN_NO, 4, 3), '-', RIGHT(RSVT_PHN_NO, 4))
+           END AS RSVT_PHN_NO
          , SCH.DAYS_NUM           AS "cal.daysNum"
       FROM TB_PP_WORK_TIME WT
     INNER JOIN

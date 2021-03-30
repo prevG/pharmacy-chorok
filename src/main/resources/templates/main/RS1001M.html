@@ -25,7 +25,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="bd-example">
-						<table class="table-sm table table-bordered table-hover">
+						<table class="table-sm table table-bordered">
 							<colgroup>
 								<col width=""/>
 								<col width="15%"/>
@@ -34,8 +34,8 @@
 								<col width="15%"/>
 								<col width="15%"/>
 								<col width="15%"/>
-							</colgroup>
-							<thead class="thead-light">
+							  </colgroup>
+							<thead>
 								<tr align="center">
 									<th>예약시간</th>
 									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
@@ -43,10 +43,10 @@
 							</thead>
 							<tbody>
 								<tr th:each="row, idx : ${rowList}" >
-									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
+									<td th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></td>
 									<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
 										<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-											<button type="button" name="rsvtSch" class="btn btn-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|">Small button</button>
+											<a href="#" name="rsvtSch"><span th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|"></span></a>
 										</div>
 									</td>
 								</tr>
@@ -62,28 +62,13 @@
 		<div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">예약 스케쥴 등록</h5>
+                    <h5 class="modal-title">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table-sm table">
-						<colgroup>
-							<col width=""/>
-							<col width="15%"/>
-							<col width="15%"/>
-							<col width="15%"/>
-						</colgroup>
-						<tbody>
-							<tr>
-								<th>예약일시</th>
-								<td></td>
-								<th>상담구분</th>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
+                    <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Save changes</button>
