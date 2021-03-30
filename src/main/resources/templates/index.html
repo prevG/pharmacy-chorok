@@ -45,7 +45,7 @@
 								<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
 								<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
 									<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-										<button type="button" name="rsvtSch" class="btn btn-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|">Small button</button>
+										<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|">Small button</button>
 									</div>
 								</td>
 							</tr>
@@ -132,12 +132,17 @@
 							</tr>
 							<tr>
 								<th>지인소개</th>
-								<td>
-									<textarea rows="5" width="100%"></textarea>
+								<td colspan="3">
+									<div class="input-group input-group-sm">
+										<input type="text" class="form-control" width="100px;">
+										<input type="text" class="form-control" width="100px;">
+									</div>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3"></td>
+								<td colspan="3">
+									<textarea rows="5" width="100%"></textarea>
+								</td>
 							</tr>
 						</tbody>
 					</table>
