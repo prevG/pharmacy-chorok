@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler( customLogoutSuccessHandler() )
             	.and()
             .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).logout()
+            	.and()
+            	.exceptionHandling().accessDeniedPage("/account/login") // 에러의 경우 보여지는 페이지
 			;
 	}
 	

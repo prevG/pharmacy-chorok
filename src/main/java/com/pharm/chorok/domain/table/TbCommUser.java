@@ -14,15 +14,17 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrNm;
 	private String usrPhnNo;
 	private String usrEml;
+	private String usrPwd;
 
 	public TbCommUser() {
 	}
 
-	public TbCommUser(long usrNo, String usrNm, String usrPhnNo, String usrEml) {
+	public TbCommUser(long usrNo, String usrNm, String usrPhnNo, String usrEml, String usrPwd) {
 		this.usrNo = usrNo;
 		this.usrNm = usrNm;
 		this.usrPhnNo = usrPhnNo;
 		this.usrEml = usrEml;
+		this.usrPwd = usrPwd;
 	}
 
 	public long getUsrNo() {
@@ -57,6 +59,14 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 		this.usrEml = usrEml;
 	}
 
+	public String getUsrPwd() {
+		return this.usrPwd;
+	}
+
+	public void setUsrPwd(String usrPwd) {
+		this.usrPwd = usrPwd;
+	}
+
 	public TbCommUser usrNo(long usrNo) {
 		setUsrNo(usrNo);
 		return this;
@@ -77,6 +87,11 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 		return this;
 	}
 
+	public TbCommUser usrPwd(String usrPwd) {
+		setUsrPwd(usrPwd);
+		return this;
+	}
+
 
 	
 	@Override
@@ -87,7 +102,7 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return this.usrPhnNo;
+		return this.usrPwd;
 	}
 	@Override
 	public String getUsername() {
