@@ -24,42 +24,40 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<div class="bd-example">
-						<table class="table-sm table table-bordered table-hover">
-							<colgroup>
-								<col width=""/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-							</colgroup>
-							<thead class="thead-light">
-								<tr align="center">
-									<th>예약시간</th>
-									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="row, idx : ${rowList}" >
-									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
-									<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
-										<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-											<button type="button" name="rsvtSch" class="btn btn-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|">Small button</button>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<table class="table-sm table table-bordered table-hover">
+						<colgroup>
+							<col width=""/>
+							<col width="15%"/>
+							<col width="15%"/>
+							<col width="15%"/>
+							<col width="15%"/>
+							<col width="15%"/>
+							<col width="15%"/>
+						</colgroup>
+						<thead class="thead-light">
+							<tr align="center">
+								<th>예약시간</th>
+								<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="row, idx : ${rowList}" >
+								<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
+								<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
+									<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
+										<button type="button" name="rsvtSch" class="btn btn-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|">Small button</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<div class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">예약 스케쥴 등록</h5>
@@ -68,19 +66,78 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table-sm table">
+                    <table class="table-sm table table-borderless">
 						<colgroup>
-							<col width=""/>
 							<col width="15%"/>
+							<col width="35%"/>
 							<col width="15%"/>
-							<col width="15%"/>
+							<col width="35%"/>
 						</colgroup>
 						<tbody>
 							<tr>
 								<th>예약일시</th>
-								<td></td>
+								<td>
+									<div class="input-group input-group-sm">
+										<input type="text" class="form-control" width="100px;">
+									</div>
+								</td>
 								<th>상담구분</th>
-								<td></td>
+								<td>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+										<label class="form-check-label" for="inlineRadio1">전화</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+										<label class="form-check-label" for="inlineRadio2">예약방문</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+										<label class="form-check-label" for="inlineRadio3">당일방문</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<td>
+									<div class="input-group input-group-sm">
+										<input type="text" class="form-control" width="100px;">
+									</div>
+								</td>
+								<th>성별</th>
+								<td>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="chkGender" id="chkGender1" value="F" checked>
+										<label class="form-check-label" for="chkGender1">여성</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="chkGender" id="chkGender2" value="M">
+										<label class="form-check-label" for="chkGender2">남성</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>휴대전화번호</th>
+								<td>
+									<div class="input-group input-group-sm">
+										<input type="text" class="form-control" width="100px;">
+									</div>
+								</td>
+								<th>전화번호</th>
+								<td>
+									<div class="input-group input-group-sm">
+										<input type="text" class="form-control" width="100px;">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>지인소개</th>
+								<td>
+									<textarea rows="5" width="100%"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3"></td>
 							</tr>
 						</tbody>
 					</table>
