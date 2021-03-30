@@ -27,10 +27,9 @@
 						<table class="table-sm table table-bordered">
 							<thead>
 								<tr>
-									<th>예약시간</th>
-									<th>예약시간</th>
+									<th colspan="2">예약시간</th>
 									<th:block th:each="date, idx : ${colList}">
-										<th th:text="${date.baseDt}"></th>
+										<th align="center" th:text="|${date.baseDtStr} (${date.daysStrKor})|"></th>
 									</th:block>
 								</tr>
 							</thead>
