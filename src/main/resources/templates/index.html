@@ -26,15 +26,24 @@
 				<div class="col-12">
 					<div class="bd-example">
 						<table class="table-sm table table-bordered">
+							<colgroup>
+								<col width=""/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+							  </colgroup>
 							<thead>
-								<tr align="center" >
-									<th colspan="2">예약시간</th>
-									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|"></th>
+								<tr align="center">
+									<th>예약시간</th>
+									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="row, idx : ${rowList}"></th:block>
-									<td colspan="2" th:text="${#dates.format(row.startHm, 'HH:mm')}"></td>
+								<tr th:each="row, idx : ${rowList}" >
+									<td th:text="${#dates.format(row.startHm, 'HH:mm')}" style="text-align:center; vertical-align: middle;"></td>
 									<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
 										<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 											<span th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|"></span>
