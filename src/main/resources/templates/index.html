@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
 
-<!-- index.html 怨좎쑀 CSS 異붽� -->
+<!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 </th:block>
 
-<!-- index.html 怨좎쑀 �뒪�겕由쏀듃 異붽� -->
+<!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 </th:block>
+
 
 <div layout:fragment="content" class="content-wrapper">
 	<section class="content-header">
@@ -26,14 +27,20 @@
 					<div class="bd-example">
 						<table class="table-sm table table-bordered">
 							<thead>
-								<tr>
+								<tr align="center" >
 									<th colspan="2">예약시간</th>
-									<th:block th:each="date, idx : ${colList}">
-										<th align="center" th:text="|${date.baseDtStr} (${date.daysStrKor})|"></th>
-									</th:block>
+									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|"></th>
 								</tr>
 							</thead>
 							<tbody>
+								<tr th:each="row, idx : ${rowList}"></th:block>
+									<td colspan="2" th:text="${#dates.format(row.startHm, 'HH:mm')}"></td>
+									<td th:each="col, idx2 : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
+										<div th:each="data, idx3 : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
+											<span th:text="|${data.rsvtUsrNm} / ${data.rsvtPhnNo}|"></span>
+										</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -42,8 +49,12 @@
 		</div>
 	</section>
 	<script type="text/javascript" th:inline="javascript">
-		var colList = /*[[${colList}]]*/ null;
-		console.log( "colList", colList );
+		var colList  = /*[[${colList}]]*/'';
+		var rowList  = /*[[${rowList}]]*/'';
+		var dataList = /*[[${dataList}]]*/'';
+		console.log( "colList" , colList );
+		console.log( "rowList" , rowList );
+		console.log( "dataList", dataList );
 	</script>
 </div>
 </html>

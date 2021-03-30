@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.ReservationScheduleRepository">
+
+	<select id="selectRsvtSchByWeekList" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+    SELECT WT.ID                  AS "wt.id"
+         , WT.START_HM            AS "wt.startHm"
+         , WT.END_HM              AS "wt.endHm"
+         , SCH.RSVT_DT            
+         , SCH.RSVT_USR_NM
+         , SCH.RSVT_PHN_NO
+         , SCH.DAYS_NUM           AS "cal.daysNum"
+      FROM TB_PP_WORK_TIME WT
+    INNER JOIN
+        (
+        SELECT ID
+                , DATE_FORMAT(RSVT_DT, '%H%i%s') AS RSVT_HM
+                , RSVT_DT
+                , RSVT_USR_NM
+                , RSVT_PHN_NO
+                , CAL.DAYS_NUM
+                , CAL.DAYS_STR_KOR
+            FROM TB_PP_RSVT_SCH
+            INNER JOIN 
+                TB_COMM_CALENDAR CAL
+            ON DATE_FORMAT(RSVT_DT, '%Y%m%d') = CAL.BASE_DT
+            WHERE CAL.WK_NUM = (SELECT WK_NUM FROM TB_COMM_CALENDAR WHERE BASE_DT = DATE_FORMAT( #{baseDt}, '%Y%m%d' ))
+            AND CAL.DAYS_NUM > 1
+        ) SCH
+        ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
+    AND WT.END_HM   >= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
+    WHERE 1 = 1
+    ORDER
+        BY WT.START_HM
+        , SCH.RSVT_DT
+	]]>
+	</select>
+
+
+	<select id="selectWorkTimeByUseYn" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
+	<![CDATA[
+    SELECT WT.WORK_VER
+         , WT.ID
+         , WT.START_HM
+         , WT.END_HM
+      FROM TB_PP_WORK_TIME WT
+     WHERE WT.USE_YN = 'Y'
+     ORDER
+        BY WT.START_HM
+	]]>
+	</select>
+</mapper>
