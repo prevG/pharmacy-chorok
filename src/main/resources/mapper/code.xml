@@ -5,7 +5,6 @@
 
 
 	<select id="selectCodesByGroupCd" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
-		
 		SELECT GRP_CD,
 			DITC_CD,
 			DITC_NM,
@@ -30,14 +29,31 @@
 		 ]]>
 		 </if>
 		 AND GRP_CD = #{grpCd}
+		 <choose>
+			<when test='srchKind != null and srchKind.equals("ko")'>
+			 AND DITC_NM like concat('%',#{srchTxt},'%')
+			</when>
+			<when test='srchKind != null and srchKind.equals("en")'>
+			 AND DITC_NM_ENG like concat('%',#{srchTxt},'%')
+			</when>
+		</choose>
 		 <if test='useYn!=null and !useYn.equals("A")'>
 		 AND USE_YN = #{useYn}
 		 </if>
 		 ORDER BY V_ORDER
-		
 	</select>
 	
-	
+	<update id="deleteCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
+		UPDATE TB_COMM_CODE
+		SET USE_YN = 'N'
+		WHERE 1=1
+		AND GRP_CD = #{grpCd}
+		<if test='ditcCd!=null'>
+		AND DITC_CD = #{ditcCd}
+		</if>
+	</update>
+
+
 	
 
 	<insert id="saveCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">

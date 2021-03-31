@@ -9,16 +9,14 @@
 <th:block layout:fragment="script">
 	<script>
 	
-    function onLoadSuccess(data){  
-      $('#dg').datagrid('enableDnd');
-    }   
-
 	function fnSearch(){
 		
 		var param = {
 			grpCd : $('#cb_grpCd').combobox('getValue'),
 			useYn : $('#cb_useYn').combobox('getValue'),
-			target : "grid"
+			target : "grid",
+			srchKind : $('#cb_cd').combobox('getValue'),
+			srchTxt : $("#srchTxt").val()
 		};
 		
 		$.ajax({
@@ -60,23 +58,27 @@
          $('#addFrm').form('clear');
 	}
 	
+	
 	function removeCode(){
 		var row = $("#dg").datagrid("getSelected");
 		
+		console.log(row);
+		
 		if(row){
 			$.messager.confirm('Confirm','코드를 삭제하겠습니까?',function(r){
-                    if (r){
-                        $.post('/admin/removeCode',{id:row.id},function(result){
-                            if (result.success){
-                                $('#dg').datagrid('reload');    // reload the user data
-                            } else {
-                                $.messager.show({    // show error message
-                                    title: 'Error',
-                                    msg: result.errorMsg
-                                });
-                            }
-                        },'json');
-                    }
+                 if (r){
+                     $.post('/admin/removeCode',{grpCd:row.grpCd, ditcCd:row.ditcCd},function(result){
+                         if (result.success){
+                             //$('#dg').datagrid('reload');    // reload the user data
+                             fnSearch();
+                         } else {
+                             $.messager.show({    // show error message
+                                 title: 'Error',
+                                 msg: result.errorMsg
+                             });
+                         }
+                     },'json');
+                 }
            });
 		}
 	}
@@ -141,12 +143,12 @@
 					<form class="form-inline">
 						<div class="form-group">
 							<select id="cb_cd" class="easyui-combobox" required="true" name="cb_cd" style="width:200px;" label="검색어">
-								<option selected="selected">선택</option>
-							    <option value="Y">코드명</option>
-							    <option value="N">코드명(영어)</option>
+								<option value="0" selected="selected">선택</option>
+							    <option value="ko">코드명</option>
+							    <option value="en">코드명(영어)</option>
 							</select>
 							&nbsp;
-							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px">
+							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px" id="srchTxt">
 							&nbsp;
 							<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 						</div>
@@ -203,8 +205,7 @@
 				          idField:'id',
 				          rownumbers:true,
 				          pagination:true,pageSize:50,pageList:[50],
-				          dragSelection: true,
-				          onLoadSuccess: onLoadSuccess">
+				          dragSelection: true">
 				      <thead>
 				        <tr>
 				          <th data-options="field:'grpCd',width:150,align:'center'">그룹코드</th>
@@ -233,10 +234,23 @@
 	<div id="dlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
 			<div style="margin-bottom: 10px">
-				<input name="grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 100%">
+				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="코드구분:">
+					<option selected="selected">선택</option>
+				    <option value="Y">코드그룹</option>
+				    <option value="N">코드</option>
+				</select>
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 100%">
+				<div class="row">
+				    <div class="col-6">
+				    	<input name="grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 200px">
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input name="ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
+				    </div>
+				</div>
+				
+				
 			</div>
 			<div style="margin-bottom: 10px">
 				<input name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
@@ -244,9 +258,9 @@
 			<div style="margin-bottom: 10px">
 				<input name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
 			</div>
-			<div style="margin-bottom: 10px">
+			<!-- <div style="margin-bottom: 10px">
 				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
-			</div>
+			</div> -->
 			<div style="margin-bottom: 10px">
 				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
 					<option selected="selected">선택</option>

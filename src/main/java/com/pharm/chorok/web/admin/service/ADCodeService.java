@@ -34,5 +34,10 @@ public class ADCodeService{
     public void saveCode(TbCommCode tbCommCode) {
     	codeRepository.saveCode(tbCommCode);
     }
+    
+    
+    public int deleteCode(TbCommCode tbCommCode) {
+    	return codeRepository.deleteCode(tbCommCode);
+    }
 
 }

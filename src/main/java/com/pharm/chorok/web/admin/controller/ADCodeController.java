@@ -28,7 +28,7 @@ public class ADCodeController {
 	@GetMapping("/code")
 	public ModelAndView code( Model model ) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/code");
+		mv.setViewName("admin/code");
 		return mv;
 	}
 	
@@ -56,8 +56,6 @@ public class ADCodeController {
 			arr.put(data);
 		}
 		
-		
-		
 		result.put("total", "1");
 		result.put("rows", arr);
 	
@@ -77,7 +75,23 @@ public class ADCodeController {
 		return jsonStr;
 	}
 	
-	
+	@PostMapping("/removeCode")
+	@ResponseBody
+	public String deleteCode(TbCommCode tbCommCode ) throws Exception {
+		JSONObject result = new JSONObject();
+		
+		int ret = codeService.deleteCode(tbCommCode);
+		
+		if(ret > 0) {
+			result.put("success", true);
+		}else {
+			result.put("success", false);
+			result.put("errorMsg", "작업실패했습니다.");
+		}
+		
+		return result.toString();
+
+	}
 	
 	
 	
@@ -86,8 +100,7 @@ public class ADCodeController {
 		
 		codeService.saveCode(tbCommCode);
 		
-		
-		ModelAndView mv = new ModelAndView("redirect:/boardMain"); 
+		ModelAndView mv = new ModelAndView("redirect:admin/code"); 
 		return mv;
 
 	}
