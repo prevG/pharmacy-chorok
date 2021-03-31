@@ -33,8 +33,8 @@
         
 	}
 	
+	
 	function fnInit(){
-		
 		$('#cb_grpCd').combobox({
 			url:'/admin/getGrpCd?GrpCd=00000&target=combo',
 		    valueField:'ditcCd',
@@ -43,8 +43,27 @@
 				console.log(rec);
 			}
 		});
-
 		
+		$("#selCdKind").combobox({
+		 	onSelect:function(rec){
+		 		if(rec.value == "G"){
+		 			$("#grpRg").hide();
+		 			$("#cdRg").show();
+		 		}else if(rec.value == "C"){
+		 			$("#grpRg").show();
+		 			$("#cdRg").hide();
+		 			
+		 			$('#grpRg_grpCd').combobox({
+						url:'/admin/getGrpCd?GrpCd=00000&target=combo',
+					    valueField:'ditcCd',
+					    textField:'ditcCdNm',
+					    onSelect:function(rec){
+							console.log(rec);
+						}
+					});
+		 		}
+			}
+		});
 	}
 	
 	
@@ -52,9 +71,13 @@
 		fnInit();
 	});
 
+
+	function chgSeLCdKind(){
+		alert("a");
+	}
 	
 	function addCode(){
-		 $('#dlg').dialog('open').dialog('center').dialog('setTitle','코드추가');
+		 $('#addDlg').dialog('open').dialog('center').dialog('setTitle','코드추가');
          $('#addFrm').form('clear');
 	}
 	
@@ -62,7 +85,7 @@
 	function removeCode(){
 		var row = $("#dg").datagrid("getSelected");
 		
-		console.log(row);
+		//console.log(row);
 		
 		if(row){
 			$.messager.confirm('Confirm','코드를 삭제하겠습니까?',function(r){
@@ -231,26 +254,37 @@
 	</div>
 	<!-- End of Main Content -->
 
-	<div id="dlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="addDlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
 			<div style="margin-bottom: 10px">
-				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="코드구분:">
-					<option selected="selected">선택</option>
-				    <option value="Y">코드그룹</option>
-				    <option value="N">코드</option>
+				<select id="selCdKind" class="easyui-combobox" required="true" name="selCdKind" style="width:200px;" label="코드구분:">
+					<option value="S" selected="selected">선택</option>
+				    <option value="G">코드그룹</option>
+				    <option value="C">코드</option>
 				</select>
 			</div>
-			<div style="margin-bottom: 10px">
+			<div style="margin-bottom: 10px;display:none;" id="grpRg">
 				<div class="row">
 				    <div class="col-6">
-				    	<input name="grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 200px">
+				    	<select id="grpRg_grpCd" class="easyui-combobox" required="true" name="grpRg_grpCd" style="width:270px;" label="그룹코드">
+							<option value="00000">선택</option>
+						</select>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
+				    	<input name="grpRg_grpRgditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
 				    </div>
 				</div>
-				
-				
+			</div>
+			<div style="margin-bottom: 10px;display:none;" id="cdRg">
+				<div class="row">
+				    <div class="col-6">
+				    	<input name="cdRg_grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup();">중복확인</a>
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
+				    </div>
+				</div>
 			</div>
 			<div style="margin-bottom: 10px">
 				<input name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
@@ -263,15 +297,13 @@
 			</div> -->
 			<div style="margin-bottom: 10px">
 				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
-					<option selected="selected">선택</option>
-				    <option value="Y">잠금</option>
+				    <option value="Y" selected="selected">잠금</option>
 				    <option value="N">비잠금</option>
 				</select>
 			</div>
 			<div style="margin-bottom: 10px">
 				<select id="useYn" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용여부">
-					<option selected="selected">선택</option>
-				    <option value="Y">사용</option>
+				    <option value="Y" selected="selected">사용</option>
 				    <option value="N">비사용</option>
 				</select>
 			</div>
