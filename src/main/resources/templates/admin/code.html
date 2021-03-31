@@ -34,6 +34,11 @@
 	}
 	
 	
+	function fnChkDup(target){
+	
+	}
+	
+	
 	function fnInit(){
 		$('#cb_grpCd').combobox({
 			url:'/admin/getGrpCd?GrpCd=00000&target=combo',
@@ -49,6 +54,8 @@
 		 		if(rec.value == "G"){
 		 			$("#grpRg").hide();
 		 			$("#cdRg").show();
+		 			
+		 			$('#addFrm').form('clear');
 		 		}else if(rec.value == "C"){
 		 			$("#grpRg").show();
 		 			$("#cdRg").hide();
@@ -61,6 +68,8 @@
 							console.log(rec);
 						}
 					});
+					
+					$('#addFrm').form('clear');
 		 		}
 			}
 		});
@@ -271,7 +280,8 @@
 						</select>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="grpRg_grpRgditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
+				    	<input name="grpRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
 				    </div>
 				</div>
 			</div>
@@ -279,7 +289,7 @@
 				<div class="row">
 				    <div class="col-6">
 				    	<input name="cdRg_grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
-				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup();">중복확인</a>
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
 				    </div>
 				    <div class="col-6 text-right">
 				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
