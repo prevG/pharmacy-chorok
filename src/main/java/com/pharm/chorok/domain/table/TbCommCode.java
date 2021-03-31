@@ -21,7 +21,10 @@ public class TbCommCode {
 	private Date regDttm;
 	private String updId;
 	private Date updDttm;
+	private String ditcCdNm;
 	
-	private String ditcCdKind;
+	//html 요소에 따라 다르게 조회
+	private String target;
+	
 	
 }

@@ -37,14 +37,15 @@ public class ADCodeController {
 	@ResponseBody
 	public String getCodesByGrpCd(TbCommCode tbCommCode ) throws Exception {
 		//ObjectMapper objectMapper = new ObjectMapper();
-		tbCommCode.setGrpCd("00000");
+		//tbCommCode.setGrpCd("00000");
 		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodesByGroupCd(tbCommCode);
 		
 		JSONObject result = new JSONObject();
-		JSONObject data = new JSONObject();
+		
 		JSONArray arr = new JSONArray();
 		
 		for(int i=0; i<tbCommCodes.size();i++) {
+			JSONObject data = new JSONObject();
 			data.put("grpCd",tbCommCodes.get(i).getGrpCd());
 			data.put("ditcCd", tbCommCodes.get(i).getDitcCd());
 			data.put("ditcNm", tbCommCodes.get(i).getDitcNm());
@@ -52,15 +53,33 @@ public class ADCodeController {
 			data.put("vOrder", tbCommCodes.get(i).getVOrder());
 			data.put("lockYn", tbCommCodes.get(i).getLockYn());
 			data.put("useYn", tbCommCodes.get(i).getUseYn());
+			arr.put(data);
 		}
 		
-		arr.put(data);
+		
 		
 		result.put("total", "1");
 		result.put("rows", arr);
 	
 		return result.toString();
 	}
+	
+	
+	@PostMapping("/getGrpCd")
+	@ResponseBody
+	public String getGrpCd(TbCommCode tbCommCode) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodesByGroupCd(tbCommCode);
+		
+		jsonStr = objectMapper.writeValueAsString(tbCommCodes);
+		return jsonStr;
+	}
+	
+	
+	
+	
 	
 	@PostMapping("/saveCode")
 	public ModelAndView saveCode(TbCommCode tbCommCode ) throws Exception {

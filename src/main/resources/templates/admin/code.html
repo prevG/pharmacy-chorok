@@ -14,21 +14,44 @@
     }   
 
 	function fnSearch(){
+		
+		var param = {
+			grpCd : $('#cb_grpCd').combobox('getValue'),
+			useYn : $('#cb_useYn').combobox('getValue'),
+			target : "grid"
+		};
+		
 		$.ajax({
 	      type: "POST",
 	      url: '/admin/getCodesByGrpCd',
 	      dataType: 'json',
 	      //data:$('#searchUser').serialize(),    
+	      data:param,
 	    }).done(function( responseJson ) {
 	    	console.log(responseJson);
           	$('#dg').datagrid('loadData', responseJson ); 
           	
         });
+        
+	}
+	
+	function fnInit(){
+		
+		$('#cb_grpCd').combobox({
+			url:'/admin/getGrpCd?GrpCd=00000&target=combo',
+		    valueField:'ditcCd',
+		    textField:'ditcCdNm',
+		    onSelect:function(rec){
+				console.log(rec);
+			}
+		});
+
+		
 	}
 	
 	
 	$(document).ready(function(){
-		fnSearch();
+		fnInit();
 	});
 
 	
@@ -117,10 +140,10 @@
 				<div class="card-body">
 					<form class="form-inline">
 						<div class="form-group">
-							<select id="codeSel" class="easyui-combobox" required="true" name="codeSel" style="width:200px;" label="검색어">
+							<select id="cb_cd" class="easyui-combobox" required="true" name="cb_cd" style="width:200px;" label="검색어">
 								<option selected="selected">선택</option>
 							    <option value="Y">코드명</option>
-							    <option value="N">코드</option>
+							    <option value="N">코드명(영어)</option>
 							</select>
 							&nbsp;
 							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px">
@@ -131,16 +154,18 @@
 					<hr class="mt-2 mb-2" />
 					<form class="form-inline">
 						<div class="form-group">
-							<select id="codeSel" class="easyui-combobox" required="true" name="codeSel" style="width:200px;" label="그룹코드">
-								<option selected="selected">선택</option>
-							    <option value="Y">사용자그룹</option>
-							    <option value="N">전화번호그룹</option>
+							<select id="cb_grpCd" class="easyui-combobox" required="true" name="cb_grpCd" style="width:300px;" label="그룹코드">
+								<option value="00000">선택</option>
 							</select>
+							&nbsp;
+							※ 그룹코드를 선택하지 않으면 그룸코드 목록이 조회됩니다.
 						</div>
-						
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
 						<div class="form-group">
-							<select id="codeSel" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용유무">
-								<option selected="selected">선택</option>
+							<select id="cb_useYn" class="easyui-combobox" required="true" name="cb_useYn" style="width:200px;" label="사용유무">
+								<option value="A" selected="selected">전체</option>
 							    <option value="Y">사용</option>
 							    <option value="N">비사용</option>
 							</select>
@@ -176,6 +201,7 @@
 				          singleSelect:false, 
 				          ctrlSelect:true,
 				          idField:'id',
+				          rownumbers:true,
 				          pagination:true,pageSize:50,pageList:[50],
 				          dragSelection: true,
 				          onLoadSuccess: onLoadSuccess">
@@ -186,8 +212,8 @@
 				          <th data-options="field:'ditcNm',width:300,align:'center'">상세코드이름</th>
 				          <th data-options="field:'cdExp',width:300,align:'center'">코드설명</th>
 				          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
-				          <th data-options="field:'lockYn',width:140,align:'center'">잠금여부</th>
-				          <th data-options="field:'useYn',width:140,align:'center'">사용여부</th>
+				          <th data-options="field:'lockYn',width:130,align:'center'">잠금여부</th>
+				          <th data-options="field:'useYn',width:130,align:'center'">사용여부</th>
 				        </tr>
 				      </thead>
 				    </table>

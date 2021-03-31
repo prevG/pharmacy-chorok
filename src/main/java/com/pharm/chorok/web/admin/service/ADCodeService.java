@@ -30,9 +30,6 @@ public class ADCodeService{
     	return codeRepository.selectCodesByGroupCd(tbCommCode);
     }
     
-    public ArrayList<TbCommCode> selectGrpCd(){
-    	return codeRepository.selectGrpCd();
-    }
     
     public void saveCode(TbCommCode tbCommCode) {
     	codeRepository.saveCode(tbCommCode);
