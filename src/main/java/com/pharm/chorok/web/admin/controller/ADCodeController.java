@@ -36,8 +36,6 @@ public class ADCodeController {
 	@PostMapping("/getCodesByGrpCd")
 	@ResponseBody
 	public String getCodesByGrpCd(TbCommCode tbCommCode ) throws Exception {
-		//ObjectMapper objectMapper = new ObjectMapper();
-		//tbCommCode.setGrpCd("00000");
 		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodesByGroupCd(tbCommCode);
 		
 		JSONObject result = new JSONObject();
@@ -90,7 +88,6 @@ public class ADCodeController {
 		}
 		
 		return result.toString();
-
 	}
 	
 	
