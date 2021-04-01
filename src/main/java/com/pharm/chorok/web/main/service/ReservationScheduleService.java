@@ -41,5 +41,13 @@ public class ReservationScheduleService {
 
         return model;
     } 
+    
+    public TbPpRsvtSch findReservationInfoByRsvtId( TbPpRsvtSch rsvtSch,  Model model  ) throws Exception {
+
+    	TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
+
+		model.addAttribute( "schInfo", rsvtSchInfo );
+    	return rsvtSchInfo;
+    }
 
 }

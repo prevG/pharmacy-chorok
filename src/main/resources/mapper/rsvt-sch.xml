@@ -55,4 +55,21 @@
         BY WT.START_HM
 	]]>
 	</select>
+	
+	
+	<select id="findReservationInfoByRsvtId" 
+		parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" 
+		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	SELECT ID
+	     , RSVT_USR_NM
+	     , RSVT_PHN_NO
+	     , RSVT_DT
+	     , RSVT_TP_CD
+	     , GEN_TP_CD
+	     , RSVT_DESC
+	  FROM TB_PP_RSVT_SCH SCH
+	 WHERE ID = #{id}
+	]]>
+	</select>
 </mapper>

@@ -30,11 +30,4 @@ public class WebController {
 		model.addAttribute("name", comUser.getUsrNm() );
 		return "home/home";
 	}
-
-	@GetMapping("/schedule_weekly")
-	public String goScheduleWeekly(Model model) throws Exception {
-
-		rsvtSchSvc.getReservationTable( model );
-		return "home/schedule_weekly";
-	}
 }

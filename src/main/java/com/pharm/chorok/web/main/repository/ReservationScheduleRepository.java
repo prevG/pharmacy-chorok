@@ -16,5 +16,11 @@ public interface ReservationScheduleRepository {
     public List<TbPpWorkTime> selectWorkTimeByUseYn() throws Exception;
 
 
-    public List<TbPpRsvtSch> selectRsvtSchByWeekList(TbCommCalendar cal) throws Exception;
+    public List<TbPpRsvtSch> selectRsvtSchByWeekList(TbCommCalendar param) throws Exception;
+    
+
+    public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;
+    
+    
+    
 }
