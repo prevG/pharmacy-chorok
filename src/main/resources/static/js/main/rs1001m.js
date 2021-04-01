@@ -7,7 +7,7 @@ $( document ).ready( function() {
 	});
 	
 	$.datetimepicker.setLocale('ko');
-	$( document ).on( "click", "#rsvtDt", function() {
+	$( document ).off("click").on( "click", "#rsvtDt", function() {
 		
 		$( this ).datetimepicker({
 			minDate	: '2021-01-01',
