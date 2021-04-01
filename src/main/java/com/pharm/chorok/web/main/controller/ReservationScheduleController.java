@@ -1,16 +1,19 @@
 package com.pharm.chorok.web.main.controller;
 
-import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.util.SecurityContextUtil;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.ReservationScheduleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+
+@RequestMapping(value = "/rsvt")
 @Controller
-public class WebController {
+public class ReservationScheduleController {
 
 	@Autowired
 	private ReservationScheduleService rsvtSchSvc;
@@ -22,12 +25,10 @@ public class WebController {
 		return "index";
 	}
 
-	@GetMapping("/home")
-	public String goHome(Model model) {
+	@PostMapping("/rs1001p1")
+	public String goHome(TbPpRsvtSch rsvt, Model model) throws Exception {
 		
-		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
-		
-		model.addAttribute("name", comUser.getUsrNm() );
-		return "home/home";
+		rsvtSchSvc.findReservationInfoByRsvtId( rsvt, model );
+		return "main/RS1001P01";
 	}
 }
