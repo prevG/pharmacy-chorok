@@ -20,6 +20,8 @@ dependencies {
 	implementation 'org.webjars:jquery:3.6.0'
 	implementation 'org.webjars:AdminLTE:3.1.0-rc'
 	implementation 'org.webjars:startbootstrap-sb-admin-2:4.0.6'
+	implementation 'org.webjars:momentjs:2.29.1'
+	implementation 'org.webjars:datetimepicker:2.5.20-1'
 
 	
 	implementation 'org.springframework.boot:spring-boot-starter-security'
