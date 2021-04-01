@@ -26,7 +26,7 @@ public class ReservationScheduleController {
 	}
 
 	@PostMapping("/rs1001p1")
-	public String goHome(TbPpRsvtSch rsvt, Model model) throws Exception {
+	public String goRS1001P01(TbPpRsvtSch rsvt, Model model) throws Exception {
 		
 		rsvtSchSvc.findReservationInfoByRsvtId( rsvt, model );
 		return "main/RS1001P01";

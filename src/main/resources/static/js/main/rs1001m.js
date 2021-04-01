@@ -6,10 +6,9 @@ $( document ).ready( function() {
 		allowTimeList.push( hhmm );
 	});
 	
-	$.datetimepicker.setLocale('ko');
-	$( document ).off("click").on( "click", "#rsvtDt", function() {
+	$( document ).on( "click", "#rsvtDt", function(e) {	
 		
-		$( this ).datetimepicker({
+		$( e.target ).datetimepicker({
 			minDate	: '2021-01-01',
 			format	: 'Y-m-d H:i',
 			weeks   : true,
@@ -18,6 +17,8 @@ $( document ).ready( function() {
 			//scrollInput : false,
 			allowTimes: allowTimeList
 		});
+		$.datetimepicker.setLocale('ko');
+		
 	});
     $("button[name='rsvtSch'").off("click").on("click", function( e ) {    
         
@@ -28,6 +29,5 @@ $( document ).ready( function() {
 		$(".modal .modal-content").load("/rsvt/rs1001p1", params, function (data, status, xhr) {			
 			$(".modal").modal('show');
 		});
-        
     });
 });
