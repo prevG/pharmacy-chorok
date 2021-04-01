@@ -49,6 +49,8 @@
 			}
 		});
 		
+		
+		
 		$("#selCdKind").combobox({
 		 	onSelect:function(rec){
 		 		if(rec.value == "G"){
@@ -280,7 +282,7 @@
 						</select>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="grpRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
+				    	<input name="grpRg_ditcCd" id="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
 				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
 				    </div>
 				</div>
@@ -292,7 +294,7 @@
 				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width: 200px">
+				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
 				    </div>
 				</div>
 			</div>

@@ -15,6 +15,16 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrPhnNo;
 	private String usrEml;
 	private String usrPwd;
+	private String usrGrade;
+	private String usrAuth;
+	
+	//화면에서 쓸거임..
+	private String cb_srch;
+	private String cb_auth;
+	private String cb_appv;
+	private String target;
+	private String srchTxt;
+	
 
 	public TbCommUser() {
 	}
@@ -25,6 +35,64 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 		this.usrPhnNo = usrPhnNo;
 		this.usrEml = usrEml;
 		this.usrPwd = usrPwd;
+	}
+	
+	
+
+	public String getCb_srch() {
+		return cb_srch;
+	}
+
+	public void setCb_srch(String cb_srch) {
+		this.cb_srch = cb_srch;
+	}
+
+	public String getCb_auth() {
+		return cb_auth;
+	}
+
+	public void setCb_auth(String cb_auth) {
+		this.cb_auth = cb_auth;
+	}
+
+	public String getCb_appv() {
+		return cb_appv;
+	}
+
+	public void setCb_appv(String cb_appv) {
+		this.cb_appv = cb_appv;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getSrchTxt() {
+		return srchTxt;
+	}
+
+	public void setSrchTxt(String srchTxt) {
+		this.srchTxt = srchTxt;
+	}
+
+	public String getUsrGrade() {
+		return usrGrade;
+	}
+
+	public void setUsrGrade(String usrGrade) {
+		this.usrGrade = usrGrade;
+	}
+
+	public String getUsrAuth() {
+		return usrAuth;
+	}
+
+	public void setUsrAuth(String usrAuth) {
+		this.usrAuth = usrAuth;
 	}
 
 	public long getUsrNo() {
