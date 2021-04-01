@@ -23,4 +23,9 @@ public class UserService {
 		
 		return resultList;
 	}
+	
+	public Long joinUser() {
+		
+		return null;
+	}
 }

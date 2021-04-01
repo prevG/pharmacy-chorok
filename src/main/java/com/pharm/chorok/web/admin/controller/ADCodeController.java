@@ -93,6 +93,7 @@ public class ADCodeController {
 	
 	
 	@PostMapping("/saveCode")
+	@ResponseBody
 	public ModelAndView saveCode(TbCommCode tbCommCode ) throws Exception {
 		
 		codeService.saveCode(tbCommCode);

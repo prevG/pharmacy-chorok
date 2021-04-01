@@ -14,6 +14,7 @@ public class TbPpRsvtSch {
     private String genTpCd;
     private String rsvtTpCd;
     private Date rsvtDt;
+    private String rsvtDesc;
 
     private TbPpWorkTime wt;
     private TbCommCalendar cal;

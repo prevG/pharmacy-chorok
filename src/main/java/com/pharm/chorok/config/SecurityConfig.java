@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.and()
             .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).logout()
             	.and()
-            	.exceptionHandling().accessDeniedPage("/account/login") // 에러의 경우 보여지는 페이지
+            	.exceptionHandling().accessDeniedPage("/account/denied") // 에러의 경우 보여지는 페이지
 			;
 	}
 	

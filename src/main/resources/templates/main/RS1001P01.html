@@ -17,22 +17,22 @@
 					<th>예약일시</th>
 					<td>
 						<div class="input-group input-group-sm">
-							<input type="text" id="rsvtDt" class="form-control datetimepicker" th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" >
+							<input type="text" id="rsvtDt" class="form-control datetimepicker" th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1">
 						</div>
 					</td>
 					<th>상담구분</th>
 					<td>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd1" value="C"   th:checked="${'C' eq schInfo?.rsvtTpCd}">
-							<label class="form-check-label" for="inlineRadio1">전화</label>
+							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd1" value="C"   th:checked="${'C' eq schInfo?.rsvtTpCd}" tabindex="2">
+							<label class="form-check-label" for="rsvtTpCd1">전화상담</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd2" value="R"  th:checked="${'R' eq schInfo?.rsvtTpCd}">
-							<label class="form-check-label" for="inlineRadio2">예약방문</label>
+							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd2" value="R"  th:checked="${'R' eq schInfo?.rsvtTpCd}" tabindex="2">
+							<label class="form-check-label" for="rsvtTpCd2">예약방문</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd3" value="D"  th:checked="${'D' eq schInfo?.rsvtTpCd}">
-							<label class="form-check-label" for="inlineRadio3">당일방문</label>
+							<input class="form-check-input" type="radio" name="rsvtTpCd" id="rsvtTpCd3" value="D"  th:checked="${'D' eq schInfo?.rsvtTpCd}" tabindex="2">
+							<label class="form-check-label" for="rsvtTpCd3">당일방문</label>
 						</div>
 					</td>
 				</tr>
@@ -40,18 +40,18 @@
 					<th>이름</th>
 					<td>
 						<div class="input-group input-group-sm">
-							<input type="text" id="rsvtUsrNm" class="form-control" th:value="${schInfo.rsvtUsrNm}" >
+							<input type="text" id="rsvtUsrNm" class="form-control" th:value="${schInfo.rsvtUsrNm}"  tabindex="3">
 						</div>
 					</td>
 					<th>성별</th>
 					<td>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}">
-							<label class="form-check-label" for="chkGender1">여성</label>
+							<input class="form-check-input" type="radio" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+							<label class="form-check-label" for="genTpCd1">여성</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq assignInfo?.genTpCd}">
-							<label class="form-check-label" for="chkGender2">남성</label>
+							<input class="form-check-input" type="radio" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+							<label class="form-check-label" for="genTpCd2">남성</label>
 						</div>
 					</td>
 				</tr>
@@ -59,13 +59,13 @@
 					<th>휴대전화번호</th>
 					<td>
 						<div class="input-group input-group-sm">
-							<input type="text" id="rsvtCellNo" class="form-control" th:value="${schInfo.rsvtCellNo}" >
+							<input type="text" id="rsvtCellNo" class="form-control" th:value="${schInfo.rsvtCellNo}"  tabindex="5">
 						</div>
 					</td>
 					<th>전화번호</th>
 					<td>
 						<div class="input-group input-group-sm">
-							<input type="text" id="rsvtPhnNo" class="form-control" th:value="${schInfo.rsvtPhnNo}" >
+							<input type="text" id="rsvtPhnNo" class="form-control" th:value="${schInfo.rsvtPhnNo}"  tabindex="6">
 						</div>
 					</td>
 				</tr>
@@ -74,25 +74,29 @@
 					<td colspan="3">
 						<div class="row">
 							<div class="input-group input-group-sm col-3">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" tabindex="7">
 							</div>
 							<div class="input-group input-group-sm col-3">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" tabindex="8">
 							</div>										
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4">
+					<th>기타메모</th>
+					<td colspan="3">
 						<div class="form-group">
-						    <textarea class="form-control" id="rsvtDesc" rows="6"></textarea>
+						    <textarea class="form-control form-control-sm" id="rsvtDesc" rows="10" th:field="${schInfo.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		<input type="hidden" id="id" name="id" th:value="${schInfo.id}" >
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" tabindex="10">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="11" >Close</button>
     </div>
+
+	<script type="text/javascript" th:src="@{/js/main/rs1001p01.js}"></script> 

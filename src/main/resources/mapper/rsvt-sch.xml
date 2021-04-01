@@ -63,6 +63,7 @@
 	<![CDATA[
 	SELECT ID
 	     , RSVT_USR_NM
+         , RSVT_CELL_NO
 	     , RSVT_PHN_NO
 	     , RSVT_DT
 	     , RSVT_TP_CD
