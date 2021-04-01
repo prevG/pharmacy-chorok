@@ -9,6 +9,7 @@ $( document ).ready( function() {
         };	
 		$(".modal .modal-content").load("/rsvt/rs1001p1", params, function (data, status, xhr) {			
 			$(".modal").modal('show');
+			$("#rsvtDt").focus();
 		});
     });
 });
