@@ -24,4 +24,12 @@ public class ADSurveyController {
 	}
 	
 	
+	@GetMapping("/surveyReg")
+	public ModelAndView surveyReg( Model model ) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/surveyReg");
+		return mv;
+	}
+	
+	
 }

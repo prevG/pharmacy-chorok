@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/admin_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script>
+
+	function fnInit(){}
+	
+	$(document).ready(function(){
+		fnInit();
+	});
+	
+	function add(){}
+	function remove(){}
+	function modify(){}
+	function save(){}
+	
+
+</script>
+</th:block>
+
+<div id="content-wrapper" class="d-flex flex-column" layout:fragment="content">
+
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item"><a href="#">설문조사 관리</a></li>
+			<li class="breadcrumb-item active" aria-current="page">설문조사 정보</li>
+		</ol>
+	</nav>
+
+	
+	<!-- Main Content -->
+	<div id="content">
+		<!-- Begin Page Content -->
+		<div class="container-fluid">
+			
+			<!-- DataTales -->
+			<div class="card shadow mb-4">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">등록하기</h5>
+				</div>
+				<div class="card-body" style="min-height: 700px !important;">
+					
+					<div style="padding: 5px 0;">
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addSurvey();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeSurvey();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editSurvey();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveSurvey();">저장</a>
+					</div>
+				
+					<table class="table">
+					  <tbody>
+					    <tr>
+					      <th scope="row">목적</th>
+					      <td>Mark</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">제목</th>
+					      <td>Jacob</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">설문요지</th>
+					      <td>Larry</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">기간</th>
+					      <td></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">응답자동의</th>
+					      <td></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">개인정보 수집동의 안내문</th>
+					      <td></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">제3자 정보재공 안내문</th>
+					      <td></td>
+					    </tr>
+					  </tbody>
+					</table>
+				
+				
+				
+				</div>
+			</div>
+			<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
+		</div>
+		<!-- /.container-fluid -->
+		
+	</div>
+	<!-- End of Main Content -->
+</div>
+<!-- End of Content Wrapper -->
+
+
+
+</html>
