@@ -13,6 +13,8 @@ import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 public class ReservationScheduleService {
@@ -49,5 +51,21 @@ public class ReservationScheduleService {
 		model.addAttribute( "schInfo", rsvtSchInfo );
     	return rsvtSchInfo;
     }
+    
+    
+	public int saveReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
+		
+		int result = -1;
+		if( !StringUtils.hasLength( rsvt.getId() )) {
+			result = rsvtSchRepo.insertTbPpRsvtSch( rsvt );
+		} else {
+			result = rsvtSchRepo.updateTbPpRsvtSch( rsvt );
+		}
+		return result;
+	}
+	
+	public int deleteReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
+		return rsvtSchRepo.deleteTbPpRsvtSch( rsvt );
+	}
 
 }

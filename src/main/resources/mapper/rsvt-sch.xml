@@ -4,7 +4,8 @@
 <mapper namespace="com.pharm.chorok.web.main.repository.ReservationScheduleRepository">
 
 	<select id="selectRsvtSchByWeekList" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
-	<![CDATA[
+	<![CDATA[	
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectRsvtSchByWeekList */
     SELECT WT.ID                  AS "wt.id"
          , WT.START_HM            AS "wt.startHm"
          , WT.END_HM              AS "wt.endHm"
@@ -45,6 +46,8 @@
 
 	<select id="selectWorkTimeByUseYn" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
 	<![CDATA[
+	
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectWorkTimeByUseYn */
     SELECT WT.WORK_VER
          , WT.ID
          , WT.START_HM
@@ -61,6 +64,7 @@
 		parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" 
 		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationInfoByRsvtId */
 	SELECT ID
 	     , RSVT_USR_NM
          , RSVT_CELL_NO
@@ -73,4 +77,78 @@
 	 WHERE ID = #{id}
 	]]>
 	</select>
+	
+	
+	<select id="findReservationTimeList"  
+		resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
+	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationTimeList */
+	SELECT DISTINCT
+           STR_TO_DATE(CONCAT(DATE_FORMAT( WT.START_HM, '%H'), RPAD(TMP.N, 2, '0')), '%H%i') AS startHm
+      FROM TB_PP_WORK_TIME WT
+     CROSS JOIN
+           t TMP
+        ON N < 6
+     WHERE WT.USE_YN = 'Y'
+	]]>
+	</select>
+	
+	
+	<insert id="insertTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	INSERT INTO TB_PP_RSVT_SCH (
+	     ID,
+	   , RSVT_USR_NM
+	   , RSVT_DT
+	   , RSVT_CELL_NO
+	   , RSVT_PHN_NO
+	   , RSVT_TP_CD
+	   , RSVT_DESC
+	   , GEN_TP_CD
+	   , RCMD_USR_NO
+	   , PIC_USR_NO
+	   , REG_DT
+	   , REG_USR_NO
+	) VALUES
+	     #{id}
+	   , #{rsvtUsrNm}
+	   , STR_TO_DATE( #{rsvtDt}, '%m/%d/%Y %H:%i:%s')
+	   , #{rsvtCellNo}
+	   , #{rsvtPhnNo}
+	   , #{rsvtTpCd}
+	   , #{rsvtDesc}
+	   , #{genTpCd}
+	   , #{rcmdUsrNo}
+	   , #{picUsrNo}
+	   , now()
+	   , #{regUsrNo}
+	);
+	]]>
+	</insert>
+	
+	<update id="updateTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	UPDATE TB_PP_RSVT_SCH
+	   SET UPD_DT        = now()
+		 , UPD_USR_NO    = #{updUsrNo}
+		 , RSVT_USR_NM   = #{rsvtUsrNm} 
+		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%m/%d/%Y %H:%i:%s')
+		 , RSVT_CELL_NO  = #{rsvtCellNo} 
+		 , RSVT_PHN_NO   = #{rsvtPhnNo} 
+		 , RSVT_TP_CD    = #{rsvtTpCd} 
+		 , RSVT_DESC     = #{rsvtDesc} 
+		 , GEN_TP_CD     = #{genTpCd} 
+		 , RCMD_USR_NO   = #{rcmdUsrNo} 
+	     , PIC_USR_NO    = #{picUsrNo}
+     WHERE ID = #{id}	 
+	]]>
+	</update>
+	
+	<update id="deleteTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	DELETE FROM TB_PP_RSVT_SCH
+     WHERE ID = #{id}	 
+	]]>
+	</update>
+	
 </mapper>
