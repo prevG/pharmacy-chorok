@@ -8,15 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pharm.chorok.web.admin.service.ADCodeService;
-import com.pharm.chorok.web.main.service.UserService;
 
 @RequestMapping(value = "/admin")
 @Controller
 public class ADSMSController {
-
-	@Autowired
-	private ADCodeService codeService;
-	
 	
 	@GetMapping("/sms")
 	public ModelAndView sms( Model model ) throws Exception {

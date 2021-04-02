@@ -16,7 +16,6 @@ import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADCodeService;
 import com.pharm.chorok.web.admin.service.ADUserService;
-import com.pharm.chorok.web.main.service.UserService;
 
 @RequestMapping(value = "/admin")
 @Controller
