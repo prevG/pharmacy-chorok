@@ -47,14 +47,18 @@ $( document ).ready( function() {
 	
 	
 	$( "#btnSaveRsvtSch" ).off("click").on("click", function( e ){
+
+		var params = $("form[name=saveForm]").serialize();
 		$.ajax({
 			type : 'post',
 	        url  : '/api/v1/main/rsvt/saveRsvtSch',
-	        data : $("form[name=saveForm]").serialize(),
+	        data : params,
 			success : function( result ) {
 				console.log( "result", result );
 				if( result.status == "success" ) {
 					alert( result.message );
+				$(".modal").modal("hide")
+					updateTimeTable();
 				} else {
 					alert( result.errorMessage );
 				}
@@ -63,5 +67,18 @@ $( document ).ready( function() {
 	});
 
 	updateTimeTable = function() {
+
+
+		var url = "/rsvt/rs1001m/refresh";
+		$("#time-table").load(url, function(response, status, xhr) {
+			console.log( "response", response );
+			console.log( "status", status );
+			console.log( "xhr",  xhr);
+			if (200==xhr.status) {
+				$("#time-table").html(response);
+			} else {
+				console.log( response, status, xhr );
+			}
+		});
 	}
 });

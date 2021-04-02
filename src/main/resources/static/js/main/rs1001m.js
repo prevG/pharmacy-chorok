@@ -1,7 +1,7 @@
 $( document ).ready( function() {
 
 
-    $("button[name='rsvtSch'").off("click").on("click", function( e ) {    
+    $( document ).on("click", "button[name='rsvtSch']", function( e ) {    
         
         e.preventDefault(); //remove href function
         var params = {

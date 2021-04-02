@@ -3,7 +3,6 @@ package com.pharm.chorok.web.main.service;
 import java.util.List;
 
 import com.pharm.chorok.common.service.CalendarService;
-import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -12,11 +11,10 @@ import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ReservationScheduleService {
@@ -29,23 +27,30 @@ public class ReservationScheduleService {
 
 
 
-    public Model getReservationTable( Model model ) throws Exception {
+    public ModelAndView getReservationTable( ModelAndView mv ) throws Exception {
 
-        TbCommCalendar currCal = calSvc.selectCurrentDate();
+		TbCommCalendar currCal = calSvc.selectCurrentDate();
 
 		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
         List<TbCommCalendar> currDtList = calSvc.selectSameWeekDateListByDt( currCal );
         List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTimeByUseYn();
         List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeekList( currCal );
 
-		model.addAttribute( "name"    , comUser.getUsrNm() );
-        model.addAttribute( "colList" , currDtList );   //Column
-        model.addAttribute( "rowList" , workTimeList ); //Row
-        model.addAttribute( "dataList", rsvtSchList ); //Cell
+		mv.addObject( "name"    , comUser.getUsrNm() );
+        mv.addObject( "colList" , currDtList );   //Column
+        mv.addObject( "rowList" , workTimeList ); //Row
+        mv.addObject( "dataList", rsvtSchList ); //Cell
 
-        return model;
+        return mv;
     } 
     
+	/**
+	 * 예약스케쥴 정보 조회
+	 * @param rsvtSch
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
     public TbPpRsvtSch findReservationInfoByRsvtId( TbPpRsvtSch rsvtSch,  Model model  ) throws Exception {
 
     	TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
