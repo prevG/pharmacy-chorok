@@ -18,12 +18,6 @@ public class ReservationScheduleController {
 	@Autowired
 	private ReservationScheduleService rsvtSchSvc;
 
-	@GetMapping("/")
-	public String goIndex(Model model) throws Exception {
-		
-		rsvtSchSvc.getReservationTable( model );
-		return "index";
-	}
 
 	@PostMapping("/rs1001p1")
 	public String goRS1001P01(TbPpRsvtSch rsvt, Model model) throws Exception {
