@@ -12,20 +12,9 @@ import com.pharm.chorok.web.main.repository.TbCommUserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private TbCommUserRepository comUsrRepo;
 
-	
-	public ArrayList<TbCommUser> getUserList() throws Exception {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		ArrayList<TbCommUser> resultList = comUsrRepo.getUserList( params );
-		
-		return resultList;
-	}
-	
-	public Long joinUser() {
-		
-		return null;
-	}
+	// 이곳의 모든 메서드를 CommUserDetailsService로 모든 내용 이동
 }

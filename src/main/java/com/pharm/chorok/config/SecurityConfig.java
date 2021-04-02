@@ -34,22 +34,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
 			.authorizeRequests()
-				.antMatchers("/account/login").permitAll()
+				.antMatchers("/account/**").permitAll()
 				.anyRequest().authenticated()
-				.and()
+            	.and()
 			.formLogin()
 				.loginPage("/account/login")		
                 .permitAll()
                 .and()
             .logout()
-            	.logoutUrl("/account/logout")
+            	.logoutSuccessUrl("/account/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler( customLogoutSuccessHandler() )
             	.and()
             .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).logout()
-            	.and()
-            	.exceptionHandling().accessDeniedPage("/account/denied") // 에러의 경우 보여지는 페이지
 			;
 	}
 	
