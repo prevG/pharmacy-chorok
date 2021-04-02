@@ -3,6 +3,7 @@ package com.pharm.chorok.web.main.service;
 import java.util.List;
 
 import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -11,10 +12,11 @@ import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 public class ReservationScheduleService {

@@ -51,12 +51,17 @@ $( document ).ready( function() {
 			type : 'post',
 	        url  : '/api/v1/main/rsvt/saveRsvtSch',
 	        data : $("form[name=saveForm]").serialize(),
-			success : function(data) {
-				alert( "성공" );
-			},
-			error : function(xhr, ajaxOptions, thrownError) {
-				alert( "실패" );
+			success : function( result ) {
+				console.log( "result", result );
+				if( result.status == "success" ) {
+					alert( result.message );
+				} else {
+					alert( result.errorMessage );
+				}
 			}
 		});
 	});
+
+	updateTimeTable = function() {
+	}
 });

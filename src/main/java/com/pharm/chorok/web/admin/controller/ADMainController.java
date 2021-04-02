@@ -1,20 +1,14 @@
 package com.pharm.chorok.web.admin.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pharm.chorok.web.main.service.UserService;
-
 @RequestMapping(value = "/admin")
 @Controller
 public class ADMainController {
-
-	@Autowired
-	private UserService userService;
 	
 	@GetMapping("/index")
 	public ModelAndView index( Model model ) throws Exception {

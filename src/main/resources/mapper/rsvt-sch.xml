@@ -46,7 +46,6 @@
 
 	<select id="selectWorkTimeByUseYn" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
 	<![CDATA[
-	
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectWorkTimeByUseYn */
     SELECT WT.WORK_VER
          , WT.ID
@@ -112,7 +111,7 @@
 	) VALUES
 	     #{id}
 	   , #{rsvtUsrNm}
-	   , STR_TO_DATE( #{rsvtDt}, '%m/%d/%Y %H:%i:%s')
+	   , STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
 	   , #{rsvtCellNo}
 	   , #{rsvtPhnNo}
 	   , #{rsvtTpCd}
@@ -132,7 +131,7 @@
 	   SET UPD_DT        = now()
 		 , UPD_USR_NO    = #{updUsrNo}
 		 , RSVT_USR_NM   = #{rsvtUsrNm} 
-		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%m/%d/%Y %H:%i:%s')
+		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
 		 , RSVT_CELL_NO  = #{rsvtCellNo} 
 		 , RSVT_PHN_NO   = #{rsvtPhnNo} 
 		 , RSVT_TP_CD    = #{rsvtTpCd} 
