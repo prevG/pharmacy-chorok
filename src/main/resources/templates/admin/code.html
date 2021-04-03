@@ -46,6 +46,9 @@
 		    textField:'ditcCdNm',
 		    onSelect:function(rec){
 				console.log(rec);
+			},
+			onLoadSuccess:function(){
+				$(this).combobox('setValue', '00000');
 			}
 		});
 		

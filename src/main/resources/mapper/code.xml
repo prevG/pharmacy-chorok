@@ -9,7 +9,17 @@
 		SELECT '',
 			'00000' AS DITC_CD,
 			'',
-			CONCAT('[00000]','전체') AS DITC_CD_NM,
+			<choose>
+				<when test='targetKind!=null and targetKind.equals("0")'>
+					CONCAT('[00000]','전체') AS DITC_CD_NM,
+				</when>
+				<when test='targetKind!=null and targetKind.equals("1")'>
+					CONCAT('[00000]','선택') AS DITC_CD_NM,
+				</when>
+				<otherwise>
+					CONCAT('[00000]','전체') AS DITC_CD_NM,
+				</otherwise>
+			</choose>
 			'',
 			'',
 			'',
@@ -72,8 +82,6 @@
 		</if>
 	</update>
 
-
-	
 
 	<insert id="saveCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		INSERT INTO TB_COMM_CODE

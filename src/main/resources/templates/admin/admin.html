@@ -12,8 +12,8 @@
 		function fnSearch(){
 			var param = {
 				cbSrch : $('#cb_srch').combobox('getValue'),
-				cbAuth : $('#cb_auth').combobox('getValue'),
-				cbAppv : $('#cb_appv').combobox('getValue'),
+				cbAuth : $('#cb_usrAuth').combobox('getValue'),
+				cbAppv : $('#cb_usrAprv').combobox('getValue'),
 				target : "grid",
 				srchTxt : $("#srchTxt").val()
 			};
@@ -26,15 +26,16 @@
 		      data:param,
 		    }).done(function( responseJson ) {
 		    	console.log(responseJson);
-	          	$('#dg').datagrid('loadData', responseJson ); 
+	          	$('#dg').datagrid('loadData', responseJson );
+	          	$('#dg').datagrid('hideColumn', 'usrNo'); 
 	          	
 	        });
 		}
 		
 		
 		function fnInit(){
-			$('#cb_auth').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1002&target=combo',
+			$('#cb_usrAuth').combobox({
+				url:'/admin/getGrpCd?GrpCd=C1002&target=combo&targetKind=0',
 			    valueField:'ditcCd',
 			    textField:'ditcCdNm',
 			    onSelect:function(rec){
@@ -45,8 +46,51 @@
 				}
 			});
 			
-			$('#cb_appv').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1010&target=combo',
+			$('#cb_usrAprv').combobox({
+				url:'/admin/getGrpCd?GrpCd=C1010&target=combo&targetKind=0',
+			    valueField:'ditcCd',
+			    textField:'ditcCdNm',
+			    onSelect:function(rec){
+					console.log(rec);
+				},
+				onLoadSuccess:function(){
+					$(this).combobox('setValue', '00000');
+				}
+			});
+		}
+		
+		
+		function addAdmin(){
+			 $('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
+	         $('#addFrm').form('clear');
+	         
+	         $('#dlg_usrGrade').combobox({
+				url:'/admin/getGrpCd?GrpCd=C1003&target=combo&targetKind=1',
+			    valueField:'ditcCd',
+			    textField:'ditcCdNm',
+			    onSelect:function(rec){
+					console.log(rec);
+				},
+				onLoadSuccess:function(){
+					$(this).combobox('setValue', '00000');
+				}
+			});
+			
+			$('#dlg_usrAuth').combobox({
+				url:'/admin/getGrpCd?GrpCd=C1002&target=combo&targetKind=1',
+			    valueField:'ditcCd',
+			    textField:'ditcCdNm',
+			    onSelect:function(rec){
+					console.log(rec);
+				},
+				onLoadSuccess:function(){
+					$(this).combobox('setValue', '00000');
+				}
+			});
+			
+			
+			$('#dlg_usrAprv').combobox({
+				url:'/admin/getGrpCd?GrpCd=C1010&target=combo&targetKind=1',
 			    valueField:'ditcCd',
 			    textField:'ditcCdNm',
 			    onSelect:function(rec){
@@ -58,7 +102,6 @@
 			});
 			
 		}
-		
 		
 		$(document).ready(function(){
 			fnInit();
@@ -102,14 +145,14 @@
 					<hr class="mt-2 mb-2" />
 					<form class="form-inline">
 						<div class="form-group">
-							<select id="cb_auth" class="easyui-combobox"  name="cb_auth" style="width:300px;" label="권한">
+							<select id="cb_usrAuth" class="easyui-combobox"  name="cb_usrAuth" style="width:300px;" label="권한">
 							</select>
 						</div>
 					</form>
 					<hr class="mt-2 mb-2" />
 					<form class="form-inline">
 						<div class="form-group">
-							<select id="cb_appv" class="easyui-combobox" name="cb_appv" style="width:300px;" label="승인여부">
+							<select id="cb_usrAprv" class="easyui-combobox" name="cb_usrAprv" style="width:300px;" label="승인여부">
 							</select>
 						</div>
 					</form>
@@ -123,10 +166,10 @@
 				<div class="card-body" style="min-height: 530px;">
 
 					<div style="padding: 5px 0;">
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addAdmin();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeAdmin();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editAdmin();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
 					</div>
 					<!--  <p>Fixed Width Buttons</p>
 				    <div style="padding:5px 0;">
@@ -146,6 +189,7 @@
 				          dragSelection: true">
 				      <thead>
 				        <tr>
+				          <th data-options="field:'usrNo',width:10,align:'center'">사용자번호</th>
 				          <th data-options="field:'usrNm',width:150,align:'center'">사용자이름</th>
 				          <th data-options="field:'usrEml',width:250,align:'center'">이메일</th>
 				          <th data-options="field:'usrPhnNo',width:200,align:'center'">핸드폰번호</th>
@@ -167,57 +211,44 @@
 	
 	<div id="addDlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
-			<div style="margin-bottom: 10px">
-				<select id="selCdKind" class="easyui-combobox" required="true" name="selCdKind" style="width:200px;" label="코드구분:">
-					<option value="S" selected="selected">선택</option>
-				    <option value="G">코드그룹</option>
-				    <option value="C">코드</option>
-				</select>
-			</div>
-			<div style="margin-bottom: 10px;display:none;" id="grpRg">
-				<div class="row">
-				    <div class="col-6">
-				    	<select id="grpRg_grpCd" class="easyui-combobox" required="true" name="grpRg_grpCd" style="width:270px;" label="그룹코드">
-							<option value="00000">선택</option>
-						</select>
-				    </div>
-				    <div class="col-6 text-right">
-				    	<input name="grpRg_ditcCd" id="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
-				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
-				    </div>
+		
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<input name="dlg_em" id="dlg_em" class="easyui-textbox" required="true" validType="email" label="이메일:" style="width: 100%">
+				</div>
+				<div class="col">
+				  	<input name="dlg_pw" id="dlg_pw" class="easyui-passwordbox" prompt="Password" iconWidth="28" label="패스워드:" style="width:100%;height:30px;">
 				</div>
 			</div>
-			<div style="margin-bottom: 10px;display:none;" id="cdRg">
-				<div class="row">
-				    <div class="col-6">
-				    	<input name="cdRg_grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
-				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
-				    </div>
-				    <div class="col-6 text-right">
-				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
-				    </div>
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<input name="dlg_usrNm" id="dlg_usrNm" class="easyui-textbox" required="true" validType="email" label="사용자이름:" style="width: 100%">
+				</div>
+				<div class="col">
+				  	<input name="dlg_usrPhnNo" id="dlg_usrPhnNo" class="easyui-textbox" required="true" validType="email" label="핸드폰번호:" style="width: 100%">
 				</div>
 			</div>
-			<div style="margin-bottom: 10px">
-				<input name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<select id="dlg_usrGrade" name="dlg_usrGrade" class="easyui-combobox" required="true" style="width:100%;" label="직위">
+					</select>
+				</div>
+				<div class="col">
+					<select id="dlg_usrAuth" name="dlg_usrAuth" class="easyui-combobox" required="true" style="width:100%;" label="권한">
+					</select>
+				</div>
 			</div>
-			<div style="margin-bottom: 10px">
-				<input name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
-			</div>
-			<!-- <div style="margin-bottom: 10px">
-				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
-			</div> -->
-			<div style="margin-bottom: 10px">
-				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
-				    <option value="Y" selected="selected">잠금</option>
-				    <option value="N">비잠금</option>
-				</select>
-			</div>
-			<div style="margin-bottom: 10px">
-				<select id="useYn" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용여부">
-				    <option value="Y" selected="selected">사용</option>
-				    <option value="N">비사용</option>
-				</select>
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col-6">
+					<select id="dlg_usrAprv" name="dlg_usrAprv" class="easyui-combobox" required="true" style="width:100%;" label="승인여부">
+					</select>
+				</div>
+				<div class="col-6">
+					<select id="dlg_delYn" name="dlg_delYn" class="easyui-combobox" required="true" style="width:200px;" label="삭제여부">
+						<option value="N" selected="selected">비삭제</option>
+					    <option value="Y">삭제</option>
+					</select>
+				</div>
 			</div>
 		</form>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>

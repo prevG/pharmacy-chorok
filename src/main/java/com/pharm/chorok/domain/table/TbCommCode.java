@@ -25,6 +25,7 @@ public class TbCommCode {
 	
 	//html 요소에 따라 다르게 조회
 	private String target;
+	private String targetKind;
 	//검색조건(ko:코드명,en:코드명(영문))
 	private String srchKind;
 	//검색값
