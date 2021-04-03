@@ -43,7 +43,7 @@
 		 ORDER BY V_ORDER
 	</select>
 	
-	<update id="deleteCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
+	<update id="updateCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		UPDATE TB_COMM_CODE
 		SET USE_YN = 'N'
 		WHERE 1=1
@@ -52,9 +52,16 @@
 		AND DITC_CD = #{ditcCd}
 		</if>
 	</update>
-
-
 	
+	
+	<delete id="removeCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
+		DELETE FROM TB_COMM_CODE
+		WHERE 1=1
+		AND GRP_CD = #{grpCd}
+		<if test='ditcCd!=null'>
+		AND DITC_CD = #{ditcCd}
+		</if>
+	</delete>	
 
 	<insert id="saveCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		INSERT INTO TB_COMM_CODE

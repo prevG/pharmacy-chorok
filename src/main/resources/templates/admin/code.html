@@ -126,29 +126,30 @@
          }
 	}
 	
+
 	function saveCode(){
 	 	var url = '/admin/saveCode';
-		
-		 $('#addFrm').form('submit',{
-             url: url,
-             iframe: false,
-             onSubmit: function(){
-                 return $(this).form('validate');
-             },
-             success: function(result){
-                 var result = eval('('+result+')');
-                 if (result.errorMsg){
-                     $.messager.show({
-                         title: 'Error',
-                         msg: result.errorMsg
-                     });
-                 } else {
-                     $('#dlg').dialog('close');        // close the dialog
-                     $('#dg').datagrid('reload');    // reload the user data
-                 }
-             }
-         });
-         
+		alert('1');
+		$('#addFrm').form('submit',{
+            url: url,
+            iframe: false,
+            onSubmit: function(){
+                return $(this).form('validate');
+            },
+            success: function(result){
+           		alert('2');
+                var result = eval('('+result+')');
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the user data
+                }
+            }
+         });         
 	}
 </script>
 </th:block>
