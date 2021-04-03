@@ -75,10 +75,10 @@ public class ADCodeController {
 	
 	@PostMapping("/removeCode")
 	@ResponseBody
-	public String deleteCode(TbCommCode tbCommCode ) throws Exception {
+	public String removeCode(TbCommCode tbCommCode ) throws Exception {
 		JSONObject result = new JSONObject();
 		
-		int ret = codeService.deleteCode(tbCommCode);
+		int ret = codeService.removeCode(tbCommCode);
 		
 		if(ret > 0) {
 			result.put("success", true);

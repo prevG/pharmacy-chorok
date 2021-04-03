@@ -15,7 +15,7 @@ public interface ADCodeRepository {
 	
 	public void saveCode(TbCommCode tbCommCode);
 	
-	public int deleteCode(TbCommCode tbCommCode);
+	public int removeCode(TbCommCode tbCommCode);
 	
 }
 

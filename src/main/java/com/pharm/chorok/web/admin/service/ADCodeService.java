@@ -36,8 +36,8 @@ public class ADCodeService{
     }
     
     
-    public int deleteCode(TbCommCode tbCommCode) {
-    	return codeRepository.deleteCode(tbCommCode);
+    public int removeCode(TbCommCode tbCommCode) {
+    	return codeRepository.removeCode(tbCommCode);
     }
 
 }
