@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.web.admin.service.ADCodeService;
 import com.pharm.chorok.web.admin.service.ADUserService;
 
 @RequestMapping(value = "/admin")
@@ -33,10 +32,10 @@ public class ADUserController {
 	
 	
 	
-	@GetMapping("/getAdmins")
+	@PostMapping("/getAdmin")
 	@ResponseBody
 	public String getAdmins( TbCommUser tbCommUser ) throws Exception {
-		ArrayList<TbCommUser> tbCommUsers = userService.getAdmins(tbCommUser);
+		ArrayList<TbCommUser> tbCommUsers = userService.getAdmin(tbCommUser);
 		
 		JSONObject result = new JSONObject();
 		
@@ -45,6 +44,7 @@ public class ADUserController {
 		for(int i=0; i<tbCommUsers.size();i++) {
 			JSONObject data = new JSONObject();
 			data.put("usrNo",tbCommUsers.get(i).getUsrNo());
+			data.put("usrEml",tbCommUsers.get(i).getUsrEml());
 			data.put("authorities", tbCommUsers.get(i).getAuthorities());
 			data.put("regUsrNo", tbCommUsers.get(i).getRegUsrNo());
 			data.put("updUsrNo", tbCommUsers.get(i).getUpdUsrNo());
@@ -56,6 +56,9 @@ public class ADUserController {
 			data.put("usrNm", tbCommUsers.get(i).getUsrNm());
 			data.put("usrPhnNo", tbCommUsers.get(i).getUsrPhnNo());
 			data.put("usrPwd", tbCommUsers.get(i).getUsrPwd());
+			data.put("usrAprv",tbCommUsers.get(i).getUsrAprv());
+			data.put("delYn",tbCommUsers.get(i).getDelYn());
+			data.put("regDt",tbCommUsers.get(i).getRegDt());
 			arr.put(data);
 		}
 		
@@ -67,7 +70,7 @@ public class ADUserController {
 	
 	
 	
-	@GetMapping("/modifyUser")
+	@GetMapping("/modifyAdmin")
 	@ResponseBody
 	public String modifyUser( Model model ) throws Exception {
 		JSONObject result = new JSONObject();
@@ -75,7 +78,7 @@ public class ADUserController {
 	}
 	
 	
-	@GetMapping("/removeUser")
+	@GetMapping("/removeAdmin")
 	@ResponseBody
 	public String removeUser( Model model ) throws Exception {
 		JSONObject result = new JSONObject();
@@ -83,7 +86,7 @@ public class ADUserController {
 	}
 	
 	
-	@GetMapping("/saveUser")
+	@GetMapping("/saveAdmin")
 	@ResponseBody
 	public String saveUser( Model model ) throws Exception {
 		JSONObject result = new JSONObject();

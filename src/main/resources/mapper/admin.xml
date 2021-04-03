@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.admin.repository.ADUserRepository">
+
+
+	<select id="selectAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbCommUser">
+		SELECT USR_NO,
+				USR_EML,
+		        USR_PWD,
+		        USR_NM,
+		        USR_PHN_NO,
+		        DATA_OWNR_ID,
+		        USR_GRADE,
+		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1003' AND DITC_CD = USR_GRADE) AS USR_GRADE_VAL,
+		        USR_AUTH,
+		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1002' AND DITC_CD = USR_AUTH) AS USR_AUTH_VAL,
+		        USR_APRV,
+		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1010' AND DITC_CD = USR_AUTH) AS USR_APRV_VAL,
+		        DEL_YN,
+		        REG_USR_NO,
+		        DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+		        UPD_USR_NO, 
+		        DATE_FORMAT(UPD_DT, '%Y-%m-%d') AS UPD_DT
+		FROM TB_COMM_USER
+		WHERE 1=1
+		<choose>
+			<when test='cbSrch!=null and cbSrch.equals("all")'>
+				AND (USR_NM LIKE CONCAT('%',#{srchTxt},'%') OR USR_EML LIKE CONCAT('%',#{srchTxt},'%'))
+			</when>
+			<when test='cbSrch!=null and cbSrch.equals("nm")'>
+				AND USR_NM LIKE CONCAT('%',#{srchTxt},'%')
+			</when>
+			<when test='cbSrch!=null and cbSrch.equals("em")'>
+				AND USR_EML LIKE CONCAT('%',#{srchTxt},'%')
+			</when>
+		</choose>
+		<choose>
+			<when test='cbAuth!=null and cbAuth.equals("00000")'>
+			</when>
+			<otherwise>
+			AND USR_AUTH = #{cbAuth}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test='cbAppv!=null and cbAppv.equals("00000")'>
+			</when>
+			<otherwise>
+			AND APPR_YN = #{cbAppv}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<update id="deleteAdminUser" parameterType="com.pharm.chorok.domain.table.TbCommUser">
+		UPDATE TB_COMM_USER
+		SET USE_YN = 'N'
+		WHERE 1=1
+		AND USR_NO = #{usrNo}
+	</update>
+
+
+	
+
+	<insert id="saveAdminUser" parameterType="com.pharm.chorok.domain.table.TbCommUser">
+		INSERT INTO TB_COMM_CODE
+		(	GRP_CD,
+			DITC_CD,
+			DITC_NM,
+			DITC_NM_ENG,
+			VALUE_CD,
+			VALUE_CD2,
+			CD_EXP,
+			CD_EXP_ENG,
+			V_ORDER,
+			LOCK_YN,
+			USE_YN,
+			REG_ID,
+			REG_DTTM,
+			UPD_ID,
+			UPD_DTTM
+		)
+		VALUES
+		(	#{grpCd},
+			#{ditcCd},
+			#{ditcNm},
+			#{ditcNmENG},
+			#{valueCd},
+			#{valueCd2},
+			#{cdExp},
+			#{cdExpEnG},
+			#{vOrder},
+			#{lockYn},
+			#{useYn},
+			#{regId},
+			#{regDttm},
+			#{updId},
+			#{updDttm}
+		)
+			
+	</insert>
+	
+	
+</mapper>

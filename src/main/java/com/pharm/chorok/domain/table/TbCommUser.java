@@ -27,6 +27,8 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrPwd;
 	private String usrGrade;
 	private String usrAuth;
+	private String usrAprv;
+	private String delYn;
 	
 	//화면에서 쓸거임..
 	private String cbSrch;

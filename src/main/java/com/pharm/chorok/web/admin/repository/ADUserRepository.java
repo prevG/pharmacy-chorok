@@ -14,7 +14,7 @@ public interface ADUserRepository {
 
 	public ArrayList<TbCommCode> selectUsers(String grpCd);
 	
-	public ArrayList<TbCommUser> selectAdmins(TbCommUser tbCommUser);
+	public ArrayList<TbCommUser> selectAdmin(TbCommUser tbCommUser);
 	
 }
 

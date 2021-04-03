@@ -19,8 +19,8 @@ public class ADUserService{
     }
     
     
-    public ArrayList<TbCommUser> getAdmins(TbCommUser tbCommUser) throws Exception{
-    	return userRepository.selectAdmins(tbCommUser);
+    public ArrayList<TbCommUser> getAdmin(TbCommUser tbCommUser) throws Exception{
+    	return userRepository.selectAdmin(tbCommUser);
     }
 
 }
