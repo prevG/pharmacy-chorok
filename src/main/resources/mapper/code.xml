@@ -5,6 +5,25 @@
 
 
 	<select id="selectCodesByGroupCd" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
+		<if test='target!=null and target.equals("combo")'>
+		SELECT '',
+			'00000' AS DITC_CD,
+			'',
+			CONCAT('[00000]','전체') AS DITC_CD_NM,
+			'',
+			'',
+			'',
+			'',
+			'',
+			0 AS V_ORDER,
+			'',
+			'',
+			'',
+			'',
+			'',
+			''
+		UNION ALL
+		</if>
 		SELECT GRP_CD,
 			DITC_CD,
 			DITC_NM,
@@ -43,7 +62,7 @@
 		 ORDER BY V_ORDER
 	</select>
 	
-	<update id="updateCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
+	<update id="deleteCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		UPDATE TB_COMM_CODE
 		SET USE_YN = 'N'
 		WHERE 1=1
@@ -52,16 +71,9 @@
 		AND DITC_CD = #{ditcCd}
 		</if>
 	</update>
+
+
 	
-	
-	<delete id="removeCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
-		DELETE FROM TB_COMM_CODE
-		WHERE 1=1
-		AND GRP_CD = #{grpCd}
-		<if test='ditcCd!=null'>
-		AND DITC_CD = #{ditcCd}
-		</if>
-	</delete>	
 
 	<insert id="saveCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		INSERT INTO TB_COMM_CODE
