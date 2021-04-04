@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADUserService;
 
@@ -72,24 +73,48 @@ public class ADUserController {
 	
 	@GetMapping("/modifyAdmin")
 	@ResponseBody
-	public String modifyUser( Model model ) throws Exception {
+	public String modifyUser( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
 		return result.toString();
 	}
 	
 	
-	@GetMapping("/removeAdmin")
+	
+	@PostMapping("/removeAdmin")
 	@ResponseBody
-	public String removeUser( Model model ) throws Exception {
+	public String removeAdmin(TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
+		
+		int ret = userService.removeAdmin(tbCommUser);
+		
+		if(ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공하였습니다.");
+		}else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
 		return result.toString();
 	}
 	
 	
-	@GetMapping("/saveAdmin")
+	
+	@PostMapping("/saveAdmin")
 	@ResponseBody
-	public String saveUser( Model model ) throws Exception {
+	public String saveAdmin( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
+		
+		int ret = userService.saveAdmin(tbCommUser);
+		
+		if(ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공하였습니다.");
+		}else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
 		return result.toString();
 	}
 }

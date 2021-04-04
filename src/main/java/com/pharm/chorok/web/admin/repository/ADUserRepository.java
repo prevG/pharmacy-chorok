@@ -16,5 +16,10 @@ public interface ADUserRepository {
 	
 	public ArrayList<TbCommUser> selectAdmin(TbCommUser tbCommUser);
 	
+	public int removeAdmin(TbCommUser tbCommUser);
+	
+	public int saveAdmin(TbCommUser tbCommUser);
+	
+	
 }
 

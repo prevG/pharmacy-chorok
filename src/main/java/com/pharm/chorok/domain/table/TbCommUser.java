@@ -16,7 +16,7 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@NonNull
-	private long   usrNo;
+	private String   usrNo;
 	@NonNull
 	private String usrNm;
 	@NonNull
@@ -29,6 +29,8 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrAuth;
 	private String usrAprv;
 	private String delYn;
+	//private String dataOwnrId;
+	//private String regUsrNo;
 	
 	//화면에서 쓸거임..
 	private String cbSrch;
