@@ -99,7 +99,7 @@
 	function removeCode(){
 		var row = $("#dg").datagrid("getSelected");
 		
-		//console.log(row);
+		console.log(row);
 		
 		if(row){
 			$.messager.confirm('Confirm','코드를 삭제하겠습니까?',function(r){
@@ -107,11 +107,15 @@
                      $.post('/admin/removeCode',{grpCd:row.grpCd, ditcCd:row.ditcCd},function(result){
                          if (result.success){
                              //$('#dg').datagrid('reload');    // reload the user data
+                             $.messager.show({    // show error message
+                                 title: 'Success',
+                                 msg: result.Msg
+                             });
                              fnSearch();
                          } else {
                              $.messager.show({    // show error message
                                  title: 'Error',
-                                 msg: result.errorMsg
+                                 msg: result.Msg
                              });
                          }
                      },'json');
@@ -129,9 +133,30 @@
          }
 	}
 	
-	function saveCode(){
+	function saveDlgCode(){
 	 	var url = '/admin/saveCode';
+	 	var param = {
 		
+		};
+	 	
+	 	
+	 	  $.post(url,param,function(result){
+	             if (result.success){
+	                 //$('#dg').datagrid('reload');    // reload the user data
+	                 $.messager.show({    // show error message
+	                     title: 'Success',
+	                     msg: result.Msg
+	                 });
+	                 fnSearch();
+	             } else {
+	                 $.messager.show({    // show error message
+	                     title: 'Error',
+	                     msg: result.Msg
+	                 });
+	             }
+	         },'json');
+	 	
+		/*
 		 $('#addFrm').form('submit',{
              url: url,
              iframe: false,
@@ -151,6 +176,7 @@
                  }
              }
          });
+         */
          
 	}
 </script>
@@ -322,7 +348,7 @@
 				</select>
 			</div>
 		</form>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgCode();">저장</a>
 	</div>
 
 	<!-- Footer -->

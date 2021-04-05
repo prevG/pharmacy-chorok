@@ -72,7 +72,7 @@
 		 ORDER BY V_ORDER
 	</select>
 	
-	<update id="deleteCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
+	<update id="removeCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		UPDATE TB_COMM_CODE
 		SET USE_YN = 'N'
 		WHERE 1=1

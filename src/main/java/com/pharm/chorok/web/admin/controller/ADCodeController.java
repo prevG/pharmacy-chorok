@@ -82,9 +82,10 @@ public class ADCodeController {
 		
 		if(ret > 0) {
 			result.put("success", true);
+			result.put("Msg", "작업성공했습니다.");
 		}else {
 			result.put("success", false);
-			result.put("errorMsg", "작업실패했습니다.");
+			result.put("Msg", "작업실패했습니다.");
 		}
 		
 		return result.toString();
