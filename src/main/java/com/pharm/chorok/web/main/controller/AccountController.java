@@ -1,6 +1,7 @@
 package com.pharm.chorok.web.main.controller;
 
 import com.common.exception.CustomException;
+import com.common.exception.DatabaseInsertException;
 import com.common.exception.EmailCheckException;
 import com.common.exception.EmptyCheckException;
 import com.common.exception.NumberCheckException;
@@ -109,14 +110,19 @@ public class AccountController {
 			result.put("result", "fail");
 		}
 		
-		int ret = adUserService.saveAdmin(user);
-		
-		if(ret > 0) {
-			result.put("result", "success");
-		}else {
+		try {
+			int ret = adUserService.saveAdmin(user);
+			if(ret > 0) {
+				result.put("result", "success");
+			}else {
+				throw new DatabaseInsertException();
+			}
+		} catch(CustomException e) {
 			result.put("result", "fail");
-			result.put("error_code", "DATA_BASE_ERROR");
-			result.put("error_message", "Database Access Error");
+			result.put("error_code", e.getCode());
+			result.put("error_message", e.getMessage());
+		} catch (Exception e) {
+			result.put("result", "fail");
 		}
 		
 		return result.toString();
