@@ -1,7 +1,5 @@
 package com.common.exception;
 
-import com.common.util.Check;
-
 abstract public class CustomException extends Exception {
 	private String item = null;
 	private String code = null;
