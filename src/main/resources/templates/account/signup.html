@@ -75,11 +75,22 @@
 									class="btn text-white btn-block btn-primary">
 								<script>
 									document.getElementById('signupBtn').onclick = function() {
+										var usrEml = document.getElementById('usrEml').value;
+										var usrPhnNo = document.getElementById('usrPhnNo').value;
+										var usrNm = document.getElementById('usrNm').value;
+										var usrPwd = document.getElementById('usrPwd').value;
+										var usrPwdChk = document.getElementById('usrPwdChk').value;
+										
+										if(usrPwd != usrPwdChk) {
+											alert('비밀번호가 서로 맞지 않습니다. 비밀번호를 다시 확인해주세요.');
+											return;
+										}
+										
 										var param = {
-											usrEml : document.getElementById('usrEml').value,
-											usrPhnNo : document.getElementById('usrPhnNo').value,
-											usrNm : document.getElementById('usrNm').value,
-											usrPwd : document.getElementById('usrPwd').value,
+											usrEml : usrEml,
+											usrPhnNo : usrPhnNo,
+											usrNm : usrNm,
+											usrPwd : usrPwd,
 										};
 										var paramStr = JSON.stringify(param);
 
@@ -87,11 +98,32 @@
 										xhr.onload = function() {
 											if (xhr.status === 200) {
 												responseObject = JSON.parse(xhr.responseText);
-												if (responseObject.success == true) {
+												if (responseObject.result == 'success') {
 													alert('회원가입을 축하합니다.');
 													location.href = "/account/login";
 												} else {
-													alert('입력한 내용을 확인바랍니다.');
+													if (responseObject.error_code == 'EMPTY_CHECK_ERROR') {
+														alert('모든 내용을 입력해 주세요.');
+													} else if (responseObject.error_code == 'EMAIL_CHECK_ERROR') {
+														alert('이메일주소를 확인해 주세요.');
+													} else if (responseObject.error_code == 'NUMBER_CHECK_ERROR') {
+														alert('휴대전화번호를 확인해 주세요.');
+													} else if (responseObject.error_code == 'SIZE_CHECK_ERROR') {
+														var content = "의 입력한 글자수가 너무 작거나 큽니다.";
+														if (responseObject.error_item == 'usrEml'){
+															content = "이메일" + content;
+														} else if (responseObject.error_item == 'usrPhnNo'){
+															content = "휴대전화번호" + content;
+														} else if (responseObject.error_item == 'usrNm'){
+															content = "성명" + content;
+														} else if (responseObject.error_item == 'usrPwd'){
+															content = "비밀번호" + content;
+														}
+														content = content + " (최소:" + responseObject.min + ", 최대:" + responseObject.max + ")";
+														alert(content);
+													} else if (responseObject.error_code == 'DATA_BASE_ERROR') {
+														alert('네트워크가 원활하지 않습니다. 잠시후 다시 시도해 주세요.');
+													}
 												}
 											}
 										};

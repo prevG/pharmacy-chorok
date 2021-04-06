@@ -12,6 +12,12 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 public class TbCommUser extends TbCommColumn implements UserDetails {
+	
+	public static final String USR_NO = "usrNo";
+	public static final String USR_NM = "usrNm";
+	public static final String USR_PHN_NO = "usrPhnNo";
+	public static final String USR_EML = "usrEml";
+	public static final String USR_PWD = "usrPwd";
 
 	private static final long serialVersionUID = 1L;
 	
