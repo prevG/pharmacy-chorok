@@ -1,5 +1,11 @@
 package com.pharm.chorok.web.main.controller;
 
+import com.common.exception.CustomException;
+import com.common.exception.EmailCheckException;
+import com.common.exception.EmptyCheckException;
+import com.common.exception.NumberCheckException;
+import com.common.exception.SizeCheckException;
+import com.common.util.Check;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADUserService;
@@ -10,7 +16,6 @@ import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/account")
 @Controller
 public class AccountController {
-
-	@Autowired
-	private CommUserDetailsService userService;
 
 	@Autowired
 	private ADUserService adUserService;
@@ -53,46 +55,47 @@ public class AccountController {
 		TbCommUser user = new TbCommUser();
 		try {
 			String usrEml = (String)jsonMap.get(TbCommUser.USR_EML);
-			if (emptyCheck(usrEml)) {
-				throw new EmptyException(TbCommUser.USR_EML);
-			} else if (sizeCheck(usrEml, 5, 100)) {
-				throw new SizeException(TbCommUser.USR_EML);
-			} else if (emailCheck(usrEml)) {
-				throw new EmailException(TbCommUser.USR_EML);
+			if (Check.emptyCheck(usrEml)) {
+				throw new EmptyCheckException(TbCommUser.USR_EML);
+			} else if (Check.sizeCheck(usrEml, 5, 100)) {
+				throw new SizeCheckException(TbCommUser.USR_EML);
+			} else if (Check.emailCheck(usrEml)) {
+				throw new EmailCheckException(TbCommUser.USR_EML);
 			}
 			user.setUsrEml(usrEml);
 			
 			String usrPhnNo = (String)jsonMap.get(TbCommUser.USR_PHN_NO);
-			if (emptyCheck(usrPhnNo)) {
-				throw new EmptyException(TbCommUser.USR_PHN_NO);
-			} else if (sizeCheck(usrPhnNo, 11, 11)) {
-				throw new SizeException(TbCommUser.USR_PHN_NO);
+			if (Check.emptyCheck(usrPhnNo)) {
+				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
+			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
+				throw new SizeCheckException(TbCommUser.USR_PHN_NO);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
-			} else if (numberCheck(usrPhnNo)) {
-				throw new NumberException(TbCommUser.USR_PHN_NO);
+			} else if (Check.numberCheck(usrPhnNo)) {
+				throw new NumberCheckException(TbCommUser.USR_PHN_NO);
 			}
 			user.setUsrPhnNo(usrPhnNo);
 			
 			String usrNm = (String)jsonMap.get(TbCommUser.USR_NM);
-			if (emptyCheck(usrNm)) {
-				throw new EmptyException(TbCommUser.USR_NM);
-			}else if (sizeCheck(usrNm, 2, 50)) {
-				throw new SizeException(TbCommUser.USR_NM);
+			if (Check.emptyCheck(usrNm)) {
+				throw new EmptyCheckException(TbCommUser.USR_NM);
+			}else if (Check.sizeCheck(usrNm, 2, 50)) {
+				throw new SizeCheckException(TbCommUser.USR_NM);
 			}
 			user.setUsrNm(usrNm);
 			
 			String usrPwd = (String)jsonMap.get(TbCommUser.USR_PWD);
-			if (emptyCheck(usrPwd)) {
-				throw new EmptyException(TbCommUser.USR_PWD);
-			} else if (sizeCheck(usrPwd, 2, 100)) {
-				throw new SizeException(TbCommUser.USR_PWD);
+			if (Check.emptyCheck(usrPwd)) {
+				throw new EmptyCheckException(TbCommUser.USR_PWD);
+			} else if (Check.sizeCheck(usrPwd, 2, 100)) {
+				throw new SizeCheckException(TbCommUser.USR_PWD);
 			}
 			user.setUsrPwd(usrPwd);
 			
 		} catch(CustomException e) {
 			result.put("result", "fail");
-			result.put("error_code", e.getErrorCode());
+			result.put("error_code", e.getCode());
+			result.put("message", e.getMessage());
 			return result.toString();
 		} catch(Exception e) {
 			result.put("result", "fail");
@@ -104,7 +107,8 @@ public class AccountController {
 			result.put("result", "success");
 		}else {
 			result.put("result", "fail");
-			result.put("error_code", "db_access_error");
+			result.put("error_code", "DATA_BASE_ERROR");
+			result.put("message", "Database Access Error");
 		}
 		
 		return result.toString();
@@ -116,68 +120,10 @@ public class AccountController {
 		return "account/logout";
 	}
 	
-	private boolean emptyCheck(String str) {
-		return str==null || "".equals(str.trim());
-	}
-	
-	private boolean sizeCheck(String str, int min, int max) {
-		return str.length() < min || str.length() > max;
-	}
-	
-	private boolean emailCheck(String str) {
-		return !str.contains("@") || !str.contains(".");
-	}
-	
-	private boolean numberCheck(String str) {
-		try {
-			Integer.parseInt(str);
-		} catch(Exception e) {
-			return true;
-		}
-		return false;
-	
-	}
-	
 	public class JsonUtil {
 		private JSONObject result;
 		public JsonUtil() {
 			result = new JSONObject();
-		}
-	}
-	
-	public class CustomException extends Exception {
-		private String errorCode = "";
-		
-		protected CustomException(String errorCode) {
-			this.errorCode = errorCode;
-		}
-
-		public String getErrorCode() {
-			return errorCode;
-		}
-	}
-	
-	public class EmptyException extends CustomException {
-		public EmptyException(String target){
-			super(target+"_is_empty");
-		}
-	}
-	
-	public class SizeException extends CustomException {
-		public SizeException(String target){
-			super(target+"_is_short_or_long_size");
-		}
-	}
-	
-	public class EmailException extends CustomException {
-		public EmailException(String target){
-			super(target+"_is_not_email_address");
-		}
-	}
-	
-	public class NumberException extends CustomException {
-		public NumberException(String target){
-			super(target+"_is_not_number");
 		}
 	}
 }
