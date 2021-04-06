@@ -69,8 +69,8 @@ public class AccountController {
 			if (Check.emptyCheck(usrPhnNo)) {
 				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
 			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
-				result.put("min", 5);
-				result.put("max", 100);
+				result.put("min", 11);
+				result.put("max", 11);
 				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
@@ -83,8 +83,8 @@ public class AccountController {
 			if (Check.emptyCheck(usrNm)) {
 				throw new EmptyCheckException(TbCommUser.USR_NM);
 			}else if (Check.sizeCheck(usrNm, 2, 50)) {
-				result.put("min", 5);
-				result.put("max", 100);
+				result.put("min", 2);
+				result.put("max", 50);
 				throw new SizeCheckException(TbCommUser.USR_NM, 2, 50);
 			}
 			user.setUsrNm(usrNm);
@@ -92,10 +92,10 @@ public class AccountController {
 			String usrPwd = (String)jsonMap.get(TbCommUser.USR_PWD);
 			if (Check.emptyCheck(usrPwd)) {
 				throw new EmptyCheckException(TbCommUser.USR_PWD);
-			} else if (Check.sizeCheck(usrPwd, 2, 100)) {
-				result.put("min", 5);
+			} else if (Check.sizeCheck(usrPwd, 4, 100)) {
+				result.put("min", 4);
 				result.put("max", 100);
-				throw new SizeCheckException(TbCommUser.USR_PWD, 2, 100);
+				throw new SizeCheckException(TbCommUser.USR_PWD, 4, 100);
 			}
 			user.setUsrPwd(usrPwd);
 			
