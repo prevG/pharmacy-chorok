@@ -52,46 +52,50 @@ public class AccountController {
 		
 		TbCommUser user = new TbCommUser();
 		try {
-			String usrEml = (String)jsonMap.get("usrEml");
+			String usrEml = (String)jsonMap.get(TbCommUser.USR_EML);
 			if (emptyCheck(usrEml)) {
-				throw new Exception("usrEml_is_empty");
+				throw new EmptyException(TbCommUser.USR_EML);
+			} else if (sizeCheck(usrEml, 5, 100)) {
+				throw new SizeException(TbCommUser.USR_EML);
 			} else if (emailCheck(usrEml)) {
-				throw new Exception("usrEml_is_not_email");
+				throw new EmailException(TbCommUser.USR_EML);
 			}
 			user.setUsrEml(usrEml);
 			
-			String usrPhnNo = (String)jsonMap.get("usrPhnNo");
+			String usrPhnNo = (String)jsonMap.get(TbCommUser.USR_PHN_NO);
 			if (emptyCheck(usrPhnNo)) {
-				throw new Exception("usrPhnNo_is_empty");
-			} else if (usrPhnNo.length() < 11) {
-				throw new Exception("usrPwd_is_short");
+				throw new EmptyException(TbCommUser.USR_PHN_NO);
+			} else if (sizeCheck(usrPhnNo, 11, 11)) {
+				throw new SizeException(TbCommUser.USR_PHN_NO);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
 			} else if (numberCheck(usrPhnNo)) {
-				throw new Exception("usrPhnNo_is_not_number");
+				throw new NumberException(TbCommUser.USR_PHN_NO);
 			}
 			user.setUsrPhnNo(usrPhnNo);
 			
-			String usrNm = (String)jsonMap.get("usrNm");
+			String usrNm = (String)jsonMap.get(TbCommUser.USR_NM);
 			if (emptyCheck(usrNm)) {
-				throw new Exception("usrNm_is_empty");
-			}else if (usrNm.length() < 2) {
-				throw new Exception("usrNm_is_short");
+				throw new EmptyException(TbCommUser.USR_NM);
+			}else if (sizeCheck(usrNm, 2, 50)) {
+				throw new SizeException(TbCommUser.USR_NM);
 			}
 			user.setUsrNm(usrNm);
 			
-			String usrPwd = (String)jsonMap.get("usrPwd");
+			String usrPwd = (String)jsonMap.get(TbCommUser.USR_PWD);
 			if (emptyCheck(usrPwd)) {
-				throw new Exception("usrPwd_is_empty");
-			} else if (usrPwd.length() < 4) {
-				throw new Exception("usrPwd_is_short");
+				throw new EmptyException(TbCommUser.USR_PWD);
+			} else if (sizeCheck(usrPwd, 2, 100)) {
+				throw new SizeException(TbCommUser.USR_PWD);
 			}
 			user.setUsrPwd(usrPwd);
 			
+		} catch(CustomException e) {
+			result.put("result", "fail");
+			result.put("error_code", e.getErrorCode());
+			return result.toString();
 		} catch(Exception e) {
 			result.put("result", "fail");
-			result.put("error_code", e.getMessage());
-			return result.toString();
 		}
 		
 		int ret = adUserService.saveAdmin(user);
@@ -112,15 +116,19 @@ public class AccountController {
 		return "account/logout";
 	}
 	
-	boolean emptyCheck(String str) {
+	private boolean emptyCheck(String str) {
 		return str==null || "".equals(str.trim());
 	}
 	
-	boolean emailCheck(String str) {
+	private boolean sizeCheck(String str, int min, int max) {
+		return str.length() < min || str.length() > max;
+	}
+	
+	private boolean emailCheck(String str) {
 		return !str.contains("@") || !str.contains(".");
 	}
 	
-	boolean numberCheck(String str) {
+	private boolean numberCheck(String str) {
 		try {
 			Integer.parseInt(str);
 		} catch(Exception e) {
@@ -128,5 +136,48 @@ public class AccountController {
 		}
 		return false;
 	
+	}
+	
+	public class JsonUtil {
+		private JSONObject result;
+		public JsonUtil() {
+			result = new JSONObject();
+		}
+	}
+	
+	public class CustomException extends Exception {
+		private String errorCode = "";
+		
+		protected CustomException(String errorCode) {
+			this.errorCode = errorCode;
+		}
+
+		public String getErrorCode() {
+			return errorCode;
+		}
+	}
+	
+	public class EmptyException extends CustomException {
+		public EmptyException(String target){
+			super(target+"_is_empty");
+		}
+	}
+	
+	public class SizeException extends CustomException {
+		public SizeException(String target){
+			super(target+"_is_short_or_long_size");
+		}
+	}
+	
+	public class EmailException extends CustomException {
+		public EmailException(String target){
+			super(target+"_is_not_email_address");
+		}
+	}
+	
+	public class NumberException extends CustomException {
+		public NumberException(String target){
+			super(target+"_is_not_number");
+		}
 	}
 }
