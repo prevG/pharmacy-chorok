@@ -76,10 +76,10 @@
 								<script>
 									document.getElementById('signupBtn').onclick = function() {
 										var param = {
-											usrEml : document.getElementById('usrEml'),
-											usrPhnNo : document.getElementById('usrPhnNo'),
-											usrNm : document.getElementById('usrNm'),
-											usrPwd : document.getElementById('usrPwd'),
+											usrEml : document.getElementById('usrEml').value,
+											usrPhnNo : document.getElementById('usrPhnNo').value,
+											usrNm : document.getElementById('usrNm').value,
+											usrPwd : document.getElementById('usrPwd').value,
 										};
 										var paramStr = JSON.stringify(param);
 
