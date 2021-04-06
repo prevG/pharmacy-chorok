@@ -55,7 +55,7 @@ public class AccountController {
 			String usrEml = (String)jsonMap.get("usrEml");
 			if (emptyCheck(usrEml)) {
 				throw new Exception("usrEml_is_empty");
-			} else if (!usrEml.contains("@") || !usrEml.contains(".")) {
+			} else if (emailCheck(usrEml)) {
 				throw new Exception("usrEml_is_not_email");
 			}
 			user.setUsrEml(usrEml);
@@ -65,13 +65,17 @@ public class AccountController {
 				throw new Exception("usrPhnNo_is_empty");
 			} else if (usrPhnNo.length() < 11) {
 				throw new Exception("usrPwd_is_short");
+			} else if (usrPhnNo.contains("-")) {
+				usrPhnNo = usrPhnNo.replaceAll("-", "");
+			} else if (numberCheck(usrPhnNo)) {
+				throw new Exception("usrPhnNo_is_not_number");
 			}
-			user.setUsrPhnNo(jsonMap.get(usrPhnNo));
+			user.setUsrPhnNo(usrPhnNo);
 			
 			String usrNm = (String)jsonMap.get("usrNm");
 			if (emptyCheck(usrNm)) {
 				throw new Exception("usrNm_is_empty");
-			}else if (usrPhnNo.length() < 2) {
+			}else if (usrNm.length() < 2) {
 				throw new Exception("usrNm_is_short");
 			}
 			user.setUsrNm(usrNm);
@@ -110,5 +114,19 @@ public class AccountController {
 	
 	boolean emptyCheck(String str) {
 		return str==null || "".equals(str.trim());
+	}
+	
+	boolean emailCheck(String str) {
+		return !str.contains("@") || !str.contains(".");
+	}
+	
+	boolean numberCheck(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch(Exception e) {
+			return true;
+		}
+		return false;
+	
 	}
 }
