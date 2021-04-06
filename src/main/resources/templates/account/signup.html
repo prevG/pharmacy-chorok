@@ -79,6 +79,12 @@
 										var usrPhnNo = document.getElementById('usrPhnNo').value;
 										var usrNm = document.getElementById('usrNm').value;
 										var usrPwd = document.getElementById('usrPwd').value;
+										var usrPwdChk = document.getElementById('usrPwdChk').value;
+										
+										if(usrPwd != usrPwdChk) {
+											alert('비밀번호가 서로 맞지 않습니다. 비밀번호를 다시 확인해주세요.');
+											return;
+										}
 										
 										var param = {
 											usrEml : usrEml,
@@ -116,7 +122,7 @@
 														content = content + " (최소:" + responseObject.min + ", 최대:" + responseObject.max + ")";
 														alert(content);
 													} else if (responseObject.error_code == 'DATA_BASE_ERROR') {
-														alert('네트워크가 원활하지 않습니다.');
+														alert('네트워크가 원활하지 않습니다. 잠시후 다시 시도해 주세요.');
 													}
 												}
 											}
