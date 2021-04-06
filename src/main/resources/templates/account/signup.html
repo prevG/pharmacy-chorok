@@ -91,15 +91,15 @@
 													alert('회원가입을 축하합니다.');
 													location.href = "/account/login";
 												} else {
-													if (responseObject.code == 'EMPTY_CHECK_ERROR') {
+													if (responseObject.error_code == 'EMPTY_CHECK_ERROR') {
 														alert('모든 내용을 입력해 주세요.');
-													} else if (responseObject.code == 'EMAIL_CHECK_ERROR') {
+													} else if (responseObject.error_code == 'EMAIL_CHECK_ERROR') {
 														alert('이메일 주소를 확인해 주세요.');
-													} else if (responseObject.code == 'NUMBER_CHECK_ERROR') {
+													} else if (responseObject.error_code == 'NUMBER_CHECK_ERROR') {
 														alert('휴대폰 전화번호를 확인해 주세요.');
-													} else if (responseObject.code == 'SIZE_CHECK_ERROR') {
+													} else if (responseObject.error_code == 'SIZE_CHECK_ERROR') {
 														alert('입력한 글자수가 작거나 큽니다.');
-													} else if (responseObject.code == 'DATA_BASE_ERROR') {
+													} else if (responseObject.error_code == 'DATA_BASE_ERROR') {
 														alert('네트워크가 원활하지 않습니다.');
 													}
 												}
