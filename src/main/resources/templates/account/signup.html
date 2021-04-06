@@ -76,10 +76,10 @@
 								<script>
 									document.getElementById('signupBtn').onclick = function() {
 										var param = {
-											usrEml : document.getElementById('usrEml'),
-											usrPhnNo : document.getElementById('usrPhnNo'),
-											usrNm : document.getElementById('usrNm'),
-											usrPwd : document.getElementById('usrPwd'),
+											usrEml : document.getElementById('usrEml').value,
+											usrPhnNo : document.getElementById('usrPhnNo').value,
+											usrNm : document.getElementById('usrNm').value,
+											usrPwd : document.getElementById('usrPwd').value,
 										};
 										var paramStr = JSON.stringify(param);
 
@@ -87,10 +87,13 @@
 										xhr.onload = function() {
 											if (xhr.status === 200) {
 												responseObject = JSON.parse(xhr.responseText);
-												if (responseObject.success == true) {
+												if (responseObject.result == 'success') {
 													alert('회원가입을 축하합니다.');
 													location.href = "/account/login";
 												} else {
+													if (responseObject.error_code == '') {
+														//alert('입력한 내용을 확인바랍니다.');
+													}
 													alert('입력한 내용을 확인바랍니다.');
 												}
 											}
