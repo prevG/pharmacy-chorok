@@ -1,86 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>초록한약국</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.4.0/font/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/fonts/icomoon/style.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/css/owl.carousel.min.css}">
+<link rel="stylesheet" th:href="@{/vendor/login-form-08/css/style.css}">
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+<!--script th:src="@{/vendor/login-form-08/js/popper.min.js}"></script-->
+<script th:src="@{/vendor/login-form-08/js/main.js}"></script>
 
 <script>
-function join(){
- 	var url = '/admin/join';
-	
-	 $('#addFrm').form('submit',{
-         url: url,
-         iframe: false,
-         onSubmit: function(){
-             return $(this).form('validate');
-         },
-         success: function(result){
-             var result = eval('('+result+')');
-             if (result.errorMsg){
-                 $.messager.show({
-                     title: 'Error',
-                     msg: result.errorMsg
-                 });
-             } else {
-                 $('#dlg').dialog('close');        // close the dialog
-                 $('#dg').datagrid('reload');    // reload the user data
-             }
-         }
-     });
-}
 </script>
-<!------ Include the above in your HEAD tag ---------->
-
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
 <body>
-   <div class="container">
-      <div class="col-md-6 mx-auto text-center">
-         <div class="header-title">
-            <h1 class="wv-heading--title">
-               Check out — it’s free!
-            </h1>
-            <h2 class="wv-heading--subtitle">
-               Lorem ipsum dolor sit amet! Neque porro quisquam est qui do dolor amet, adipisci velit...
-            </h2>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-4 mx-auto">
-            <div class="myform form ">
-               <form action="" method="post" name="login">
-                  <div class="form-group">
-                     <input type="text" name="name"  class="form-control my-input" id="name" placeholder="Name">
-                  </div>
-                  <div class="form-group">
-                     <input type="email" name="email"  class="form-control my-input" id="email" placeholder="Email">
-                  </div>
-                  <div class="form-group">
-                     <input type="number" min="0" name="phone" id="phone"  class="form-control my-input" placeholder="Phone">
-                  </div>
-                  <div class="text-center ">
-                     <button type="submit" class=" btn btn-block send-button tx-tfm">Create Your Free Account</button>
-                  </div>
-                  <div class="col-md-12 ">
-                     <div class="login-or">
-                        <hr class="hr-or">
-                        <span class="span-or">or</span>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <a class="btn btn-block g-button" href="#">
-                     <i class="fa fa-google"></i> Sign up with Google
-                     </a>
-                  </div>
-                  <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a href="#" class="ps-hero__content__link">Terms of Use</a> and <a href="#">Privacy Policy</a>.
-                  </p>
-               </form>
-            </div>
-         </div>
-      </div>
-   </div>
+
+
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 contents">
+					<div class="row justify-content-center">
+						<div class="col-md-4">
+							<div class="mb-4">
+								<h3>초록건강한약국</h3>
+								<h2>회원가입</h2>
+							</div>
+							<form action="/account/doLogin" method="POST">
+								<div class="form-group">
+									<label for="usrEml">이메일</label> <input type="text" class="form-control" id="usrEml" name="usrEml">
+								</div>
+								
+								<div class="form-group">
+									<label for="usrEml">휴대전화번호</label> <input type="text" class="form-control" id="usrEml" name="usrEml">
+								</div>
+								
+								<div class="form-group">
+									<label for="usrEml">성명</label> <input type="text" class="form-control" id="usrEml" name="usrEml">
+								</div>
+								
+								<div class="form-group">
+									<label for="usrPwd">비밀번호</label>
+									<div class="input-group">
+										<input type="password" class="form-control" id="usrPwd" name="usrPwd">
+										<div class="input-group-append" style='height: 100%; align: center;'>
+											<i class="bi-eye" style="margin-left: -15px; cursor: pointer;"></i>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="usrPwd">비밀번호 확인</label>
+									<div class="input-group">
+										<input type="password" class="form-control" id="usrPwd" name="usrPwd">
+										<div class="input-group-append" style='height: 100%; align: center;'>
+											<i class="bi-eye" style="margin-left: -15px; cursor: pointer;"></i>
+										</div>
+									</div>
+								</div>
+
+								<input type="submit" value="회원가입" class="btn text-white btn-block btn-primary"> 
+								
+								<!-- <span class="d-block text-left my-4 text-muted"> or sign in with</span>
+								<div class="social-login">
+									<a href="/account/signup" class="google"> <span class="icon-group mr-3"></span>
+									</a> <a href="#" class="facebook"> <span class="icon-facebook mr-3"></span>
+									</a> <a href="#" class="twitter"> <span class="icon-twitter mr-3"></span>
+									</a> <a href="#" class="google"> <span class="icon-google mr-3"></span>
+									</a>
+								</div> -->
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>

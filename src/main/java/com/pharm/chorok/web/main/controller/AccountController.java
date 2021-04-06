@@ -18,7 +18,7 @@ public class AccountController {
 
 	// 로그인 페이지
 	@GetMapping("/login")
-	public String login(Model model) {
+	public String login() {
 		return "account/login";
 	}
 
