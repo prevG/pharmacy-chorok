@@ -9,7 +9,6 @@ import com.common.util.Check;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADUserService;
-import com.pharm.chorok.web.main.service.CommUserDetailsService;
 
 import java.util.Map;
 
@@ -58,7 +57,9 @@ public class AccountController {
 			if (Check.emptyCheck(usrEml)) {
 				throw new EmptyCheckException(TbCommUser.USR_EML);
 			} else if (Check.sizeCheck(usrEml, 5, 100)) {
-				throw new SizeCheckException(TbCommUser.USR_EML);
+				result.put("min", 5);
+				result.put("max", 100);
+				throw new SizeCheckException(TbCommUser.USR_EML, 5, 100);
 			} else if (Check.emailCheck(usrEml)) {
 				throw new EmailCheckException(TbCommUser.USR_EML);
 			}
@@ -68,7 +69,9 @@ public class AccountController {
 			if (Check.emptyCheck(usrPhnNo)) {
 				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
 			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
-				throw new SizeCheckException(TbCommUser.USR_PHN_NO);
+				result.put("min", 5);
+				result.put("max", 100);
+				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
 			} else if (Check.numberCheck(usrPhnNo)) {
@@ -80,7 +83,9 @@ public class AccountController {
 			if (Check.emptyCheck(usrNm)) {
 				throw new EmptyCheckException(TbCommUser.USR_NM);
 			}else if (Check.sizeCheck(usrNm, 2, 50)) {
-				throw new SizeCheckException(TbCommUser.USR_NM);
+				result.put("min", 5);
+				result.put("max", 100);
+				throw new SizeCheckException(TbCommUser.USR_NM, 2, 50);
 			}
 			user.setUsrNm(usrNm);
 			
@@ -88,14 +93,17 @@ public class AccountController {
 			if (Check.emptyCheck(usrPwd)) {
 				throw new EmptyCheckException(TbCommUser.USR_PWD);
 			} else if (Check.sizeCheck(usrPwd, 2, 100)) {
-				throw new SizeCheckException(TbCommUser.USR_PWD);
+				result.put("min", 5);
+				result.put("max", 100);
+				throw new SizeCheckException(TbCommUser.USR_PWD, 2, 100);
 			}
 			user.setUsrPwd(usrPwd);
 			
 		} catch(CustomException e) {
 			result.put("result", "fail");
 			result.put("error_code", e.getCode());
-			result.put("message", e.getMessage());
+			result.put("error_item", e.getItem());
+			result.put("error_message", e.getMessage());
 			return result.toString();
 		} catch(Exception e) {
 			result.put("result", "fail");
@@ -108,7 +116,7 @@ public class AccountController {
 		}else {
 			result.put("result", "fail");
 			result.put("error_code", "DATA_BASE_ERROR");
-			result.put("message", "Database Access Error");
+			result.put("error_message", "Database Access Error");
 		}
 		
 		return result.toString();
