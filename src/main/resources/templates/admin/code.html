@@ -134,28 +134,37 @@
 	}
 	
 	function saveDlgCode(){
-	 	var url = '/admin/saveCode';
-	 	var param = {
-		
+		var param = {
+			grpCd : $('#cdRg_grpCd').textbox('getValue'),
+			ditcCd : $('#cdRg_ditcCd').textbox('getValue'),
+			ditcNm : $('#ditcNm').textbox('getValue'),
+			cdExp : $('#cdExp').textbox('getValue'),
+			lockYn : $('#lockYn').combobox('getValue'),
+			useYn : $('#useYn').combobox('getValue')
 		};
-	 	
-	 	
-	 	  $.post(url,param,function(result){
-	             if (result.success){
-	                 //$('#dg').datagrid('reload');    // reload the user data
-	                 $.messager.show({    // show error message
-	                     title: 'Success',
-	                     msg: result.Msg
-	                 });
-	                 fnSearch();
-	             } else {
-	                 $.messager.show({    // show error message
-	                     title: 'Error',
-	                     msg: result.Msg
-	                 });
-	             }
-	         },'json');
-	 	
+		
+		console.log(param);
+		
+		$.post('/admin/saveCode',param,function(result){
+                 if (result.success){
+                     
+                      $.messager.show({    // show error message
+                         title: 'Success',
+                         msg: result.Msg
+                     });
+                     
+                     fnSearch();
+                 } else {
+                     $.messager.show({    // show error message
+                         title: 'Error',
+                         msg: result.Msg
+                     });
+                 }
+                 
+                 $('#addFrm').dialog('close');
+             },'json')	
+	
+
 		/*
 		 $('#addFrm').form('submit',{
              url: url,
@@ -310,7 +319,7 @@
 						</select>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="grpRg_ditcCd" id="cdRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
+				    	<input id="grpRg_ditcCd" name="grpRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
 				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
 				    </div>
 				</div>
@@ -318,19 +327,19 @@
 			<div style="margin-bottom: 10px;display:none;" id="cdRg">
 				<div class="row">
 				    <div class="col-6">
-				    	<input name="cdRg_grpCd" class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
+				    	<input id="cdRg_grpCd" name="cdRg_grpCd"  class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
 				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
 				    </div>
 				    <div class="col-6 text-right">
-				    	<input name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
+				    	<input id="cdRg_ditcCd" name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
 				    </div>
 				</div>
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
+				<input id="ditcNm" name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
 			</div>
 			<div style="margin-bottom: 10px">
-				<input name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
+				<input id="cdExp" name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
 			</div>
 			<!-- <div style="margin-bottom: 10px">
 				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
