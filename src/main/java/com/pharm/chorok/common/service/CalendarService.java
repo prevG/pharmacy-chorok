@@ -23,15 +23,4 @@ public class CalendarService {
     public TbCommCalendar selectCurrentDate() throws Exception {
         return calRepo.selectCurrentDate();
     }
-
-    /**
-     * 해당날자가 속한 주차의 모든 날짜를 조회
-     * 
-     * @param cal
-     * @return
-     * @throws Exception
-     */
-    public List<TbCommCalendar> selectSameWeekDateListByDt(TbCommCalendar cal) throws Exception {
-        return calRepo.selectSameWeekDateListByDt( cal );
-    }
  }

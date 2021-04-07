@@ -41,7 +41,7 @@
 					<th>이름</th>
 					<td>
 						<div class="input-group input-group-sm" style="width:200px;" >
-							<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo.rsvtUsrNm}"  tabindex="3">
+							<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo?.rsvtUsrNm}"  tabindex="3">
 						</div>
 					</td>
 					<th>성별</th>
@@ -60,13 +60,13 @@
 					<th>휴대전화</th>
 					<td>
 						<div class="input-group input-group-sm" style="width:200px;" >
-							<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo.rsvtCellNo}"  tabindex="5">
+							<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}"  tabindex="5">
 						</div>
 					</td>
 					<th>일반전화</th>
 					<td>
 						<div class="input-group input-group-sm" style="width:200px;" >
-							<input type="text" id="rsvtPhnNo" name="rsvtPhnNo" class="form-control" th:value="${schInfo.rsvtPhnNo}"  tabindex="6">
+							<input type="text" id="rsvtPhnNo" name="rsvtPhnNo" class="form-control" th:value="${schInfo?.rsvtPhnNo}"  tabindex="6">
 						</div>
 					</td>
 				</tr>
@@ -84,13 +84,13 @@
 					<th>기타메모</th>
 					<td colspan="3">
 						<div class="form-group">
-						    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:field="${schInfo.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
+						    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" id="id" name="id" th:value="${schInfo.id}" >
+		<input type="hidden" id="id" name="id" th:value="${schInfo?.id}" >
 		</form>
     </div>
     <div class="modal-footer">

@@ -1,13 +1,13 @@
 package com.pharm.chorok.web.main.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
-import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,24 +25,72 @@ public class ReservationScheduleService {
     @Autowired
     private ReservationScheduleRepository rsvtSchRepo;
 
+    public ModelAndView getReservationByDt( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
+		String todayDt   = calSvc.selectCurrentDate().getBaseDtStr();
+		String currDt    = reservationPagination.getCurrDt();
+		if( !StringUtils.hasText( currDt )) {
+			currDt = todayDt;
+		}
+		
+		TbCommCalendar currCal = new TbCommCalendar();
+		currCal.setBaseDtStr( currDt );
 
-    public ModelAndView getReservationTable( ModelAndView mv ) throws Exception {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put( "cal"     , currCal );
+		params.put( "interval",  0 );
 
-		TbCommCalendar currCal = calSvc.selectCurrentDate();
+		//업무시간 목록을 조회
+        List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
 
-		TbCommUser comUser = SecurityContextUtil.getAuthenticatedUser();
-        List<TbCommCalendar> currDtList = calSvc.selectSameWeekDateListByDt( currCal );
-        List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTimeByUseYn();
-        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeekList( currCal );
+		//검색일자와 동일한 주차를 가지는 날짜를 조회
+        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( params );
 
-		mv.addObject( "name"    , comUser.getUsrNm() );
-        mv.addObject( "colList" , currDtList );   //Column
+		//검색일자와 동일한 주차에 속하는 등록된 스케쥴을 조회
+        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( params );
+
+		mv.addObject( "currDt" , currDt      ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
-        mv.addObject( "dataList", rsvtSchList ); //Cell
+        mv.addObject( "colList" , currDtList   ); //Column
+        mv.addObject( "dataList", rsvtSchList  ); //Cell
 
         return mv;
     } 
+
+	public ModelAndView getReservationByMovedWeekNo( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
+
+		Integer srchWeek = reservationPagination.getInterval();
+		String todayDt   = calSvc.selectCurrentDate().getBaseDtStr();
+		String currDt    = reservationPagination.getCurrDt();
+
+		if( srchWeek == 0 ) {
+			currDt = todayDt;
+		}
+		TbCommCalendar currCal = new TbCommCalendar();
+		currCal.setBaseDtStr( currDt );
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put( "cal", currCal );
+		params.put( "interval",  srchWeek );
+
+		//업무시간 목록을 조회
+        List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
+
+		//검색일자와 동일한 주차를 가지는 날짜를 조회
+        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( params );
+
+		//검색일자와 동일한 주차에 속하는 등록된 스케쥴을 조회
+        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( params );
+
+		mv.addObject( "currDt"  , currDt      ); //검색기준일자
+        mv.addObject( "rowList" , workTimeList ); //Row
+        mv.addObject( "colList" , currDtList   ); //Column
+        mv.addObject( "dataList", rsvtSchList  ); //Cell
+
+        return mv;
+    } 
+
+	
     
 	/**
 	 * 예약스케쥴 정보 조회

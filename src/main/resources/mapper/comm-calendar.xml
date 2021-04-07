@@ -6,22 +6,7 @@
 	<select id="selectCurrentDate" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
 	<![CDATA[
 	SELECT NOW() AS BASE_DT
-	]]>
-	</select>
-
-	<select id="selectSameWeekDateListByDt" 
-		parameterType="com.pharm.chorok.domain.table.TbCommCalendar" 
-		resultType="com.pharm.chorok.domain.table.TbCommCalendar">
-	<![CDATA[    
-	SELECT BASE_DT
-		 , DAYS_STR_KOR
-		 , DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
-		 , DAYS_NUM
-	  FROM TB_COMM_CALENDAR CAL
-  	 WHERE CAL.WK_NUM = (SELECT WK_NUM FROM TB_COMM_CALENDAR WHERE BASE_DT = DATE_FORMAT( #{baseDt} , '%Y%m%d' ))
-	   AND DAYS_NUM > 1
-     ORDER
-		BY BASE_DT
+	     , DATE_FORMAT( NOW(), '%Y%m%d') AS BASE_DT_STR
 	]]>
 	</select>
 </mapper>

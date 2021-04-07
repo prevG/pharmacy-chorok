@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.controller;
 
+import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.service.ReservationScheduleService;
@@ -17,9 +18,11 @@ public class WebController {
 	private ReservationScheduleService rsvtSchSvc;
 
 	@GetMapping("/")
-	public ModelAndView goIndex(Model model) throws Exception {
+	public ModelAndView goIndex(
+		ReservationPagination reservationPagination,
+		Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("index");
-		rsvtSchSvc.getReservationTable( mv );
+		rsvtSchSvc.getReservationByDt( mv, reservationPagination );
 		return mv;
 	}
 

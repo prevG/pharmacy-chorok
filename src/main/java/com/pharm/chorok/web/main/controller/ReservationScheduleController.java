@@ -1,12 +1,7 @@
 package com.pharm.chorok.web.main.controller;
 
-import java.util.List;
-
-import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbCommUser;
+import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.domain.table.TbPpWorkTime;
-import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.service.ReservationScheduleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +29,24 @@ public class ReservationScheduleController {
 	}
 
 
-	@GetMapping("/rs1001m/refresh")
-	public ModelAndView refresh(Model model) throws Exception {
+	@PostMapping("/rs1001m/refresh")
+	public ModelAndView refresh(
+		ReservationPagination reservationPagination,
+		Model model) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("index :: time-table");
-		rsvtSchSvc.getReservationTable( mv );
+		rsvtSchSvc.getReservationByDt( mv,  reservationPagination );
+        return mv;
+	}
+
+
+	@PostMapping("/rs1001m/moveWeek")
+	public ModelAndView getPrevWeek(
+		ReservationPagination reservationPagination,
+		Model model) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("index :: time-table");
+		rsvtSchSvc.getReservationByMovedWeekNo( mv,  reservationPagination );
         return mv;
 	}
 }

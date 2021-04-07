@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.table.TbCommCalendar;
@@ -13,9 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReservationScheduleRepository {
     
-    public List<TbPpWorkTime> selectWorkTimeByUseYn() throws Exception;
+    public List<TbPpWorkTime> selectWorkTime() throws Exception;
 
-    public List<TbPpRsvtSch> selectRsvtSchByWeekList(TbCommCalendar param) throws Exception;
+	public List<TbCommCalendar> selectSameWeekDateListByDt( HashMap<String, Object> params ) throws Exception;
+
+    public List<TbPpRsvtSch> selectRsvtSchByWeek( HashMap<String, Object> params )  throws Exception;
 
     public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;
     

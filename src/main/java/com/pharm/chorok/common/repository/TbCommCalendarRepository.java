@@ -12,6 +12,4 @@ import org.springframework.stereotype.Repository;
 public interface TbCommCalendarRepository {
 
 	public TbCommCalendar selectCurrentDate() throws Exception;
-
-	public List<TbCommCalendar> selectSameWeekDateListByDt( TbCommCalendar cal ) throws Exception;
 }

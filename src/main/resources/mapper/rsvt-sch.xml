@@ -3,19 +3,40 @@
 
 <mapper namespace="com.pharm.chorok.web.main.repository.ReservationScheduleRepository">
 
-	<select id="selectRsvtSchByWeekList" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<select id="selectSameWeekDateListByDt" 
+		parameterType="map" 
+		resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+	<![CDATA[    
+	SELECT BASE_DT
+		 , DAYS_STR_KOR
+		 , DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
+		 , DAYS_NUM
+	  FROM TB_COMM_CALENDAR CAL
+  	 WHERE CAL.WK_NUM = (SELECT WK_NUM 
+	                       FROM TB_COMM_CALENDAR 
+						  WHERE BASE_DT = DATE_ADD( STR_TO_DATE(#{cal.baseDtStr}, '%Y%m%d'), INTERVAL #{interval} DAY )
+						)
+	   AND DAYS_NUM > 1
+     ORDER
+		BY BASE_DT
+	]]>
+	</select>
+
+	<select id="selectRsvtSchByWeek" 
+		parameterType="map" 
+		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[	
-	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectRsvtSchByWeekList */
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectRsvtSchByWeek */
     SELECT WT.ID                  AS "wt.id"
          , WT.START_HM            AS "wt.startHm"
          , WT.END_HM              AS "wt.endHm"
          , SCH.ID                 
          , SCH.RSVT_DT            
          , SCH.RSVT_USR_NM
-         , CASE LENGTH(RSVT_PHN_NO)
-                WHEN 11 THEN CONCAT(LEFT(RSVT_PHN_NO, 3), '-', MID(RSVT_PHN_NO, 4, 4), '-', RIGHT(RSVT_PHN_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(RSVT_PHN_NO, 3), '-', MID(RSVT_PHN_NO, 4, 3), '-', RIGHT(RSVT_PHN_NO, 4))
-           END AS RSVT_PHN_NO
+         , CASE LENGTH(RSVT_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(RSVT_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(RSVT_CELL_NO, 4))
+           END AS RSVT_CELL_NO
          , SCH.DAYS_NUM           AS "cal.daysNum"
       FROM TB_PP_WORK_TIME WT
     INNER JOIN
@@ -24,14 +45,17 @@
                 , DATE_FORMAT(RSVT_DT, '%H%i%s') AS RSVT_HM
                 , RSVT_DT
                 , RSVT_USR_NM
-                , RSVT_PHN_NO
+                , RSVT_CELL_NO
                 , CAL.DAYS_NUM
                 , CAL.DAYS_STR_KOR
             FROM TB_PP_RSVT_SCH
             INNER JOIN 
                 TB_COMM_CALENDAR CAL
             ON DATE_FORMAT(RSVT_DT, '%Y%m%d') = CAL.BASE_DT
-            WHERE CAL.WK_NUM = (SELECT WK_NUM FROM TB_COMM_CALENDAR WHERE BASE_DT = DATE_FORMAT( #{baseDt}, '%Y%m%d' ))
+            WHERE CAL.WK_NUM = (SELECT WK_NUM 
+								  FROM TB_COMM_CALENDAR 
+								 WHERE BASE_DT = DATE_ADD( STR_TO_DATE(#{cal.baseDtStr}, '%Y%m%d'), INTERVAL ${interval} DAY )
+								)
             AND CAL.DAYS_NUM > 1
         ) SCH
         ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
@@ -44,9 +68,9 @@
 	</select>
 
 
-	<select id="selectWorkTimeByUseYn" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
+	<select id="selectWorkTime" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
 	<![CDATA[
-	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectWorkTimeByUseYn */
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectWorkTime */
     SELECT WT.WORK_VER
          , WT.ID
          , WT.START_HM

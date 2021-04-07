@@ -54,31 +54,19 @@ $( document ).ready( function() {
 	        url  : '/api/v1/main/rsvt/saveRsvtSch',
 	        data : params,
 			success : function( result ) {
-				console.log( "result", result );
+
 				if( result.status == "success" ) {
 					alert( result.message );
-				$(".modal").modal("hide")
-					updateTimeTable();
+					$(".modal").modal("hide")
+
+					var params = {
+						"currDt"   : $("#currDt").val()
+					};
+					refreshTimeTable( params );
 				} else {
 					alert( result.errorMessage );
 				}
 			}
 		});
 	});
-
-	updateTimeTable = function() {
-
-
-		var url = "/rsvt/rs1001m/refresh";
-		$("#time-table").load(url, function(response, status, xhr) {
-			console.log( "response", response );
-			console.log( "status", status );
-			console.log( "xhr",  xhr);
-			if (200==xhr.status) {
-				$("#time-table").html(response);
-			} else {
-				console.log( response, status, xhr );
-			}
-		});
-	}
 });
