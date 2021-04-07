@@ -78,8 +78,6 @@ public class AccountController {
 				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (Check.numberCheck(usrPhnNo)) {
 				throw new NumberCheckException(TbCommUser.USR_PHN_NO);
-			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
-				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			}
 			user.setUsrPhnNo(usrPhnNo);
 			
