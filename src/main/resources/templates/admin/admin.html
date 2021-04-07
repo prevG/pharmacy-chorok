@@ -10,24 +10,13 @@
 	<script>
 		
 		function fnSearch(){
-			var param = {
-				cbSrch : $('#cb_srch').combobox('getValue'),
-				cbAuth : $('#cb_usrAuth').combobox('getValue'),
-				cbAppv : $('#cb_usrAprv').combobox('getValue'),
-				target : "grid",
-				srchTxt : $("#srchTxt").val()
-			};
-			
-			$.ajax({
-		      type: "POST",
-		      url: '/admin/getAdmin',
-		      dataType: 'json',
-		     //data:$('#searchUser').serialize(),    
-		      data:param,
-		    }).done(function( responseJson ) {
-		    	console.log(responseJson);
-	          	$('#dg').datagrid('loadData', responseJson );
-	        });
+			var queryParams=$("#dg").datagrid('options').queryParams;
+			queryParams.cbSrch= $('#cb_srch').combobox('getValue');
+			queryParams.cbAuth= $('#cb_usrAuth').combobox('getValue');
+			queryParams.cbAppv= $('#cb_usrAprv').combobox('getValue');
+			queryParams.target= "grid";
+			queryParams.srchTxt= $("#srchTxt").val();
+			$('#dg').datagrid('reload');
 		}
 		
 		
@@ -56,6 +45,9 @@
 				}
 			});
 			
+			$("#dg").datagrid({
+				
+			});
 			
 		}
 		
@@ -235,31 +227,30 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editAdmin();">편집</a> 
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
 					</div>
-					<!--  <p>Fixed Width Buttons</p>
-				    <div style="padding:5px 0;">
-				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
-				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
-				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
-				        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
-				    </div> -->
-				
+					
 					<table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
-				          singleSelect:false, 
+				          singleSelect:true, 
 				          ctrlSelect:true,
 				          idField:'usrNo',
 				          rownumbers:true,
+				          fitColumns:true, 
+				          fit:true,
+				          title:'관리자검색결과',
+				          emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
 				          pagination:true,pageSize:50,pageList:[50],
-				          dragSelection: true">
+				          dragSelection: true,
+				          url:'/admin/getAdmin'
+				          ">
 				      <thead>
 				        <tr>
 				          <th data-options="field:'usrNo',width:0,align:'center',hidden:'true'">사용자번호</th>
-				          <th data-options="field:'usrNm',width:150,align:'center'">사용자이름</th>
+				          <th data-options="field:'usrNm',width:150,align:'center',sortable:'true'">사용자이름</th>
 				          <th data-options="field:'usrEml',width:250,align:'center'">이메일</th>
 				          <th data-options="field:'usrPhnNo',width:200,align:'center'">핸드폰번호</th>
 				          <th data-options="field:'usrGrade',width:100,align:'center'">직위</th>
 				          <th data-options="field:'usrAuth',width:100,align:'center'">권한</th>
 				          <th data-options="field:'usrAprv',width:100,align:'center'">승인여부</th>
-				          <th data-options="field:'delYn',width:150,align:'center',editor:{type:'checkbox',options:{on: 'Y',off: 'N'}}">삭제여부</th>
+				          <th data-options="field:'delYn',width:150,align:'center'">삭제여부</th>
 				          <th data-options="field:'regDt',width:200,align:'center'">등록날짜</th>
 				        </tr>
 				      </thead>
