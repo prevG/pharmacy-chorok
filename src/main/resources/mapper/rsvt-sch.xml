@@ -120,8 +120,7 @@
 	<insert id="insertTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	INSERT INTO TB_PP_RSVT_SCH (
-	     ID,
-	   , RSVT_USR_NM
+	     RSVT_USR_NM
 	   , RSVT_DT
 	   , RSVT_CELL_NO
 	   , RSVT_PHN_NO
@@ -132,9 +131,8 @@
 	   , PIC_USR_NO
 	   , REG_DT
 	   , REG_USR_NO
-	) VALUES
-	     #{id}
-	   , #{rsvtUsrNm}
+	) VALUES (
+	     #{rsvtUsrNm}
 	   , STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
 	   , #{rsvtCellNo}
 	   , #{rsvtPhnNo}
@@ -145,7 +143,7 @@
 	   , #{picUsrNo}
 	   , now()
 	   , #{regUsrNo}
-	);
+	)
 	]]>
 	</insert>
 	
