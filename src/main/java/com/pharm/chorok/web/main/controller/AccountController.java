@@ -106,7 +106,7 @@ public class AccountController {
 				throw new DatabaseInsertException();
 			}
 			
-		// 예외처리
+		// 예외 처리
 		} catch(CustomException e) {
 			resMsg.setStatus("fail");
 			resMsg.setMessage( e.getMessage() ); 
@@ -120,7 +120,9 @@ public class AccountController {
 			resMsg.setData(resObj.toMap());
 		} catch(Exception e) {
 			resMsg.setStatus("fail");
-			resMsg.setMessage( e.getMessage() );
+			// 예상범위 밖의 예외는 사용자에게 알려주지 않음. 
+			//resMsg.setMessage( e.getMessage() );
+			e.printStackTrace();
 		}
 		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
 	}
