@@ -47,19 +47,19 @@ public class AccountController {
 	// 회원가입 처리
 	@PostMapping("/signupProc")
 	@ResponseBody
+	public ResponseEntity<ResponseMessage> signupProc(@RequestBody Map<String, String> reqMap) throws Exception {
 	// 아래의 코드로도 사용가능
-	//public String signupProc(@RequestBody Map<String, String> jsonMap) throws Exception {
-	public ResponseEntity<ResponseMessage> signupProc(@RequestBody String data) throws Exception {
+	//public ResponseEntity<ResponseMessage> signupProc(@RequestBody String reqStr) throws Exception {
 		
 		ResponseMessage resMsg = new ResponseMessage();
-		JSONObject result = new JSONObject();
+		JSONObject resObj = new JSONObject();
 
 		try {
-			Map<String, String> jsonMap = new ObjectMapper().readValue(data, Map.class);
+			//Map<String, String> reqMap = new ObjectMapper().readValue(reqStr, Map.class);
 			TbCommUser user = new TbCommUser();
 			
 			// 유효성 검사
-			String usrEml = (String)jsonMap.get(TbCommUser.USR_EML);
+			String usrEml = (String)reqMap.get(TbCommUser.USR_EML);
 			if (Check.emptyCheck(usrEml)) {
 				throw new EmptyCheckException(TbCommUser.USR_EML);
 			} else if (Check.sizeCheck(usrEml, 5, 100)) {
@@ -69,7 +69,7 @@ public class AccountController {
 			}
 			user.setUsrEml(usrEml);
 			
-			String usrPhnNo = (String)jsonMap.get(TbCommUser.USR_PHN_NO);
+			String usrPhnNo = (String)reqMap.get(TbCommUser.USR_PHN_NO);
 			if (Check.emptyCheck(usrPhnNo)) {
 				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
 			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
@@ -81,7 +81,7 @@ public class AccountController {
 			}
 			user.setUsrPhnNo(usrPhnNo);
 			
-			String usrNm = (String)jsonMap.get(TbCommUser.USR_NM);
+			String usrNm = (String)reqMap.get(TbCommUser.USR_NM);
 			if (Check.emptyCheck(usrNm)) {
 				throw new EmptyCheckException(TbCommUser.USR_NM);
 			}else if (Check.sizeCheck(usrNm, 2, 50)) {
@@ -89,7 +89,7 @@ public class AccountController {
 			}
 			user.setUsrNm(usrNm);
 			
-			String usrPwd = (String)jsonMap.get(TbCommUser.USR_PWD);
+			String usrPwd = (String)reqMap.get(TbCommUser.USR_PWD);
 			if (Check.emptyCheck(usrPwd)) {
 				throw new EmptyCheckException(TbCommUser.USR_PWD);
 			} else if (Check.sizeCheck(usrPwd, 4, 100)) {
@@ -111,13 +111,13 @@ public class AccountController {
 			resMsg.setStatus("fail");
 			resMsg.setMessage( e.getMessage() ); 
 			resMsg.setErrorCode(e.getCode());
-			result.put("item", e.getItem());
+			resObj.put("item", e.getItem());
 			if (e instanceof SizeCheckException) {
 				SizeCheckException se = (SizeCheckException) e;
-				result.put("min", se.getMin());
-				result.put("max", se.getMin());
+				resObj.put("min", se.getMin());
+				resObj.put("max", se.getMin());
 			}
-			resMsg.setData(result.toMap());
+			resMsg.setData(resObj.toMap());
 		} catch(Exception e) {
 			resMsg.setStatus("fail");
 			resMsg.setMessage( e.getMessage() );
