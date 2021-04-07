@@ -115,7 +115,7 @@ public class AccountController {
 			if (e instanceof SizeCheckException) {
 				SizeCheckException se = (SizeCheckException) e;
 				resObj.put("min", se.getMin());
-				resObj.put("max", se.getMin());
+				resObj.put("max", se.getMax());
 			}
 			resMsg.setData(resObj.toMap());
 		} catch(Exception e) {
