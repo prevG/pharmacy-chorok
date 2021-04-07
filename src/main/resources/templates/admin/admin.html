@@ -21,34 +21,57 @@
 		
 		
 		function fnInit(){
-			$('#cb_usrAuth').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1002&target=combo&targetKind=0',
-			    valueField:'ditcCd',
-			    textField:'ditcCdNm',
-			    onSelect:function(rec){
-					console.log(rec);
-				},
-				onLoadSuccess:function(){
-					$(this).combobox('setValue', '00000');
-				}
-			});
 			
-			$('#cb_usrAprv').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1010&target=combo&targetKind=0',
-			    valueField:'ditcCd',
-			    textField:'ditcCdNm',
-			    onSelect:function(rec){
-					console.log(rec);
-				},
-				onLoadSuccess:function(){
-					$(this).combobox('setValue', '00000');
-				}
-			});
+			initComboBox($('#cb_usrAuth'), '/admin/getGrpCd', {GrpCd:'C1002',target:'combo', targetKind:'0'});
+			initComboBox($('#cb_usrAprv'), '/admin/getGrpCd', {GrpCd:'C1010',target:'combo', targetKind:'0'});
 			
-			$("#dg").datagrid({
-				
+			$('#dg').datagrid({
+			    url: '/admin/getAdmin',
+			    saveUrl: '/admin/saveAdmin',
+			    updateUrl: '/admin/modifyAdmin',
+			    destroyUrl: '/admin/removeAdmin',
+			    onEndEdit:function(index,row){
+		            var ed = $(this).datagrid('getEditor', {
+		                index: index,
+		                field: 'productid'
+		            });
+		            row.productname = $(ed.target).combobox('getText');
+		        },
+		        onBeforeEdit:function(index,row){
+		            row.editing = true;
+		            $(this).datagrid('refreshRow', index);
+		        },
+		        onAfterEdit:function(index,row){
+		            row.editing = false;
+		            $(this).datagrid('refreshRow', index);
+		        },
+		        onCancelEdit:function(index,row){
+		            row.editing = false;
+		            $(this).datagrid('refreshRow', index);
+		        }
 			});
-			
+		}
+		
+		
+		function getRowIndex(target){
+		    var tr = $(target).closest('tr.datagrid-row');
+		    return parseInt(tr.attr('datagrid-row-index'));
+		}
+		function editrow(target){
+		    $('#dg').datagrid('beginEdit', getRowIndex(target));
+		}
+		function deleterow(target){
+		    $.messager.confirm('Confirm','Are you sure?',function(r){
+		        if (r){
+		            $('#dg').datagrid('deleteRow', getRowIndex(target));
+		        }
+		    });
+		}
+		function saverow(target){
+		    $('#dg').datagrid('endEdit', getRowIndex(target));
+		}
+		function cancelrow(target){
+		    $('#dg').datagrid('cancelEdit', getRowIndex(target));
 		}
 		
 		
@@ -84,42 +107,10 @@
 			 $('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
 	         $('#addFrm').form('clear');
 	         
-	         $('#dlg_usrGrade').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1003&target=combo&targetKind=1',
-			    valueField:'ditcCd',
-			    textField:'ditcCdNm',
-			    onSelect:function(rec){
-					console.log(rec);
-				},
-				onLoadSuccess:function(){
-					$(this).combobox('setValue', '00000');
-				}
-			});
-			
-			$('#dlg_usrAuth').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1002&target=combo&targetKind=1',
-			    valueField:'ditcCd',
-			    textField:'ditcCdNm',
-			    onSelect:function(rec){
-					console.log(rec);
-				},
-				onLoadSuccess:function(){
-					$(this).combobox('setValue', '00000');
-				}
-			});
-			
-			
-			$('#dlg_usrAprv').combobox({
-				url:'/admin/getGrpCd?GrpCd=C1010&target=combo&targetKind=1',
-			    valueField:'ditcCd',
-			    textField:'ditcCdNm',
-			    onSelect:function(rec){
-					console.log(rec);
-				},
-				onLoadSuccess:function(){
-					$(this).combobox('setValue', '00000');
-				}
-			});
+	         initComboBox($('#dlg_usrGrade'), '/admin/getGrpCd', {GrpCd:'C1003',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_usrAuth'), '/admin/getGrpCd', {GrpCd:'C1002',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_usrAprv'), '/admin/getGrpCd', {GrpCd:'C1010',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_delYn'), '/admin/getGrpCd', {GrpCd:'C1012',target:'combo', targetKind:'1'});
 		}
 		
 		
@@ -135,7 +126,6 @@
 				delYn : $('#dlg_delYn').textbox('getValue')
 			};
 			
-			console.log(param);
 			
 			$.post('/admin/saveAdmin',param,function(result){
                   if (result.success){
@@ -162,6 +152,17 @@
 		$(document).ready(function(){
 			fnInit();
 		});
+		
+		
+		function formatDate(value, row){
+			return "kkj"+value;
+		}
+		
+	
+		
+		function editAdmin(){
+			$('#dg').datagrid('beginEdit', 1);
+		}
 	
 	</script>
 </th:block>
@@ -214,6 +215,11 @@
 					</form>
 				</div>
 			</div>
+			<!-- 
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">New</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a> -->
 			
 			<div class="card shadow mb-4">
 				<div class="card-header">
@@ -228,31 +234,28 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
 					</div>
 					
-					<table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
-				          singleSelect:true, 
-				          ctrlSelect:true,
-				          idField:'usrNo',
-				          rownumbers:true,
-				          fitColumns:true, 
-				          fit:true,
-				          title:'관리자검색결과',
-				          emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
-				          pagination:true,pageSize:50,pageList:[50],
-				          dragSelection: true,
-				          url:'/admin/getAdmin'
-				          ">
-				      <thead>
-				        <tr>
-				          <th data-options="field:'usrNo',width:0,align:'center',hidden:'true'">사용자번호</th>
-				          <th data-options="field:'usrNm',width:150,align:'center',sortable:'true'">사용자이름</th>
-				          <th data-options="field:'usrEml',width:250,align:'center'">이메일</th>
-				          <th data-options="field:'usrPhnNo',width:200,align:'center'">핸드폰번호</th>
-				          <th data-options="field:'usrGrade',width:100,align:'center'">직위</th>
-				          <th data-options="field:'usrAuth',width:100,align:'center'">권한</th>
-				          <th data-options="field:'usrAprv',width:100,align:'center'">승인여부</th>
-				          <th data-options="field:'delYn',width:150,align:'center'">삭제여부</th>
-				          <th data-options="field:'regDt',width:200,align:'center'">등록날짜</th>
-				        </tr>
+					<table id="dg" class="easyui-datagrid" title="관리자검색결과" style="width:100%;height:600px" 
+					data-options="singleSelect:true, 
+						          ctrlSelect:true,
+						          idField:'usrNo',
+						          rownumbers:true,
+						          fitColumns:true, 
+						          fit:true,
+						          emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
+						          pagination:true,pageSize:50,pageList:[50],
+						          dragSelection: true">
+				       <thead>
+					        <tr>
+					          <th field='usrNo' width='0' align='center' hidden='true'>사용자번호</th>
+					          <th field='usrNm' width='150' align='center' editor='text'>사용자이름</th>
+					          <th field='usrEml' width='250' align='center' editor='{type:"validatebox",options:{required:true,validType:"email"}}'>이메일</th>
+					          <th field='usrPhnNo' width='200' align='center' editor='text'>핸드폰번호</th>
+					          <th field='usrGrade' width='100' align='center' editor='text'>직위</th>
+					          <th field='usrAuth' width='100' align='center' editor='text'>권한</th>
+					          <th field='usrAprv' width='100' align='center' editor='text'>승인여부</th>
+					          <th field='delYn' width='150' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>삭제여부</th>
+					          <th field='regDt' width='200' align='center' editor='text' formatter="formatDate">등록날짜</th>
+					        </tr>
 				      </thead>
 				    </table>
 				    

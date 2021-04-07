@@ -46,7 +46,7 @@
 			<when test='cbAppv!=null and cbAppv.equals("00000")'>
 			</when>
 			<otherwise>
-			AND APPR_YN = #{cbAppv}
+			AND USR_APRV = #{cbAppv}
 			</otherwise>
 		</choose>
 	</select>
