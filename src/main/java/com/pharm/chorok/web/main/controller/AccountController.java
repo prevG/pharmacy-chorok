@@ -72,10 +72,10 @@ public class AccountController {
 			String usrPhnNo = (String)reqMap.get(TbCommUser.USR_PHN_NO);
 			if (Check.emptyCheck(usrPhnNo)) {
 				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
-			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
-				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
+			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
+				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (Check.numberCheck(usrPhnNo)) {
 				throw new NumberCheckException(TbCommUser.USR_PHN_NO);
 			}
