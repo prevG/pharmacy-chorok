@@ -98,30 +98,30 @@
 										xhr.onload = function() {
 											if (xhr.status === 200) {
 												responseObject = JSON.parse(xhr.responseText);
-												if (responseObject.result == 'success') {
+												if (responseObject.status == 'success') {
 													alert('회원가입을 축하합니다.');
 													location.href = "/account/login";
 												} else {
-													if (responseObject.error_code == 'EMPTY_CHECK_ERROR') {
+													if (responseObject.errorCode == 'EMPTY_CHECK_ERROR') {
 														alert('모든 내용을 입력해 주세요.');
-													} else if (responseObject.error_code == 'EMAIL_CHECK_ERROR') {
+													} else if (responseObject.errorCode == 'EMAIL_CHECK_ERROR') {
 														alert('이메일주소를 확인해 주세요.');
-													} else if (responseObject.error_code == 'NUMBER_CHECK_ERROR') {
+													} else if (responseObject.errorCode == 'NUMBER_CHECK_ERROR') {
 														alert('휴대전화번호를 확인해 주세요.');
-													} else if (responseObject.error_code == 'SIZE_CHECK_ERROR') {
+													} else if (responseObject.errorCode == 'SIZE_CHECK_ERROR') {
 														var content = "의 입력한 글자수가 너무 작거나 큽니다.";
-														if (responseObject.error_item == 'usrEml'){
+														if (responseObject.data.item == 'usrEml'){
 															content = "이메일" + content;
-														} else if (responseObject.error_item == 'usrPhnNo'){
+														} else if (responseObject.data.item == 'usrPhnNo'){
 															content = "휴대전화번호" + content;
-														} else if (responseObject.error_item == 'usrNm'){
+														} else if (responseObject.data.item == 'usrNm'){
 															content = "성명" + content;
-														} else if (responseObject.error_item == 'usrPwd'){
+														} else if (responseObject.data.item == 'usrPwd'){
 															content = "비밀번호" + content;
 														}
-														content = content + " (최소:" + responseObject.min + ", 최대:" + responseObject.max + ")";
+														content = content + " (최소:" + responseObject.data.min + ", 최대:" + responseObject.data.max + ")";
 														alert(content);
-													} else if (responseObject.error_code == 'DATA_BASE_ERROR') {
+													} else if (responseObject.errorCode == 'DATA_BASE_ERROR') {
 														alert('네트워크가 원활하지 않습니다. 잠시후 다시 시도해 주세요.');
 													}
 												}

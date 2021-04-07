@@ -10,6 +10,14 @@ public class SizeCheckException extends CustomException {
 		this.min = min;
 		this.max = max;
 	}
+	
+	public int getMin() {
+		return this.min;
+	}
+	
+	public int getMax() {
+		return this.max;
+	}
 
 	@Override
 	public String getMessage() {

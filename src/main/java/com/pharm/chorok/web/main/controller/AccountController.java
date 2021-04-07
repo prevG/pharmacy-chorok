@@ -8,6 +8,7 @@ import com.common.exception.NumberCheckException;
 import com.common.exception.SizeCheckException;
 import com.common.util.Check;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADUserService;
 
@@ -15,6 +16,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,20 +49,20 @@ public class AccountController {
 	@ResponseBody
 	// 아래의 코드로도 사용가능
 	//public String signupProc(@RequestBody Map<String, String> jsonMap) throws Exception {
-	public String signupProc(@RequestBody String data) throws Exception {
+	public ResponseEntity<ResponseMessage> signupProc(@RequestBody String data) throws Exception {
 		
+		ResponseMessage resMsg = new ResponseMessage();
 		JSONObject result = new JSONObject();
-		
-		Map<String, String> jsonMap = new ObjectMapper().readValue(data, Map.class);
-		
-		TbCommUser user = new TbCommUser();
+
 		try {
+			Map<String, String> jsonMap = new ObjectMapper().readValue(data, Map.class);
+			TbCommUser user = new TbCommUser();
+			
+			// 유효성 검사
 			String usrEml = (String)jsonMap.get(TbCommUser.USR_EML);
 			if (Check.emptyCheck(usrEml)) {
 				throw new EmptyCheckException(TbCommUser.USR_EML);
 			} else if (Check.sizeCheck(usrEml, 5, 100)) {
-				result.put("min", 5);
-				result.put("max", 100);
 				throw new SizeCheckException(TbCommUser.USR_EML, 5, 100);
 			} else if (Check.emailCheck(usrEml)) {
 				throw new EmailCheckException(TbCommUser.USR_EML);
@@ -70,8 +73,6 @@ public class AccountController {
 			if (Check.emptyCheck(usrPhnNo)) {
 				throw new EmptyCheckException(TbCommUser.USR_PHN_NO);
 			} else if (Check.sizeCheck(usrPhnNo, 11, 11)) {
-				result.put("min", 11);
-				result.put("max", 11);
 				throw new SizeCheckException(TbCommUser.USR_PHN_NO, 11, 11);
 			} else if (usrPhnNo.contains("-")) {
 				usrPhnNo = usrPhnNo.replaceAll("-", "");
@@ -84,8 +85,6 @@ public class AccountController {
 			if (Check.emptyCheck(usrNm)) {
 				throw new EmptyCheckException(TbCommUser.USR_NM);
 			}else if (Check.sizeCheck(usrNm, 2, 50)) {
-				result.put("min", 2);
-				result.put("max", 50);
 				throw new SizeCheckException(TbCommUser.USR_NM, 2, 50);
 			}
 			user.setUsrNm(usrNm);
@@ -94,38 +93,36 @@ public class AccountController {
 			if (Check.emptyCheck(usrPwd)) {
 				throw new EmptyCheckException(TbCommUser.USR_PWD);
 			} else if (Check.sizeCheck(usrPwd, 4, 100)) {
-				result.put("min", 4);
-				result.put("max", 100);
 				throw new SizeCheckException(TbCommUser.USR_PWD, 4, 100);
 			}
 			user.setUsrPwd(usrPwd);
 			
-		} catch(CustomException e) {
-			result.put("result", "fail");
-			result.put("error_code", e.getCode());
-			result.put("error_item", e.getItem());
-			result.put("error_message", e.getMessage());
-			return result.toString();
-		} catch(Exception e) {
-			result.put("result", "fail");
-		}
-		
-		try {
+			// DB에 저장
 			int ret = adUserService.saveAdmin(user);
+			
 			if(ret > 0) {
-				result.put("result", "success");
+				resMsg.setStatus("success");
 			}else {
 				throw new DatabaseInsertException();
 			}
+			
+		// 예외처리
 		} catch(CustomException e) {
-			result.put("result", "fail");
-			result.put("error_code", e.getCode());
-			result.put("error_message", e.getMessage());
-		} catch (Exception e) {
-			result.put("result", "fail");
+			resMsg.setStatus("fail");
+			resMsg.setMessage( e.getMessage() ); 
+			resMsg.setErrorCode(e.getCode());
+			result.put("item", e.getItem());
+			if (e instanceof SizeCheckException) {
+				SizeCheckException se = (SizeCheckException) e;
+				result.put("min", se.getMin());
+				result.put("max", se.getMin());
+			}
+			resMsg.setData(result.toMap());
+		} catch(Exception e) {
+			resMsg.setStatus("fail");
+			resMsg.setMessage( e.getMessage() );
 		}
-		
-		return result.toString();
+		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
 	}
 
 	// 로그아웃 결과 페이지
