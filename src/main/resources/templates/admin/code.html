@@ -133,15 +133,28 @@
          }
 	}
 	
-	function saveDlgCode(){
-		var param = {
-			grpCd : $('#cdRg_grpCd').textbox('getValue'),
-			ditcCd : $('#cdRg_ditcCd').textbox('getValue'),
-			ditcNm : $('#ditcNm').textbox('getValue'),
-			cdExp : $('#cdExp').textbox('getValue'),
-			lockYn : $('#lockYn').combobox('getValue'),
-			useYn : $('#useYn').combobox('getValue')
-		};
+	function saveDlgCode(x){
+		if(x==1){
+			var param = {
+				grpCd : $('#grpRg_grpCd').textbox('getValue'),
+				ditcCd : $('#grpRg_ditcCd').textbox('getValue'),
+				ditcNm : $('#ditcNm').textbox('getValue'),
+				cdExp : $('#cdExp').textbox('getValue'),
+				lockYn : $('#lockYn').combobox('getValue'),
+				useYn : $('#useYn').combobox('getValue')
+			};
+		} else if(x==2){
+			var param = {
+				grpCd : $('#cdRg_grpCd').textbox('getValue'),
+				ditcCd : $('#cdRg_ditcCd').textbox('getValue'),
+				ditcNm : $('#ditcNm').textbox('getValue'),
+				cdExp : $('#cdExp').textbox('getValue'),
+				lockYn : $('#lockYn').combobox('getValue'),
+				useYn : $('#useYn').combobox('getValue')
+			};		
+		} else{
+		// 코드구분 미선택 처리
+		}
 		
 		console.log(param);
 		
@@ -357,7 +370,7 @@
 				</select>
 			</div>
 		</form>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgCode();">저장</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgCode(selCdKind.value);">저장</a>
 	</div>
 
 	<!-- Footer -->
