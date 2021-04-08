@@ -9,7 +9,12 @@
 <th:block layout:fragment="script">
 <script>
 
-	function fnInit(){}
+	function fnInit(){
+		
+		$('#yougi').texteditor({
+        });
+		
+	}
 	
 	$(document).ready(function(){
 		fnInit();
@@ -45,7 +50,57 @@
 				<div class="card-header">
 					<h5 class="m-0 font-weight-bold text-primary">등록하기</h5>
 				</div>
-				<div class="card-body" style="min-height: 700px !important;">
+				<div class="card-body" style="min-height: 500px !important;">
+					
+					
+				
+					<table class="table">
+					  <tbody>
+					    <tr>
+					      <th scope="row">목적</th>
+					      <td>
+					      	<div class="easyui-texteditor" title="TextEditor" style="width:700px;height:300px;padding:20px" id="surveyPpose"></div>
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">제목</th>
+					      <td>
+					      	<div class="easyui-texteditor" title="TextEditor" style="width:700px;height:300px;padding:20px" id="surveyNm"></div>
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">설문요지</th>
+					      <td>
+					      	<div class="easyui-texteditor" title="TextEditor" style="width:700px;height:300px;padding:20px" id="surveyDesc"></div>
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">기간</th>
+					      <td>
+					      	<input id="startDttm" type="text" class="easyui-datebox" required="required">
+					      	<input id="endDttm" type="text" class="easyui-datebox" required="required">
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">응답자동의</th>
+					      <td>
+					      		<input class="easyui-checkbox" name="user1Yn">
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">개인정보 수집동의 안내문</th>
+					      <td>
+					      	<div class="easyui-texteditor" title="TextEditor" style="width:700px;height:300px;padding:20px" id="surveyAgreeText"></div>
+					      </td>
+					    </tr>
+					    <tr>
+					      <th scope="row">제3자 정보재공 안내문</th>
+					      <td>
+					      	<div class="easyui-texteditor" title="TextEditor" style="width:700px;height:300px;padding:20px" id="thirdPsnAgrofferDes"></div>
+					      </td>
+					    </tr>
+					  </tbody>
+					</table>
 					
 					<div style="padding: 5px 0;">
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addSurvey();">추가</a> 
@@ -53,44 +108,92 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editSurvey();">편집</a> 
 						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveSurvey();">저장</a>
 					</div>
-				
-					<table class="table">
-					  <tbody>
-					    <tr>
-					      <th scope="row">목적</th>
-					      <td>Mark</td>
-					    </tr>
-					    <tr>
-					      <th scope="row">제목</th>
-					      <td>Jacob</td>
-					    </tr>
-					    <tr>
-					      <th scope="row">설문요지</th>
-					      <td>Larry</td>
-					    </tr>
-					    <tr>
-					      <th scope="row">기간</th>
-					      <td></td>
-					    </tr>
-					    <tr>
-					      <th scope="row">응답자동의</th>
-					      <td></td>
-					    </tr>
-					    <tr>
-					      <th scope="row">개인정보 수집동의 안내문</th>
-					      <td></td>
-					    </tr>
-					    <tr>
-					      <th scope="row">제3자 정보재공 안내문</th>
-					      <td></td>
-					    </tr>
-					  </tbody>
-					</table>
-				
-				
-				
 				</div>
 			</div>
+			
+			
+			<div class="card shadow mb-4">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">설문문항:</h5>
+				</div>
+				<div class="card-body" style="min-height: 700px !important;">
+					
+					<table id="dg" class="easyui-datagrid" title="설문제목" style="width:100%;height:300px" 
+					data-options="singleSelect:true, 
+						          ctrlSelect:true,
+						          idField:'usrNo',
+						          rownumbers:true,
+						          fitColumns:true, 
+						          fit:true,
+						          emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
+						          pagination:true,pageSize:50,pageList:[50],
+						          dragSelection: true">
+				       <thead>
+					        <tr>
+					          <th field='usrNo' width='0' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>삭제</th>
+					          <th field='usrNm' width='150' align='center' editor='text'>순번</th>
+					          <th field='usrEml' width='250' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>개인정보</th>
+					          <th field='usrPhnNo' width='200' align='center' editor='text'>문항</th>
+					          <th field='usrGrade' width='100' align='center' editor='text'>문항유형</th>
+					        </tr>
+				      </thead>
+				    </table>
+					
+					<div style="padding: 5px 0;">
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addSurvey();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeSurvey();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editSurvey();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveSurvey();">기본정보</a>
+					</div>
+				
+				 <!--select지문, 라디오지무느 체크지분 200자텍스트 이메일 연락처-->
+				</div>
+			</div>
+			
+			
+			<div class="card shadow mb-4">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">설문지문:</h5>
+				</div>
+				<div class="card-body" style="min-height: 700px !important;">
+					
+					<table id="dg" class="easyui-datagrid" title="문항" style="width:100%;height:300px" 
+					data-options="singleSelect:true, 
+						          ctrlSelect:true,
+						          idField:'usrNo',
+						          rownumbers:true,
+						          fitColumns:true, 
+						          fit:true,
+						          emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
+						          pagination:true,pageSize:50,pageList:[50],
+						          dragSelection: true">
+				       <thead>
+					        <tr>
+					          <th field='usrNo' width='0' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>삭제</th>
+					          <th field='usrNm' width='150' align='center' editor='text'>지문</th>
+					          <th field='usrEml' width='250' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>지문설명</th>
+					          <th field='usrPhnNo' width='200' align='center' editor='text'>사용여부</th>
+					          <th field='usrGrade' width='100' align='center' editor='text'>설문ID</th>
+					          <th field='usrGrade' width='100' align='center' editor='text'>QUESTION SEQ</th>
+					          <th field='usrGrade' width='100' align='center' editor='text'>EXAM SEQ</th>
+					        </tr>
+				      </thead>
+				    </table>
+				
+				 <!--select지문, 라디오지무느 체크지분 200자텍스트 이메일 연락처-->
+				 
+				 
+				 	<div style="padding: 5px 0;">
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addSurvey();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeSurvey();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editSurvey();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveSurvey();">위로이동</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveSurvey();">아래로이동</a>
+					</div>
+				</div>
+			</div>
+			
+			
 			<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
 		</div>
 		<!-- /.container-fluid -->
