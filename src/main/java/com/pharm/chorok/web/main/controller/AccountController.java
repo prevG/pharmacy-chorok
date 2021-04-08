@@ -134,12 +134,6 @@ public class AccountController {
 		}
 		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
 	}
-
-	// 로그아웃 결과 페이지
-	@GetMapping("/logout")
-	public String logout() {
-		return "account/logout";
-	}
 	
 	public class JsonUtil {
 		private JSONObject result;
