@@ -8,7 +8,7 @@ public class DatabaseInsertException extends CustomException {
 	}
 
 	@Override
-	public String getCode() {
+	public String getErrorCode() {
 		return "DATABASE_INSERT_EROOR";
 	}
 

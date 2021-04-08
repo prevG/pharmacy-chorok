@@ -104,16 +104,16 @@ public class AccountController {
 			int ret = adUserService.saveAdmin(user);
 			
 			if(ret > 0) {
-				resMsg.setStatus("success");
+				resMsg.setStatus(CustomException.SUCCESS);
 			}else {
 				throw new DatabaseInsertException();
 			}
 			
 		// 예외 처리
 		} catch(CustomException e) {
-			resMsg.setStatus("fail");
-			resMsg.setMessage( e.getMessage() ); 
-			resMsg.setErrorCode(e.getCode());
+			resMsg.setStatus(CustomException.FAIL);
+			resMsg.setMessage(e.getMessage()); 
+			resMsg.setErrorCode(e.getErrorCode());
 			
 			// 추가정보를 resJSON에 추가
 			if (e instanceof ExceptionItem) {
@@ -127,9 +127,9 @@ public class AccountController {
 			}
 			resMsg.setData(resJSON.toMap());
 		} catch(Exception e) {
-			resMsg.setStatus("fail");
+			resMsg.setStatus(CustomException.FAIL);
 			// 예상범위 밖의 예외는 사용자에게 알려주지 않음. 
-			//resMsg.setMessage( e.getMessage() );
+			//resMsg.setMessage(e.getMessage());
 			e.printStackTrace();
 		}
 		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);

@@ -25,7 +25,7 @@ public class SizeCheckException extends CustomException implements ExceptionItem
 	}
 
 	@Override
-	public String getCode() {
+	public String getErrorCode() {
 		return "SIZE_CHECK_ERROR";
 	}
 

@@ -14,7 +14,7 @@ public class EmailCheckException extends CustomException implements ExceptionIte
 	}
 
 	@Override
-	public String getCode() {
+	public String getErrorCode() {
 		return "EMAIL_CHECK_ERROR";
 	}
 

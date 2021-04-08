@@ -14,7 +14,7 @@ public class EmptyCheckException extends CustomException implements ExceptionIte
 	}
 
 	@Override
-	public String getCode() {
+	public String getErrorCode() {
 		return "EMPTY_CHECK_ERROR";
 	}
 

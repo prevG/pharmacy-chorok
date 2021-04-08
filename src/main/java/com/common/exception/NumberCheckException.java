@@ -14,7 +14,7 @@ public class NumberCheckException extends CustomException implements ExceptionIt
 	}
 
 	@Override
-	public String getCode() {
+	public String getErrorCode() {
 		return "NUMBER_CHECK_ERROR";
 	}
 
