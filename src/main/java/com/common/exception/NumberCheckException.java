@@ -1,12 +1,25 @@
 package com.common.exception;
 
-public class NumberCheckException extends CustomException {
+public class NumberCheckException extends CustomException implements ExceptionItem {
+	
+	private String item;
+	
 	public NumberCheckException(String item){
-		super(item, "NUMBER_CHECK_ERROR");
+		this.item = item;
 	}
 
 	@Override
 	public String getMessage() {
-		return super.getItem() + " is Not Number";
+		return this.item + " is Not Number";
+	}
+
+	@Override
+	public String getCode() {
+		return "NUMBER_CHECK_ERROR";
+	}
+
+	@Override
+	public String getItem() {
+		return this.item;
 	}
 }

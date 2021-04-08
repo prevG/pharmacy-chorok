@@ -4,6 +4,7 @@ import com.common.exception.CustomException;
 import com.common.exception.DatabaseInsertException;
 import com.common.exception.EmailCheckException;
 import com.common.exception.EmptyCheckException;
+import com.common.exception.ExceptionItem;
 import com.common.exception.NumberCheckException;
 import com.common.exception.SizeCheckException;
 import com.common.util.Check;
@@ -48,13 +49,15 @@ public class AccountController {
 	@PostMapping("/signupProc")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> signupProc(@RequestBody Map<String, String> reqMap) throws Exception {
-	// 아래의 코드로도 사용가능
+	// JSON을 String으로 받아오는 코드(1)
 	//public ResponseEntity<ResponseMessage> signupProc(@RequestBody String reqStr) throws Exception {
 		
 		ResponseMessage resMsg = new ResponseMessage();
-		JSONObject resObj = new JSONObject();
+		JSONObject resJSON = new JSONObject();
 
 		try {
+			// String의 JSON을 Map으로 변환하는 과정
+			// (1)를 사용할 경우 아래의 코드를 사용
 			//Map<String, String> reqMap = new ObjectMapper().readValue(reqStr, Map.class);
 			TbCommUser user = new TbCommUser();
 			
@@ -111,13 +114,18 @@ public class AccountController {
 			resMsg.setStatus("fail");
 			resMsg.setMessage( e.getMessage() ); 
 			resMsg.setErrorCode(e.getCode());
-			resObj.put("item", e.getItem());
+			
+			// 추가정보를 resJSON에 추가
+			if (e instanceof ExceptionItem) {
+				ExceptionItem ei = (ExceptionItem) e;
+				resJSON.put("item", ei.getItem());
+			}
 			if (e instanceof SizeCheckException) {
 				SizeCheckException se = (SizeCheckException) e;
-				resObj.put("min", se.getMin());
-				resObj.put("max", se.getMax());
+				resJSON.put("min", se.getMin());
+				resJSON.put("max", se.getMax());
 			}
-			resMsg.setData(resObj.toMap());
+			resMsg.setData(resJSON.toMap());
 		} catch(Exception e) {
 			resMsg.setStatus("fail");
 			// 예상범위 밖의 예외는 사용자에게 알려주지 않음. 
