@@ -15,10 +15,13 @@ import org.springframework.stereotype.Repository;
 public interface ReservationScheduleRepository {
     
     public List<TbPpWorkTime> selectWorkTime() throws Exception;
+    
 
-	public List<TbCommCalendar> selectSameWeekDateListByDt( HashMap<String, Object> params ) throws Exception;
+    public TbCommCalendar selectDateAdd( HashMap<String, Object> params ) throws Exception;
 
-    public List<TbPpRsvtSch> selectRsvtSchByWeek( HashMap<String, Object> params )  throws Exception;
+	public List<TbCommCalendar> selectSameWeekDateListByDt( TbCommCalendar cal ) throws Exception;
+
+    public List<TbPpRsvtSch> selectRsvtSchByWeek( TbCommCalendar cal )  throws Exception;
 
     public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;
     

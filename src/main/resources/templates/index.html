@@ -35,7 +35,7 @@
 				<div class="col-sm-4">
 					<div class="text-right">
 						<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
-						<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">금주</button>
+						<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">오늘</button>
 						<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="time-table" th:fragment="time-table">
-						<input type="text" id="currDt" name="currDt" th:value="${currDt}" />
+						<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
 						<table class="table-sm table table-bordered table-hover">
 							<colgroup>
 								<col width=""/>

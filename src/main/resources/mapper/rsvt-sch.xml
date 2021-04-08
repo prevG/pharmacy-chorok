@@ -3,9 +3,7 @@
 
 <mapper namespace="com.pharm.chorok.web.main.repository.ReservationScheduleRepository">
 
-	<select id="selectSameWeekDateListByDt" 
-		parameterType="map" 
-		resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+	<select id="selectSameWeekDateListByDt" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
 	<![CDATA[    
 	SELECT BASE_DT
 		 , DAYS_STR_KOR
@@ -14,12 +12,21 @@
 	  FROM TB_COMM_CALENDAR CAL
   	 WHERE CAL.WK_NUM = (SELECT WK_NUM 
 	                       FROM TB_COMM_CALENDAR 
-						  WHERE BASE_DT = DATE_ADD( STR_TO_DATE(#{cal.baseDtStr}, '%Y%m%d'), INTERVAL #{interval} DAY )
+						  WHERE BASE_DT_STR = #{baseDtStr}
 						)
 	   AND DAYS_NUM > 1
      ORDER
 		BY BASE_DT
 	]]>
+	</select>
+	
+	
+	<select id="selectDateAdd" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+	<![CDATA[    
+	SELECT *
+      FROM TB_COMM_CALENDAR
+     WHERE base_dt = date_add( STR_TO_DATE( #{cal.baseDtStr}, '%Y%m%d'), interval #{interval} DAY)
+	]]>  
 	</select>
 
 	<select id="selectRsvtSchByWeek" 
@@ -54,7 +61,7 @@
             ON DATE_FORMAT(RSVT_DT, '%Y%m%d') = CAL.BASE_DT
             WHERE CAL.WK_NUM = (SELECT WK_NUM 
 								  FROM TB_COMM_CALENDAR 
-								 WHERE BASE_DT = DATE_ADD( STR_TO_DATE(#{cal.baseDtStr}, '%Y%m%d'), INTERVAL ${interval} DAY )
+								 WHERE BASE_DT_STR = #{baseDtStr}
 								)
             AND CAL.DAYS_NUM > 1
         ) SCH

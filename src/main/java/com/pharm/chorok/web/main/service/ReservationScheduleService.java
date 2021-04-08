@@ -35,21 +35,18 @@ public class ReservationScheduleService {
 		
 		TbCommCalendar currCal = new TbCommCalendar();
 		currCal.setBaseDtStr( currDt );
-
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put( "cal"     , currCal );
-		params.put( "interval",  0 );
-
-		//업무시간 목록을 조회
-        List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
-
+        
 		//검색일자와 동일한 주차를 가지는 날짜를 조회
-        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( params );
+        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( currCal );
 
 		//검색일자와 동일한 주차에 속하는 등록된 스케쥴을 조회
-        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( params );
+        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( currCal );
+        
+		//업무시간 목록을 조회
+        List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
+		
 
-		mv.addObject( "currDt" , currDt      ); //검색기준일자
+		mv.addObject( "currDt" , currDt        ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
         mv.addObject( "colList" , currDtList   ); //Column
         mv.addObject( "dataList", rsvtSchList  ); //Cell
@@ -59,11 +56,11 @@ public class ReservationScheduleService {
 
 	public ModelAndView getReservationByMovedWeekNo( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
-		Integer srchWeek = reservationPagination.getInterval();
+		Integer interval = reservationPagination.getInterval();
 		String todayDt   = calSvc.selectCurrentDate().getBaseDtStr();
 		String currDt    = reservationPagination.getCurrDt();
 
-		if( srchWeek == 0 ) {
+		if( interval == 0 ) {
 			currDt = todayDt;
 		}
 		TbCommCalendar currCal = new TbCommCalendar();
@@ -71,18 +68,21 @@ public class ReservationScheduleService {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put( "cal", currCal );
-		params.put( "interval",  srchWeek );
+		params.put( "interval",  interval );
+		
+		//주차 변경이 발생한 경우 변경된 날짜를 가져온다.
+		TbCommCalendar srchCal = rsvtSchRepo.selectDateAdd( params );
 
 		//업무시간 목록을 조회
         List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
 
 		//검색일자와 동일한 주차를 가지는 날짜를 조회
-        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( params );
+        List<TbCommCalendar> currDtList = rsvtSchRepo.selectSameWeekDateListByDt( srchCal );
 
 		//검색일자와 동일한 주차에 속하는 등록된 스케쥴을 조회
-        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( params );
+        List<TbPpRsvtSch> rsvtSchList  = rsvtSchRepo.selectRsvtSchByWeek( srchCal );
 
-		mv.addObject( "currDt"  , currDt      ); //검색기준일자
+		mv.addObject( "currDt"  , srchCal.getBaseDtStr()  ); //변경후 기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
         mv.addObject( "colList" , currDtList   ); //Column
         mv.addObject( "dataList", rsvtSchList  ); //Cell
