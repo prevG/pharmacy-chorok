@@ -1,35 +1,49 @@
 package com.pharm.chorok.web.main.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.pharm.chorok.common.service.CalendarService;
-import com.pharm.chorok.domain.main.ReservationPagination;
-import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.domain.table.TbPpWorkTime;
-import com.pharm.chorok.web.main.repository.SurveyRepository;
-import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.pharm.chorok.domain.table.TbCommCode;
+import com.pharm.chorok.domain.table.TbSurvey;
+import com.pharm.chorok.domain.table.TbSurveyQuest;
+import com.pharm.chorok.web.main.repository.SurveyRepository;
 
 @Service
 public class SurveyService {
     
 
     @Autowired
-    private SurveyRepository cstChtRepo;
+    private SurveyRepository surveyRepository;
 
-    public ModelAndView getCstChrtList() throws Exception {
+    public Map<String,Object> getSurveyList(TbSurvey tbSurvey) throws Exception {
+    	Map<String,Object> result = new HashMap<String, Object>();
     	
-    	ModelAndView mv = new ModelAndView();
-	
-    	return mv;
+    	TbSurvey survey = surveyRepository.selectSurvey(tbSurvey);
+    	List<TbSurveyQuest> surveyQuestList = surveyRepository.selectSurveyQuestList(tbSurvey);
+    	
+    	result.put("survey", survey);
+    	result.put("surveyQuestList", surveyQuestList);
+    	
+    	return result;
+    } 
+    
+    
+    public TbSurvey getSurvey(TbSurvey tbSurvey) throws Exception {
+    	Map<String,Object> result = new HashMap<String, Object>();
+    	
+    	TbSurvey survey = surveyRepository.selectSurvey(tbSurvey);
+    	
+    	return survey;
     } 
 
+    
+    
+    
 
 }

@@ -15,14 +15,14 @@ import com.pharm.chorok.domain.table.TbSurveyQuest;
 @Repository
 public interface SurveyRepository {
         
-    public TbSurvey selectSurvey() throws Exception;
+    public TbSurvey selectSurvey(TbSurvey tbSurvey) throws Exception;
     
-    public TbSurveyAns selectSurveyAns() throws Exception;
+    public TbSurveyAns selectSurveyAns(TbSurvey tbSurvey) throws Exception;
     
-    public List<TbSurveyQuest> selectSurveyQuestList() throws Exception;
+    public List<TbSurveyQuest> selectSurveyQuestList(TbSurvey tbSurvey) throws Exception;
     
-    public List<TbSurveyExam> selectSurveyExamList() throws Exception;
+    public List<TbSurveyExam> selectSurveyExamList(TbSurvey tbSurvey) throws Exception;
     
-    public List<TbSurveyAnsExam> selectTbSurveyAnsExamList() throws Exception;
+    public List<TbSurveyAnsExam> selectTbSurveyAnsExamList(TbSurvey tbSurvey) throws Exception;
     
 }
