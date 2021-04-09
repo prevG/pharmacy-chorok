@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.and()
             .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).logout()
 	        .and()
-	        .oauth2Login()
+	        //.oauth2Login()
 			;
 	}
 	
