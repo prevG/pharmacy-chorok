@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/account/login")		
                 .permitAll()
                 .and()
+    	     //.oauth2Login()
+    	        //.and()
             .logout()
             	.logoutUrl("/account/logout")
                 .invalidateHttpSession(true)
@@ -48,8 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler( customLogoutSuccessHandler() )
             	.and()
             .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).logout()
-	        .and()
-	        //.oauth2Login()
 			;
 	}
 	

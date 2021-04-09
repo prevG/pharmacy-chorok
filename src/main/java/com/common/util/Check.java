@@ -15,10 +15,10 @@ public class Check {
 	}
 
 	public static boolean numberCheck(String str) {
-		try {
-			Integer.parseInt(str);
-		} catch (Exception e) {
-			return true;
+		for (char c : str.toCharArray()) {
+			if(!Character.isDigit(c)) {
+				return true;
+			}
 		}
 		return false;
 	}
