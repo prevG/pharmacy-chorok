@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">	
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	
+	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>고객정보</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+			1
+			</div>
+			<div class="row">
+				<div class="col-4">
+				
+				<div class="card card-primary card-outline">
+	              <div class="card-header">
+	                <h3 class="card-title">상담이력</h3>
+	              </div>
+	              <!-- /.card-header -->
+	              <div class="card-body">
+	                <table class="table table-bordered">
+	                  <thead>                  
+	                    <tr>
+	                      <th style="width: 10%">회차</th>
+	                      <th>상담일시</th>
+	                      <th>상담약사</th>
+	                    </tr>
+	                  </thead>
+	                  <tbody>
+	                    <tr>
+	                      <td>1.</td>
+	                      <td>2021.12.12</td>
+	                      <td>약사(가)</td>
+	                    </tr>
+	                    <tr>
+	                      <td>2.</td>
+	                      <td>2021.12.15</td>
+	                      <td>약사(나)</td>
+	                    </tr>
+	                  </tbody>
+	                </table>
+	              </div>
+	              <!-- /.card-body -->
+	              <div class="card-footer clearfix">
+	                <ul class="pagination pagination-sm m-0 float-right">
+	                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+	                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+	                </ul>
+	              </div>
+	            </div>
+	            
+	            
+	             <div class="card card-primary card-outline">
+	              <div class="card-header">
+	                <h3 class="card-title">회원정보</h3>
+	              </div>
+	              <!-- /.card-header -->
+	              <div class="card-body">
+	                <form role="form">
+	                  <div class="row">
+	                    <div class="col-sm-6">
+	                      <!-- text input -->
+	                      <div class="form-group">
+	                        <label>이름</label>
+	                        <input type="text" class="form-control" placeholder="Enter ...">
+	                      </div>
+	                    </div>
+	                    <div class="col-sm-6">
+	                      <div class="form-group">
+	                        <label>전화번호</label>
+	                        <input type="text" class="form-control" placeholder="Enter ...">
+	                      </div>
+	                    </div>
+	                  </div>
+	                  <div class="row">
+	                    <div class="col-sm-6">
+	                      <!-- textarea -->
+	                      <div class="form-group">
+	                        <label>생년월일</label>
+	                        <input type="text" class="form-control" placeholder="Enter ...">
+	                      </div>
+	                    </div>
+	                    <div class="col-sm-6">
+		                      <div class="form-group">
+		                        	<label>성별</label>
+			                        <div class="form-check">
+			                          <input class="form-check-input" type="radio" name="radio1">
+			                          <label class="form-check-label">남</label>
+			                        </div>
+			                        <div class="form-check">
+			                          <input class="form-check-input" type="radio" name="radio1" checked>
+			                          <label class="form-check-label">여</label>
+			                        </div>
+		                      </div>
+	                    </div>
+	                  </div>
+	
+	                  <!-- input states -->
+	                  <div class="form-group">
+	                    <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
+	                      success</label>
+	                    <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
+	                  </div>
+	                  <div class="form-group">
+	                    <label class="col-form-label" for="inputWarning"><i class="far fa-bell"></i> Input with
+	                      warning</label>
+	                    <input type="text" class="form-control is-warning" id="inputWarning" placeholder="Enter ...">
+	                  </div>
+	                  <div class="form-group">
+	                    <label class="col-form-label" for="inputError"><i class="far fa-times-circle"></i> Input with
+	                      error</label>
+	                    <input type="text" class="form-control is-invalid" id="inputError" placeholder="Enter ...">
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-sm-6">
+	                      <!-- checkbox -->
+	                      <div class="form-group">
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="checkbox">
+	                          <label class="form-check-label">Checkbox</label>
+	                        </div>
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="checkbox" checked>
+	                          <label class="form-check-label">Checkbox checked</label>
+	                        </div>
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="checkbox" disabled>
+	                          <label class="form-check-label">Checkbox disabled</label>
+	                        </div>
+	                      </div>
+	                    </div> 
+	                    <div class="col-sm-6">
+	                      <!-- radio -->
+	                      <div class="form-group">
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="radio" name="radio1">
+	                          <label class="form-check-label">Radio</label>
+	                        </div>
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="radio" name="radio1" checked>
+	                          <label class="form-check-label">Radio checked</label>
+	                        </div>
+	                        <div class="form-check">
+	                          <input class="form-check-input" type="radio" disabled>
+	                          <label class="form-check-label">Radio disabled</label>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-sm-6">
+	                      <!-- select -->
+	                      <div class="form-group">
+	                        <label>Select</label>
+	                        <select class="form-control">
+	                          <option>option 1</option>
+	                          <option>option 2</option>
+	                          <option>option 3</option>
+	                          <option>option 4</option>
+	                          <option>option 5</option>
+	                        </select>
+	                      </div>
+	                    </div>
+	                    <div class="col-sm-6">
+	                      <div class="form-group">
+	                        <label>Select Disabled</label>
+	                        <select class="form-control" disabled>
+	                          <option>option 1</option>
+	                          <option>option 2</option>
+	                          <option>option 3</option>
+	                          <option>option 4</option>
+	                          <option>option 5</option>
+	                        </select>
+	                      </div>
+	                    </div>
+	                  </div>
+	
+	                  <div class="row">
+	                    <div class="col-sm-6">
+	                      <!-- Select multiple-->
+	                      <div class="form-group">
+	                        <label>Select Multiple</label>
+	                        <select multiple class="form-control">
+	                          <option>option 1</option>
+	                          <option>option 2</option>
+	                          <option>option 3</option>
+	                          <option>option 4</option>
+	                          <option>option 5</option>
+	                        </select>
+	                      </div>
+	                    </div>
+	                    <div class="col-sm-6">
+	                      <div class="form-group">
+	                        <label>Select Multiple Disabled</label>
+	                        <select multiple class="form-control" disabled>
+	                          <option>option 1</option>
+	                          <option>option 2</option>
+	                          <option>option 3</option>
+	                          <option>option 4</option>
+	                          <option>option 5</option>
+	                        </select>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	              <!-- /.card-body -->
+	            </div>
+	            
+	            
+	            
+	            
+	            
+				</div>
+				<div class="col-8">
+					
+				<div class="card card-primary card-outline">
+		          <div class="card-header">
+		            <h3 class="card-title">
+		              차트
+		            </h3>
+		          </div>
+		          <div class="card-body">
+		            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+		              <li class="nav-item">
+		                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">상담차트</a>
+		              </li>
+		              <li class="nav-item">
+		                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">복용차트</a>
+		              </li>
+		             
+		            </ul>
+		            <div class="tab-content" id="custom-content-below-tabContent" style="min-height:700px;">
+		              <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+		              	상담차트
+		              </div>
+		              <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+		              	복용차트
+		              </div>
+		            </div>
+		            <div class="tab-custom-content">
+		              <p class="lead mb-0">Custom Content goes here</p>
+		            </div>
+		          </div>
+		          <!-- /.card -->
+		        </div>
+		        <!-- /.card -->
+		      </div>
+					
+					
+			</div>
+		</div>
+	</section>
+
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+		</div>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+		var rowList  = /*[[${rowList}]]*/'';
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/rs1001m.js}"></script> 
+</div>
+</html>
