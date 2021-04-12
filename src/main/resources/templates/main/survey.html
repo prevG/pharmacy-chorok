@@ -116,8 +116,8 @@
 					
 					<div id="surveyQuestRgn" style="display:none;">
 						
-						<div th:each="item:${surveyQuestExam}">
-							<div th:if="${item.gubun}=='QUEST'" th:text="${item.questNm}"></div>
+						<div th:each="item:${surveyQuestExam}" th:object="${item}" th:style="${item.gubun}=='EXAM'?'display:inline-block;':''">
+							<span th:if="${item.gubun}=='QUEST'" th:text="${item.questNm}"></span>
 							<input type="radio" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='RADIO'" th:value="${item.examNm}" th:text="${item.examNm}"/>
 							<input type="text" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='TEXT'" th:value="${item.examNm}"/>
 							<input type="text" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='CHECKBOX'" th:value="${item.examNm}" th:text="${item.examNm}"/>
@@ -126,9 +126,6 @@
 							<textarea th:if="${item.gubun}=='EXAM' and ${item.examCd}=='LGTEXT'">
 							</textarea>
 						</div>
-						
-						
-							
 					</div>
 					
 				</div>
