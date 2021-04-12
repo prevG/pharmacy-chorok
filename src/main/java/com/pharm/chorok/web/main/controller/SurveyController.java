@@ -1,12 +1,18 @@
 package com.pharm.chorok.web.main.controller;
 
+import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.pharm.chorok.domain.table.TbSurvey;
+import com.pharm.chorok.domain.table.TbSurveyQuest;
+import com.pharm.chorok.domain.table.TbSurveyQuestExam;
 import com.pharm.chorok.web.main.service.SurveyService;
 
 @RequestMapping(value = "/survey")
@@ -36,19 +42,18 @@ public class SurveyController {
 	}
 	
 	//설문개요 조회
-	@GetMapping("/survey")
-	public ModelAndView survey(TbSurvey tbSurvey) {
-		TbSurvey ret;
+	@GetMapping("/view")
+	public ModelAndView survey(TbSurvey tbSurvey) throws Exception{
+		TbSurvey survey;
+		List<TbSurveyQuestExam> tbSurveyQuestExam;
 		ModelAndView mv = new ModelAndView();
 		
-		try {
-			ret = surveyService.getSurvey(tbSurvey);
-			mv.addObject("survey", ret);
-			mv.setViewName("/main/survey");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		survey = surveyService.getSurvey(tbSurvey);
+		tbSurveyQuestExam = surveyService.getSurveyQuestionExam(tbSurvey);
+		mv.addObject("survey", survey);
+		mv.addObject("surveyQuestExam", tbSurveyQuestExam);
+		mv.setViewName("/main/survey");
+		
 		
 		return mv;
 	}

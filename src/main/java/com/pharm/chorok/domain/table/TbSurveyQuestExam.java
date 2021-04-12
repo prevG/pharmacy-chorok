@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class TbSurveyQuest{
+public class TbSurveyQuestExam{
 	long surveyId;
 	long questSeq;
 	String grpExp;
@@ -21,4 +21,12 @@ public class TbSurveyQuest{
 	String updId;
 	Date updDttm;
 	
+	long examSeq;
+	String examExp;
+	String examVal;
+	String examNm;
+	String etcYn;
+	long vOrder;
+	
+	String gubun;
 }

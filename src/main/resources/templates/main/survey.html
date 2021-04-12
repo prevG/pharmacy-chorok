@@ -29,11 +29,9 @@
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row mb-1">
-				<div class="col-sm-8">
-					<button type="button" class="btn btn-primary btn-sm" >Button</button>
-					<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+				<div class="col-8">
 				</div>
-				<div class="col-sm-4">
+				<div class="col-4">
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary btn-sm">불러오기</button>
 					</div>
@@ -42,25 +40,55 @@
 					
 			<div class="row">
 				<div class="col-sm-12">
-					<div id="time-table" th:fragment="time-table">
-						<table class="table-sm table table-bordered table-hover">
+					<div id="agrRgn">
+						<table class="table-sm table table-bordered">
 							<colgroup>
-								<col width=""/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
+								<col width="20%"/>
+								<col width="*"/>
 							</colgroup>
-							<!--<thead class="thead-light">
-								<tr align="center">
-									<th>예약시간</th>
-									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
-								</tr>
-							</thead>
 							<tbody>
-								<tr th:each="row, idx : ${rowList}" >
+								<tr>
+									<th>동의문</th>
+									<td>
+										<div th:text="${survey.surveyAgreeText}"></div>
+										
+										<form class="form-inline">
+											<div class="form-check">
+											  <input class="form-check-input" type="radio" name="agree1" id="agree1_1" value="on">
+											  <label class="form-check-label" for="agree1_1">
+											    동의
+											  </label>
+											</div>
+											<div class="form-check">
+											  <input class="form-check-input" type="radio" name="agree1" id="agree1_2" value="off" checked>
+											  <label class="form-check-label" for="agree1_2">
+											    비동의
+											  </label>
+											</div>
+										</form>
+									</td>
+								</tr>
+								<tr>
+									<th>3자동의문</th>
+									<td>
+										<div th:text="${survey.thirdPsnAgrofferDes}"></div>
+										<form class="form-inline">
+											<div class="form-check">
+											  <input class="form-check-input" type="radio" name="agree2" id="agree2_1" value="on">
+											  <label class="form-check-label" for="agree2_1">
+											    동의
+											  </label>
+											</div>
+											<div class="form-check">
+											  <input class="form-check-input" type="radio" name="agree2" id="agree2_2" value="off" checked>
+											  <label class="form-check-label" for="agree2_2">
+											    비동의
+											  </label>
+											</div>
+										</form>
+									</td>
+								</tr>
+								<!-- <tr th:each="row, idx : ${rowList}" >
 									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
 									<td th:each="col, idx2 : ${colList}" 
 										th:data-row="${row.id}" th:data-col="${col.daysNum}">
@@ -71,10 +99,38 @@
 										</div>
 										</th:block>
 									</td>
-								</tr>
-							</tbody>-->
+								</tr> -->
+							</tbody>
 						</table>
+						
+							<div class="row">
+								<div class="col-8">
+								</div>
+								<div class="col-4">
+									<div class="text-right">
+										<button type="button" class="btn btn-primary btn-sm" id="agrNextBtn">다음</button>
+									</div>
+								</div>
+							</div>
 					</div>
+					
+					<div id="surveyQuestRgn" style="display:none;">
+						
+						<div th:each="item:${surveyQuestExam}">
+							<div th:if="${item.gubun}=='QUEST'" th:text="${item.questNm}"></div>
+							<input type="radio" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='RADIO'" th:value="${item.examNm}" th:text="${item.examNm}"/>
+							<input type="text" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='TEXT'" th:value="${item.examNm}"/>
+							<input type="text" th:if="${item.gubun}=='EXAM' and ${item.examCd}=='CHECKBOX'" th:value="${item.examNm}" th:text="${item.examNm}"/>
+							<select th:if="${item.gubun}=='EXAM' and ${item.examCd}=='SELECT'">
+							</select>
+							<textarea th:if="${item.gubun}=='EXAM' and ${item.examCd}=='LGTEXT'">
+							</textarea>
+						</div>
+						
+						
+							
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -82,7 +138,32 @@
 
 	
 	<script type="text/javascript" th:inline="javascript">
-		var rowList  = /*[[${rowList}]]*/'';
+			
+		$(document).ready(function(){
+			fnInit();
+		});
+		
+		function fnInit(){
+			$("#agrNextBtn").on("click",function(){
+				
+				var agree1 = $(":input:radio[name=agree1]:checked").val();
+				var agree2 = $(":input:radio[name=agree2]:checked").val();
+				
+				if(agree1 == "off"){
+					alert("동의문을 동의해주세요");
+				}else if(agree2 == "off"){
+					alert("3자 동의문을 동의해주세요");
+				}else{
+					$("#agrRgn").hide();
+					$("#surveyQuestRgn").show();
+				
+				}
+			});
+		}
+		
+		
+		
+		
 	</script>
 	<script type="text/javascript" th:src="@{/js/main/rs1001m.js}"></script> 
 </div>

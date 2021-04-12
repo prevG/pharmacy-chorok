@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.SurveyRepository">
+
+<select id="selectSurvey" parameterType="com.pharm.chorok.domain.table.TbSurvey" resultType="com.pharm.chorok.domain.table.TbSurvey">
+	SELECT SURVEY_ID,
+		   SURVEY_NM,
+		   SURVEY_PPOSE,
+		   START_DTTM,
+		   END_DTTM,
+		   USER1_YN,
+		   USER2_YN,
+		   USE_YN,
+		   REG_ID,
+		   REG_DTTM,
+		   UPD_ID,
+		   UPD_DTTM,
+		   SURVEY_AGREE_TEXT,
+		   THIRD_PSN_AGROFFER_DES
+	FROM TB_SURVEY
+	WHERE SURVEY_ID = #{surveyId}
+</select>
+
+
+<select id="getSurveyQuestionExam" parameterType="com.pharm.chorok.domain.table.TbSurvey" resultType="com.pharm.chorok.domain.table.TbSurveyQuestExam">
+	SELECT T.*
+	FROM (
+	SELECT SURVEY_ID
+		  ,QUEST_SEQ
+		  ,0 AS EXAM_SEQ
+		  ,QUEST_NO
+		  ,QUEST_NM
+		  ,EXAM_CD
+	      ,'' AS EXAM_NM
+	      ,'' AS GRP_EXP
+	      ,'' AS EXAM_VAL
+	      ,'' AS ETC_YN-- 
+	      ,'QUEST' AS GUBUN
+	FROM TB_SURVEY_QUEST
+	WHERE SURVEY_ID = #{surveyId}
+	AND USE_YN = 'Y'
+	UNION ALL
+	SELECT A.SURVEY_ID
+			  ,A.QUEST_SEQ
+		      ,B.EXAM_SEQ
+		      ,A.QUEST_NO
+		      ,A.QUEST_NM
+		      ,A.EXAM_CD
+		      ,B.EXAM_NM
+		      ,B.GRP_EXP
+		      ,B.EXAM_VAL
+		      ,B.ETC_YN
+	          ,'EXAM' AS GUBUN
+		FROM TB_SURVEY_QUEST A LEFT OUTER JOIN TB_SURVEY_EXAM B
+		ON A.SURVEY_ID = B.SURVEY_ID AND A.QUEST_SEQ = B.QUEST_SEQ
+		WHERE A.USE_YN = 'Y'
+		AND B.USE_YN = 'Y'
+		AND A.SURVEY_ID = #{surveyId}
+	    ) T
+	    ORDER BY T.SURVEY_ID, T.QUEST_SEQ, T.EXAM_SEQ, T.QUEST_NO
+</select>
+
+
+</mapper>

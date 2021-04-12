@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbSurvey;
 import com.pharm.chorok.domain.table.TbSurveyQuest;
+import com.pharm.chorok.domain.table.TbSurveyQuestExam;
 import com.pharm.chorok.web.main.repository.SurveyRepository;
 
 @Service
@@ -40,7 +41,17 @@ public class SurveyService {
     	TbSurvey survey = surveyRepository.selectSurvey(tbSurvey);
     	
     	return survey;
-    } 
+    }
+    
+    
+    
+    public List<TbSurveyQuestExam> getSurveyQuestionExam(TbSurvey tbSurvey) throws Exception {
+    	
+    	List<TbSurveyQuestExam> tbSurveyQuest = surveyRepository.getSurveyQuestionExam(tbSurvey);
+    	
+    	return tbSurveyQuest;
+    }
+    
 
     
     
