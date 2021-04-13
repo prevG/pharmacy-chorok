@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">	
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	
+	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>복용정보</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			
+					<div class="card card-primary card-outline">
+			              <div class="card-header">
+			              	<h3 class="card-title">검색조건</h3>
+			              </div>
+			              <div class="card-body">
+				              <div class="row">
+								<div class="col-3">	
+				              		<div class="form-group">
+					                  <label for="selMgrKind">관리자구분</label>
+					                  <select class="custom-select form-control-border" id="selMgrKind">
+						                    <option>상담실장</option>
+						                    <option>약사</option>
+					                  </select>
+					                </div>
+				                </div>
+				                <div class="col-3">	
+				              		<div class="form-group">
+					                  <label for="selMgrNm">이름</label>
+					                  <select class="custom-select form-control-border" id="selMgrNm">
+						                    <option>홍길동</option>
+						                    <option>김아무개</option>
+					                  </select>
+					                </div>
+				                </div>
+	             			</div>
+	             			
+	             			<div class="row">
+	             				  <div class="form-group">
+					                  <label>검색기간:</label>
+					
+					                  <div class="input-group">
+					                    <div class="input-group-prepend">
+					                      <span class="input-group-text">
+					                        <i class="far fa-calendar-alt"></i>
+					                      </span>
+					                    </div>
+					                    <input type="text" class="form-control float-right" id="reservation">
+					                  </div>
+					                  <!-- /.input group -->
+					              </div>
+	             			</div>
+			              </div>
+					</div>
+					
+					<div class="row">
+						<div class="col-12">
+							<div class="card card-primary">
+				              <div class="card-body">
+				              
+					            <table id="dg" class="easyui-datagrid" title="검색결과" style="width:100%;height:600px" data-options="
+						          singleSelect:false, 
+						          ctrlSelect:true,
+						          idField:'id',
+						          rownumbers:true,
+						          pagination:true,pageSize:50,pageList:[50],
+						          dragSelection: true">
+							      <thead>
+							        <tr>
+							          <th data-options="field:'grpCd',width:150,align:'center'">그룹코드</th>
+							          <th data-options="field:'ditcCd',width:150,align:'center'">상세코드</th>
+							          <th data-options="field:'ditcNm',width:300,align:'center'">상세코드이름</th>
+							          <th data-options="field:'cdExp',width:300,align:'center'">코드설명</th>
+							          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
+							          <th data-options="field:'lockYn',width:130,align:'center'">잠금여부</th>
+							          <th data-options="field:'useYn',width:130,align:'center'">사용여부</th>
+							        </tr>
+							      </thead>
+				              	</table>
+				              
+				              
+				              </div>
+					        </div>
+				        </div>
+					</div>
+		</div>
+	</section>
+
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+		</div>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+	
+		function fnInit(){
+	
+		}
+		
+		
+		$(document).ready(function(){
+			fnInit();
+		});
+		
+		
+		
+	</script>
+</div>
+</html>

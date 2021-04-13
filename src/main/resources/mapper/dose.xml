@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.DoseRepository">
+
+<select id="selectDoseByComUsrRole" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbSurvey">
+	
+</select>
+
+
+</mapper>
