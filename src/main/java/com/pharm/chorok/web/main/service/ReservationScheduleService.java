@@ -3,18 +3,17 @@ package com.pharm.chorok.web.main.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ReservationScheduleService {
@@ -99,12 +98,12 @@ public class ReservationScheduleService {
 	 * @return
 	 * @throws Exception
 	 */
-    public TbPpRsvtSch findReservationInfoByRsvtId( TbPpRsvtSch rsvtSch,  Model model  ) throws Exception {
+    public ModelAndView findReservationInfoByRsvtId( ModelAndView mv, TbPpRsvtSch rsvtSch  ) throws Exception {
 
     	TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
 
-		model.addAttribute( "schInfo", rsvtSchInfo );
-    	return rsvtSchInfo;
+    	mv.addObject( "schInfo", rsvtSchInfo );
+    	return mv;
     }
     
     

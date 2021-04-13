@@ -30,14 +30,13 @@
 		<div class="container-fluid">
 			<div class="row mb-1">
 				<div class="col-sm-8">
-					<button type="button" class="btn btn-primary btn-sm" >Button</button>
-					<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+					<button type="button" id="btnNewSch" name="btnNewSch" class="btn btn-success btn-sm">새 스케쥴 등록하기</button>
 				</div>
 				<div class="col-sm-4">
 					<div class="text-right">
-						<button type="button" class="btn btn-secondary btn-sm">지난주</button>
-						<button type="button" class="btn btn-secondary btn-sm">금주</button>
-						<button type="button" class="btn btn-secondary btn-sm">다음주</button>
+						<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
+						<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">오늘</button>
+						<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button>
 					</div>
 				</div>
 			</div>
@@ -45,6 +44,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="time-table" th:fragment="time-table">
+						<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
 						<table class="table-sm table table-bordered table-hover">
 							<colgroup>
 								<col width=""/>
@@ -89,6 +89,9 @@
 	</div>
 	<script type="text/javascript" th:inline="javascript">
 		var rowList  = /*[[${rowList}]]*/'';
+		var currCal  = /*[[${currCal}]]*/'';
+		console.log( "currCal", currCal)
+
 	</script>
 	<script type="text/javascript" th:src="@{/js/main/rs1001m.js}"></script> 
 </div>

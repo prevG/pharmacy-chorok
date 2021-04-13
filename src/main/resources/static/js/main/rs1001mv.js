@@ -1,33 +1,25 @@
 $( document ).ready( function() {
 
-    $.contextMenu({
-        selector: "button[name='rsvtSch']",
-        items: {
-            insert : {name: "상담 차트", callback: function(key, opt){ console.log( key, opt); }},
-            modify : {name: "스케쥴 수정"  , callback: function(key, opt){ console.log( key, opt); }}
-        }
-        // there's more, have a look at the demos and docs...
-    });
 
     /**************************************************************
-     * 스케쥴 클릭시 상세스케쥴 확인
+     * 예약고객의 상세스케쥴 보기
      **************************************************************/
-    $( document ).on("click", "button[name='rsvtSch'], button[name='btnNewSch']", function( e ) {    
-        
-        e.preventDefault(); //remove href function
-        var params = {
-        	"id" : $(e.target ).closest("div").attr("data-id")
-        };	
-		$(".modal .modal-content").load("/rsvt/rs1001p1", params, function (data, status, xhr) {			
-			$(".modal").modal('show');
-			$("#rsvtDt").focus();
-		});
+    $( document ).on("click", "button[name='rsvtSch']", function( e ) {    
+	
+		var params = {
+			"id" : $(e.target ).closest("div").attr("data-id")
+		}
+		findReservationDetail( params );
     });
 
     /**************************************************************
      * 새 스케쥴 등록하기
      **************************************************************/
     $( document ).on("click", "button[name='btnNewSch']", function( e ) {   
+		var params = {
+			"id" : ""
+		}
+		findReservationDetail( params );
     });
 
     /**************************************************************
@@ -67,8 +59,21 @@ $( document ).ready( function() {
 		
     });
 
+    findReservationDetail = function( params ) {
+
+		var url = "/reservation/RS1001MV/detail";
+		$("#reservation-detail").load(url, params, function(response, status, xhr) {
+
+			if (200==xhr.status) {
+				$("#reservation-detail").html(response);
+			} else {
+				console.log( response, status, xhr );
+			}
+		});
+    }
+
     moveWeekTimeTable = function( params ) {
-        var url = "/rsvt/rs1001m/moveWeek";
+        var url = "/reservation/RS1001MV/moveWeek";
 		$("#time-table").load(url, params, function(response, status, xhr) {
 
 			if (200==xhr.status) {
@@ -80,7 +85,7 @@ $( document ).ready( function() {
     }
 
     refreshTimeTable = function( params ) {
-        var url = "/rsvt/rs1001m/refresh";
+        var url = "/reservation/RS1001MV/refresh";
 		$("#time-table").load(url, params, function(response, status, xhr) {
 
 			if (200==xhr.status) {
@@ -90,4 +95,6 @@ $( document ).ready( function() {
 			}
 		});
     }
+
+
 });

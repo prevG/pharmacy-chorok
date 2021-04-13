@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
-@RequestMapping(value = "/rsvt")
+@RequestMapping(value = "/reservation")
 @Controller
 public class ReservationScheduleController {
 
@@ -21,31 +21,51 @@ public class ReservationScheduleController {
 	private ReservationScheduleService rsvtSchSvc;
 
 
-	@PostMapping("/rs1001p1")
-	public String goRS1001P01(TbPpRsvtSch rsvt, Model model) throws Exception {
+	@GetMapping("/RS1001MV")
+	public ModelAndView goRS1001ML(
+			ReservationPagination reservationPagination,
+			Model model) throws Exception {
 		
-		rsvtSchSvc.findReservationInfoByRsvtId( rsvt, model );
-		return "main/RS1001P01";
+		ModelAndView mv = new ModelAndView("main/RS1001Mv");
+		rsvtSchSvc.getReservationByDt( mv, reservationPagination );
+		return mv;
+	}
+	
+	
+	@PostMapping("/RS1001P01")
+	public ModelAndView goRS1001P01(TbPpRsvtSch rsvt) throws Exception {
+		
+		ModelAndView mv = new ModelAndView( "main/RS1001P01" );
+		rsvtSchSvc.findReservationInfoByRsvtId( mv, rsvt );
+		return mv;
 	}
 
-
-	@PostMapping("/rs1001m/refresh")
-	public ModelAndView refresh(
-		ReservationPagination reservationPagination,
-		Model model) throws Exception {
+	
+	@PostMapping("/RS1001MV/detail")
+	public ModelAndView detail(
+			TbPpRsvtSch rsvt) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("index :: time-table");
+		ModelAndView mv = new ModelAndView("main/RS1001MV :: reservation-detail");
+		rsvtSchSvc.findReservationInfoByRsvtId( mv, rsvt );
+        return mv;
+	}
+	
+
+	@PostMapping("/RS1001MV/refresh")
+	public ModelAndView refresh(
+			ReservationPagination reservationPagination) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("main/RS1001MV :: time-table");
 		rsvtSchSvc.getReservationByDt( mv,  reservationPagination );
         return mv;
 	}
 
 
-	@PostMapping("/rs1001m/moveWeek")
+	@PostMapping("/RS1001MV/moveWeek")
 	public ModelAndView getPrevWeek(
-		ReservationPagination reservationPagination,
-		Model model) throws Exception {
+			ReservationPagination reservationPagination) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("index :: time-table");
+		ModelAndView mv = new ModelAndView("main/RS1001MV :: time-table");
 		rsvtSchSvc.getReservationByMovedWeekNo( mv,  reservationPagination );
         return mv;
 	}

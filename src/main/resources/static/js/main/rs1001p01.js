@@ -46,6 +46,31 @@ $( document ).ready( function() {
 	});
 	
 	
+
+	$("#rsvtCellNo").keydown(function(event) {
+
+/*	    var key = event.charCode || event.keyCode || 0;
+	    $text = $(this);
+	    if (key !== 8 && key !== 9) {
+		
+		    
+			var changedVal = $text.val().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+			
+			console.log( "changedVal", changedVal );
+	        $text.val( changedVal );
+
+	        if ($text.val().length === 3) {
+	            $text.val($text.val() + '-');
+	        }
+	        if ($text.val().length === 8) {
+	            $text.val($text.val() + '-');
+	        }
+	    }
+	 
+	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));        
+*/  
+	});
+	
 	$( "#btnSaveRsvtSch" ).off("click").on("click", function( e ){
 
 		var params = $("form[name=saveForm]").serialize();

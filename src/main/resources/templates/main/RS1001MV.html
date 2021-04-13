@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">	
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	
+	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>주간 예약 스케쥴</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-7">
+					<div class="row mb-1">
+					    <div class="col-sm-12 text-right">
+							<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
+							<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">오늘</button>
+							<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button>
+					    </div>
+					</div>
+					<div id="time-table" th:fragment="time-table">
+						<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
+						<table class="table-sm table table-bordered table-hover">
+							<colgroup>
+								<col width=""/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+								<col width="15%"/>
+							</colgroup>
+							<thead class="thead-light">
+								<tr align="center">
+									<th>예약시간</th>
+									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="row, idx : ${rowList}" style="height:34px;">
+									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
+									<td th:each="col, colIdx : ${colList}"
+										th:data-row="${row.id}" th:data-col="${col.daysNum}">
+									
+										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
+										<div th:data-id="${data.id}">
+											<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+										</div>
+										</th:block>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4 border border-light">
+					<div class="row mb-1">
+					    <div class="col-sm-6">
+					    	<button type="button" id="btnNewSch" name="btnNewSch" class="btn btn-success btn-sm">새 스케쥴 등록하기</button>
+						</div>
+					</div>
+					<div id="reservation-detail" th:fragment="reservation-detail">
+					   	<form name="detailForm" id="detailForm" action="POST">
+				        <table class="table-sm table table-borderless">
+							<colgroup>
+								<col width="12%"/>
+								<col width="30%"/>
+								<col width="12%"/>
+								<col width="46%"/>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>예약일시</th>
+									<td>
+										<div class="input-group input-group-sm" style="width:200px;" >
+											<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1">
+										</div>
+									</td>
+									<th>상담구분</th>
+									<td>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd1" value="C"   th:checked="${'C' eq schInfo?.rsvtTpCd}" tabindex="2">
+											<label class="form-check-label" for="rsvtTpCd1">전화상담</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd2" value="R"  th:checked="${'R' eq schInfo?.rsvtTpCd}" tabindex="2">
+											<label class="form-check-label" for="rsvtTpCd2">예약방문</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd3" value="D"  th:checked="${'D' eq schInfo?.rsvtTpCd}" tabindex="2">
+											<label class="form-check-label" for="rsvtTpCd3">당일방문</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>이름</th>
+									<td>
+										<div class="input-group input-group-sm" style="width:200px;" >
+											<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo?.rsvtUsrNm}"  tabindex="3">
+										</div>
+									</td>
+									<th>성별</th>
+									<td>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+											<label class="form-check-label" for="genTpCd1">여성</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+											<label class="form-check-label" for="genTpCd2">남성</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>휴대전화</th>
+									<td>
+										<div class="input-group input-group-sm" style="width:200px;" >
+											<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}" maxlength="13" tabindex="5">
+										</div>
+									</td>
+									<th>일반전화</th>
+									<td>
+										<div class="input-group input-group-sm" style="width:200px;" >
+											<input type="text" id="rsvtPhnNo" name="rsvtPhnNo" class="form-control" th:value="${schInfo?.rsvtPhnNo}"   maxlength="14" tabindex="6">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>지인소개</th>
+									<td colspan="3">
+										<div class="input-group input-group-sm input-group-inline" style="width:410px;">
+											<input type="text" class="form-control" style="margin-right:8px;" tabindex="7" > 
+											<input type="text" class="form-control" tabindex="8" >
+										</div>	
+									</td>
+								</tr>
+								<tr>
+									<th>기타메모</th>
+									<td colspan="3">
+										<div class="form-group">
+										    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="hidden" id="id" name="id" th:value="${schInfo?.id}" >
+						</form>
+						<script type="text/javascript" th:inline="javascript">
+						var rowList  = /*[[${rowList}]]*/'';
+						var currCal  = /*[[${currCal}]]*/'';
+		
+						/** timepicker에 사용될 값 조회 */
+						var allowTimeList = [];
+					    rowList.find( function( obj) {
+					        var hhmm = moment( obj["startHm"] ).format("HH:mm");
+					        allowTimeList.push( hhmm );
+					    });
+					
+						/** 예약일시 datetimepicker 적용 */
+					    $.datetimepicker.setLocale('ko');
+					    $( "#rsvtDt" ).datetimepicker({
+					        minDate	: '2021-01-01',
+					        format	: 'Y-m-d H:i',
+					        weeks   : true,
+					        lang    : "ko",
+					        //scrollMonth : false,
+					        //scrollInput : false,
+					        allowTimes: allowTimeList
+					    });
+					    </script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+		</div>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/rs1001mv.js}"></script> 
+</div>
+</html>

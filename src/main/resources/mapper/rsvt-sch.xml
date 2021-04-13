@@ -141,8 +141,8 @@
 	) VALUES (
 	     #{rsvtUsrNm}
 	   , STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
-	   , #{rsvtCellNo}
-	   , #{rsvtPhnNo}
+	   , REPLACE( #{rsvtCellNo}, '-', '')
+	   , REPLACE( #{rsvtPhnNo} , '-', '') 
 	   , #{rsvtTpCd}
 	   , #{rsvtDesc}
 	   , #{genTpCd}
@@ -154,6 +154,7 @@
 	]]>
 	</insert>
 	
+	
 	<update id="updateTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	UPDATE TB_PP_RSVT_SCH
@@ -161,8 +162,8 @@
 		 , UPD_USR_NO    = #{updUsrNo}
 		 , RSVT_USR_NM   = #{rsvtUsrNm} 
 		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
-		 , RSVT_CELL_NO  = #{rsvtCellNo} 
-		 , RSVT_PHN_NO   = #{rsvtPhnNo} 
+		 , RSVT_CELL_NO  = REPLACE( #{rsvtCellNo}, '-', '') 
+		 , RSVT_PHN_NO   = REPLACE( #{rsvtPhnNo} , '-', '') 
 		 , RSVT_TP_CD    = #{rsvtTpCd} 
 		 , RSVT_DESC     = #{rsvtDesc} 
 		 , GEN_TP_CD     = #{genTpCd} 
