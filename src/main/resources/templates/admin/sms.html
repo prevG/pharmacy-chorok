@@ -7,6 +7,68 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script>
+	
+	function test1(){
+	  	var xhr = new XMLHttpRequest();
+	    // var formData = new FormData();
+	    // formData.append('body', '문자보내기 테스트');
+	    // formData.append('sendNo', '01038252547');
+	    xhr.onload = function() {
+	      if (xhr.status === 200 || xhr.status === 201) {
+	        console.log(xhr.responseText);
+	      } else {
+	        console.error(xhr.responseText);
+	      }
+	    };
+	    var appKey = "0rhL2B2YO15WTOXr"; //앱키
+	    var body = "문자보내기 테스트";
+	    var sendNo = "01030038397";
+	    var recipientNo = '01030038397';
+	    xhr.open("POST", "https://api-sms.cloud.toast.com/sms/v2.4/appKeys/" + appKey + "/sender/sms?startRequestDate=2021-04-14 23:08:00&endRequestDate=2021-04-14 23:08:00");
+	    xhr.withCredentials = true;
+	    xhr.send("{\"body\":\"" + body + "\", \"sendNo\":\"" + sendNo + "\", \"recipientList\":[{\"recipientNo\":\"" + recipientNo + "\"}]}");
+	
+	}
+	
+	function test2(){
+		var appKey = "0rhL2B2YO15WTOXr"; //앱키
+	  
+	
+		var param = {
+			body : "문자보내기 테스트",
+			sendNo : "01030038397",
+			recipientList:[
+			      {
+			         "recipientNo":"01030038397",
+			         "countryCode":"82"
+			      }
+   			],
+		};
+		
+		$.ajax({
+	      type: "POST",
+	      url: "https://api-sms.cloud.toast.com/sms/v2.4/appKeys/" + appKey + "/sender/sms",
+	      dataType: 'json',
+	      //data:$('#searchUser').serialize(),    
+	      data:param,
+	    }).done(function( responseJson ) {
+	    	console.log(responseJson);
+          	
+        });
+        
+	
+	
+	}
+	
+	$(document).ready(function(){
+		$("#smsBtn").click(function(){
+			test1();
+		});
+	});
+
+
+</script>
 </th:block>
 
 <div id="content-wrapper" class="d-flex flex-column" layout:fragment="content">
@@ -14,8 +76,8 @@
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">Home</a></li>
-			<li class="breadcrumb-item"><a href="#">사용자 관리</a></li>
-			<li class="breadcrumb-item active" aria-current="page">회원 관리</li>
+			<li class="breadcrumb-item"><a href="#">공통코드 관리</a></li>
+			<li class="breadcrumb-item active" aria-current="page">공통코드 관리</li>
 		</ol>
 	</nav>
 
@@ -23,137 +85,126 @@
 	<div id="content">
 		<!-- Begin Page Content -->
 		<div class="container-fluid">
+
+			<!-- Top Content -->
 			<div class="card shadow mb-1">
 				<div class="card-header">
 					<h5 class="m-0 font-weight-bold text-primary">검색</h5>
 				</div>
 				<div class="card-body">
-					<form class="form-inline">
-						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">구분</span>
-							<select class="form-control-sm custom-select-sm custom-select mr-3" style="width: 270px;">
-								<option selected>선택...</option>
-								<option value="1">예약고객</option>
-								<option value="2">구매고객</option>
-							</select>
-						</div>
-					</form>
-					<hr class="mt-2 mb-2" />
-					<form class="form-inline">
-						<div class="form-group">
-							<span class="align-middle font-weight-bold" style="width: 80px;">검색어</span>
-							<select class="form-control-sm custom-select-sm custom-select mr-3">
-								<option selected>선택...</option>
-								<option value="1">이름</option>
-								<option value="2">전화번호</option>
-							</select>
-							<input type="search" class="form-control form-control-sm mr-3" placeholder="" aria-controls="dataTable">
-						</div>
-					</form>
-					<button type="button" class="btn-sm btn-primary mr-1 float-right px-4" id="srchBtn">조회</button>
+					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="smsBtn">문자보내기</button>
+
 				</div>
 			</div>
-			<!-- DataTales -->
-			<div class="card shadow mb-4">
+
+
+			<div class="card shadow">
 				<div class="card-header">
 					<h5 class="m-0 font-weight-bold text-primary">조회내역</h5>
 				</div>
-				<div class="card-body" style="min-height: 700px !important;">
-					<div class="table-responsive">
-						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-							<thead>
-								<tr>
-									<th class="text-center">no</th>
-									<th class="text-center">체크</th>
-									<th class="text-center">구분</th>
-									<th class="text-center">이름</th>
-									<th class="text-center">전화번호</th>
-									<th class="text-center">최근예약(구매) 날짜</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="text-center pt-4">1</td>
-									<td class="text-center pt-4">
-										<div class="custom-control custom-control-sm custom-checkbox custom-checkbox-sm">
-											<input type="checkbox" class="custom-control-input" id="customCheck1"> <label class="custom-control-label" for="customCheck1"></label>
-										</div>
-									</td>
-									<td class="text-center pt-4">예약고객</td>
-									<td class="text-center pt-4">곽경준</td>
-									<td class="text-center pt-4">01030038397</td>
-									<td class="text-center pt-4">2012-11-01</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="card-body" style="min-height: 530px;">
 
-					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="smsBtn">문자 보내기</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="delBtn">삭제</button>
-					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button>
+					<div style="padding: 5px 0;">
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a> 
+						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
+					</div>
+				
+					 <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
+				          singleSelect:false, 
+				          ctrlSelect:true,
+				          idField:'id',
+				          rownumbers:true,
+				          pagination:true,pageSize:50,pageList:[50],
+				          dragSelection: true">
+				      <thead>
+				        <tr>
+				          <th data-options="field:'grpCd',width:150,align:'center'">그룹코드</th>
+				          <th data-options="field:'ditcCd',width:150,align:'center'">상세코드</th>
+				          <th data-options="field:'ditcNm',width:300,align:'center'">상세코드이름</th>
+				          <th data-options="field:'cdExp',width:300,align:'center'">코드설명</th>
+				          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
+				          <th data-options="field:'lockYn',width:130,align:'center'">잠금여부</th>
+				          <th data-options="field:'useYn',width:130,align:'center'">사용여부</th>
+				        </tr>
+				      </thead>
+				    </table>
+
+
 				</div>
 			</div>
 		</div>
 		<!-- /.container-fluid -->
 	</div>
 	<!-- End of Main Content -->
+
+	<div id="addDlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
+			<div style="margin-bottom: 10px">
+				<select id="selCdKind" class="easyui-combobox" required="true" name="selCdKind" style="width:200px;" label="코드구분:">
+					<option value="S" selected="selected">선택</option>
+				    <option value="G">코드그룹</option>
+				    <option value="C">코드</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px;display:none;" id="grpRg">
+				<div class="row">
+				    <div class="col-6">
+				    	<select id="grpRg_grpCd" class="easyui-combobox" required="true" name="grpRg_grpCd" style="width:270px;" label="그룹코드">
+							<option value="00000">선택</option>
+						</select>
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input id="grpRg_ditcCd" name="grpRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
+				    </div>
+				</div>
+			</div>
+			<div style="margin-bottom: 10px;display:none;" id="cdRg">
+				<div class="row">
+				    <div class="col-6">
+				    	<input id="cdRg_grpCd" name="cdRg_grpCd"  class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input id="cdRg_ditcCd" name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
+				    </div>
+				</div>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="ditcNm" name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="cdExp" name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
+			</div>
+			<!-- <div style="margin-bottom: 10px">
+				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
+			</div> -->
+			<div style="margin-bottom: 10px">
+				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
+				    <option value="Y" selected="selected">잠금</option>
+				    <option value="N">비잠금</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="useYn" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용여부">
+				    <option value="Y" selected="selected">사용</option>
+				    <option value="N">비사용</option>
+				</select>
+			</div>
+		</form>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgCode(selCdKind.value);">저장</a>
+	</div>
+
+	<!-- Footer -->
 	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
+	<!-- End of Footer -->
+
 </div>
 <!-- End of Content Wrapper -->
 
-
-
-
-
-<div class="modal fade" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" style="width: 680px;">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">
-					<b>SMS 보내기</b>
-				</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form class="form-inline">
-					<div class="form-group">
-						<label for="codeNm" class="col-2">코드명 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" required />
-						</div>
-						<label for="codeNm" class="col-2">코드 : </label>
-						<div class="col-4">
-							<input type="text" class="form-control" disabled />
-						</div>
-					</div>
-					<div class="form-group"></div>
-					<div class="form-group"></div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-				<a class="btn btn-primary" href="login.html">등록</a>
-			</div>
-		</div>
-	</div>
 </div>
-
-<div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;">
-	<div class="toast-header">
-		<strong class="mr-auto"><i class="fa fa-grav"></i> We miss you!</strong> <small>11 mins ago</small>
-		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<div class="toast-body">
-		<div>
-			It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
-		</div>
-	</div>
-</div>
-
-
+<!-- End of Page Wrapper -->
 
 </html>
