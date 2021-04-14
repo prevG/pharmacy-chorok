@@ -26,7 +26,7 @@ public class ReservationScheduleController {
 			ReservationPagination reservationPagination,
 			Model model) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("main/RS1001Mv");
+		ModelAndView mv = new ModelAndView("main/RS1001MV");
 		rsvtSchSvc.getReservationByDt( mv, reservationPagination );
 		return mv;
 	}
