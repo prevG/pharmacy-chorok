@@ -95,13 +95,20 @@ public class ADCodeController {
 	
 	@PostMapping("/saveCode")
 	@ResponseBody
-	public ModelAndView saveCode(TbCommCode tbCommCode ) throws Exception {
-		
-		codeService.saveCode(tbCommCode);
-		
-		ModelAndView mv = new ModelAndView("redirect:admin/code"); 
-		return mv;
+	public String saveCode(TbCommCode tbCommCode ) throws Exception {
+		JSONObject result = new JSONObject();
 
+		int ret = codeService.saveCode(tbCommCode);
+		
+		if(ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공했습니다.");
+		}else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
+		return result.toString();
 	}
 	
 }

@@ -136,8 +136,8 @@
 	function saveDlgCode(x){
 		if(x==1){
 			var param = {
-				grpCd : $('#grpRg_grpCd').textbox('getValue'),
-				ditcCd : $('#grpRg_ditcCd').textbox('getValue'),
+				grpCd : $('#cdRg_grpCd').textbox('getValue'),
+				ditcCd : $('#cdRg_ditcCd').textbox('getValue'),
 				ditcNm : $('#ditcNm').textbox('getValue'),
 				cdExp : $('#cdExp').textbox('getValue'),
 				lockYn : $('#lockYn').combobox('getValue'),
@@ -145,8 +145,8 @@
 			};
 		} else if(x==2){
 			var param = {
-				grpCd : $('#cdRg_grpCd').textbox('getValue'),
-				ditcCd : $('#cdRg_ditcCd').textbox('getValue'),
+				grpCd : $('#grpRg_grpCd').textbox('getValue'),
+				ditcCd : $('#grpRg_ditcCd').textbox('getValue'),
 				ditcNm : $('#ditcNm').textbox('getValue'),
 				cdExp : $('#cdExp').textbox('getValue'),
 				lockYn : $('#lockYn').combobox('getValue'),

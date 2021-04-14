@@ -31,8 +31,8 @@ public class ADCodeService{
     }
     
     
-    public void saveCode(TbCommCode tbCommCode) {
-    	codeRepository.saveCode(tbCommCode);
+    public int saveCode(TbCommCode tbCommCode) {
+    	return codeRepository.saveCode(tbCommCode);
     }
     
     
