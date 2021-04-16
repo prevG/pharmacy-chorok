@@ -34,12 +34,13 @@ public class ADSMSController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/sms");
 		
-		sendSms2();
+		sendToastSms();
 		return mv;
 	}
 	
-	
-	public void sendSms2() {
+	//toast용 문자 보내기
+	//https://docs.toast.com/ko/Notification/SMS/ko/api-guide/  참조
+	public void sendToastSms() {
 		String hostNameUrl = "https://api-sms.cloud.toast.com";     		// 호스트 URL
 		String requestUrl= "/sms/v2.4/appKeys/0rhL2B2YO15WTOXr/sender/sms";                   		// 요청 URL
 		String apiUrl = hostNameUrl + requestUrl;
@@ -51,10 +52,10 @@ public class ADSMSController {
 		
 		
 		bodyJson.put("body","sms");				
-	    bodyJson.put("sendNo","01038252547");			
+	    bodyJson.put("sendNo","01038252547");//토스트에 발신자번호 등록된 번호로만 해야됨.
 	    
-	    //821030038397
-	    toJson.put("recipientNo","01030038397");			
+	    
+	    toJson.put("recipientNo","01030038397");		
 	    toArr.add(toJson);
 	    
 		
@@ -108,8 +109,8 @@ public class ADSMSController {
 	    
 	}
 	
-	
-	public void sendSms() {
+	//네이버 클라우드 문자
+	public void sendNaverCloudSms() {
 		String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
 		String requestUrl= "/sms/v2/services/";                   		// 요청 URL
 		String requestUrlType = "/messages";                      		// 요청 URL
