@@ -1,0 +1,380 @@
+    <div class="modal-header">
+        <h5 class="modal-title">상담하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card card-primary card-outline card-outline-tabs">
+					<div class="card-header p-0 border-bottom-0">
+					  	<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">고객정보</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">차트정보</a>
+							</li>
+					  	</ul>
+					</div>
+					<div class="card-body">
+						<div class="tab-content" id="custom-tabs-four-tabContent">
+							<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-header bg-info">
+												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>기본정보</h3>
+											</div>
+											<div class="card-body p-3">
+												<table class="table-sm table table-borderless">
+													<colgroup>
+														<col width="18%"/>
+														<col width="32%"/>
+														<col width="18%"/>
+														<col width="32%"/>
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>이름</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																</div>
+															</td>
+															<th>연락처</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" maxlength="13" tabindex="5">
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>생년월일</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="birthDt" name="birthDt" class="form-control"  tabindex="3">
+																	<input type="text" id="birthDt" name="birthDt" class="form-control"  tabindex="3">
+																</div>
+															</td>
+															<th>성별</th>
+															<td>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">여성</label>
+																</div>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd2">남성</label>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+										<div class="card">
+											<div class="card-header bg-info">
+												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>결혼정보</h3>
+											</div>
+											<div class="card-body p-3">
+												<table class="table-sm table table-borderless">
+													<colgroup>
+														<col width="18%"/>
+														<col width="32%"/>
+														<col width="18%"/>
+														<col width="32%"/>
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>결혼유무</th>
+															<td colspan="3">
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">미혼</label>
+																</div>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd2">기혼</label>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>출산 자녀수</th>
+															<td >
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">여성</label>
+																</div>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd2">남성</label>
+																</div>
+															</td>
+															<th>마지막 출산년도</th>
+															<td >
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">여성</label>
+																</div>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd2">남성</label>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>모유수유 현재</th>
+															<td colspan="3">
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">예</label>
+																</div>
+																<div class="form-check form-check-inline">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd2">아니요</label>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+										<div class="card">
+											<div class="card-header bg-info">
+												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>내원경로</h3>
+											</div>
+											<div class="card-body p-3">
+												<table class="table-sm table table-borderless">
+													<colgroup>
+														<col width="18%"/>
+														<col width="*"/>
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">지인소개</label>
+																</div>
+															</th>
+															<td></td>
+														</tr>
+														<tr>
+															<th>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">홈페이지</label>
+																</div>
+															</th>
+															<td></td>
+														</tr>
+														<tr>
+															<th>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">카카오톡 검색창</label>
+																</div>
+															</th>
+															<td></td>
+														</tr>
+														<tr>
+															<th>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">블로그 및 인터넷</label>
+																</div>
+															</th>
+															<td></td>
+														</tr>
+														<tr>
+															<th>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+																	<label class="form-check-label" for="genTpCd1">기타</label>
+																</div>
+															</th>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-header bg-info">
+												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>주소정보</h3>
+											</div>
+											<div class="card-body p-3">
+												<table class="table-sm table table-borderless">
+													<colgroup>
+														<col width="18%"/>
+														<col width="*"/>
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>우편번호</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>주소</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<th>상세주소</th>
+															<td>
+																<div class="input-group input-group-sm" style="width:200px;" >
+																	<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="card">
+											<div class="card-header">
+												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>상담이력</h3>
+											</div>
+											<div class="card-body p-3">
+												<div class="row mb-1">
+													<div class="col-sm-12 text-right">
+														<button type="button" id="btnNewChart" name="btnNewChart" class="btn btn-success btn-sm">차트생성</button>
+													</div>
+												</div>
+												<div class="row mb-1">
+													<div class="col-sm-12">
+														<div id="consultation-table"></div>
+													</div>
+												</div>
+												<div class="row mb-1">
+													<div class="col-sm-12 text-right">
+														<textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="15" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
+													</div>
+												</div>
+											</div>
+											<!-- /.card-body -->
+										</div>
+									</div>
+									<div class="col-sm-9">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="card card-primary card-outline card-outline-tabs">
+													<div class="card-header p-0 border-bottom-0">
+														<ul class="nav nav-tabs" id="custom-tabs-four-tab111" role="tablist">
+															<li class="nav-item">
+																<a class="nav-link active" id="custom-tabs-four-home-tab111" data-toggle="pill" href="#custom-tabs-four-home111" role="tab" aria-controls="custom-tabs-four-home111" aria-selected="true">설문차트</a>
+															</li>
+															<li class="nav-item">
+																<a class="nav-link" id="custom-tabs-four-profile-tab111" data-toggle="pill" href="#custom-tabs-four-profile111" role="tab" aria-controls="custom-tabs-four-profile111" aria-selected="false">복용차트</a>
+															</li>
+														</ul>
+													</div>
+													<div class="card-body">
+														<div class="tab-content" id="custom-tabs-four-tabContent111">
+															<div class="tab-pane fade active show" id="custom-tabs-four-home111" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab111">
+															</div>
+															<div class="tab-pane fade" id="custom-tabs-four-profile111" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab111">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<table class="table-sm table table-borderless">
+																			<colgroup>
+																				<col width="16%"/>
+																				<col width="16%"/>
+																				<col width="16%"/>
+																				<col width="16%"/>
+																				<col width="16%"/>
+																				<col width="*"/>
+																			</colgroup>
+																			<tbody>
+																				<tr>
+																					<th>시작 체중</th>
+																					<td>
+																						<div class="input-group input-group-sm" style="width:200px;" >
+																							<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																						</div>
+																					</td>
+																					<th>목표 체중</th>
+																					<td>
+																						<div class="input-group input-group-sm" style="width:200px;" >
+																							<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																						</div>
+																					</td>
+																					<th>목표 감량</th>
+																					<td>
+																						<div class="input-group input-group-sm" style="width:200px;" >
+																							<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"  tabindex="3">
+																						</div>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div id="dosingchar-table"></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+	<script type="text/javascript" th:inline="javascript">
+		var table01 = new Tabulator("#consultation-table", {
+			height:"120px",
+			headerVisible : false,
+			columns:[
+				{title:"No"    , field:"name"},
+				{title:"상담일시", field:"progress"},
+				{title:"담당약사", field:"gender"}
+			],
+		});
+		var table02 = new Tabulator("#dosingchar-table", {
+		    columnHeaderVertAlign:"center",
+		    layout:"fitDataFill",
+			columns:[
+				{title:"No"     , field:"name"},
+				{title:"복용단계" , field:"progress"},
+				{title:"복용일자" , field:"gender"},
+				{title:"요일"	 , field:"progress"},
+				{title:"상담여부" , field:"gender"},
+				{title:"복용여부" , field:"progress"},
+				{title:"체중"    , field:"gender"},
+				{title:"감량"   , field:"gender"},
+				{title:"몸상태"  , field:"gender"},
+				{title:"약반응"  , field:"gender"}
+			],
+		});
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/rs1001p02.js}"></script> 

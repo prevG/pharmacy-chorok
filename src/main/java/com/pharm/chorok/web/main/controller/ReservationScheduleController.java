@@ -40,6 +40,12 @@ public class ReservationScheduleController {
 		return mv;
 	}
 
+
+	@PostMapping("/RS1001P02")
+	public String goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
+		return "main/RS1001P02";
+	}
+
 	
 	@PostMapping("/RS1001MV/detail")
 	public ModelAndView detail(
@@ -50,7 +56,6 @@ public class ReservationScheduleController {
         return mv;
 	}
 	
-
 	@PostMapping("/RS1001MV/refresh")
 	public ModelAndView refresh(
 			ReservationPagination reservationPagination) throws Exception {

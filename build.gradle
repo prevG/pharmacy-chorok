@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.webjars:datetimepicker:2.5.20-1'
 	implementation 'org.webjars.npm:bootstrap-icons:1.4.0'
 	implementation 'org.webjars.npm:jquery-contextmenu:2.8.0'
+	implementation 'org.webjars.npm:tabulator-tables:4.9.3'
 
 	
 	implementation 'org.springframework.boot:spring-boot-starter-security'

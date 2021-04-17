@@ -3,6 +3,8 @@
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">	
+
+	<link rel="stylesheet" th:href="@{/webjars/tabulator-tables/4.9.3/dist/css/tabulator.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
 </th:block>
@@ -10,6 +12,7 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 	
+	<script th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
 	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
 	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
 	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
@@ -87,10 +90,10 @@
 		                  		<form name="detailForm" id="detailForm" action="POST">
 						        <table class="table-sm table table-borderless">
 									<colgroup>
-										<col width="12%"/>
-										<col width="30%"/>
-										<col width="12%"/>
-										<col width="46%"/>
+										<col width="20%"/>
+										<col width="25%"/>
+										<col width="15%"/>
+										<col width="40%"/>
 									</colgroup>
 									<tbody>
 										<tr>
@@ -137,15 +140,9 @@
 										</tr>
 										<tr>
 											<th>휴대전화</th>
-											<td>
+											<td colspan="3">
 												<div class="input-group input-group-sm" style="width:200px;" >
 													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}" maxlength="13" tabindex="5">
-												</div>
-											</td>
-											<th>일반전화</th>
-											<td>
-												<div class="input-group input-group-sm" style="width:200px;" >
-													<input type="text" id="rsvtPhnNo" name="rsvtPhnNo" class="form-control" th:value="${schInfo?.rsvtPhnNo}"   maxlength="14" tabindex="6">
 												</div>
 											</td>
 										</tr>
@@ -161,54 +158,50 @@
 										<tr>
 											<th>기타메모</th>
 											<td colspan="3">
-												<div class="form-group">
-												    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
-												</div>
+												<textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 								<input type="hidden" id="id" name="id" th:value="${schInfo?.id}" >
 								</form>
+								<script type="text/javascript" th:inline="javascript">
+									var rowList  = /*[[${rowList}]]*/'';
+									var currCal  = /*[[${currCal}]]*/'';
+					
+									/** timepicker에 사용될 값 조회 */
+									var allowTimeList = [];
+									$(rowList).find( function(obj) {
+										var hhmm = moment( obj["startHm"] ).format("HH:mm");
+										allowTimeList.push( hhmm );
+									})
+								
+									/** 예약일시 datetimepicker 적용 */
+									$.datetimepicker.setLocale('ko');
+									$( "#rsvtDt" ).datetimepicker({
+										minDate	: '2021-01-01',
+										format	: 'Y-m-d H:i',
+										weeks   : true,
+										lang    : "ko",
+										//scrollMonth : false,
+										//scrollInput : false,
+										allowTimes: allowTimeList
+									});
+								</script>
 		                	</div>
 		              	</div><!-- /.card-body -->
 		              	<div class="card-footer clearfix">
 		              		<div class="row">
 				            	<div class="col-sm-4">
-									<button type="button" id="prevWeek" name="prevWeek" class="btn btn-success btn-sm">상담하기</button>
+									<button type="button" id="prevWeek" name="btnNewChart" class="btn btn-success btn-sm">상담하기</button>
 							    </div>
 				            	<div class="col-sm-8 text-right">
-									<button type="button" id="prevWeek" name="prevWeek" class="btn btn-primary btn-sm">저장</button>
-									<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">수정</button>
-									<button type="button" id="nextWeek" name="nextWeek" class="btn btn-danger btn-sm">삭제</button>
+									<button type="button" id="prevWeek" name="btnSaveRsvtSch"   class="btn btn-primary btn-sm">저장</button>
+									<button type="button" id="nextWeek" name="btnDeleteRsvtSch" class="btn btn-danger btn-sm">삭제</button>
 							    </div>
 						    </div>
 			            </div>
 					</div>
-					   	
-					<script type="text/javascript" th:inline="javascript">
-					var rowList  = /*[[${rowList}]]*/'';
-					var currCal  = /*[[${currCal}]]*/'';
-	
-					/** timepicker에 사용될 값 조회 */
-					var allowTimeList = [];
-				    rowList.find( function( obj) {
-				        var hhmm = moment( obj["startHm"] ).format("HH:mm");
-				        allowTimeList.push( hhmm );
-				    });
-				
-					/** 예약일시 datetimepicker 적용 */
-				    $.datetimepicker.setLocale('ko');
-				    $( "#rsvtDt" ).datetimepicker({
-				        minDate	: '2021-01-01',
-				        format	: 'Y-m-d H:i',
-				        weeks   : true,
-				        lang    : "ko",
-				        //scrollMonth : false,
-				        //scrollInput : false,
-				        allowTimes: allowTimeList
-				    });
-				    </script>
 				</div>
 			</div>
 		</div>
@@ -216,6 +209,12 @@
 
 	<div class="modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+		</div>
+	</div>
+
+	<div class="modal" id="modalRsvtChart" tabindex="-1" role="dialog">
+		<div class="modal-dialog" style="min-width:1600px;min-height:800px;">
             <div class="modal-content"></div>
 		</div>
 	</div>
