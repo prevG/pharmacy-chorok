@@ -65,7 +65,7 @@
 										th:data-row="${row.id}" th:data-col="${col.daysNum}">
 									
 										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-										<div th:data-id="${data.id}">
+										<div th:data-id="${data.rsvtId}">
 											<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 										</div>
 										</th:block>
@@ -75,7 +75,7 @@
 						</table>
 					</div>
 				</div>
-				<div class="col-sm-4 border border-light">
+				<div class="col-sm-5 border border-light">
 					<div class="row mb-1">
 					    <div class="col-sm-6">
 					    	<button type="button" id="btnNewSch" name="btnNewSch" class="btn btn-success btn-sm">새 스케쥴 등록하기</button>
@@ -91,9 +91,9 @@
 						        <table class="table-sm table table-borderless">
 									<colgroup>
 										<col width="20%"/>
-										<col width="25%"/>
 										<col width="15%"/>
-										<col width="40%"/>
+										<col width="15%"/>
+										<col width="50%"/>
 									</colgroup>
 									<tbody>
 										<tr>
@@ -163,7 +163,8 @@
 										</tr>
 									</tbody>
 								</table>
-								<input type="hidden" id="id" name="id" th:value="${schInfo?.id}" >
+								<input type="hidden" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" >
+								<input type="hidden" id="custId" name="custId" th:value="${schInfo?.custId}" >
 								</form>
 								<script type="text/javascript" th:inline="javascript">
 									var rowList  = /*[[${rowList}]]*/'';
@@ -220,6 +221,6 @@
 	</div>
 	<script type="text/javascript" th:inline="javascript">
 	</script>
-	<script type="text/javascript" th:src="@{/js/main/rs1001mv.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/main/RS1001MV.js}"></script> 
 </div>
 </html>

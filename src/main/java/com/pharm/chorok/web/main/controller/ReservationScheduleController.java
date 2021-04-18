@@ -32,18 +32,21 @@ public class ReservationScheduleController {
 	}
 	
 	
-	@PostMapping("/RS1001P01")
+	@PostMapping("/RS1001PV01")
 	public ModelAndView goRS1001P01(TbPpRsvtSch rsvt) throws Exception {
 		
-		ModelAndView mv = new ModelAndView( "main/RS1001P01" );
+		ModelAndView mv = new ModelAndView( "main/RS1001PV01" );
 		rsvtSchSvc.findReservationInfoByRsvtId( mv, rsvt );
 		return mv;
 	}
 
 
-	@PostMapping("/RS1001P02")
-	public String goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
-		return "main/RS1001P02";
+	@PostMapping("/RS1001PU02")
+	public ModelAndView goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU02");
+		rsvtSchSvc.findCustomerByRsvtId( mv, rsvt );
+		return mv;
 	}
 
 	

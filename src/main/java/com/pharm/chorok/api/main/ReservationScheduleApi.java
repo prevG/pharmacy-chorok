@@ -1,4 +1,4 @@
-package com.pharm.chorok.restapi.main;
+package com.pharm.chorok.api.main;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RequestMapping(value = "/api/v1/main/rsvt")
+@RequestMapping(value = "/api/v1/main/reservation")
 @RestController
 public class ReservationScheduleApi {
 

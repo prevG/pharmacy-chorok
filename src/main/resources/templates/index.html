@@ -61,7 +61,7 @@
 										th:data-row="${row.id}" th:data-col="${col.daysNum}">
 									
 										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-										<div th:data-id="${data.id}">
+										<div th:data-id="${data.rsvtId}">
 											<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 										</div>
 										</th:block>
@@ -80,12 +80,6 @@
 
 	<div class="modal"  id="modalRsvtDtl" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content"></div>
-		</div>
-	</div>
-
-	<div class="modal" id="modalRsvtChart" tabindex="-1" role="dialog">
-		<div class="modal-dialog" style="min-width:1600px;">
             <div class="modal-content"></div>
 		</div>
 	</div>

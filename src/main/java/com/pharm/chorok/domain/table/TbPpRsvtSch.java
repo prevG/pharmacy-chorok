@@ -9,12 +9,13 @@ import lombok.Data;
 @Data
 public class TbPpRsvtSch extends TbCommColumn {
 
-    private String id;
+    private Long rsvtId;
     private String rsvtUsrNm;
     private String rsvtCellNo;
     private String rsvtPhnNo;
     private String genTpCd;
     private String rsvtTpCd;
+    private Long custId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date rsvtDt;

@@ -7,7 +7,7 @@ $(document).ready(function () {
     $(document).on("click", "button[name='rsvtSch']", function (e) {
 
         var params = {
-            "id": $(e.target).closest("div").attr("data-id")
+            "rsvtId": $(e.target).closest("div").attr("data-id")
         }
         findReservationDetail(params);
     });
@@ -19,9 +19,11 @@ $(document).ready(function () {
 
         e.preventDefault(); //remove href function
         var params = {
-            "id": 1
+            "rsvtId": $("#rsvtId").val(),
+            "custId": $("#custId").val()
         };
-        $("#modalRsvtChart .modal-content").load("/reservation/RS1001P02", params, function (data, status, xhr) {
+
+        $("#modalRsvtChart .modal-content").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
             $("#modalRsvtChart").modal('show');
         });
     });
@@ -31,7 +33,7 @@ $(document).ready(function () {
      **************************************************************/
     $(document).on("click", "button[name='btnNewSch']", function (e) {
         var params = {
-            "id": ""
+            "rsvtId": ""
         }
         findReservationDetail(params);
     });
@@ -104,7 +106,7 @@ $(document).ready(function () {
         var params = $("form[name=detailForm]").serialize();
         $.ajax({
             type: 'post',
-            url: '/api/v1/main/rsvt/saveRsvtSch',
+            url: '/api/v1/main/reservation/saveRsvtSch',
             data: params,
             success: function (result) {
 
