@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.CustomerRepository">
+
+
+	<select id="findCustomerByCustId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+    SELECT CUST_ID
+         , CUST_USR_NM
+         , CUST_CELL_NO
+         , CUST_BIRTH_DT
+         , CUST_GEN_TP_CD
+         , MRG_YN
+         , PCRT_CHD_CNT
+         , LST_PCRT_YEAR
+         , BRST_FDG_YN
+         , VIST_TP_CD
+         , ZIP_CODE
+         , ADDR1
+         , ADDR2
+         , REG_DT
+         , REG_USR_NO
+         , UPD_DT
+         , UPD_USR_NO
+      FROM TB_CUSTOMER
+     WHERE CUST_ID = #{custId}
+	]]>
+	</select>
+
+    <insert id="insertTbCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+    INSERT INTO TB_CUSTOMER (
+           CUST_USR_NM
+         , CUST_CELL_NO
+         , CUST_BIRTH_DT
+         , CUST_GEN_TP_CD
+         , MRG_YN
+         , PCRT_CHD_CNT
+         , LST_PCRT_YEAR
+         , BRST_FDG_YN
+         , VIST_TP_CD
+         , ZIP_CODE
+         , ADDR1
+         , ADDR2
+         , REG_DT
+         , REG_USR_NO
+    ) VALUES (
+           #{custUsrNm}
+         , #{custCellNo}
+         , #{custBirthDt}
+         , #{custGenTpCd}
+         , #{mrgYn}
+         , #{pcrtChdCnt}
+         , #{lstPcrtYear}
+         , #{brstFdgYn}
+         , #{vistTpCd}
+         , #{zipCode}
+         , #{addr1}
+         , #{addr2}
+         , now()
+         , #{regUsrNo}
+    )
+	]]>
+	</insert>
+
+    <update id="updateTbCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+    UPDATE TB_CUSTOMER
+       SET UPD_DT          = now()
+         , UPD_USR_NO      = #{regUsrNo}
+         , CUST_USR_NM     = #{custUsrNm}
+         , CUST_CELL_NO    = #{custCellNo}
+         , CUST_BIRTH_DT   = #{custBirthDt}
+         , CUST_GEN_TP_CD  = #{custGenTpCd}
+         , MRG_YN          = #{mrgYn}
+         , PCRT_CHD_CNT    = #{pcrtChdCnt}
+         , LST_PCRT_YEAR   = #{lstPcrtYear}
+         , BRST_FDG_YN     = #{brstFdgYn}
+         , VIST_TP_CD      = #{vistTpCd}
+         , ZIP_CODE        = #{zipCode}
+         , ADDR1           = #{addr1}
+         , ADDR2           = #{addr2}
+     WHERE CUST_ID = #{custId}
+	]]>
+	</update>
+</mapper>

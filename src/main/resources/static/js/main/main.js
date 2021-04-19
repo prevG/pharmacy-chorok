@@ -1,5 +1,6 @@
 $( document ).ready( function() {
 
+
     /**************************************************************
      * 예약고객 상세스케쥴 클릭시 상세스케쥴 확인
      **************************************************************/
@@ -7,9 +8,9 @@ $( document ).ready( function() {
         
         e.preventDefault(); //remove href function
         var params = {
-        	"id" : $(e.target ).closest("div").attr("data-id")
+        	"rsvtId" : $(e.target ).closest("div").attr("data-id")
         };	
-		$(".modal .modal-content").load("/reservation/RS1001P01", params, function (data, status, xhr) {			
+		$(".modal .modal-content").load("/reservation/RS1001PU01", params, function (data, status, xhr) {			
 			$(".modal").modal('show');
 		});
     });
@@ -22,8 +23,6 @@ $( document ).ready( function() {
         e.preventDefault(); //remove href function
         location.href = "/reservation/RS1001MV";
     });
-
-    	
 
     refreshTimeTable = function( params ) {
         var url = "/reservation/RS1001MV/refresh";

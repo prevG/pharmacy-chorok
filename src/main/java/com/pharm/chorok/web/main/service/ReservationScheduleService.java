@@ -3,17 +3,19 @@ package com.pharm.chorok.web.main.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.main.ReservationPagination;
+import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.domain.table.TbPpWorkTime;
+import com.pharm.chorok.web.main.repository.CustomerRepository;
+import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.pharm.chorok.common.service.CalendarService;
-import com.pharm.chorok.domain.main.ReservationPagination;
-import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.domain.table.TbPpWorkTime;
-import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 @Service
 public class ReservationScheduleService {
@@ -23,6 +25,9 @@ public class ReservationScheduleService {
 
     @Autowired
     private ReservationScheduleRepository rsvtSchRepo;
+
+    @Autowired
+    private CustomerRepository customerRepo;
 
     public ModelAndView getReservationByDt( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
@@ -93,8 +98,8 @@ public class ReservationScheduleService {
     
 	/**
 	 * 예약스케쥴 정보 조회
-	 * @param rsvtSch
-	 * @param model
+	 * @param ModelAndView mv
+	 * @param TbPpRsvtSch rsvtSch 
 	 * @return
 	 * @throws Exception
 	 */
@@ -106,11 +111,47 @@ public class ReservationScheduleService {
     	return mv;
     }
     
+	/**
+	 * 상담하기(접수)버튼을 클릭한 경우 예약고객정보를 가지고 고객테이블에서 기본정보 조회
+	 * 신규고객일 경우 예약정보를 사용한다.
+	 * 
+	 * @param ModelAndView mv
+	 * @param TbPpRsvtSch rsvtSch 
+	 * @return
+	 * @throws Exception
+	 */
+    public ModelAndView findCustomerByRsvtId( ModelAndView mv, TbPpRsvtSch rsvtSch  ) throws Exception {
+
+
+		Long rsvtId = rsvtSch.getRsvtId();
+		Long custId = rsvtSch.getCustId();
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		TbCustomer custInfo = null;
+		if( custId != null && custId > 0 ) {
+			
+			params.put("custId", custId );
+    		custInfo = customerRepo.findCustomerByCustId( params );
+		} else  {
+
+			params.put("rsvtId", rsvtId );
+			custInfo = rsvtSchRepo.findCustomerByRsvtSchId( params );
+		}
+		TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
+
+    	mv.addObject( "rsvtInfo", rsvtSchInfo );
+    	mv.addObject( "custInfo", custInfo );
+    	return mv;
+    }
+
     
 	public int saveReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
 		
 		int result = -1;
-		if( !StringUtils.hasLength( rsvt.getId() )) {
+
+		Long rsvtId = rsvt.getRsvtId();
+		if( rsvtId != null && rsvtId > 0) {
 			result = rsvtSchRepo.insertTbPpRsvtSch( rsvt );
 		} else {
 			result = rsvtSchRepo.updateTbPpRsvtSch( rsvt );

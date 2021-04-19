@@ -37,7 +37,7 @@
     SELECT WT.ID                  AS "wt.id"
          , WT.START_HM            AS "wt.startHm"
          , WT.END_HM              AS "wt.endHm"
-         , SCH.ID                 
+         , SCH.RSVT_ID                 
          , SCH.RSVT_DT            
          , SCH.RSVT_USR_NM
          , CASE LENGTH(RSVT_CELL_NO)
@@ -48,21 +48,21 @@
       FROM TB_PP_WORK_TIME WT
     INNER JOIN
         (
-        SELECT ID
-                , DATE_FORMAT(RSVT_DT, '%H%i%s') AS RSVT_HM
-                , RSVT_DT
-                , RSVT_USR_NM
-                , RSVT_CELL_NO
-                , CAL.DAYS_NUM
-                , CAL.DAYS_STR_KOR
-            FROM TB_PP_RSVT_SCH
-            INNER JOIN 
-                TB_COMM_CALENDAR CAL
-            ON DATE_FORMAT(RSVT_DT, '%Y%m%d') = CAL.BASE_DT
-            WHERE CAL.WK_NUM = (SELECT WK_NUM 
-								  FROM TB_COMM_CALENDAR 
-								 WHERE BASE_DT_STR = #{baseDtStr}
-								)
+        SELECT RSVT_ID
+			, DATE_FORMAT(RSVT_DT, '%H%i%s') AS RSVT_HM
+			, RSVT_DT
+			, RSVT_USR_NM
+			, RSVT_CELL_NO
+			, CAL.DAYS_NUM
+			, CAL.DAYS_STR_KOR
+		FROM TB_PP_RSVT_SCH
+		INNER JOIN 
+			TB_COMM_CALENDAR CAL
+		ON DATE_FORMAT(RSVT_DT, '%Y%m%d') = CAL.BASE_DT
+		WHERE CAL.WK_NUM = (SELECT WK_NUM 
+								FROM TB_COMM_CALENDAR 
+								WHERE BASE_DT_STR = #{baseDtStr}
+							)
             AND CAL.DAYS_NUM > 1
         ) SCH
         ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
@@ -95,7 +95,7 @@
 		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationInfoByRsvtId */
-	SELECT ID
+	SELECT RSVT_ID
 	     , RSVT_USR_NM
          , RSVT_CELL_NO
 	     , RSVT_PHN_NO
@@ -103,8 +103,9 @@
 	     , RSVT_TP_CD
 	     , GEN_TP_CD
 	     , RSVT_DESC
+		 , CUST_ID
 	  FROM TB_PP_RSVT_SCH SCH
-	 WHERE ID = #{id}
+	 WHERE RSVT_ID = #{rsvtId}
 	]]>
 	</select>
 	
@@ -122,6 +123,19 @@
      WHERE WT.USE_YN = 'Y'
 	]]>
 	</select>
+
+
+	<select id="findCustomerByRsvtSchId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findCustomerByRsvtSchId */
+	SELECT RSVT_USR_NM  AS CUST_USR_NM
+         , RSVT_CELL_NO AS CUST_CELL_NO
+         , GEN_TP_CD    AS CUST_GEN_TP_CD
+      FROM TB_PP_RSVT_SCH A
+     WHERE 1 = 1
+       AND RSVT_ID = #{rsvtId}
+	]]>
+	</select>
 	
 	
 	<insert id="insertTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
@@ -136,6 +150,7 @@
 	   , GEN_TP_CD
 	   , RCMD_USR_NO
 	   , PIC_USR_NO
+	   , CUST_ID
 	   , REG_DT
 	   , REG_USR_NO
 	) VALUES (
@@ -148,6 +163,7 @@
 	   , #{genTpCd}
 	   , #{rcmdUsrNo}
 	   , #{picUsrNo}
+	   , #{custId}
 	   , now()
 	   , #{regUsrNo}
 	)
@@ -169,14 +185,15 @@
 		 , GEN_TP_CD     = #{genTpCd} 
 		 , RCMD_USR_NO   = #{rcmdUsrNo} 
 	     , PIC_USR_NO    = #{picUsrNo}
-     WHERE ID = #{id}	 
+		 , CUST_ID       = #{custId}
+     WHERE RSVT_ID = #{rsvtId}	 
 	]]>
 	</update>
 	
 	<update id="deleteTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	DELETE FROM TB_PP_RSVT_SCH
-     WHERE ID = #{id}	 
+     WHERE RSVT_ID = #{rsvtId}	 	 
 	]]>
 	</update>
 	

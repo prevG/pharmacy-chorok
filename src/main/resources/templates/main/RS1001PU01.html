@@ -84,13 +84,14 @@
 					<th>기타메모</th>
 					<td colspan="3">
 						<div class="form-group">
-						    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
+						    <textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="5" th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9"></textarea>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" id="id" name="id" th:value="${schInfo?.id}" >
+		<input type="hidden" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" >
+		<input type="hidden" id="custId" name="custId" th:value="${schInfo?.custId}" >
 		</form>
     </div>
     <div class="modal-footer">
