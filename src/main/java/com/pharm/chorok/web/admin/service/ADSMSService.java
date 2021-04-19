@@ -14,12 +14,6 @@ public class ADSMSService{
 	@Autowired
 	private ADSMSRepository SMSRepository;
 
-    public ArrayList<TbCommCode> selectCommCode(String grpCd) throws Exception {
-    	return SMSRepository.selectCommCode(grpCd);
-    }
     
-    public void insertCommCode() throws Exception{
-    	//codeRepository.insertCommCode()
-    }
 
 }
