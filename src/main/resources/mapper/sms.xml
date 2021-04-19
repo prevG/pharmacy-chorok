@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.admin.repository.ADSMSRepository">
+
+	<select id="selectSmsMsg" parameterType="com.pharm.chorok.domain.table.TbSmsMsg" resultType="com.pharm.chorok.domain.table.TbSmsMsg">
+		SELECT SMS_VER,
+			   SMS_GRP_TYPE,
+			   SMS_TYPE,
+			   SMS_TITLE,
+			   SMS_CONTENT,
+			   SMS_USE_TYPE,
+			   SMS_PERIOD,
+			   USE_YN,
+			   REG_DTTM,
+			   REG_ID,
+			   UPD_DTTM,
+			   UPD_ID
+		FROM TB_SMS_MSG
+		WHERE SMS_VER = #{smsVer}
+		AND SMS_GRP_TYPE = #{smsGrpType}
+		AND SMS_TYPE = #{smsType}
+	</select>
+	
+	
+	
+	
+</mapper>

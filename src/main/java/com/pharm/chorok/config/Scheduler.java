@@ -26,6 +26,7 @@ public class Scheduler {
 	}
 	*/
     
+    /*
     @Scheduled(fixedDelay = 10000) // 메소드 호출이 종료되는 시간에서 10000ms 이후 재 호출 
     public void doFixedDelayJob() { 
         schedulingService.job("RsrvSMS"); 
@@ -35,5 +36,6 @@ public class Scheduler {
     public void doFixedRateJob() { 
         schedulingService.job("DoseSMS"); 
     }
+    */
     
  }
