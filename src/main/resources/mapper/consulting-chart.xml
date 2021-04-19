@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.ConsultingRepository">
+
+
+
+    <insert id="insertNewConsultingChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+    INSERT INTO TB_PP_CNST_CHART (
+           CUST_ID
+         , CNST_DT
+         , CUST_BIRTH_DT
+         , PIC_USR_NO
+         , DEL_YN
+         , CNST_DESC
+         , CUR_WGT
+         , TGT_WGT
+         , START_DOSG_DT
+         , REG_DT
+         , REG_USR_NO
+    ) VALUES (
+           #{custId}
+         , #{cnstDt}
+         , #{custBirthDt}
+         , #{picUsrNo}
+         , 'N'
+         , #{cnstDesc}
+         , #{curWgt}
+         , #{tgtWgt}
+         , #{startDosgDt}
+         , now()
+         , #{regUsrNo}
+    )
+	]]>
+	</insert>
+    
+	
+</mapper>

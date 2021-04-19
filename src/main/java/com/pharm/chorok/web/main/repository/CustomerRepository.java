@@ -15,6 +15,5 @@ public interface CustomerRepository {
     public TbCustomer findCustomerByCustId(HashMap<String, Object> params) throws Exception;
     public int insertTbCustomer(TbCustomer custInfo) throws Exception;
     public int updateTbCustomer(TbCustomer custInfo) throws Exception;
-    
-    
+    public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
 }

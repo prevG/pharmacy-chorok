@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.DosingRepository">
+
+    <select id="generateDosingSchedule" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+	<![CDATA[    
+	SELECT A.ROWNUM
+		 , CASE WHEN ROWNUM  <= 3  THEN '1'
+				WHEN ROWNUM  <= 7  THEN '2'
+				WHEN ROWNUM  <= 14 THEN '3'
+				WHEN ROWNUM  <= 21 THEN '4'
+				WHEN ROWNUM  <= 28 THEN '5'
+		  END AS GUBUN
+		 , A.*
+	  FROM (
+	  	   SELECT CAL.*
+	 		    , @ROWNUM := @ROWNUM + 1 AS ROWNUM
+			 FROM bazzarmall.TB_COMM_CALENDAR CAL
+			 	, (SELECT @ROWNUM :=0) TMP
+			WHERE 1 = 1
+			  AND BASE_DT_STR >= DATE_FORMAT( NOW(), '%Y%m%d')
+			  AND BASE_DT_STR < DATE_ADD( NOW(), INTERVAL 27 DAY)
+		   ) A
+	 ORDER
+	    BY A.ROWNUM
+	]]>
+	</select>
+
+    <insert id="insertNewDosingChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+	<![CDATA[    
+    INSERT INTO TB_PP_DOSG_CHART (
+          CNST_ID
+        , DOSG_DT
+        , DOSG_TP_CD
+        , CALL_YN
+        , DOSG_YN
+        , CUST_WGT
+        , DOSG_DESC1
+        , DOSG_DESC2
+        , REG_DT
+        , REG_USR_NO
+    ) VALUES (
+          #{cnstId}
+        , #{dosgDt}
+        , #{dosgTpCd}
+        , #{callYn}
+        , #{dosgYn}
+        , #{custWgt}
+        , #{dosgDesc1}
+        , #{dosgDesc2}
+        , #{regDt}
+        , #{regUsrNo}
+    )
+	]]>
+	</insert>
+
+</mapper>

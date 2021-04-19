@@ -37,4 +37,24 @@ public class CustomerApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
+
+
+
+
+	@PostMapping("/createNewConsultingChart")
+	public ResponseEntity<ResponseMessage> createNewChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			customerSvc.createNewConsultingChart( custInfo );
+
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
 }

@@ -45,4 +45,26 @@ $( document ).ready( function() {
 			}
 		});
 	});
+
+	/**************************************************************
+     * 차트 생성
+     **************************************************************/
+	 $(document).on("click", "button[name='btnNewChart']", function (e) {
+
+		var params = $("form[name=saveCustForm]").serialize();
+		$.ajax({
+			type : 'post',
+	        url  : '/api/v1/main/customer/createNewChar',
+	        data : params,
+			success : function( result ) {
+
+				if( result.status == "success" ) {
+					alert( result.message );
+					
+				} else {
+					alert( result.errorMessage );
+				}
+			}
+		});
+	});
 });

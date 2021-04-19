@@ -15,7 +15,7 @@ $(document).ready(function () {
     /**************************************************************
      * 차트생성
      **************************************************************/
-    $(document).on("click", "button[name='btnNewChart']", function (e) {
+    $(document).on("click", "button[name='btnNewChartView']", function (e) {
 
         e.preventDefault(); //remove href function
         var params = {

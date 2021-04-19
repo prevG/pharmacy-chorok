@@ -6,6 +6,7 @@ import java.util.Map;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
+import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.CustomerRepository;
 import com.pharm.chorok.web.main.repository.SurveyRepository;
 
@@ -14,8 +15,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService {
+
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ConsultingRepository consultingRepository;
 
     @Autowired
     private SurveyRepository surveyRepository;
@@ -43,8 +48,12 @@ public class CustomerService {
 		}
 		return result;
 	}
-    
-    
-    
 
+	public int createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
+		
+		int result = -1;
+		Long custId = custInfo.getCustId();
+		result = consultingRepository.insertTpPpCnstChart( null );
+		return result;
+	}
 }
