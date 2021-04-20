@@ -53,6 +53,7 @@
 			, RSVT_DT
 			, RSVT_USR_NM
 			, RSVT_CELL_NO
+			, CUST_ID
 			, CAL.DAYS_NUM
 			, CAL.DAYS_STR_KOR
 		FROM TB_PP_RSVT_SCH
@@ -90,9 +91,7 @@
 	</select>
 	
 	
-	<select id="findReservationInfoByRsvtId" 
-		parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" 
-		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<select id="findReservationInfoByRsvtId" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationInfoByRsvtId */
 	SELECT RSVT_ID
@@ -110,8 +109,7 @@
 	</select>
 	
 	
-	<select id="findReservationTimeList"  
-		resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
+	<select id="findReservationTimeList" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
 	<![CDATA[
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationTimeList */
 	SELECT DISTINCT
@@ -170,13 +168,22 @@
 	]]>
 	</insert>
 	
-	
+	<update id="updateCustIdByRsvtId" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	UPDATE TB_PP_RSVT_SCH
+	   SET UPD_DT        = now()
+		 , UPD_USR_NO    = #{updUsrNo}
+		 , CUST_ID       = #{custId}
+     WHERE RSVT_ID = #{rsvtId}
+	]]>
+	</update>
+
 	<update id="updateTbPpRsvtSch" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	UPDATE TB_PP_RSVT_SCH
 	   SET UPD_DT        = now()
 		 , UPD_USR_NO    = #{updUsrNo}
-		 , RSVT_USR_NM   = #{rsvtUsrNm} 
+		 , RSVT_USR_NM   = #{rsvtUsrNm}
 		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
 		 , RSVT_CELL_NO  = REPLACE( #{rsvtCellNo}, '-', '') 
 		 , RSVT_PHN_NO   = REPLACE( #{rsvtPhnNo} , '-', '') 
@@ -186,7 +193,7 @@
 		 , RCMD_USR_NO   = #{rcmdUsrNo} 
 	     , PIC_USR_NO    = #{picUsrNo}
 		 , CUST_ID       = #{custId}
-     WHERE RSVT_ID = #{rsvtId}	 
+     WHERE RSVT_ID = #{rsvtId}
 	]]>
 	</update>
 	

@@ -54,12 +54,12 @@ $( document ).ready( function() {
 		var params = $("form[name=saveCustForm]").serialize();
 		$.ajax({
 			type : 'post',
-	        url  : '/api/v1/main/customer/createNewChar',
+	        url  : '/api/v1/main/customer/createNewChart',
 	        data : params,
 			success : function( result ) {
-
 				if( result.status == "success" ) {
 					alert( result.message );
+					table01.setData( result.data )
 					
 				} else {
 					alert( result.errorMessage );
@@ -67,4 +67,28 @@ $( document ).ready( function() {
 			}
 		});
 	});
+
+
+	/**************************************************************
+     * 차트 목록 조회
+     **************************************************************/
+	loadConsultingChart = function() {
+		var params = $("form[name=saveCustForm]").serialize();
+		$.ajax({
+			type : 'post',
+	        url  : '/api/v1/main/customer/createNewChart',
+			datatype : "json",
+	        data : params,
+			success : function( result ) {
+
+				if( result.status == "success" ) {
+					alert( result.message );
+					table01.setData( result.data )
+					
+				} else {
+					alert( result.errorMessage );
+				}
+			}
+		});
+	}
 });

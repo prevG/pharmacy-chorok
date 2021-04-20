@@ -152,9 +152,9 @@ public class ReservationScheduleService {
 
 		Long rsvtId = rsvt.getRsvtId();
 		if( rsvtId != null && rsvtId > 0) {
-			result = rsvtSchRepo.insertTbPpRsvtSch( rsvt );
-		} else {
 			result = rsvtSchRepo.updateTbPpRsvtSch( rsvt );
+		} else {
+			result = rsvtSchRepo.insertTbPpRsvtSch( rsvt );
 		}
 		return result;
 	}

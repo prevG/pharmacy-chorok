@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -59,7 +60,7 @@ public class ReservationScheduleController {
         return mv;
 	}
 	
-	@PostMapping("/RS1001MV/refresh")
+	@RequestMapping(value = "/RS1001MV/refresh", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView refresh(
 			ReservationPagination reservationPagination) throws Exception {
 		

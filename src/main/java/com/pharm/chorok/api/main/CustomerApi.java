@@ -1,7 +1,10 @@
 package com.pharm.chorok.api.main;
 
+import java.util.List;
+
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.CustomerService;
 
@@ -28,6 +31,7 @@ public class CustomerApi {
 		try {
 			customerSvc.saveCustomer( custInfo, rsvtInfo );
 
+
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
 			
@@ -41,13 +45,14 @@ public class CustomerApi {
 
 
 
-	@PostMapping("/createNewConsultingChart")
+	@PostMapping("/createNewChart")
 	public ResponseEntity<ResponseMessage> createNewChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			customerSvc.createNewConsultingChart( custInfo );
+			List<TbPpCnstChart> cnstList = customerSvc.createNewConsultingChart( custInfo, rsvtInfo );
 
+			resMsg.setData( cnstList );
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
 			

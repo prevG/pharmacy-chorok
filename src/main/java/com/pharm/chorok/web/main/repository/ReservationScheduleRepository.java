@@ -32,6 +32,8 @@ public interface ReservationScheduleRepository {
     public int updateTbPpRsvtSch(TbPpRsvtSch param) throws Exception;
     
     public int deleteTbPpRsvtSch(TbPpRsvtSch param) throws Exception;
+
+    public int updateCustIdByRsvtId(TbPpRsvtSch param) throws Exception;
     
     public List<TbPpRsvtSch> selectOneDayBeforeRsv() throws Exception;
     

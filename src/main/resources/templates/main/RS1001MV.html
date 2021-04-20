@@ -163,8 +163,8 @@
 										</tr>
 									</tbody>
 								</table>
-								<input type="hidden" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" >
-								<input type="hidden" id="custId" name="custId" th:value="${schInfo?.custId}" >
+								<input type="text" name="rsvtId" th:value="${schInfo?.rsvtId}" >
+								<input type="text" name="custId" th:value="${schInfo?.custId}" >
 								</form>
 								<script type="text/javascript" th:inline="javascript">
 									var rowList  = /*[[${rowList}]]*/'';
@@ -208,13 +208,8 @@
 		</div>
 	</section>
 
-	<div class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content"></div>
-		</div>
-	</div>
 
-	<div class="modal" id="modalRsvtChart" tabindex="-1" role="dialog">
+	<div class="modal" id="modalCnstChart" tabindex="-1" role="dialog">
 		<div class="modal-dialog" style="min-width:1600px;min-height:800px;">
             <div class="modal-content"></div>
 		</div>
