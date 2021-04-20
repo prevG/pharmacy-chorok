@@ -21,6 +21,7 @@ public class TbSmsMsg {
 	Date regDttm;
 	String updId;
 	Date updDttm;
+	String sendHhmi;
 	
 	
 }

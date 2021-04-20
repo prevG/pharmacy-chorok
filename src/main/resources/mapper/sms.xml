@@ -12,6 +12,7 @@
 			   SMS_USE_TYPE,
 			   SMS_PERIOD,
 			   USE_YN,
+			   SEND_HHMI,
 			   REG_DTTM,
 			   REG_ID,
 			   UPD_DTTM,
