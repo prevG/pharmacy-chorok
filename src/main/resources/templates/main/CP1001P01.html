@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">	
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	
+	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>상담차트</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row mb-1">
+				<div class="col-8">
+				</div>
+				<div class="col-4">
+					<div class="text-right">
+						<button type="button" class="btn btn-secondary btn-sm">불러오기</button>
+					</div>
+				</div>
+			</div>
+					
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="agrRgn">
+						<table class="table-sm table table-bordered">
+							<colgroup>
+								<col width="20%"/>
+								<col width="*"/>
+							</colgroup>
+							<tbody>
+							
+							</tbody>
+						</table>
+						
+							<div class="row">
+								<div class="col-8">
+								</div>
+								<div class="col-4">
+									<div class="text-right">
+										<button type="button" class="btn btn-primary btn-sm" id="agrNextBtn">다음</button>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
+	<script type="text/javascript" th:inline="javascript">
+			
+		$(document).ready(function(){
+			fnInit();
+		});
+		
+		
+		
+		
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/rs1001m.js}"></script> 
+</div>
+</html>
