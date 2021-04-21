@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">	
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	
+	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>상담차트</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row mb-1">
+				<div class="col-8">
+				</div>
+				<div class="col-4">
+					<div class="text-right">
+						<button type="button" class="btn btn-secondary btn-sm">불러오기</button>
+					</div>
+				</div>
+			</div>
+					
+			<div class="row">
+				<div class="col-12">
+					<table class="table table-bordered">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">지문</th>
+						      <th scope="col">응답</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="item:${cnstPaper}">
+						      <th scope="row" th:text="${item.num}"></th>
+						      <td th:text="${item.questText}"></td>
+						      <td>
+						      	<div class="input-group input-group-sm">
+						      		<!--textbox-->
+						      		<div th:if="${item.examCd} =='TEXT'">
+							      		<input type="text" th:attr="id=${item.id}" class="form-control"/>
+						      		</div>
+							      	
+							      	<!--radio-->
+							<!--      	<div th:if="${item.examCd} =='RADIO'" th:each="num : ${#numbers.sequence(1,item.examCnt)}" th:with="txt=${item.exam}">
+								      	<label th:text="${txt}" th:attr="for='exam1'"></label>
+								      	<input type="radio" th:if="${item.examCd} =='RADIO'" class="form-radio-input" th:attr="id='exam1'"/>
+							      	</div>
+							      	-->
+							      	<input type="checkbox" th:if="${item.examCd} =='CHECK'" class="form-check-input"/>
+						      	</div>
+						      </td>
+						    </tr>
+						  </tbody>
+					</table>
+				</div>
+			</div>
+			
+			
+		</div>
+	</section>
+
+	
+	<script type="text/javascript" th:inline="javascript">
+			
+		$(document).ready(function(){
+			fnInit();
+		});
+		
+		function fnInit(){
+		}
+		
+		
+		
+		
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/rs1001m.js}"></script> 
+</div>
+</html>
