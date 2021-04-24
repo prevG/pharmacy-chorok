@@ -59,6 +59,7 @@
          , DOSG_YN          
          , CURR_WGT    
          , LOSS_WGT     
+         , RMI_WGT
          , DOSG_DESC1       
          , DOSG_DESC2       
          , REG_DT           
@@ -81,6 +82,7 @@
         , DOSG_YN
         , CURR_WGT
         , LOSS_WGT
+        , RMI_WGT
         , DOSG_DESC1
         , DOSG_DESC2
         , REG_DT
@@ -92,6 +94,7 @@
         , #{callYn}
         , #{dosgYn}
         , #{currWgt}
+        , #{rmiWgt}
         , #{dosgDesc1}
         , #{dosgDesc2}
         , #{regDt}
@@ -111,6 +114,7 @@
          , DOSG_YN     = #{dosgYn}
          , CUST_WGT    = #{custWgt} 
          , LOSS_WGT    = #{lossWgt}
+         , RMI_WGT     = #{rmiWgt}
          , DOSG_DESC1  = #{dosgDesc1} 
          , DOSG_DESC2  = #{dosgDesc2} 
      WHERE DOSG_ID = #{dosgId}

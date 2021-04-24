@@ -15,7 +15,7 @@ public class ResultConsultingVo extends TbCommColumn {
     private String picUsrNo;
     private String delYn;
     private String cnstDesc;
-    private String curWgt;
+    private String orgWgt;
     private String tgtWgt;
     private String startDosgDt;
 }
