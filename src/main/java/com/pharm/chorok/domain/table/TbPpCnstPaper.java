@@ -5,10 +5,11 @@ import lombok.Data;
 
 @Data
 public class TbPpCnstPaper {
+	String id;
 	long cnstVer;
 	long num;
 	String questText;
-	String examType;
+	String examCd;
 	long examCnt;
 	String exam1;
 	String exam2;
@@ -17,10 +18,10 @@ public class TbPpCnstPaper {
 	String exam5;
 	String exam6;
 	String exam7;
+	String exam;
 	String useYn;
 	String regId;
-	Date regDttm;
 	String updId;
+	Date regDttm;
 	Date updDttm;
-	
 }

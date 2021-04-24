@@ -39,30 +39,42 @@
 			</div>
 					
 			<div class="row">
-				<div class="col-sm-12">
-					<div id="agrRgn">
-						<table class="table-sm table table-bordered">
-							<colgroup>
-								<col width="20%"/>
-								<col width="*"/>
-							</colgroup>
-							<tbody>
-							
-							</tbody>
-						</table>
-						
-							<div class="row">
-								<div class="col-8">
-								</div>
-								<div class="col-4">
-									<div class="text-right">
-										<button type="button" class="btn btn-primary btn-sm" id="agrNextBtn">다음</button>
-									</div>
-								</div>
-							</div>
-					</div>
+				<div class="col-12">
+					<table class="table table-bordered">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">지문</th>
+						      <th scope="col">응답</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="item:${cnstPaper}">
+						      <th scope="row" th:text="${item.num}"></th>
+						      <td th:text="${item.questText}"></td>
+						      <td>
+						      	<div class="input-group input-group-sm">
+						      		<!--textbox-->
+						      		<div th:if="${item.examCd} =='TEXT'">
+							      		<input type="text" th:attr="id=${item.id}" class="form-control"/>
+						      		</div>
+							      	
+							      	<!--radio-->
+							<!--      	<div th:if="${item.examCd} =='RADIO'" th:each="num : ${#numbers.sequence(1,item.examCnt)}" th:with="txt=${item.exam}">
+								      	<label th:text="${txt}" th:attr="for='exam1'"></label>
+								      	<input type="radio" th:if="${item.examCd} =='RADIO'" class="form-radio-input" th:attr="id='exam1'"/>
+							      	</div>
+							      	-->
+							      	<input type="checkbox" th:if="${item.examCd} =='CHECK'" class="form-check-input"/>
+						      	</div>
+						      </td>
+						    </tr>
+						  </tbody>
+					</table>
 				</div>
 			</div>
+			
+			
 		</div>
 	</section>
 
@@ -72,6 +84,9 @@
 		$(document).ready(function(){
 			fnInit();
 		});
+		
+		function fnInit(){
+		}
 		
 		
 		
