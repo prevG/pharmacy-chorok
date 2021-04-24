@@ -17,7 +17,7 @@
 			   REG_ID,
 			   UPD_DTTM,
 			   UPD_ID
-		FROM TB_SMS_MSG
+		FROM TB_COMM_SMS_MSG
 		WHERE SMS_VER = #{smsVer}
 		AND SMS_GRP_TYPE = #{smsGrpType}
 		AND SMS_TYPE = #{smsType}
