@@ -2,19 +2,22 @@ package com.pharm.chorok.api.main;
 
 import java.util.List;
 
-import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.table.TbPpDosgChart;
-import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.web.main.service.DosingChartService;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.ResultSrvVo;
+import com.pharm.chorok.domain.table.TbPpDosgChart;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.domain.table.TbPpSrvChart;
+import com.pharm.chorok.web.main.service.CnstPaperService;
+import com.pharm.chorok.web.main.service.DosingChartService;
+import com.pharm.chorok.web.main.service.ReservationScheduleService;
 
 
 @RequestMapping(value = "/api/v1/main/dosing")
@@ -26,6 +29,7 @@ public class DosingChartApi {
 
 	@Autowired
 	private DosingChartService dosgChartSvc;
+	
 
 	@PostMapping("/selectDosingChartByDosgId")
 	public ResponseEntity<ResponseMessage> selectDosingChartByDosgId(TbPpDosgChart dosingInfo) {
@@ -44,6 +48,9 @@ public class DosingChartApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
+	
+	
+	
 
 	@PostMapping("/saveRsvtSch")
 	public ResponseEntity<ResponseMessage> saveRsvtSch(TbPpRsvtSch rsvt) {
