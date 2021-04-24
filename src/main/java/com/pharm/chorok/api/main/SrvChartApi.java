@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultSrvVo;
 import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.service.CnstPaperService;
 
+
+
+@RequestMapping(value = "/api/v1/main/survey")
+@RestController
 public class SrvChartApi {
 	
 	@Autowired

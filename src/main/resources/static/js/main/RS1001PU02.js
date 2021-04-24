@@ -134,7 +134,7 @@ function callSrvChart(row){
 
 	$.ajax({
 		type : 'post',
-		url  : '/api/v1/main/dosing/selectSurveyChartByCnstId',
+		url  : '/api/v1/main/survey/selectSurveyChartByCnstId',
 		data : params,
 		success : function( result ) {
 
