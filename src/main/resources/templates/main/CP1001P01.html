@@ -43,8 +43,8 @@
 					<table class="table table-bordered">
 						  <thead>
 						    <tr>
-						      <th scope="col">#</th>
-						      <th scope="col">지문</th>
+						      <th scope="col">번호</th>
+						      <th scope="col">질문</th>
 						      <th scope="col">응답</th>
 						    </tr>
 						  </thead>
@@ -53,19 +53,24 @@
 						      <th scope="row" th:text="${item.num}"></th>
 						      <td th:text="${item.questText}"></td>
 						      <td>
-						      	<div class="input-group input-group-sm">
+						      	<div class="form-group form-row">
 						      		<!--textbox-->
-						      		<div th:if="${item.examCd} =='TEXT'">
-							      		<input type="text" th:attr="id=${item.id}" class="form-control"/>
+						      		<div th:if="${item.examCd} =='TEXT'" style="width:40%;" class="px-2">
+							      		<input type="text" th:attr="id=${item.id}" class="form-control input-lg"/>
 						      		</div>
 							      	
-							      	<!--radio-->
-							<!--      	<div th:if="${item.examCd} =='RADIO'" th:each="num : ${#numbers.sequence(1,item.examCnt)}" th:with="txt=${item.exam}">
-								      	<label th:text="${txt}" th:attr="for='exam1'"></label>
-								      	<input type="radio" th:if="${item.examCd} =='RADIO'" class="form-radio-input" th:attr="id='exam1'"/>
+							      	<!-- radio -->
+							      	<div th:if="${item.examCd} =='RADIO'" th:each="el : ${#strings.arraySplit(item.exam,',')}" class="px-2">
+							      		<label class="form-radio-label" th:text="${el}"></label>
+							      		<input type="radio" class="form-radio-input" th:attr="name=${item.id}"/>
 							      	</div>
-							      	-->
-							      	<input type="checkbox" th:if="${item.examCd} =='CHECK'" class="form-check-input"/>
+							      	
+							      	<!-- checkbox -->
+							      	<div th:if="${item.examCd} =='CHECK'" th:each="el : ${#strings.arraySplit(item.exam,',')}"  class="px-2">
+							      		<label class="form-check-label mr-4"  th:text="${el}"></label>
+							      		<input type="checkbox" class="form-check-input mr-7" th:attr="name=${item.id}"/>
+							      	</div>
+							      	
 						      	</div>
 						      </td>
 						    </tr>
