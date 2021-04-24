@@ -16,6 +16,7 @@ public class TbPpDosgChart extends TbCommColumn {
     private String dosgYn;
     private long currWgt;
     private long lossWgt;
+    private long rmiWgt;
     private String dosgDesc1;
     private String dosgDesc2;
 }

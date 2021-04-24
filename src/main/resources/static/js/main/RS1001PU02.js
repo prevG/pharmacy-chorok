@@ -155,12 +155,20 @@ function cellEditCheck( cell ) {
 function weightCheck( cell ) {
 	var currWgt = cell.getValue();
 	if( isNaN( currWgt) ){
-		alert("숫자 또는 .만 입력할 수 있습니다.")
+		alert("숫자 또는 .만 입력할 수 있습니다.");
+		cell.setValue("");
 		return;
 	}
 	var orgWgt = $("#orgWgt").val();
 	if( !isNaN(orgWgt) ) {
+		var lossWgt = (currWgt - orgWgt); //감량체중
+		cell.getRow().getCell("lossWgt").setValue( lossWgt );
 
+	}
+	var tgtWgt = $("#tgtWgt").val();
+	if( !isNaN(tgtWgt) ) {
+		var rmiWgt  = (currWgt - tgtWgt); //남은체중
+		cell.getRow().getCell("rmiWgt").setValue( rmiWgt );
 	}
 	return true;
 }

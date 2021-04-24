@@ -353,7 +353,13 @@
 									</div>
 								</div>
 								<div class="col-sm-9">
-									<div id="charts" th:replace="main/RS1001PU03 :: charts-area">
+									<div class="card card-primary card-outline card-outline-tabs">
+										<div class="card-header p-0 border-bottom-0">
+											<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>차트정보</h3>
+										</div>
+										<div class="card-body">
+											<div id="charts" th:replace="main/RS1001PU03 :: charts-area"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -392,14 +398,15 @@
 		height: "120px",
 		columnHeaderVertAlign: "center",
 		selectable : 1,
+		headerSort:false,
 		columns: [
-			{ title: "상담일시", field: "cnstDt"  , width:100, hozAlign:"center", headerSort:false},
-			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true, headerSort:false},
-			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", headerSort:false, visible : true},
-			{ title: "삭제",    width:60, hozAlign:"center", headerSort:false},
-			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", headerSort:false, visible : true},
-			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", headerSort:false, visible : true},
-			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", headerSort:false, visible : true},
+			{ title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
+			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true},
+			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", visible : true},
+			{ title: "삭제",    width:60, hozAlign:"center"},
+			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", visible : true},
+			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", visible : true},
+			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : true},
 		],
 		rowClick:function(e, row){
 			callDosingChart( row  );
@@ -410,17 +417,19 @@
 		height  : "500px",
 		columnHeaderVertAlign: "center",
 		selectable : 1,
+		headerSort:false,
 		columns : [
-			{ title: "일수"    , field: "seqStr"     , width:60,  hozAlign:"right"},
-			{ title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"left",  editor:"select", editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
-			{ title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", editor:dateEditor, cellEdited:function(cell){ displayEdited(cell)}, editable:cellEditCheck},
-			{ title: "요일"    , field: "daysStrKor" , width:70, hozAlign:"center", },
-			{ title: "상담여부"  , field: "callYn"    , widht:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam01}, formatter:"lookup", formatterParams:selectParam01, editable:cellEditCheck},
-			{ title: "복용여부" , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
-			{ title: "체중"    , field: "currWgt"    , width:70,  hozAlign:"right", editor:"input", cellEdited:function(cell){ weightCheck(cell)}, editable:true},
-			{ title: "감량"    , field: "lossWgt"    , width:70,  hozAlign:"right"},
-			{ title: "몸상태"   , field: "dosgDesc1"  , width:200},
-			{ title: "약반응"  , field: "dosgDesc1"   , width:200}
+			{ title: "일수"    , field: "seqStr"     , width:60,  hozAlign:"right", frozen:true},
+			{ title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"left",  frozen:true, editor:"select", editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
+			{ title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", frozen:true, editor:dateEditor, cellEdited:function(cell){ displayEdited(cell)}, editable:cellEditCheck},
+			{ title: "요일"    , field: "daysStrKor" , width:50, hozAlign:"center"},
+			{ title: "상담예약"  , field: "callYn"    , widht:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam01}, formatter:"lookup", formatterParams:selectParam01, editable:cellEditCheck},
+			{ title: "복용여부"  , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+			{ title: "현재체중"  , field: "currWgt"   , width:70,  hozAlign:"right", editor:"number", cellEdited:function(cell){ weightCheck(cell)}, editable:true},
+			{ title: "감량체중"  , field: "lossWgt"   , width:70,  hozAlign:"right"},
+			{ title: "남은체중"  , field: "rmiWgt"    , width:70,  hozAlign:"right"},
+			{ title: "몸상태"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true},
+			{ title: "약반응"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true}
 		]
 	});
 </script>
