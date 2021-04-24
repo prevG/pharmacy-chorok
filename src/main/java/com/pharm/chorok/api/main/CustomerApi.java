@@ -1,8 +1,13 @@
-package com.pharm.chorok.restapi.main;
+package com.pharm.chorok.api.main;
+
+import java.util.HashMap;
+import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
+import com.pharm.chorok.web.main.service.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,20 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RequestMapping(value = "/api/v1/main/rsvt")
+@RequestMapping(value = "/api/v1/main/customer")
 @RestController
-public class ReservationScheduleApi {
+public class CustomerApi {
 
 	@Autowired
-	private ReservationScheduleService rsvtSchSvc;
+	private CustomerService customerSvc;
 
 
-	@PostMapping("/saveRsvtSch")
-	public ResponseEntity<ResponseMessage> saveRsvtSch(TbPpRsvtSch rsvt) {
+	@PostMapping("/saveCustomer")
+	public ResponseEntity<ResponseMessage> saveCustomer(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.saveReservationSchedule( rsvt );
+			customerSvc.saveCustomer( custInfo, rsvtInfo );
+
 
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
@@ -36,16 +42,21 @@ public class ReservationScheduleApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
-		
-	@PostMapping("/deleteSchedule")
-	public ResponseEntity<ResponseMessage>  deleteRsvtSch(TbPpRsvtSch rsvt) throws Exception {
 
+
+
+
+	@PostMapping("/createNewChart")
+	public ResponseEntity<ResponseMessage> createNewChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
+		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.deleteReservationSchedule( rsvt );
-
+			HashMap<String, Object> result = customerSvc.createNewConsultingChart( custInfo, rsvtInfo );
+			
+			
+			resMsg.setData( result );
 			resMsg.setStatus("success");
-			resMsg.setMessage("정상적으로 삭제되었습니다.");
+			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
 			
 		} catch(Exception e) {
 			resMsg.setStatus("error");

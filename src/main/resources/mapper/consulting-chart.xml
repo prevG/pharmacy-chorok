@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.ConsultingRepository">
+
+	<select id="selectNewCnstId" resultType="long">
+	<![CDATA[    
+    SELECT CASE WHEN MAX( CNST_ID ) IS NULL THEN 1
+                ELSE MAX( CNST_ID ) + 1 
+	       END AS "newId"
+      FROM TB_PP_CNST_CHART
+	]]>
+	</select>
+
+
+  <select id="selectConsultingChartByCustId" resultType="com.pharm.chorok.domain.table.TbPpCnstChart" parameterType="com.pharm.chorok.domain.main.ResultConsultingVo">
+	<![CDATA[    
+  SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
+       , CNST_ID
+       , CUST_ID
+       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%m' ) AS CNST_DT
+       , PIC_USR_NO
+       , DEL_YN
+       , CNST_DESC
+       , CUR_WGT
+       , TGT_WGT
+       , START_DOSG_DT
+       , REG_DT
+       , REG_USR_NO
+       , UPD_DT
+       , UPD_USR_NO
+    FROM TB_PP_CNST_CHART
+       , (SELECT @ROWNUM :=-1) TMP
+   WHERE CUST_ID = #{custId}
+   ORDER
+      BY CNST_DT DESC
+	]]>
+	</select>
+
+  <insert id="insertTpPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+    INSERT INTO TB_PP_CNST_CHART (
+           CNST_ID
+         , CUST_ID
+         , CNST_DT
+         , PIC_USR_NO
+         , DEL_YN
+         , REG_DT
+         , REG_USR_NO
+    ) VALUES (
+           #{cnstId}
+         , #{custId}
+         , now()
+         , #{picUsrNo}
+         , 'N'
+         , now()
+         , #{regUsrNo}
+    )
+	]]>
+	</insert>
+	
+</mapper>

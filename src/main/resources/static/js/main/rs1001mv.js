@@ -7,7 +7,7 @@ $(document).ready(function () {
     $(document).on("click", "button[name='rsvtSch']", function (e) {
 
         var params = {
-            "id": $(e.target).closest("div").attr("data-id")
+            "rsvtId": $(e.target).closest("div").attr("data-id")
         }
         findReservationDetail(params);
     });
@@ -15,14 +15,16 @@ $(document).ready(function () {
     /**************************************************************
      * 차트생성
      **************************************************************/
-    $(document).on("click", "button[name='btnNewChart']", function (e) {
+    $(document).on("click", "button[name='btnNewChartView']", function (e) {
 
         e.preventDefault(); //remove href function
         var params = {
-            "id": 1
+            "rsvtId": $("form[name='detailForm']").find("input[name='rsvtId']").val(),
+            "custId": $("form[name='detailForm']").find("input[name='custId']").val()
         };
-        $("#modalRsvtChart .modal-content").load("/reservation/RS1001P02", params, function (data, status, xhr) {
-            $("#modalRsvtChart").modal('show');
+
+        $("#modalCnstChart .modal-content").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
+            $("#modalCnstChart").modal('show');
         });
     });
 
@@ -31,7 +33,7 @@ $(document).ready(function () {
      **************************************************************/
     $(document).on("click", "button[name='btnNewSch']", function (e) {
         var params = {
-            "id": ""
+            "rsvtId": ""
         }
         findReservationDetail(params);
     });
@@ -97,6 +99,17 @@ $(document).ready(function () {
 
 
     /**************************************************************
+     * 상담하기 팝업이 닫힐때 처음 상담한 고객인 경우 refresh
+     **************************************************************/
+    $("#modalCnstChart").on('shown.bs.modal', function () {
+        var custId = $("form[name='detailForm']").find("input[name='custId']").val()
+        if( $.trim(custId)=="" || custId == 0) {
+            refreshTimeTable();
+        }
+    });
+
+
+    /**************************************************************
      * 저장하기
      **************************************************************/
     $(document).on("click", "button[name='btnSaveRsvtSch']", function (e) {
@@ -104,7 +117,7 @@ $(document).ready(function () {
         var params = $("form[name=detailForm]").serialize();
         $.ajax({
             type: 'post',
-            url: '/api/v1/main/rsvt/saveRsvtSch',
+            url: '/api/v1/main/reservation/saveRsvtSch',
             data: params,
             success: function (result) {
 
@@ -147,14 +160,13 @@ $(document).ready(function () {
     }
 
     //저장후 타임테이블 새로고침
-    refreshTimeTable = function (params) {
+    refreshTimeTable = function () {
         var url = "/reservation/RS1001MV/refresh";
         var params = {
             "currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
         };
 
-        console.log( params );
-        $("#time-table").load(url, params, function (response, status, xhr) {
+        $("#time-table").load( url, params, function (response, status, xhr) {
 
             if (200 == xhr.status) {
                 $("#time-table").html(response);

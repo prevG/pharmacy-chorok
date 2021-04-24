@@ -1,5 +1,7 @@
 package com.pharm.chorok.web.main.controller;
 
+import java.util.Map;
+
 import com.common.exception.CustomException;
 import com.common.exception.DatabaseInsertException;
 import com.common.exception.EmailCheckException;
@@ -8,12 +10,9 @@ import com.common.exception.ExceptionItem;
 import com.common.exception.NumberCheckException;
 import com.common.exception.SizeCheckException;
 import com.common.util.Check;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADUserService;
-
-import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

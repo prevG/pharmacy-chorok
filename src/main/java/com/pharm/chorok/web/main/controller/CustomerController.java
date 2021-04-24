@@ -29,7 +29,7 @@ public class CustomerController {
 	public ModelAndView survey(TbSurvey tbSurvey) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("/main/CS1001P01");
+		mv.setViewName("/main/CP1001P01");
 		return mv;
 	}
 
