@@ -38,7 +38,7 @@ public class ADSMSController {
 		return mv;
 	}
 	
-	
+	//toast 메세지 전송
 	public void sendSms2() {
 		String hostNameUrl = "https://api-sms.cloud.toast.com";     		// 호스트 URL
 		String requestUrl= "/sms/v2.4/appKeys/0rhL2B2YO15WTOXr/sender/sms";                   		// 요청 URL
@@ -50,14 +50,15 @@ public class ADSMSController {
 	    JSONArray  toArr = new JSONArray();
 		
 		
-		bodyJson.put("body","sms");				
+		bodyJson.put("body","sms");
+		//최일준과장님 번호(보내는사람)
 	    bodyJson.put("sendNo","01038252547");			
 	    
-	    //821030038397
+	    //곽경준전화번호(받는사람)
 	    toJson.put("recipientNo","01030038397");			
 	    toArr.add(toJson);
 	    
-		
+		//받는사람
 	    bodyJson.put("recipientList", toArr);
 	    
 	    String body = bodyJson.toJSONString();
