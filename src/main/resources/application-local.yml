@@ -21,7 +21,7 @@ spring:
 #    password: tower0814
     hikari:
       connection-timeout: 30000
-      maximum-pool-size: 10
+      maximum-pool-size: 30
       max-lifetime: 1800000
       pool-name: HikariCP
       read-only: false

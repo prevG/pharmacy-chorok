@@ -39,9 +39,9 @@
     
     
     <!-- log4jdbc 옵션 설정 --> 
-    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc" level="DEBUG"/>
     <!-- 커넥션 open close 이벤트를 로그로 남긴다. --> 
-    <logger name="jdbc.connection" level="OFF"/> 
+    <logger name="jdbc.connection" level="DEBUG"/> 
     <!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. --> 
     <logger name="jdbc.sqlonly" level="OFF"/> 
     <!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. --> 

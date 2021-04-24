@@ -76,6 +76,7 @@ public class CustomerService {
 		return result;
 	}
 
+	@Transactional
 	public HashMap<String, Object> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
 		
 
