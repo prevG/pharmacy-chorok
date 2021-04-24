@@ -1,5 +1,6 @@
 $( document ).ready( function() {
 	
+	setDataOnConsultingChart( cnstList );
 
 	/**
 	 * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
@@ -58,8 +59,12 @@ $( document ).ready( function() {
 	        data : params,
 			success : function( result ) {
 				if( result.status == "success" ) {
+
 					alert( result.message );
-					table01.setData( result.data )
+					// console.log("result.data.cnstList", result.data.cnstList);
+					// console.log("result.data.dosgList", result.data.dosgList);
+					setDataOnConsultingChart( result.data.cnstList );
+					setDataOnDosingChart( result.data.dosgList );
 					
 				} else {
 					alert( result.errorMessage );
@@ -67,28 +72,38 @@ $( document ).ready( function() {
 			}
 		});
 	});
-
-
-	/**************************************************************
-     * 차트 목록 조회
-     **************************************************************/
-	loadConsultingChart = function() {
-		var params = $("form[name=saveCustForm]").serialize();
-		$.ajax({
-			type : 'post',
-	        url  : '/api/v1/main/customer/createNewChart',
-			datatype : "json",
-	        data : params,
-			success : function( result ) {
-
-				if( result.status == "success" ) {
-					alert( result.message );
-					table01.setData( result.data )
-					
-				} else {
-					alert( result.errorMessage );
-				}
-			}
-		});
-	}
 });
+
+
+
+function setDataOnConsultingChart( data ) {
+	table01.setData( data )
+}
+function setDataOnDosingChart( data ) {
+	table02.setData( data )
+}
+
+function callDosingChart( row ) {
+
+	var params = {
+		"cnstId" : row.getCell("cnstId").getValue()
+	};
+
+	$.ajax({
+		type : 'post',
+		url  : '/api/v1/main/dosing/selectDosingChartByDosgId',
+		data : params,
+		success : function( result ) {
+
+			if( result.status == "success" ) {
+				table02.setData( result.data )
+			} else {
+				alert( result.errorMessage );
+			}
+		}
+	});
+}
+
+function cellEditCheck( cell ) {
+	return true;
+}

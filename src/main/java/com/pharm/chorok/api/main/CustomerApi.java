@@ -1,5 +1,6 @@
 package com.pharm.chorok.api.main;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
@@ -50,9 +51,10 @@ public class CustomerApi {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			List<TbPpCnstChart> cnstList = customerSvc.createNewConsultingChart( custInfo, rsvtInfo );
-
-			resMsg.setData( cnstList );
+			HashMap<String, Object> result = customerSvc.createNewConsultingChart( custInfo, rsvtInfo );
+			
+			
+			resMsg.setData( result );
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
 			

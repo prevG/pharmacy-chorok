@@ -21,7 +21,7 @@
 		<div class="container-fluid">
 		  	<div class="row mb-1">
 				<div class="col-sm-6">
-			  		<h1>주간 예약 스케쥴</h1>
+			  		<h1>Home</h1>
 				</div>
 		  	</div>
 		</div><!-- /.container-fluid -->
@@ -29,50 +29,71 @@
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-7">
-					<div class="row mb-1">
-					    <div class="col-sm-12 text-right">
-							<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">금주 스케쥴 보기</button>
-					    </div>	
-					</div>
-				
-					<div id="time-table" th:fragment="time-table">
-						<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
-						<table class="table-sm table table-bordered table-hover">
-							<colgroup>
-								<col width=""/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-								<col width="15%"/>
-							</colgroup>
-							<thead class="thead-light">
-								<tr align="center">
-									<th>예약시간</th>
-									<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="row, idx : ${rowList}" style="height:34px;">
-									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
-									<td th:each="col, colIdx : ${colList}"
-										th:data-row="${row.id}" th:data-col="${col.daysNum}">
-									
-										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-										<div th:data-id="${data.rsvtId}">
-											<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
-										</div>
-										</th:block>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
 				<div class="col-sm-4">
+					<div class="card">
+		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
+		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>오늘 스케쥴</h3>
+							<div class="card-tools">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">금주 스케쥴 보기</button>
+							</div>
+		              	</div>
+						<div class="card-body">
+							<div id="time-table" th:fragment="time-table">
+								<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
+								<table class="table-sm table table-bordered table-hover">
+									<colgroup>
+										<col width="20%"/>
+										<col width="40%"/>
+										<col width="40%"/>
+									</colgroup>
+									<thead class="thead-light">
+										<tr align="center">
+											<th>예약시간</th>
+											<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="row, idx : ${rowList}" style="height:34px;">
+											<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
+											<td th:each="col, colIdx : ${colList}"
+												th:data-row="${row.id}" th:data-col="${col.daysNum}">
+											
+												<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
+												<div th:data-id="${data.rsvtId}">
+													<button type="button" name="rsvtSch" class="btn btn-sm" 
+														th:classappend="${data.picUsrNo} == 1 ? btn-outline-success : btn-outline-primary"
+													style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+												</div>
+												</th:block>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-sm-5 border border-light">
+				<div class="col-sm-4">
+					<div class="card">
+		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
+		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>오늘 상담전화 (상담실장님)</h3>
+							<div class="card-tools">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
+							</div>
+		              	</div>
+						<div class="card-body"></div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="card">
+		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
+		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>금일 상담전화 (약사님)</h3>
+							<div class="card-tools">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
+							</div>
+		              	</div>
+						<div class="card-body"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -87,8 +108,6 @@
 	<script type="text/javascript" th:inline="javascript">
 		var rowList  = /*[[${rowList}]]*/'';
 		var currCal  = /*[[${currCal}]]*/'';
-		console.log( "currCal", currCal)
-
 	</script>
 	<script type="text/javascript" th:src="@{/js/main/main.js}"></script> 
 </div>

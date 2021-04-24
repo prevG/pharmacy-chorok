@@ -88,6 +88,17 @@
 						</div>
 					</td>
 				</tr>
+				<tr>
+					<th>담당약사</th>
+					<td colspan="3">
+						<select class="form-select" name="picUsrNo" tabindex="10" >
+							<option value=""  th:selected="${''  eq schInfo?.picUsrNo}">선택하세요</option>
+							<th:block th:if="${chemistList!=null}" >
+								<option th:each="data, index : ${chemistList}" th:value="${data?.usrNo}" th:text="${data?.usrNm}" th:selected="${data?.usrNo eq schInfo?.picUsrNo}">선택하세요</option>
+							</th:block>
+						</select>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<input type="hidden" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" >
@@ -98,4 +109,8 @@
 		<button type="button" id="btnSaveRsvtSch" class="btn btn-primary" tabindex="10">저장</button>
   		<button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="11" >닫기</button>
     </div>
-	<script type="text/javascript" th:src="@{/js/main/rs1001p01.js}"></script> 
+	<script type="text/javascript" th:inline="javascript">
+		var chemistList  = /*[[${chemistList}]]*/'';
+		console.log( "chemistList", chemistList)
+	</script>
+	<script type="text/javascript" th:src="@{/js/main/RS1001PU01.js}"></script> 

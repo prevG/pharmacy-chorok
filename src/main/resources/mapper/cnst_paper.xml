@@ -4,7 +4,6 @@
 <mapper namespace="com.pharm.chorok.web.main.repository.CnstPaperRepository">
 
 <select id="selectCnstPaper" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper" resultType="com.pharm.chorok.domain.table.TbPpCnstPaper">
-	
 	SELECT CONCAT_WS('_', CNST_VER, NUM) AS 'ID',
 		   CNST_VER,
 		   NUM,

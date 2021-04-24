@@ -7,7 +7,7 @@
 	<![CDATA[    
     SELECT CASE WHEN MAX( CUST_ID ) IS NULL THEN 1
                 ELSE MAX( CUST_ID ) + 1 
-	       END AS "newCustId"
+	       END AS "newId"
       FROM TB_CUSTOMER
 	]]>
 	</select>

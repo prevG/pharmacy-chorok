@@ -12,10 +12,11 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 	
-	<script th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
-	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
-	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
-	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/tabulator.custom.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
 </th:block>
 
 
@@ -66,7 +67,9 @@
 									
 										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 										<div th:data-id="${data.rsvtId}">
-											<button type="button" name="rsvtSch" class="btn btn-outline-success btn-sm" style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+											<button type="button" name="rsvtSch" class="btn btn-sm" 
+											th:classappend="${data.picUsrNo} == 1 ? btn-outline-success : btn-outline-primary"
+										style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 										</div>
 										</th:block>
 									</td>
@@ -90,16 +93,16 @@
 		                  		<form name="detailForm" id="detailForm" action="POST">
 						        <table class="table-sm table table-borderless">
 									<colgroup>
-										<col width="20%"/>
-										<col width="15%"/>
-										<col width="15%"/>
-										<col width="50%"/>
+										<col width="12%" style="text-align:right;"/>
+										<col width="10%"/>
+										<col width="12%" style="text-align:right;"/>
+										<col width="*%"/>
 									</colgroup>
 									<tbody>
 										<tr>
 											<th>예약일시</th>
 											<td>
-												<div class="input-group input-group-sm" style="width:200px;" >
+												<div class="input-group input-group-sm" style="width:150px;" >
 													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1">
 												</div>
 											</td>
@@ -122,7 +125,7 @@
 										<tr>
 											<th>이름</th>
 											<td>
-												<div class="input-group input-group-sm" style="width:200px;" >
+												<div class="input-group input-group-sm" style="width:150px;" >
 													<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo?.rsvtUsrNm}"  tabindex="3">
 												</div>
 											</td>
@@ -141,7 +144,7 @@
 										<tr>
 											<th>휴대전화</th>
 											<td colspan="3">
-												<div class="input-group input-group-sm" style="width:200px;" >
+												<div class="input-group input-group-sm" style="width:150px;" >
 													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}" maxlength="13" tabindex="5">
 												</div>
 											</td>
@@ -149,8 +152,8 @@
 										<tr>
 											<th>지인소개</th>
 											<td colspan="3">
-												<div class="input-group input-group-sm input-group-inline" style="width:410px;">
-													<input type="text" class="form-control" style="margin-right:8px;" tabindex="7" > 
+												<div class="input-group input-group-sm input-group-inline" style="width:308px;">
+													<input type="text" class="form-control" style="margin-right:8px;" tabindex="7"> 
 													<input type="text" class="form-control" tabindex="8" >
 												</div>	
 											</td>
@@ -210,7 +213,7 @@
 
 
 	<div class="modal" id="modalCnstChart" tabindex="-1" role="dialog">
-		<div class="modal-dialog" style="min-width:1600px;min-height:800px;">
+		<div class="modal-dialog" style="min-width:1400px;min-height:800px;">
             <div class="modal-content"></div>
 		</div>
 	</div>

@@ -22,7 +22,7 @@ public class WebController {
 		ReservationPagination reservationPagination,
 		Model model) throws Exception {
 		ModelAndView mv = new ModelAndView("index");
-		rsvtSchSvc.getReservationByDt( mv, reservationPagination );
+		rsvtSchSvc.getDashBoard( mv, reservationPagination );
 		return mv;
 	}
 

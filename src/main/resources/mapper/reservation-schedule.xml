@@ -5,6 +5,7 @@
 
 	<select id="selectSameWeekDateListByDt" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectSameWeekDateListByDt */
 	SELECT BASE_DT
 		 , DAYS_STR_KOR
 		 , DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
@@ -19,19 +20,33 @@
 		BY BASE_DT
 	]]>
 	</select>
+
+	<select id="selectDashBoardDateListByDt" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectDashBoardDateListByDt */
+	SELECT BASE_DT
+		, DAYS_STR_KOR
+		, DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
+		, DAYS_NUM
+	FROM TB_COMM_CALENDAR CAL
+	WHERE BASE_DT >= DATE_FORMAT( NOW(), '%Y-%m-%d')
+	AND BASE_DT <= DATE_FORMAT( DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')
+	ORDER
+		BY BASE_DT
+	]]>
+	</select>
 	
 	
 	<select id="selectDateAdd" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectDateAdd */
 	SELECT *
       FROM TB_COMM_CALENDAR
      WHERE base_dt = date_add( STR_TO_DATE( #{cal.baseDtStr}, '%Y%m%d'), interval #{interval} DAY)
 	]]>  
 	</select>
 
-	<select id="selectRsvtSchByWeek" 
-		parameterType="map" 
-		resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<select id="selectRsvtSchByWeek" parameterType="map" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[	
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectRsvtSchByWeek */
     SELECT WT.ID                  AS "wt.id"
@@ -40,6 +55,7 @@
          , SCH.RSVT_ID                 
          , SCH.RSVT_DT            
          , SCH.RSVT_USR_NM
+		 , SCH.PIC_USR_NO
          , CASE LENGTH(RSVT_CELL_NO)
                 WHEN 11 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(RSVT_CELL_NO, 4))
                 WHEN 10 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(RSVT_CELL_NO, 4))
@@ -54,6 +70,7 @@
 			, RSVT_USR_NM
 			, RSVT_CELL_NO
 			, CUST_ID
+			, PIC_USR_NO
 			, CAL.DAYS_NUM
 			, CAL.DAYS_STR_KOR
 		FROM TB_PP_RSVT_SCH

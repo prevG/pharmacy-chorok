@@ -3,31 +3,74 @@
 
 <mapper namespace="com.pharm.chorok.web.main.repository.DosingRepository">
 
-    <select id="generateDosingSchedule" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
+    <insert id="insertTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
-	SELECT A.ROWNUM
-		 , CASE WHEN ROWNUM  <= 3  THEN '1'
-				WHEN ROWNUM  <= 7  THEN '2'
-				WHEN ROWNUM  <= 14 THEN '3'
-				WHEN ROWNUM  <= 21 THEN '4'
-				WHEN ROWNUM  <= 28 THEN '5'
-		  END AS GUBUN
-		 , A.*
-	  FROM (
-	  	   SELECT CAL.*
-	 		    , @ROWNUM := @ROWNUM + 1 AS ROWNUM
-			 FROM bazzarmall.TB_COMM_CALENDAR CAL
-			 	, (SELECT @ROWNUM :=0) TMP
-			WHERE 1 = 1
-			  AND BASE_DT_STR >= DATE_FORMAT( NOW(), '%Y%m%d')
-			  AND BASE_DT_STR < DATE_ADD( NOW(), INTERVAL 27 DAY)
-		   ) A
-	 ORDER
-	    BY A.ROWNUM
+    INSERT INTO TB_PP_DOSG_CHART (
+          CNST_ID
+        , DOSG_DT
+        , DOSG_TP_CD
+        , CALL_YN
+        , REG_DT
+        , REG_USR_NO
+    ) 
+    SELECT #{cnstId}
+         , BASE_DT_STR
+         , DOSG_TP_CD
+         , 'N'
+         , now()
+         , #{regUsrNo}
+      FROM (
+            SELECT A.ROWNUM
+                 , CASE WHEN ROWNUM  = 0  THEN  '0'
+                        WHEN ROWNUM  <= 3  THEN '1'
+                        WHEN ROWNUM  <= 7  THEN '2'
+                        WHEN ROWNUM  <= 14 THEN '3'
+                        WHEN ROWNUM  <= 21 THEN '4'
+                        WHEN ROWNUM  <= 28 THEN '5'
+                END AS DOSG_TP_CD
+                , A.BASE_DT_STR
+            FROM (
+                SELECT CAL.*
+                        , @ROWNUM := @ROWNUM + 1 AS ROWNUM
+                    FROM bazzarmall.TB_COMM_CALENDAR CAL
+                        , (SELECT @ROWNUM :=-1) TMP
+                    WHERE 1 = 1
+                    AND BASE_DT_STR >= DATE_FORMAT( DATE_ADD( NOW(), INTERVAL -1 DAY), '%Y%m%d')
+                    AND BASE_DT_STR < DATE_ADD( NOW(), INTERVAL 27 DAY)
+                ) A
+            ORDER
+                BY A.ROWNUM
+            ) A
 	]]>
-	</select>
+	</insert>
 
-    <insert id="insertNewDosingChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+
+
+    <select id="selectDosingChartByCustId" parameterType="map" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
+	<![CDATA[    
+    SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
+         , CONCAT(@ROWNUM, '일차') AS SEQ_STR
+         , DOSG_ID
+         , CNST_ID
+         , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
+         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
+         , DOSG_TP_CD
+         , CALL_YN          
+         , DOSG_YN          
+         , CURR_WGT         
+         , DOSG_DESC1       
+         , DOSG_DESC2       
+         , REG_DT           
+         , REG_USR_NO
+      FROM TB_PP_DOSG_CHART DOSG
+         , (SELECT @ROWNUM :=-1) TMP
+     WHERE CNST_ID = 8
+     ORDER
+        BY DOSG_ID
+	]]>
+    </select>
+
+    <insert id="updateNewDosingChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
     INSERT INTO TB_PP_DOSG_CHART (
           CNST_ID
@@ -35,7 +78,7 @@
         , DOSG_TP_CD
         , CALL_YN
         , DOSG_YN
-        , CUST_WGT
+        , CURR_WGT
         , DOSG_DESC1
         , DOSG_DESC2
         , REG_DT
@@ -46,7 +89,7 @@
         , #{dosgTpCd}
         , #{callYn}
         , #{dosgYn}
-        , #{custWgt}
+        , #{currWgt}
         , #{dosgDesc1}
         , #{dosgDesc2}
         , #{regDt}
@@ -54,5 +97,21 @@
     )
 	]]>
 	</insert>
+
+    <update id="updatetNewDosingChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+	<![CDATA[    
+    UPDATE TB_PP_DOSG_CHART 
+       SET UPD_DT      = #{regDt} 
+         , UPD_USR_NO  = #{regUsrNo} 
+         , DOSG_DT     = #{dosgDt}
+         , DOSG_TP_CD  = #{dosgTpCd}
+         , CALL_YN     = #{callYn}
+         , DOSG_YN     = #{dosgYn}
+         , CUST_WGT    = #{custWgt} 
+         , DOSG_DESC1  = #{dosgDesc1} 
+         , DOSG_DESC2  = #{dosgDesc2} 
+     WHERE DOSG_ID = #{dosgId}
+	]]>
+	</update>
 
 </mapper>

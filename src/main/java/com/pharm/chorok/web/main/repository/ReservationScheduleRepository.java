@@ -21,6 +21,8 @@ public interface ReservationScheduleRepository {
 
 	public List<TbCommCalendar> selectSameWeekDateListByDt( TbCommCalendar cal ) throws Exception;
 
+	public List<TbCommCalendar> selectDashBoardDateListByDt( TbCommCalendar cal ) throws Exception;
+
     public List<TbPpRsvtSch> selectRsvtSchByWeek( TbCommCalendar cal )  throws Exception;
 
     public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;

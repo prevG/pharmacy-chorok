@@ -4,13 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
+import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
 import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.CustomerRepository;
+import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class CustomerService {
 
     @Autowired
     private ConsultingRepository consultingRepo;
+
+    @Autowired
+    private DosingRepository dosingRepo;
 
     @Autowired
     private ReservationScheduleRepository reservationRepo;
@@ -65,17 +71,35 @@ public class CustomerService {
 		return result;
 	}
 
-	public List<TbPpCnstChart> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
+	public HashMap<String, Object> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
 		
+
+		//신규 상담차트번호 생성
+		Long newCnstId = consultingRepo.selectNewCnstId();
+
 		String usrNo = SecurityContextUtil.getAuthenticatedUser().getUsrNo();
+
+		//상담차트 생성
 		TbPpCnstChart cnstInfo = new TbPpCnstChart();
+		cnstInfo.setCnstId( newCnstId );
 		cnstInfo.setCustId( custInfo.getCustId() );
 		cnstInfo.setPicUsrNo( usrNo );
+		consultingRepo.insertTpPpCnstChart( cnstInfo );
 
-		int result = consultingRepo.insertTpPpCnstChart( cnstInfo );
-		List<TbPpCnstChart> cnstList = consultingRepo.selectCnstChartByCustId( cnstInfo );
+		//복용차트 생성(오늘날짜로 디폴트 생성)
+		TbPpDosgChart dosingInfo = new TbPpDosgChart();
+		dosingInfo.setCnstId( newCnstId );
+		dosingRepo.insertTbPpDosgChart( dosingInfo );
+
+		//고객의 전체 상담차트 조회
+		List<ResultConsultingVo> cnstList = consultingRepo.selectConsultingChartByCustId( cnstInfo );
+
+		// //상담차트번호에 대한 복용차트 조회
+		// List<TbPpDosgChart> dosgList = dosingRepo.selectDosingChartByCustId( dosingInfo );
 		
-		return cnstList;
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("cnstList",  cnstList);
+		return result;
 	}
 
 	public int deleteConsultingChart(TbPpCnstChart cnstInfo) throws Exception {

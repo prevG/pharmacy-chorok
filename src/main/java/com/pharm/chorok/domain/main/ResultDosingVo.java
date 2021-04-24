@@ -1,16 +1,18 @@
-package com.pharm.chorok.domain.table;
+package com.pharm.chorok.domain.main;
 
-import java.util.Date;
+import com.pharm.chorok.domain.table.TbCommColumn;
 
 import lombok.Data;
 
 @Data
-public class TbPpDosgChart extends TbCommColumn {
+public class ResultDosingVo extends TbCommColumn {
     
     private int seq;
+    private String seqStr;
     private Long dosgId;
     private Long cnstId;
-    private Date dosgDt;
+    private String dosgDt;
+    private String daysStrKor;
     private String dosgTpCd;
     private String callYn;
     private String dosgYn;

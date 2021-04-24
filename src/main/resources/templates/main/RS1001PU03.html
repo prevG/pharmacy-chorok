@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div class="row" th:fragment="charts-area">
+	<div class="col-sm-12">
+		<div class="card card-primary card-outline card-outline-tabs">
+			<div class="card-header p-0 border-bottom-0">
+				<ul class="nav nav-tabs" id="custom-tabs-four-tab111"
+					role="tablist">
+					<li class="nav-item">
+						<a class="nav-link" id="custom-tabs-four-home-tab111"
+							data-toggle="pill" href="#custom-tabs-four-home111"
+							role="tab" aria-controls="custom-tabs-four-home111"
+							aria-selected="true">설문차트</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" id="custom-tabs-four-profile-tab111"
+							data-toggle="pill" href="#custom-tabs-four-profile111"
+							role="tab" aria-controls="custom-tabs-four-profile111"
+							aria-selected="false">복용차트</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content" id="custom-tabs-four-tabContent111">
+					<div class="tab-pane fade" id="custom-tabs-four-home111" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab111">
+					</div>
+					<div class="tab-pane fade active show" id="custom-tabs-four-profile111"
+						role="tabpanel"
+						aria-labelledby="custom-tabs-four-profile-tab111">
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table-sm table-borderless">
+									<colgroup>
+										<col width="100px;" />
+										<col width="80px" />
+										<col width="100px" />
+										<col width="80px" />
+										<col width="100px" />
+										<col width="160px" />
+										<col width="*" />
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>시작 체중</th>
+											<td>
+												<div class="input-group input-group-sm">
+													<input type="text" id="curWgt" name="curWgt" class="form-control" tabindex="3">
+												</div>
+											</td>
+											<th>목표 체중</th>
+											<td>
+												<div class="input-group input-group-sm">
+													<input type="text" id="tgtWgt" name="tgtWgt" class="form-control" tabindex="3">
+												</div>
+											</td>
+											<th>복용시작일자</th>
+											<td>
+												<div class="input-group input-group-sm">
+													<input type="text" id="startDosgDt" name="startDosgDt" class="form-control" tabindex="3">
+												</div>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div id="dosingchar-table"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
