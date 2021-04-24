@@ -39,24 +39,20 @@
 		 	CNST_PAPER_NUM,
 		 	CNST_PAPER_VAL,
 		 	REG_DT,
-		 	REG_USR_NO,
-		 	UPD_DT,
-		 	UPD_USR_NO
+		 	REG_USR_NO
 		 )
-		 SELECT CAST(#{cnstId} AS UNSIGNED),
-		 		NOW(),
-		 		CONCAT(CNST_VER,'_',NUM)
+		 SELECT #{cnstId},
+		 		DATE_FORMAT(NOW(), '%Y%m%d'),
+		 		CONCAT(CNST_VER,'_',NUM),
 		 		CNST_VER,
 			    NUM,
 			    '',
 			    NOW(),
-			    'TESTER',
-			    NOW(),
-			    'TESTER'
+			    #{regUsrNo}
 			FROM TB_COMM_CNST_PAPER
 			WHERE 1=1
 			AND USE_YN = 'Y'
-			AND CNST_VER = #{cnstVer}
+			AND CNST_VER = 1
 	</insert>
 	
 

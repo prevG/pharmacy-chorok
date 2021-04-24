@@ -1,10 +1,9 @@
 package com.pharm.chorok.domain.table;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data
-public class TbPpCnstPaper {
+public class TbPpCnstPaper extends TbCommColumn {
 	String id;
 	long cnstVer;
 	long num;
@@ -20,10 +19,6 @@ public class TbPpCnstPaper {
 	String exam7;
 	String exam;
 	String useYn;
-	String regId;
-	String updId;
-	Date regDttm;
-	Date updDttm;
 	//임시
-	long custId;
+	long cnstId;
 }

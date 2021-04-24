@@ -98,9 +98,9 @@ public class CustomerService {
 		
 		//설문조사 차트 생성
 		TbPpCnstPaper tbPpCnstPaper = new TbPpCnstPaper();
-		tbPpCnstPaper.setCnstVer(1);
-		tbPpCnstPaper.setRegId(usrNo);
-		tbPpCnstPaper.setCustId(newCnstId);
+		tbPpCnstPaper.setCnstVer(1);		
+		tbPpCnstPaper.setUpdUsrNo(Long.parseLong(usrNo));
+		tbPpCnstPaper.setCnstId(newCnstId);
 		cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
 
 		//고객의 전체 상담차트 조회
