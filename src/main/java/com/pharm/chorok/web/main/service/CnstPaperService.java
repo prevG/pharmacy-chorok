@@ -30,5 +30,11 @@ public class CnstPaperService {
     }
     
     
+    public int insertTbPpSrvChart(TbPpCnstPaper tbPpCnstPaper) throws Exception
+    {
+    	return cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
+    }
+    
+    
 
 }

@@ -27,5 +27,37 @@
 		WHERE CNST_VER = #{cnstVer}
 		AND USE_YN = 'Y'
 	</select>
+	
+	
+	<insert id="insertTbPpSrvChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper">
+		INSERT INTO TB_PP_SRV_CHART
+		(
+		 	CNST_ID,
+		 	SRV_DT,
+		 	CNST_PAPER_ID,
+		 	CNST_PAPER_VER,
+		 	CNST_PAPER_NUM,
+		 	CNST_PAPER_VAL,
+		 	REG_DT,
+		 	REG_USR_NO,
+		 	UPD_DT,
+		 	UPD_USR_NO
+		 )
+		 SELECT CAST(#{cnstId} AS UNSIGNED),
+		 		NOW(),
+		 		CONCAT(CNST_VER,'_',NUM)
+		 		CNST_VER,
+			    NUM,
+			    '',
+			    NOW(),
+			    'TESTER',
+			    NOW(),
+			    'TESTER'
+			FROM TB_COMM_CNST_PAPER
+			WHERE 1=1
+			AND USE_YN = 'Y'
+			AND CNST_VER = #{cnstVer}
+	</insert>
+	
 
 </mapper>

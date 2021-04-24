@@ -19,4 +19,7 @@ public interface CnstPaperRepository {
     
     public List<ResultSrvVo> selectSurveyChartByCnstId(TbPpSrvChart tbPpCnstPaper) throws Exception;
     
+    
+    public int insertTbPpSrvChart(TbPpCnstPaper tbPpCnstPaper) throws Exception;
+    
 }

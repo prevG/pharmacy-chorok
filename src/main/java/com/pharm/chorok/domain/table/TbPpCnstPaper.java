@@ -24,4 +24,6 @@ public class TbPpCnstPaper {
 	String updId;
 	Date regDttm;
 	Date updDttm;
+	//임시
+	long custId;
 }

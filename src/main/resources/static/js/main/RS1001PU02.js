@@ -75,7 +75,9 @@ $( document ).ready( function() {
 					// console.log("result.data.dosgList", result.data.dosgList);
 					setDataOnConsultingChart( result.data.cnstList );
 					setDataOnDosingChart( result.data.dosgList );
+					console.log('aa');
 					setDataOnSrvChart(result.data.srvList);
+					console.log('aa1');
 				} else {
 					alert( result.errorMessage );
 				}

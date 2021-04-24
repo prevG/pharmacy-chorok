@@ -4,21 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
+import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
 import com.pharm.chorok.util.SecurityContextUtil;
+import com.pharm.chorok.web.main.repository.CnstPaperRepository;
 import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.CustomerRepository;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -34,6 +36,9 @@ public class CustomerService {
 
     @Autowired
     private ReservationScheduleRepository reservationRepo;
+    
+    @Autowired
+    private CnstPaperRepository cnstPaperRepository;
 
     
     
@@ -90,6 +95,13 @@ public class CustomerService {
 		TbPpDosgChart dosingInfo = new TbPpDosgChart();
 		dosingInfo.setCnstId( newCnstId );
 		dosingRepo.insertTbPpDosgChart( dosingInfo );
+		
+		//설문조사 차트 생성
+		TbPpCnstPaper tbPpCnstPaper = new TbPpCnstPaper();
+		tbPpCnstPaper.setCnstVer(1);
+		tbPpCnstPaper.setRegId(usrNo);
+		tbPpCnstPaper.setCustId(newCnstId);
+		cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
 
 		//고객의 전체 상담차트 조회
 		List<ResultConsultingVo> cnstList = consultingRepo.selectConsultingChartByCustId( cnstInfo );
