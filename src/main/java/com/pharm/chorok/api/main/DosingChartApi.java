@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.main.ResultSrvVo;
 import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.domain.table.TbPpSrvChart;
-import com.pharm.chorok.web.main.service.CnstPaperService;
 import com.pharm.chorok.web.main.service.DosingChartService;
 import com.pharm.chorok.web.main.service.ReservationScheduleService;
 

@@ -65,7 +65,7 @@ $( document ).ready( function() {
 					// console.log("result.data.dosgList", result.data.dosgList);
 					setDataOnConsultingChart( result.data.cnstList );
 					setDataOnDosingChart( result.data.dosgList );
-					
+					setDataOnSrvChart(result.data.srvList);
 				} else {
 					alert( result.errorMessage );
 				}
@@ -81,6 +81,10 @@ function setDataOnConsultingChart( data ) {
 }
 function setDataOnDosingChart( data ) {
 	table02.setData( data )
+}
+
+function setDataOnSrvChart(data){
+	alert("setDataOnSrvChart");
 }
 
 function callDosingChart( row ) {
@@ -102,6 +106,30 @@ function callDosingChart( row ) {
 			}
 		}
 	});
+}
+
+
+function callSrvChart(row){
+	
+	var params = {
+		"cnstId" : row.getCell("cnstId").getValue()
+	};
+
+	$.ajax({
+		type : 'post',
+		url  : '/api/v1/main/dosing/selectSurveyChartByCnstId',
+		data : params,
+		success : function( result ) {
+
+			if( result.status == "success" ) {
+				//table02.setData( result.data )
+				console.log(result.data);
+			} else {
+				alert( result.errorMessage );
+			}
+		}
+	});
+	
 }
 
 function cellEditCheck( cell ) {
