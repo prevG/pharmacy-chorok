@@ -7,6 +7,7 @@ import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -37,6 +38,13 @@ public class ReservationScheduleService {
 
 
 	public ModelAndView getDashBoard( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
+
+		getDashBoardReservationByDt(mv, reservationPagination );
+
+        return mv;
+    } 
+
+	public ModelAndView getDashBoardReservationByDt( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
 		String todayDt   = calSvc.selectCurrentDate().getBaseDtStr();
 		String currDt    = reservationPagination.getCurrDt();
@@ -91,6 +99,11 @@ public class ReservationScheduleService {
         mv.addObject( "colList" , currDtList   ); //Column
         mv.addObject( "dataList", rsvtSchList  ); //Cell
 
+
+		//약사목록 을 조회
+        List<TbCommUser> chemistList = selectChemistList();
+        mv.addObject( "chemistList", chemistList  ); //약사목록
+
         return mv;
     } 
 
@@ -144,11 +157,11 @@ public class ReservationScheduleService {
     	TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
 
 		//약사목록 을 조회
-        // List<TbCommUser> chemistList = userRepo.selectChemistList();
+        List<TbCommUser> chemistList = selectChemistList();
 		
 
     	mv.addObject( "schInfo", rsvtSchInfo );
-        mv.addObject( "chemistList", null  ); //약사목록
+        mv.addObject( "chemistList", chemistList  ); //약사목록
     	return mv;
     }
     
@@ -212,4 +225,8 @@ public class ReservationScheduleService {
 		return rsvtSchRepo.deleteTbPpRsvtSch( rsvt );
 	}
 
+
+	public List<TbCommUser> selectChemistList() throws Exception {
+		return rsvtSchRepo.selectChemistList();
+	}
 }

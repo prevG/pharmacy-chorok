@@ -71,27 +71,46 @@ $( document ).ready( function() {
 */  
 	});
 	
-	$( "#btnSaveRsvtSch" ).off("click").on("click", function( e ){
 
-		var params = $("form[name=saveForm]").serialize();
+	/**************************************************************
+     * 저장하기
+     **************************************************************/
+	$("button[name='btnSaveRsvtSch']").off("click").on("click", function (e) {
+
+		var params = $("form[name=detailForm]").serialize();
 		$.ajax({
-			type : 'post',
-	        url  : '/api/v1/main/rsvt/saveRsvtSch',
-	        data : params,
-			success : function( result ) {
+			type: 'post',
+			url: '/api/v1/main/reservation/saveRsvtSch',
+			data: params,
+			success: function (result) {
 
-				if( result.status == "success" ) {
-					alert( result.message );
+				if (result.status == "success") {
+					alert(result.message);
 					$(".modal").modal("hide")
 
-					var params = {
-						"currDt"   : $("#currDt").val()
-					};
-					refreshTimeTable( params );
+					refreshTimeTable();
 				} else {
-					alert( result.errorMessage );
+					alert(result.errorMessage);
 				}
 			}
 		});
 	});
+
+	//저장후 타임테이블 새로고침
+	refreshTimeTable = function () {
+		var url = "/reservation/dashboard/refresh";
+		var params = {
+			"currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
+		};
+
+		$("#time-table").load( url, params, function (response, status, xhr) {
+
+			if (200 == xhr.status) {
+				$("#time-table").html(response);
+			} else {
+				console.log(response, status, xhr);
+			}
+		});
+	}
 });
+

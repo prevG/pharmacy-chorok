@@ -57,14 +57,15 @@
          , DOSG_TP_CD
          , CALL_YN          
          , DOSG_YN          
-         , CURR_WGT         
+         , CURR_WGT    
+         , LOSS_WGT     
          , DOSG_DESC1       
          , DOSG_DESC2       
          , REG_DT           
          , REG_USR_NO
       FROM TB_PP_DOSG_CHART DOSG
          , (SELECT @ROWNUM :=-1) TMP
-     WHERE CNST_ID = 8
+     WHERE CNST_ID = #{cnstId}
      ORDER
         BY DOSG_ID
 	]]>
@@ -79,6 +80,7 @@
         , CALL_YN
         , DOSG_YN
         , CURR_WGT
+        , LOSS_WGT
         , DOSG_DESC1
         , DOSG_DESC2
         , REG_DT
@@ -108,6 +110,7 @@
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
          , CUST_WGT    = #{custWgt} 
+         , LOSS_WGT    = #{lossWgt}
          , DOSG_DESC1  = #{dosgDesc1} 
          , DOSG_DESC2  = #{dosgDesc2} 
      WHERE DOSG_ID = #{dosgId}

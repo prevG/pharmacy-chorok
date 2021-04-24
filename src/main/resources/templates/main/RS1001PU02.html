@@ -28,308 +28,291 @@
 					<div class="tab-content" id="custom-tabs-four-tabContent">
 						<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel"
 							aria-labelledby="custom-tabs-four-home-tab">
-							<form name="saveCustForm" id="saveCustForm" method="post">
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="card">
-											<div class="card-header bg-info">
-												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>기본정보</h3>
+							<div id="customer-table" th:fragment="customer-table">
+								<form name="saveCustForm" id="saveCustForm" method="post">
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="card">
+												<div class="card-header bg-info">
+													<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>기본정보</h3>
+												</div>
+												<div class="card-body p-3">
+													<table class="table-sm table table-borderless">
+														<colgroup>
+															<col width="18%" />
+															<col width="32%" />
+															<col width="18%" />
+															<col width="32%" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th>이름</th>
+																<td>
+																	<div class="input-group input-group-sm" style="width:200px;">
+																		<input type="text"   name="custUsrNm" th:value="${custInfo?.custUsrNm}"class="form-control" tabindex="1">
+																		<input type="hidden" name="custId"    th:value="${custInfo?.custId}" class="form-control">
+																		<input type="hidden" name="rsvtId"    th:value="${rsvtInfo?.rsvtId}" class="form-control">
+																	</div>
+																</td>
+																<th>연락처</th>
+																<td>
+																	<div class="input-group input-group-sm"
+																		style="width:200px;">
+																		<input type="text" id="custCellNo" name="custCellNo"
+																			th:value="${custInfo?.custCellNo}"
+																			class="form-control" maxlength="13"
+																			tabindex="2">
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th>생년월일</th>
+																<td>
+																	<div class="input-group input-group-sm"
+																		style="width:200px;">
+																		<input type="number" id="custBirthDt"
+																			name="custBirthDt"
+																			th:value="${custInfo?.custBirthDt}"
+																			class="form-control" maxlength="6"
+																			tabindex="3">
+																	</div>
+																</td>
+																<th>성별</th>
+																<td>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="custGenTpCd" id="custGenTpCd1" value="F"
+																			th:checked="${'F' eq custInfo?.custGenTpCd}"
+																			tabindex="4">
+																		<label class="form-check-label"
+																			for="custGenTpCd1">여성</label>
+																	</div>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="custGenTpCd" id="custGenTpCd2" value="M"
+																			th:checked="${'M' eq custInfo?.custGenTpCd}"
+																			tabindex="4">
+																		<label class="form-check-label"
+																			for="custGenTpCd2">남성</label>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
 											</div>
-											<div class="card-body p-3">
-												<table class="table-sm table table-borderless">
-													<colgroup>
-														<col width="18%" />
-														<col width="32%" />
-														<col width="18%" />
-														<col width="32%" />
-													</colgroup>
-													<tbody>
-														<tr>
-															<th>이름</th>
-															<td>
-																<div class="input-group input-group-sm" style="width:200px;">
-																	<input type="text" name="custUsrNm" th:value="${custInfo?.custUsrNm}"class="form-control" tabindex="3">
-																	<input type="text" name="custId"    th:value="${custInfo?.custId}" class="form-control" tabindex="3">
-																	<input type="text" name="rsvtId"    th:value="${rsvtInfo?.rsvtId}" class="form-control" tabindex="3">
-																</div>
-															</td>
-															<th>연락처</th>
-															<td>
-																<div class="input-group input-group-sm"
-																	style="width:200px;">
-																	<input type="text" id="custCellNo" name="custCellNo"
-																		th:value="${custInfo?.custCellNo}"
-																		class="form-control" maxlength="13"
-																		tabindex="5">
-																</div>
-															</td>
-														</tr>
-														<tr>
-															<th>생년월일</th>
-															<td>
-																<div class="input-group input-group-sm"
-																	style="width:200px;">
-																	<input type="text" id="custBirthDt"
-																		name="custBirthDt"
-																		th:value="${custInfo?.custBirthDt}"
-																		class="form-control" maxlength="13"
-																		tabindex="5">
-																</div>
-															</td>
-															<th>성별</th>
-															<td>
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="custGenTpCd" id="custGenTpCd1" value="F"
-																		th:checked="${'F' eq custInfo?.custGenTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="custGenTpCd1">여성</label>
-																</div>
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="custGenTpCd" id="custGenTpCd2" value="M"
-																		th:checked="${'M' eq custInfo?.custGenTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="custGenTpCd2">남성</label>
-																</div>
-															</td>
-														</tr>
-													</tbody>
-												</table>
+
+											<div class="card">
+												<div class="card-header bg-info">
+													<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>결혼정보</h3>
+												</div>
+												<div class="card-body p-3">
+													<table class="table-sm table table-borderless">
+														<colgroup>
+															<col width="18%" />
+															<col width="32%" />
+															<col width="18%" />
+															<col width="32%" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th>결혼유무</th>
+																<td colspan="3">
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="mrgYn" id="mrgYn1" value="N"
+																			th:checked="${'N' eq custInfo?.mrgYn}"
+																			tabindex="5">
+																		<label class="form-check-label"
+																			for="mrgYn1">미혼</label>
+																	</div>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="mrgYn" id="mrgYn2" value="Y"
+																			th:checked="${'Y' eq custInfo?.mrgYn}"
+																			tabindex="5">
+																		<label class="form-check-label"
+																			for="mrgYn2">기혼</label>
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th>출산 자녀수</th>
+																<td>
+																	<select name="pcrtChdCnt" class="form-select" style="min-width:100px;" tabindex="6">
+																		<option value="0"  th:selected="${'0'  eq custInfo?.pcrtChdCnt}">0 명</option>
+																		<option value="1"  th:selected="${'1'  eq custInfo?.pcrtChdCnt}">1 명</option>
+																		<option value="2"  th:selected="${'2'  eq custInfo?.pcrtChdCnt}">2 명</option>
+																		<option value="3"  th:selected="${'3'  eq custInfo?.pcrtChdCnt}">3 명</option>
+																		<option value="4"  th:selected="${'4'  eq custInfo?.pcrtChdCnt}">4 명</option>
+																		<option value="5"  th:selected="${'5'  eq custInfo?.pcrtChdCnt}">5 명</option>
+																		<option value="6"  th:selected="${'6'  eq custInfo?.pcrtChdCnt}">6 명</option>
+																		<option value="7"  th:selected="${'7'  eq custInfo?.pcrtChdCnt}">7 명</option>
+																		<option value="8"  th:selected="${'8'  eq custInfo?.pcrtChdCnt}">8 명</option>
+																		<option value="9"  th:selected="${'9'  eq custInfo?.pcrtChdCnt}">9 명</option>
+																		<option value="10" th:selected="${'10' eq custInfo?.pcrtChdCnt}">10 명</option>
+																		<option value="11" th:selected="${'11' eq custInfo?.pcrtChdCnt}">11 명</option>
+																		<option value="12" th:selected="${'12' eq custInfo?.pcrtChdCnt}">12 명</option>
+																		<option value="13" th:selected="${'13' eq custInfo?.pcrtChdCnt}">13 명</option>
+																		<option value="14" th:selected="${'14' eq custInfo?.pcrtChdCnt}">14 명</option>
+																		<option value="15" th:selected="${'15' eq custInfo?.pcrtChdCnt}">15 명</option>
+																	</select>
+																</td>
+																<th>마지막 출산년도</th>
+																<td>
+																	<input type="number" name="lstPcrtYear" th:value="${custInfo?.lstPcrtYear}" maxlength="4" tabindex="7">
+																</td>
+															</tr>
+															<tr>
+																<th>모유수유 현재</th>
+																<td colspan="3">
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="brstFdgYn" id="brstFdgYn1" value="Y"
+																			th:checked="${'Y' eq custInfo?.brstFdgYn}"
+																			tabindex="8">
+																		<label class="form-check-label" for="brstFdgYn1">예</label>
+																	</div>
+																	<div class="form-check form-check-inline">
+																		<input class="form-check-input" type="checkbox"
+																			name="brstFdgYn" id="brstFdgYn2" value="N"
+																			th:checked="${'N' eq custInfo?.brstFdgYn}"
+																			tabindex="8">
+																		<label class="form-check-label" for="brstFdgYn2">아니요</label>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+											<div class="card">
+												<div class="card-header bg-info">
+													<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>내원경로</h3>
+												</div>
+												<div class="card-body p-3">
+													<table class="table-sm table table-borderless">
+														<colgroup>
+															<col width="25%" />
+															<col width="*" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th>
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox"
+																			name="vistTpCd" id="vistTpCd1" value="1"
+																			th:checked="${'1' eq custInfo?.vistTpCd}"
+																			tabindex="9">
+																		<label class="form-check-label"
+																			for="vistTpCd1">지인소개</label>
+																	</div>
+																</th>
+																<td></td>
+															</tr>
+															<tr>
+																<th>
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox"
+																			name="vistTpCd" id="vistTpCd2" value="2"
+																			th:checked="${'2' eq custInfo?.vistTpCd}"
+																			tabindex="9">
+																		<label class="form-check-label"
+																			for="vistTpCd2">홈페이지</label>
+																	</div>
+																</th>
+																<td></td>
+															</tr>
+															<tr>
+																<th>
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox"
+																			name="vistTpCd" id="vistTpCd3" value="3"
+																			th:checked="${'3' eq custInfo?.vistTpCd}"
+																			tabindex="9">
+																		<label class="form-check-label" for="vistTpCd3">카카오톡
+																			검색창</label>
+																	</div>
+																</th>
+																<td></td>
+															</tr>
+															<tr>
+																<th>
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox"
+																			name="vistTpCd" id="vistTpCd4" value="4"
+																			th:checked="${'4' eq custInfo?.vistTpCd}"
+																			tabindex="9">
+																		<label class="form-check-label" for="vistTpCd4">블로그
+																			및 인터넷</label>
+																	</div>
+																</th>
+																<td></td>
+															</tr>
+															<tr>
+																<th>
+																	<div class="form-check">
+																		<input class="form-check-input" type="checkbox"
+																			name="vistTpCd" id="vistTpCd5" value="5"
+																			th:checked="${'5' eq custInfo?.vistTpCd}"
+																			tabindex="9">
+																		<label class="form-check-label"
+																			for="vistTpCd5">기타</label>
+																	</div>
+																</th>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
 
-										<div class="card">
-											<div class="card-header bg-info">
-												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>결혼정보</h3>
-											</div>
-											<div class="card-body p-3">
-												<table class="table-sm table table-borderless">
-													<colgroup>
-														<col width="18%" />
-														<col width="32%" />
-														<col width="18%" />
-														<col width="32%" />
-													</colgroup>
-													<tbody>
-														<tr>
-															<th>결혼유무</th>
-															<td colspan="3">
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="mrgYn" id="mrgYn1" value="F"
-																		th:checked="${'N' eq custInfo?.mrgYn}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="mrgYn1">미혼</label>
-																</div>
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="mrgYn" id="mrgYn2" value="M"
-																		th:checked="${'Y' eq custInfo?.mrgYn}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="mrgYn2">기혼</label>
-																</div>
-															</td>
-														</tr>
-														<tr>
-															<th>출산 자녀수</th>
-															<td>
-																<select class="form-select" style="min-width:100px;">
-																	<option value="0" selected>0 명</option>
-																	<option value="1">1 명</option>
-																	<option value="2">2 명</option>
-																	<option value="3">3 명</option>
-																	<option value="4">4 명</option>
-																	<option value="5">5 명</option>
-																	<option value="6">6 명</option>
-																	<option value="7">7 명</option>
-																	<option value="8">8 명</option>
-																	<option value="9">9 명</option>
-																	<option value="10">10 명</option>
-																	<option value="11">11 명</option>
-																	<option value="12">12 명</option>
-																	<option value="13">13 명</option>
-																	<option value="14">14 명</option>
-																	<option value="15">15 명</option>
-																</select>
-															</td>
-															<th>마지막 출산년도</th>
-															<td>
-																<select class="form-select" style="min-width:100px;">
-																	<option value="0" selected>0 명</option>
-																	<option value="1">1 명</option>
-																	<option value="2">2 명</option>
-																	<option value="3">3 명</option>
-																	<option value="4">4 명</option>
-																	<option value="5">5 명</option>
-																	<option value="6">6 명</option>
-																	<option value="7">7 명</option>
-																	<option value="8">8 명</option>
-																	<option value="9">9 명</option>
-																	<option value="10">10 명</option>
-																	<option value="11">11 명</option>
-																	<option value="12">12 명</option>
-																	<option value="13">13 명</option>
-																	<option value="14">14 명</option>
-																	<option value="15">15 명</option>
-																</select>
-															</td>
-														</tr>
-														<tr>
-															<th>모유수유 현재</th>
-															<td colspan="3">
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="brstFdgYn" id="brstFdgYn1" value="F"
-																		th:checked="${'Y' eq schInfo?.brstFdgYn}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="brstFdgYn1">예</label>
-																</div>
-																<div class="form-check form-check-inline">
-																	<input class="form-check-input" type="checkbox"
-																		name="brstFdgYn" id="brstFdgYn2" value="M"
-																		th:checked="${'N' eq schInfo?.brstFdgYn}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="brstFdgYn2">아니요</label>
-																</div>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-
-										<div class="card">
-											<div class="card-header bg-info">
-												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>내원경로</h3>
-											</div>
-											<div class="card-body p-3">
-												<table class="table-sm table table-borderless">
-													<colgroup>
-														<col width="25%" />
-														<col width="*" />
-													</colgroup>
-													<tbody>
-														<tr>
-															<th>
-																<div class="form-check">
-																	<input class="form-check-input" type="checkbox"
-																		name="vistTpCd" id="vistTpCd1" value="F"
-																		th:checked="${'1' eq custInfo?.vistTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="vistTpCd1">지인소개</label>
-																</div>
-															</th>
-															<td></td>
-														</tr>
-														<tr>
-															<th>
-																<div class="form-check">
-																	<input class="form-check-input" type="checkbox"
-																		name="vistTpCd" id="vistTpCd2" value="F"
-																		th:checked="${'2' eq custInfo?.vistTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="vistTpCd2">홈페이지</label>
-																</div>
-															</th>
-															<td></td>
-														</tr>
-														<tr>
-															<th>
-																<div class="form-check">
-																	<input class="form-check-input" type="checkbox"
-																		name="vistTpCd" id="vistTpCd3" value="F"
-																		th:checked="${'3' eq custInfo?.vistTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label" for="vistTpCd3">카카오톡
-																		검색창</label>
-																</div>
-															</th>
-															<td></td>
-														</tr>
-														<tr>
-															<th>
-																<div class="form-check">
-																	<input class="form-check-input" type="checkbox"
-																		name="vistTpCd" id="vistTpCd4" value="F"
-																		th:checked="${'4' eq custInfo?.vistTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label" for="vistTpCd4">블로그
-																		및 인터넷</label>
-																</div>
-															</th>
-															<td></td>
-														</tr>
-														<tr>
-															<th>
-																<div class="form-check">
-																	<input class="form-check-input" type="checkbox"
-																		name="vistTpCd" id="vistTpCd5" value="F"
-																		th:checked="${'5' eq custInfo?.vistTpCd}"
-																		tabindex="4">
-																	<label class="form-check-label"
-																		for="vistTpCd5">기타</label>
-																</div>
-															</th>
-															<td></td>
-														</tr>
-													</tbody>
-												</table>
+										<div class="col-sm-6">
+											<div class="card">
+												<div class="card-header bg-info">
+													<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>주소정보</h3>
+												</div>
+												<div class="card-body p-3">
+													<table class="table-sm table table-borderless">
+														<colgroup>
+															<col width="18%" />
+															<col width="*" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th>우편번호</th>
+																<td>
+																	<div class="input-group input-group-sm" style="width:100px;">
+																		<input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="10">
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th>주소</th>
+																<td>
+																	<div class="input-group input-group-sm" style="width:400px;">
+																		<input type="text" id="addr1" name="addr1" th:value="${custInfo?.addr1}" class="form-control" tabindex="11">
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<th>상세주소</th>
+																<td>
+																	<div class="input-group input-group-sm" style="width:400px;">
+																		<input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="12">
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
 									</div>
-
-									<div class="col-sm-6">
-										<div class="card">
-											<div class="card-header bg-info">
-												<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>주소정보</h3>
-											</div>
-											<div class="card-body p-3">
-												<table class="table-sm table table-borderless">
-													<colgroup>
-														<col width="18%" />
-														<col width="*" />
-													</colgroup>
-													<tbody>
-														<tr>
-															<th>우편번호</th>
-															<td>
-																<div class="input-group input-group-sm" style="width:100px;">
-																	<input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="3">
-																</div>
-															</td>
-														</tr>
-														<tr>
-															<th>주소</th>
-															<td>
-																<div class="input-group input-group-sm" style="width:400px;">
-																	<input type="text" id="addr1" name="addr2" th:value="${custInfo?.addr1}" class="form-control" tabindex="3">
-																</div>
-															</td>
-														</tr>
-														<tr>
-															<th>상세주소</th>
-															<td>
-																<div class="input-group input-group-sm" style="width:400px;">
-																	<input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="3">
-																</div>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</form>
+								</form>
+							</div>
 
 							<div class="row">
 								<div class="col-sm-12 text-right">
@@ -410,11 +393,13 @@
 		columnHeaderVertAlign: "center",
 		selectable : 1,
 		columns: [
-			{ title: "No"    , field: "seq" 	, width:"30", hozAlign:"center" },
-			{ title: "상담일시", field: "cnstDt"  , width:"100", hozAlign:"center" },
-			{ title: "담당약사", field: "picUsrNo", width:"100", hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true},
-			{ title: "차트번호", field: "cnstId"   },
-			{ title: "삭제",    field: "del"      }
+			{ title: "상담일시", field: "cnstDt"  , width:100, hozAlign:"center", headerSort:false},
+			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true, headerSort:false},
+			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", headerSort:false, visible : true},
+			{ title: "삭제",    width:60, hozAlign:"center", headerSort:false},
+			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", headerSort:false, visible : true},
+			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", headerSort:false, visible : true},
+			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", headerSort:false, visible : true},
 		],
 		rowClick:function(e, row){
 			callDosingChart( row  );
@@ -422,20 +407,20 @@
     	}
 	});
 	var table02 = new Tabulator("#dosingchar-table", {
-		columnHeaderVertAlign: "center",
 		height  : "500px",
-		layout  : "fitDataFill",
+		columnHeaderVertAlign: "center",
+		selectable : 1,
 		columns : [
-			{ title: "일수"    , field: "seqStr", width:"60", hozAlign:"right"},
-			{ title: "복용단계" , field: "dosgTpCd", width:"100", hozAlign:"center", editor:"select", editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
-			{ title: "복용일자" , field: "dosgDt", width:"120", hozAlign:"center", editor:dateEditor, cellEdited:function(cell){ displayEdited(cell)}, editable:cellEditCheck},
-			{ title: "요일"    , field: "daysStrKor", width:"70", hozAlign:"center", },
-			{ title: "상담여부"  , field: "callYn" , hozAlign:"center", editor:"select", editorParams:{values:selectParam01}, formatter:"lookup", formatterParams:selectParam01, editable:cellEditCheck},
-			{ title: "복용여부" , field: "dosgYn" , hozAlign:"center", editor:"select", editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
-			{ title: "체중"    , field: "currWgt" },
-			{ title: "감량"    , field: "gender" },
-			{ title: "몸상태"   , field: "dosgDesc1" },
-			{ title: "약반응"  , field: "dosgDesc1" }
+			{ title: "일수"    , field: "seqStr"     , width:60,  hozAlign:"right"},
+			{ title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"left",  editor:"select", editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
+			{ title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", editor:dateEditor, cellEdited:function(cell){ displayEdited(cell)}, editable:cellEditCheck},
+			{ title: "요일"    , field: "daysStrKor" , width:70, hozAlign:"center", },
+			{ title: "상담여부"  , field: "callYn"    , widht:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam01}, formatter:"lookup", formatterParams:selectParam01, editable:cellEditCheck},
+			{ title: "복용여부" , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+			{ title: "체중"    , field: "currWgt"    , width:70,  hozAlign:"right", editor:"input", cellEdited:function(cell){ weightCheck(cell)}, editable:true},
+			{ title: "감량"    , field: "lossWgt"    , width:70,  hozAlign:"right"},
+			{ title: "몸상태"   , field: "dosgDesc1"  , width:200},
+			{ title: "약반응"  , field: "dosgDesc1"   , width:200}
 		]
 	});
 </script>

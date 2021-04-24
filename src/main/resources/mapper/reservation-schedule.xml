@@ -28,9 +28,9 @@
 		, DAYS_STR_KOR
 		, DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
 		, DAYS_NUM
-	FROM TB_COMM_CALENDAR CAL
+	 FROM TB_COMM_CALENDAR CAL
 	WHERE BASE_DT >= DATE_FORMAT( NOW(), '%Y-%m-%d')
-	AND BASE_DT <= DATE_FORMAT( DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')
+	  AND BASE_DT <= DATE_FORMAT( DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')
 	ORDER
 		BY BASE_DT
 	]]>
@@ -106,6 +106,15 @@
         BY WT.START_HM
 	]]>
 	</select>
+
+	<select id="selectChemistList" resultType="com.pharm.chorok.domain.table.TbCommUser">
+	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectChemistList */
+    SELECT *
+      FROM TB_COMM_USER
+     WHERE USR_AUTH = 'A00'
+	]]>
+	</select>
 	
 	
 	<select id="findReservationInfoByRsvtId" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
@@ -119,6 +128,7 @@
 	     , RSVT_TP_CD
 	     , GEN_TP_CD
 	     , RSVT_DESC
+		 , PIC_USR_NO
 		 , CUST_ID
 	  FROM TB_PP_RSVT_SCH SCH
 	 WHERE RSVT_ID = #{rsvtId}

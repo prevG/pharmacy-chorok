@@ -27,6 +27,11 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String usrNm;
 	@NonNull
 	private String usrPhnNo;
+
+	public String getUsrNo() {
+		return this.usrNo;
+	}
+
 	@NonNull
 	private String usrEml;
 	@NonNull
@@ -97,5 +102,114 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	public void setUsrNo(String usrNo) {
+		this.usrNo = usrNo;
+	}
+
+	public String getUsrNm() {
+		return this.usrNm;
+	}
+
+	public void setUsrNm(String usrNm) {
+		this.usrNm = usrNm;
+	}
+
+	public String getUsrPhnNo() {
+		return this.usrPhnNo;
+	}
+
+	public void setUsrPhnNo(String usrPhnNo) {
+		this.usrPhnNo = usrPhnNo;
+	}
+
+	public String getUsrEml() {
+		return this.usrEml;
+	}
+
+	public void setUsrEml(String usrEml) {
+		this.usrEml = usrEml;
+	}
+
+	public String getUsrPwd() {
+		return this.usrPwd;
+	}
+
+	public void setUsrPwd(String usrPwd) {
+		this.usrPwd = usrPwd;
+	}
+
+	public String getUsrGrade() {
+		return this.usrGrade;
+	}
+
+	public void setUsrGrade(String usrGrade) {
+		this.usrGrade = usrGrade;
+	}
+
+	public String getUsrAuth() {
+		return this.usrAuth;
+	}
+
+	public void setUsrAuth(String usrAuth) {
+		this.usrAuth = usrAuth;
+	}
+
+	public String getUsrAprv() {
+		return this.usrAprv;
+	}
+
+	public void setUsrAprv(String usrAprv) {
+		this.usrAprv = usrAprv;
+	}
+
+	public String getDelYn() {
+		return this.delYn;
+	}
+
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
+
+	public String getCbSrch() {
+		return this.cbSrch;
+	}
+
+	public void setCbSrch(String cbSrch) {
+		this.cbSrch = cbSrch;
+	}
+
+	public String getCbAuth() {
+		return this.cbAuth;
+	}
+
+	public void setCbAuth(String cbAuth) {
+		this.cbAuth = cbAuth;
+	}
+
+	public String getCbAppv() {
+		return this.cbAppv;
+	}
+
+	public void setCbAppv(String cbAppv) {
+		this.cbAppv = cbAppv;
+	}
+
+	public String getTarget() {
+		return this.target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getSrchTxt() {
+		return this.srchTxt;
+	}
+
+	public void setSrchTxt(String srchTxt) {
+		this.srchTxt = srchTxt;
 	}
 }

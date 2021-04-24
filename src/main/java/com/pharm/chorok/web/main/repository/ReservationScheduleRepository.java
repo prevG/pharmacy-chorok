@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
@@ -40,5 +41,9 @@ public interface ReservationScheduleRepository {
     public List<TbPpRsvtSch> selectOneDayBeforeRsv() throws Exception;
     
     public List<TbPpRsvtSch> selectDayRsv() throws Exception;
+
+    public List<TbCommUser> selectChemistList() throws Exception;
+
+    
     
 }

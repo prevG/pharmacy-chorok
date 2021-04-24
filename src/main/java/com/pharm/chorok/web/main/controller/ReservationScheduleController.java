@@ -1,9 +1,11 @@
 package com.pharm.chorok.web.main.controller;
 
 import com.pharm.chorok.domain.main.ReservationPagination;
+import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.ChartService;
+import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.ReservationScheduleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ReservationScheduleController {
 
 	@Autowired
 	private ReservationScheduleService reservationSvc;
+
+	@Autowired
+	private CustomerService customerSvc;
 
 	@Autowired
 	private ChartService chartSvc;
@@ -81,6 +86,16 @@ public class ReservationScheduleController {
 	}
 
 
+	@RequestMapping(value = "/dashboard/refresh", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView refreshDashboard(
+			ReservationPagination reservationPagination) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("index :: time-table");
+		reservationSvc.getDashBoardReservationByDt( mv,  reservationPagination );
+        return mv;
+	}
+
+
 	@PostMapping("/RS1001MV/moveWeek")
 	public ModelAndView getPrevWeek(
 			ReservationPagination reservationPagination) throws Exception {
@@ -89,4 +104,19 @@ public class ReservationScheduleController {
 		reservationSvc.getReservationByMovedWeekNo( mv,  reservationPagination );
         return mv;
 	}
+
+		
+	@RequestMapping(value = "/RS1001PU02/saveCustomer", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView saveCustomer(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
+		
+			
+		customerSvc.saveCustomer( custParam, rsvtParam );
+		TbCustomer custInfo = customerSvc.findCustomerByCustId( custParam, rsvtParam  );
+
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU02 :: customer-table");
+		mv.addObject("custInfo", custInfo);
+        return mv;
+	}
+
 }

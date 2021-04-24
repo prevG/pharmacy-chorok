@@ -4,7 +4,7 @@ $(document).ready(function () {
     /**************************************************************
      * 예약고객의 상세스케쥴 보기
      **************************************************************/
-    $(document).on("click", "button[name='rsvtSch']", function (e) {
+    $(document).off("click", "button[name='rsvtSch']").on("click", "button[name='rsvtSch']", function (e) {
 
         var params = {
             "rsvtId": $(e.target).closest("div").attr("data-id")
@@ -15,7 +15,7 @@ $(document).ready(function () {
     /**************************************************************
      * 차트생성
      **************************************************************/
-    $(document).on("click", "button[name='btnNewChartView']", function (e) {
+    $(document).off("click", "button[name='btnNewChartView']").on("click", "button[name='btnNewChartView']", function (e) {
 
         e.preventDefault(); //remove href function
         var params = {
@@ -31,7 +31,7 @@ $(document).ready(function () {
     /**************************************************************
      * 새 스케쥴 등록하기
      **************************************************************/
-    $(document).on("click", "button[name='btnNewSch']", function (e) {
+    $(document).off("click", "button[name='btnNewSch']").on("click", "button[name='btnNewSch']", function (e) {
         var params = {
             "rsvtId": ""
         }
@@ -65,7 +65,7 @@ $(document).ready(function () {
     /**************************************************************
      * 다음주 스케쥴 보기
      **************************************************************/
-    $(document).on("click", "button[name='nextWeek']", function (e) {
+    $(document).off("click", "button[name='nextWeek']").on("click", "button[name='nextWeek']", function (e) {
 
         var params = {
             "currDt": $("#currDt").val(),
@@ -78,7 +78,7 @@ $(document).ready(function () {
     /**
 	 * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
 	 */
-     $(document).on("change", "input[name=genTpCd]", function( e ){
+     $(document).off("change", "input[name=genTpCd]").on("change", "input[name=genTpCd]", function( e ){
 
         if($(this).prop('checked')){
             $('input[name="genTpCd"]').prop('checked',false);
@@ -89,7 +89,7 @@ $(document).ready(function () {
     /**
      * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
      */
-     $(document).on("change", "input[name=rsvtTpCd]", function( e ){
+     $(document).off("change", "input[name=rsvtTpCd]").on("change", "input[name=rsvtTpCd]", function( e ){
         
         if($(this).prop('checked')){
             $('input[name="rsvtTpCd"]').prop('checked',false);
@@ -101,7 +101,7 @@ $(document).ready(function () {
     /**************************************************************
      * 상담하기 팝업이 닫힐때 처음 상담한 고객인 경우 refresh
      **************************************************************/
-    $("#modalCnstChart").on('shown.bs.modal', function () {
+    $("#modalCnstChart").off("shown.bs.modal").on('shown.bs.modal', function () {
         var custId = $("form[name='detailForm']").find("input[name='custId']").val()
         if( $.trim(custId)=="" || custId == 0) {
             refreshTimeTable();
@@ -112,7 +112,7 @@ $(document).ready(function () {
     /**************************************************************
      * 저장하기
      **************************************************************/
-    $(document).on("click", "button[name='btnSaveRsvtSch']", function (e) {
+    $(document).off("click", "button[name='btnSaveRsvtSch']").on("click", "button[name='btnSaveRsvtSch']", function (e) {
 
         var params = $("form[name=detailForm]").serialize();
         $.ajax({

@@ -108,4 +108,12 @@ public class CustomerService {
 		result = consultingRepo.deleteTpPpCnstChart( cnstInfo );
 		return result;
 	}
+
+	public TbCustomer findCustomerByCustId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("custId", rsvtParam.getCustId() );
+		TbCustomer custInfo = customerRepo.findCustomerByCustId( params );
+
+		return custInfo;
+	}
 }

@@ -5,52 +5,62 @@ $( document ).ready( function() {
 	/**
 	 * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
 	 */
-    $( "input[name=custGenTpCd]" ).off("change").on("change", function( e ){
+	//성별
+	$(document).off("change", "input[name=custGenTpCd]").on("change", "input[name=custGenTpCd]", function(e){
 		
 		if($(this).prop('checked')){
      		$('input[name="custGenTpCd"]').prop('checked',false);
      		$(this).prop('checked',true);
     	}
    	});
-
-	/**
-	 * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
-	 */
-	$( "input[name=mrgYn]" ).off("change").on("change", function( e ){
+	//결혼유무
+	$(document).off("change", "input[name=mrgYn]").on("change", "input[name=mrgYn]", function(e){
 		
 		if($(this).prop('checked')){
      		$('input[name="mrgYn"]').prop('checked',false);
      		$(this).prop('checked',true);
     	}
 	});
-	
+	//모유수유여부
+	$(document).off("change", "input[name=brstFdgYn]").on("change", "input[name=brstFdgYn]", function(e){
+		
+		if($(this).prop('checked')){
+     		$('input[name="brstFdgYn"]').prop('checked',false);
+     		$(this).prop('checked',true);
+    	}
+	});
+	//내원경로
+	$(document).off("change", "input[name=vistTpCd]").on("change", "input[name=vistTpCd]", function(e){
+		
+		if($(this).prop('checked')){
+     		$('input[name="vistTpCd"]').prop('checked',false);
+     		$(this).prop('checked',true);
+    	}
+   	});
 	
     /**************************************************************
      * 고객정보 저장
      **************************************************************/
-	 $(document).on("click", "button[name='btnSaveCustomer']", function (e) {
+	$(document).off("click", "button[name='btnSaveCustomer']").on("click", "button[name='btnSaveCustomer']", function (e) {
 
-		var params = $("form[name=saveCustForm]").serialize();
-		$.ajax({
-			type : 'post',
-	        url  : '/api/v1/main/customer/saveCustomer',
-	        data : params,
-			success : function( result ) {
 
-				if( result.status == "success" ) {
-					alert( result.message );
-					
-				} else {
-					alert( result.errorMessage );
-				}
-			}
-		});
+        var url = "/reservation/RS1001PU02/saveCustomer";
+        var params = $("form[name=saveCustForm]").serialize();
+        $("#customer-table").load( url, params, function (response, status, xhr) {
+
+            if (200 == xhr.status) {
+				alert("고객정보가 정상적으로 저장 되었습니다.")
+                $("#customer-table").html(response);
+            } else {
+                console.log(response, status, xhr);
+            }
+        });
 	});
 
 	/**************************************************************
      * 차트 생성
      **************************************************************/
-	 $(document).on("click", "button[name='btnNewChart']", function (e) {
+	 $(document).off("click", "button[name='btnNewChart']").on("click", "button[name='btnNewChart']", function (e) {
 
 		var params = $("form[name=saveCustForm]").serialize();
 		$.ajax({
@@ -89,10 +99,15 @@ function setDataOnSrvChart(data){
 
 function callDosingChart( row ) {
 
+	var orgWgt = row.getCell("orgWgt").getValue();
+	var tgtWgt = row.getCell("tgtWgt").getValue();
+	$("#orgWgt").val( orgWgt );
+	$("#tgtWgt").val( tgtWgt) ;
+
+
 	var params = {
 		"cnstId" : row.getCell("cnstId").getValue()
 	};
-
 	$.ajax({
 		type : 'post',
 		url  : '/api/v1/main/dosing/selectDosingChartByDosgId',
@@ -100,7 +115,7 @@ function callDosingChart( row ) {
 		success : function( result ) {
 
 			if( result.status == "success" ) {
-				table02.setData( result.data )
+				table02.setData( result.data );
 			} else {
 				alert( result.errorMessage );
 			}
@@ -133,5 +148,17 @@ function callSrvChart(row){
 }
 
 function cellEditCheck( cell ) {
+	return true;
+}
+function weightCheck( cell ) {
+	var currWgt = cell.getValue();
+	if( isNaN( currWgt) ){
+		alert("숫자 또는 .만 입력할 수 있습니다.")
+		return;
+	}
+	var orgWgt = $("#orgWgt").val();
+	if( !isNaN(orgWgt) ) {
+
+	}
 	return true;
 }

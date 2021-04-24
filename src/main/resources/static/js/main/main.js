@@ -24,15 +24,4 @@ $( document ).ready( function() {
         e.preventDefault(); //remove href function
         location.href = "/reservation/RS1001MV";
     });
-
-    refreshTimeTable = function( params ) {
-        var url = "/reservation/RS1001MV/refresh";
-		$("#reservation-detail").load(url, params, function(response, status, xhr) {
-			if (200==xhr.status) {
-				$("#time-table").html(response);
-			} else {
-				console.log( response, status, xhr );
-			}
-		});
-    }
 });
