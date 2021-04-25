@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCustomer;
-import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.CustomerService;
 
@@ -64,4 +63,24 @@ public class CustomerApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
+
+
+
+	@PostMapping("/recommandCustUser")
+    public ResponseEntity<ResponseMessage> selectCustomerByUsrNmOrCellNo(TbPpRsvtSch reservationParam) {
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( reservationParam );
+			
+			
+			resMsg.setData( result );
+			resMsg.setStatus("success");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+	
 }

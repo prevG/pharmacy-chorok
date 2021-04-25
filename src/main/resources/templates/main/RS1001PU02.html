@@ -363,6 +363,27 @@
 									<div class="row">
 										<div class="col-sm-12">
 											<div id="consultation-table"></div>
+											<script type="text/javascript" th:inline="javascript">
+												var table01 = new Tabulator("#consultation-table", {
+													height: "120px",
+													selectable : 1,
+													headerSort:false,
+													columns: [
+														{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
+														{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", visible : false},
+														{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", visible : false},
+														{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
+														{ title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
+														{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true,cellEdited:function(cell){ displayEdited(cell);}},
+														{ title: "삭제"   , formatter:trashIcon, width:40, hozAlign:"center", cellClick:function(e, cell){ deleteConsultingChart(e, cell)}}
+													],
+													rowClick:function(e, row){
+														loadChartByCnstId( row );
+														// callDosingChart( row  );
+														// callSrvChart( row  );
+													}
+												});
+											</script>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -373,7 +394,7 @@
 									<div class="row mb-1">
 										<div class="col-sm-12 text-right">
 											<textarea class="form-control form-control-sm" id="rsvtDesc"
-												name="rsvtDesc" rows="21" th:text="${schInfo?.rsvtDesc}"
+												name="rsvtDesc" rows="19" th:text="${schInfo?.rsvtDesc}"
 												placeholder="기타메모" tabindex="9"></textarea>
 										</div>
 									</div>
@@ -417,8 +438,8 @@
 																	<div class="tab-pane fade active show" id="custom-tabs-four-home111" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab111">
 																		<div class="row">
 																			<div class="col-12">
-																				<div class="overflow-auto" style="max-height:570px;">
-																					<table class="table table-sm table-bordered" >
+																				<div class="overflow-auto" style="max-height:530px;">
+																					<table class="table table-xs table-bordered .table-striped" >
 																						<thead>
 																							<tr>
 																								<th>번호</th>
@@ -507,7 +528,7 @@
 																				<div id="dosingchar-table"></div>
 																				<script type="text/javascript" th:inline="javascript">
 																					var table02 = new Tabulator("#dosingchar-table", {
-																						height  : "530px",
+																						height  : "490px",
 																						selectable : 1,
 																						headerSort:false,
 																						columns : [
@@ -550,25 +571,4 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" th:inline="javascript">
-	var table01 = new Tabulator("#consultation-table", {
-		height: "120px",
-		selectable : 1,
-		headerSort:false,
-		columns: [
-			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
-			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", visible : false},
-			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", visible : false},
-			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
-			{ title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
-			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true,cellEdited:function(cell){ displayEdited(cell);}},
-			{ title: "삭제"   , formatter:trashIcon, width:40, hozAlign:"center", cellClick:function(e, cell){ deleteConsultingChart(e, cell)}}
-    	],
-		rowClick:function(e, row){
-			loadChartByCnstId( row );
-			// callDosingChart( row  );
-			// callSrvChart( row  );
-    	}
-	});
-</script>
 </html>

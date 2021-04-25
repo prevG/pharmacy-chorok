@@ -23,6 +23,8 @@ public class TbPpRsvtSch extends TbCommColumn {
     private String rsvtDesc;
     private String picUsrNo;
     private Long rcmdUsrNo;
+    private String rcmdUsrNm;
+    private String rcmdCellNo;
 
     private TbPpWorkTime wt;
     private TbCommCalendar cal;

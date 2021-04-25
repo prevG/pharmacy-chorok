@@ -12,6 +12,25 @@
 	]]>
 	</select>
 
+    <select id="selectCustomerByUsrNmOrCellNo" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[ 
+	/** com.pharm.chorok.web.main.repository.repository.CustomerRepository */
+    SELECT *
+      FROM TB_CUSTOMER
+     WHERE 1 = 1
+    ]]>
+    <if test="custUsrNm != null and custUsrNm != ''">
+       AND CUST_USR_NM LIKE CONCAT('%', #{custUsrNo}, '%')
+    </if>
+    <if test="custCellNo != null and custCellNo != ''">
+       AND CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%'))
+    </if>
+    <![CDATA[ 
+     ORDER
+        BY CUST_USR_NM
+	]]>
+	</select>
+
 
 	<select id="findCustomerByCustId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    

@@ -132,6 +132,29 @@ $(document).ready(function () {
         });
     });
 
+    /**************************************************************
+     * 저장하기
+     **************************************************************/
+     $(document).off("click", "button[name='btnSendSms']").on("click", "button[name='btnSendSms']", function (e) {
+
+        var params = $("form[name=detailForm]").serialize();
+        $.ajax({
+            type: 'post',
+            url: '/api/v1/sms/reservation',
+            data: params,
+            success: function (result) {
+
+                if (result.status == "success") {
+                    alert(result.message);
+                    refreshTimeTable();
+                    findReservationDetail( params );
+                } else {
+                    alert(result.errorMessage);
+                }
+            }
+        });
+    });
+
     //예약 상세정보조회
     findReservationDetail = function (params) {
 

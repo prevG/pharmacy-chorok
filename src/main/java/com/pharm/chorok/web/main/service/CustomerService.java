@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
@@ -129,4 +130,22 @@ public class CustomerService {
 
 		return custInfo;
 	}
+
+
+    public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbPpRsvtSch reservationParam) throws Exception {
+
+		String rcmdUsrNm  = reservationParam.getRcmdUsrNm();
+		String rcmdCellNo = reservationParam.getRcmdCellNo();
+
+		if( !StringUtils.hasLength(rcmdUsrNm) && !StringUtils.hasLength(rcmdCellNo)) {
+			return null;
+		}
+
+		TbCustomer customerParam = new TbCustomer();
+		customerParam.setCustUsrNm( rcmdUsrNm );
+		customerParam.setCustCellNo( rcmdCellNo );
+		return customerRepo.selectCustomerByUsrNmOrCellNo( customerParam );
+	}
 }
+
+
