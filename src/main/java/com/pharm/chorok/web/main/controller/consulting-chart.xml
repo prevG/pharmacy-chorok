@@ -27,7 +27,7 @@
        , TGT_WGT
        , START_DOSG_DT
     FROM TB_PP_CNST_CHART
-   WHERE CNST_ID = #{cnstId}
+   WHERE CUST_ID = #{cnstId}
    ORDER
       BY CNST_DT DESC
 	]]>
@@ -35,8 +35,6 @@
 
   <select id="selectConsultingChartByCustId" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart" resultType="com.pharm.chorok.domain.main.ResultConsultingVo" >
 	<![CDATA[    
-	/** com.pharm.chorok.web.main.repository.ConsultingRepository.selectConsultingChartByCustId */
-	/** 고객번호에 대한 차트 목록조회 */
   SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
        , CNST_ID
        , CUST_ID

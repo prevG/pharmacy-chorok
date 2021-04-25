@@ -2,9 +2,12 @@ package com.pharm.chorok.web.main.service;
 
 import java.util.List;
 
+import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.ResultSrvVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
-import com.pharm.chorok.domain.table.TbPpDosgChart;
+import com.pharm.chorok.domain.table.TbPpCnstPaper;
+import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +20,39 @@ public class ChartService {
     @Autowired
     private DosingRepository dosingRepo;
 
-    public ModelAndView selectChartByDosgId( ModelAndView mv, TbPpCnstChart cnstInfo ) throws Exception {
+    @Autowired
+    private ConsultingRepository consultingRepo;
 
-        TbPpCnstChart cosultingInfo = null;
+	@Autowired
+	private DosingChartService dosingChartSvc;
 
-        //상담차트번호에 대한 복용차트 조회
-		TbPpDosgChart dosingParam = new TbPpDosgChart();
-		dosingParam.setCnstId( cnstInfo.getCnstId() );
-        List<ResultDosingVo> dosgList = dosingRepo.selectDosingChartByCustId( dosingParam );
+    @Autowired
+    private CnstPaperService cnstPaperService;
 
-        mv.addObject( "cosultingInfo", cosultingInfo );
-        mv.addObject( "dosingList"    , dosgList );
+    public ModelAndView selectChartByDosgId( ModelAndView mv, TbPpCnstChart chartParam ) throws Exception {
+
+        List<ResultDosingVo> dosgList = dosingRepo.selectDosingChartByCnstId( chartParam );
+        mv.addObject( "dosingList"   , dosgList );
 
         return mv;
     }
+
+
+    public ModelAndView findChartByCnstId( ModelAndView mv, TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper ) throws Exception {
+
+        ResultConsultingVo cnstInfo =  consultingRepo.selectConsultingChartByCnstId( chartParam );
+        List<ResultDosingVo> dosingList = dosingChartSvc.selectDosingChartByCnstId( chartParam );
+
+        tbPpCnstPaper.setCnstVer(1);
+		List<TbPpCnstPaper> cnstPaper = cnstPaperService.getCnstPaper(tbPpCnstPaper);
+        
+
+        mv.addObject( "cnstInfo", cnstInfo   );
+        mv.addObject( "dosgList", dosingList );
+        mv.addObject( "cnstPaper", cnstPaper );
+        return mv;
+    }
+    
 }
+
+        

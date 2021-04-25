@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<script type="text/javascript" th:src="@{/js/main/RS1001PU02.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	var cnstList  = /*[[${cnstList}]]*/'';
+	var selectParam01 = {
+		"Y": "예", 
+		"N":"아니요"
+	};
+	var selectParam02 = {
+		"" : "",
+		"Y": "예", 
+		"N": "아니요"
+	};
+	var selectParam03 = {
+		"0": "복용 시작전", 
+		"1": "1단계(선식3일)",
+		"2": "2단계(안정기)", 
+		"3": "3단계(1주)", 
+		"4": "3단계(2주)", 
+		"5": "3단계(3주)", 
+	};
+	var picUsrList = {
+		"1" : "박정란",
+		"2" : "황진영"
+	};
+</script>
 <div class="modal-header">
 	<h5 class="modal-title">상담하기</h5>
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -26,8 +51,7 @@
 				</div>
 				<div class="card-body">
 					<div class="tab-content" id="custom-tabs-four-tabContent">
-						<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel"
-							aria-labelledby="custom-tabs-four-home-tab">
+						<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
 							<div id="customer-table" th:fragment="customer-table">
 								<form name="saveCustForm" id="saveCustForm" method="post">
 									<div class="row">
@@ -275,38 +299,40 @@
 													<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>주소정보</h3>
 												</div>
 												<div class="card-body p-3">
-													<table class="table-sm table table-borderless">
-														<colgroup>
-															<col width="18%" />
-															<col width="*" />
-														</colgroup>
-														<tbody>
-															<tr>
-																<th>우편번호</th>
-																<td>
-																	<div class="input-group input-group-sm" style="width:100px;">
-																		<input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="10">
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th>주소</th>
-																<td>
-																	<div class="input-group input-group-sm" style="width:400px;">
-																		<input type="text" id="addr1" name="addr1" th:value="${custInfo?.addr1}" class="form-control" tabindex="11">
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th>상세주소</th>
-																<td>
-																	<div class="input-group input-group-sm" style="width:400px;">
-																		<input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="12">
-																	</div>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<div class="tableFixHead">
+														<table class="table-sm table table-borderless">
+															<colgroup>
+																<col width="18%" />
+																<col width="*" />
+															</colgroup>
+															<tbody>
+																<tr>
+																	<th>우편번호</th>
+																	<td>
+																		<div class="input-group input-group-sm" style="width:100px;">
+																			<input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="10">
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<th>주소</th>
+																	<td>
+																		<div class="input-group input-group-sm" style="width:400px;">
+																			<input type="text" id="addr1" name="addr1" th:value="${custInfo?.addr1}" class="form-control" tabindex="11">
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<th>상세주소</th>
+																	<td>
+																		<div class="input-group input-group-sm" style="width:400px;">
+																			<input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="12">
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -325,44 +351,198 @@
 							aria-labelledby="custom-tabs-four-profile-tab">
 							<div class="row">
 								<div class="col-sm-3">
-									<div class="card">
-										<div class="card-header bg-info">
-											<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>차트 정보</h3>
-											<div class="card-tools">
-												<button type="button" id="btnNewChart" name="btnNewChart" class="btn btn-success btn-sm">차트생성</button>
-											</div>
+									<div class="row mb-1">
+										<div class="col-sm-8">
+											<h6><i class="fas fa-chart-pie mr-1"></i>차트 목록</h6>
 										</div>
-										<div class="card-body p-3">
-											<div class="row mb-1">
-												<div class="col-sm-12">
-													<div id="consultation-table"></div>
-												</div>
-											</div>
-											<div class="row mb-1">
-												<div class="col-sm-12 text-right">
-													<textarea class="form-control form-control-sm" id="rsvtDesc"
-														name="rsvtDesc" rows="16" th:text="${schInfo?.rsvtDesc}"
-														placeholder="기타메모" tabindex="9"></textarea>
-												</div>
-											</div>
+										<div class="col-sm-4 text-right">
+											<button type="button" id="btnNewChart" name="btnNewChart"
+												class="btn btn-success btn-sm">차트생성</button>
 										</div>
-										<div class="card-footer clearfix">
-											<div class="row">
-											  <div class="col-sm-12 text-right">
-												  <button type="button" id="bntSaveCnstChart" name="bntSaveCnstChart"   class="btn btn-primary btn-sm">저장</button>
-											  </div>
-											</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<div id="consultation-table"></div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-sm-12">
+											<h6><i class="fas fa-chart-pie mr-1"></i>기타메모</h6>
+										</div>
+									</div>
+									<div class="row mb-1">
+										<div class="col-sm-12 text-right">
+											<textarea class="form-control form-control-sm" id="rsvtDesc"
+												name="rsvtDesc" rows="21" th:text="${schInfo?.rsvtDesc}"
+												placeholder="기타메모" tabindex="9"></textarea>
 										</div>
 									</div>
 								</div>
 								<div class="col-sm-9">
 									<div class="row">
 										<div class="col-sm-12 text-right" style="margin-bottom:0px;">
-											<div id="charts" th:replace="main/RS1001PU03 :: charts-area"></div>
+
+											<div id="chart-area" th:fragment="chart-area">
+												<script type="text/javascript" th:inline="javascript">
+													var cnstInfo  = /*[[${cnstInfo}]]*/'';
+													var dosgList  = /*[[${dosgList}]]*/'';
+													var cnstPaper  = /*[[${cnstPaper}]]*/'';
+											
+													console.log("cnstInfo", cnstInfo);
+													console.log("dosgList", dosgList);
+													console.log("cnstPaper", cnstPaper);
+												</script>	
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="card card-primary card-outline card-outline-tabs">
+															<div class="card-header p-0 border-bottom-0">
+																<ul class="nav nav-tabs" id="custom-tabs-four-tab111"
+																	role="tablist">
+																	<li class="nav-item">
+																		<a class="nav-link active" id="custom-tabs-four-home-tab111"
+																			data-toggle="pill" href="#custom-tabs-four-home111"
+																			role="tab" aria-controls="custom-tabs-four-home111"
+																			aria-selected="true">설문차트</a>
+																	</li>
+																	<li class="nav-item">
+																		<a class="nav-link" id="custom-tabs-four-profile-tab111"
+																			data-toggle="pill" href="#custom-tabs-four-profile111"
+																			role="tab" aria-controls="custom-tabs-four-profile111"
+																			aria-selected="false">복용차트</a>
+																	</li>
+																</ul>
+															</div>
+															<div class="card-body">
+																<div class="tab-content" id="custom-tabs-four-tabContent111">
+																	<div class="tab-pane fade active show" id="custom-tabs-four-home111" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab111">
+																		<div class="row">
+																			<div class="col-12">
+																				<div class="overflow-auto" style="max-height:570px;">
+																					<table class="table table-sm table-bordered" >
+																						<thead>
+																							<tr>
+																								<th>번호</th>
+																								<th>질문</th>
+																								<th>답변</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																							<tr th:each="item:${cnstPaper}">
+																								<th th:text="${item.num}"></th>
+																								<td th:text="${item.questText}"></td>
+																								<td>
+																									<!--textbox-->
+																									<div class="input-group input-group-sm" th:if="${item.examCd} =='TEXT'">
+																										<input type="text" th:attr="id=${item.id}" class="form-control input-sm">
+																									</div>
+																									
+																									<!-- radio -->
+																									<div class="form-check form-check-inline" th:if="${item.examCd} =='RADIO'" th:each="el : ${#strings.arraySplit(item.exam,',')}">
+																										<input class="form-check-input" type="radio" th:attr="name=${item.id}"/>
+																										<label class="form-check-label" th:text="${el}"></label>
+																									</div>
+																									
+																									<!-- checkbox -->
+																									<div class="form-check form-check-inline" th:if="${item.examCd} =='CHECK'" th:each="el : ${#strings.arraySplit(item.exam,',')}">
+																										<input type="checkbox" class="form-check-input mr-7" th:attr="name=${item.id}"/>
+																										<label class="form-check-label mr-4"  th:text="${el}"></label>
+																									</div>
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="tab-pane fade" id="custom-tabs-four-profile111"
+																		role="tabpanel"
+																		aria-labelledby="custom-tabs-four-profile-tab111">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<table class="table-sm table-borderless">
+																					<colgroup>
+																						<col width="60px;" />
+																						<col width="120px" />
+																						<col width="80px;" />
+																						<col width="80px" />
+																						<col width="100px" />
+																						<col width="80px" />
+																						<col width="100px" />
+																						<col width="160px" />
+																						<col width="*" />
+																					</colgroup>
+																					<tbody>
+																						<tr>
+																							<th>상담일시</th>
+																							<td>
+																								<span id="cnstDt" th:text="${cnstInfo?.cnstDt}" ></span>
+																							</td>
+																							<th>시작 체중</th>
+																							<td>
+																								<div class="input-group input-group-sm">
+																									<input type="text" id="orgWgt" name="orgWgt" th:value="${cnstInfo?.orgWgt}" class="form-control" tabindex="1">
+																								</div>
+																							</td>
+																							<th>희망체중</th>
+																							<td>
+																								<div class="input-group input-group-sm">
+																									<input type="text" id="tgtWgt" name="tgtWgt" th:value="${cnstInfo?.tgtWgt}" class="form-control" tabindex="2">
+																								</div>
+																							</td>
+																							<th>복용시작일자</th>
+																							<td>
+																								<div class="input-group input-group-sm">
+																									<input type="text" id="startDosgDt" name="startDosgDt"  th:value="${cnstInfo?.startDosgDt}" class="form-control" tabindex="3">
+																								</div>
+																							</td>
+																							<td></td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<div id="dosingchar-table"></div>
+																				<script type="text/javascript" th:inline="javascript">
+																					var table02 = new Tabulator("#dosingchar-table", {
+																						height  : "530px",
+																						selectable : 1,
+																						headerSort:false,
+																						columns : [
+																							{ title: "일수"    , field: "seqStr"     , width:50,  hozAlign:"right", frozen:true},
+																							{ title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"center", frozen:true, editor:"select", cellEdited:function(cell){ displayEdited(cell);},editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
+																							{ title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", frozen:true, editor:dateEditor, cellEdited:function(cell){ displayEdited(cell);doChangeNextDate(cell);}, editable:cellEditCheck},
+																							{ title: "요일"    , field: "daysStrKor" , width:50, hozAlign:"center",},
+																							{ title: "상담예약"  , field: "callYn"    , width:70,  hozAlign:"center", editor:"select",cellEdited:function(cell){ displayEdited(cell);}, editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+																							{ title: "복용여부"  , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select" ,cellEdited:function(cell){ displayEdited(cell);}, editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+																							{ title: "현재체중"  , field: "currWgt"   , width:70,  hozAlign:"right", editor:"number",  cellEdited:function(cell){ displayEdited(cell);weightCheck(cell);}, editable:true},
+																							{ title: "감량체중"  , field: "lossWgt"   , width:70,  hozAlign:"right"},
+																							{ title: "남은체중"  , field: "rmiWgt"    , width:70,  hozAlign:"right"},
+																							{ title: "몸상태"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true},
+																							{ title: "약반응"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true}
+																						]
+																					});
+																				</script>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-sm-12 text-right">
+									<button type="button" id="bntSaveCnstChart" name="bntSaveCnstChart"   class="btn btn-primary btn-sm">저장</button>
+								</div>
+							  </div>
 						</div>
 					</div>
 				</div>
@@ -370,67 +550,25 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" th:src="@{/js/main/RS1001PU02.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-	var cnstList  = /*[[${cnstList}]]*/'';
-	var selectParam01 = {
-		"Y": "예", 
-		"N":"아니요"
-	};
-	var selectParam02 = {
-		"" : "",
-		"Y": "예", 
-		"N": "아니요"
-	};
-	var selectParam03 = {
-		"0": "복용 시작전", 
-		"1": "1단계(선식3일)",
-		"2": "2단계(안정기)", 
-		"3": "3단계(1주)", 
-		"4": "3단계(2주)", 
-		"5": "3단계(3주)", 
-	};
-	var picUsrList = {
-		"1" : "박정란",
-		"2" : "황진영"
-	};
 	var table01 = new Tabulator("#consultation-table", {
 		height: "120px",
-		columnHeaderVertAlign: "center",
 		selectable : 1,
 		headerSort:false,
 		columns: [
+			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
+			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", visible : false},
+			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", visible : false},
+			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
 			{ title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
-			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true},
-			{ title: "차트번호", field: "cnstId"  , width:60, hozAlign:"center", visible : true},
-			{ title: "삭제",    width:60, hozAlign:"center"},
-			{ title: "현재체중", field: "orgWgt"  , width:60, hozAlign:"center", visible : true},
-			{ title: "희망체중", field: "tgtWgt"  , width:60, hozAlign:"center", visible : true},
-			{ title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : true},
-		],
+			{ title: "담당약사", field: "picUsrNo", width:100, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true,cellEdited:function(cell){ displayEdited(cell);}},
+			{ title: "삭제"   , formatter:trashIcon, width:40, hozAlign:"center", cellClick:function(e, cell){ deleteConsultingChart(e, cell)}}
+    	],
 		rowClick:function(e, row){
-			callDosingChart( row  );
-			callSrvChart( row  );
+			loadChartByCnstId( row );
+			// callDosingChart( row  );
+			// callSrvChart( row  );
     	}
-	});
-	var table02 = new Tabulator("#dosingchar-table", {
-		height  : "525px",
-		columnHeaderVertAlign: "center",
-		selectable : 1,
-		headerSort:false,
-		columns : [
-			{ title: "일수"    , field: "seqStr"     , width:60,  hozAlign:"right", frozen:true},
-			{ title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"left",  frozen:true, editor:"select", editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
-			{ title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", frozen:true, editor:dateEditor, cellEdited:function(cell){ displayEdited(cell)}, editable:cellEditCheck},
-			{ title: "요일"    , field: "daysStrKor" , width:50, hozAlign:"center"},
-			{ title: "상담예약"  , field: "callYn"    , widht:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam01}, formatter:"lookup", formatterParams:selectParam01, editable:cellEditCheck},
-			{ title: "복용여부"  , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select", editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
-			{ title: "현재체중"  , field: "currWgt"   , width:70,  hozAlign:"right", editor:"number", cellEdited:function(cell){ weightCheck(cell)}, editable:true},
-			{ title: "감량체중"  , field: "lossWgt"   , width:70,  hozAlign:"right"},
-			{ title: "남은체중"  , field: "rmiWgt"    , width:70,  hozAlign:"right"},
-			{ title: "몸상태"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true},
-			{ title: "약반응"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true}
-		]
 	});
 </script>
 </html>

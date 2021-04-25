@@ -1,7 +1,7 @@
 package com.pharm.chorok.domain.main;
 
 import java.util.Date;
-import com.pharm.chorok.domain.table.TbPpSrvChart;
+
 import lombok.Data;
 
 @Data

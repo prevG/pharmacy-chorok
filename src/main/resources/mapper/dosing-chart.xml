@@ -46,8 +46,10 @@
 
 
 
-    <select id="selectDosingChartByCustId" parameterType="map" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
+    <select id="selectDosingChartByCnstId"  parameterType="com.pharm.chorok.domain.table.TbPpCnstChart" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCnstId */
+	/** 차트번호에 대한 차트마스터 정보 조회 */
     SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
          , CONCAT(@ROWNUM, '일차') AS SEQ_STR
          , DOSG_ID

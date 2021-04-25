@@ -60,7 +60,7 @@ $( document ).ready( function() {
 	/**************************************************************
      * 차트 생성
      **************************************************************/
-	 $(document).off("click", "button[name='btnNewChart']").on("click", "button[name='btnNewChart']", function (e) {
+	$(document).off("click", "button[name='btnNewChart']").on("click", "button[name='btnNewChart']", function (e) {
 
 		var params = $("form[name=saveCustForm]").serialize();
 		$.ajax({
@@ -99,10 +99,36 @@ function setDataOnSrvChart(data){
 	alert("setDataOnSrvChart");
 }
 
+/*************************************************
+ * 고객의 특정 차트를 선택한 경우
+ **************************************************/
+function loadChartByCnstId( row ) {
+
+	var params = {
+		"cnstId" : row.getCell("cnstId").getValue()
+	};
+
+	var url = "/reservation/RS1001PU02/findChartByCnstId";
+	$("#chart-area").load( url, params, function (response, status, xhr) {
+
+		if (200 == xhr.status) {
+			$("#chart-area").html(response);
+			table02.setData( dosgList );
+		} else {
+			console.log(response, status, xhr);
+			alert("관리자에게 문의하세요.");
+		}
+	});
+
+}
+
+
 function callDosingChart( row ) {
 
+	var cnstDt = row.getCell("cnstDt").getValue();
 	var orgWgt = row.getCell("orgWgt").getValue();
 	var tgtWgt = row.getCell("tgtWgt").getValue();
+	$("#cnstDt").text( cnstDt );
 	$("#orgWgt").val( orgWgt );
 	$("#tgtWgt").val( tgtWgt) ;
 
@@ -161,14 +187,58 @@ function weightCheck( cell ) {
 	}
 	var orgWgt = $("#orgWgt").val();
 	if( !isNaN(orgWgt) ) {
-		var lossWgt = (currWgt - orgWgt); //감량체중
+		var lossWgt = (currWgt - orgWgt).toFixed(1); //감량체중
 		cell.getRow().getCell("lossWgt").setValue( lossWgt );
 
 	}
 	var tgtWgt = $("#tgtWgt").val();
 	if( !isNaN(tgtWgt) ) {
-		var rmiWgt  = (currWgt - tgtWgt); //남은체중
+		var rmiWgt  = (currWgt - tgtWgt).toFixed(1); //남은체중
 		cell.getRow().getCell("rmiWgt").setValue( rmiWgt );
 	}
 	return true;
+}
+function trashIcon(cell, formatterParams, onRendered){ //plain text value
+    return "<i class='bi bi-trash'></i>";
+}
+function doChangeNextDate( cell ) {
+	var row = cell.getRow();
+	var nextRow = row.getNextRow();
+
+	console.log( "nextRow", nextRow );
+	if( nextRow ) {
+
+		//오늘날짜 구하기
+		var dosgDt = row.getCell("dosgDt").getValue();
+
+		//오늘 날짜의 요일바꾸기
+		var dosgDtStrKor = getDaysStrKorByDayNum(moment( dosgDt ).day());
+		row.getCell("daysStrKor").setValue( dosgDtStrKor );
+
+		//다음행의 날짜 1씩 더하기
+		var dosgDt = row.getCell("dosgDt").getValue();
+		var nextDt = moment( dosgDt ).add(1, 'day');
+		var nextDtStr = nextDt.format("YYYY-MM-DD"); 
+		var nextDaysStrKor = getDaysStrKorByDayNum(nextDt.day());
+		nextRow.getCell("dosgDt").setValue( nextDtStr );
+		nextRow.getCell("daysStrKor").setValue( nextDaysStrKor );
+	}
+}
+function deleteConsultingChart(e, cell) {
+	var cnstId = cell.getRow().getCell("cnstId").getValue();
+}
+
+function getDaysStrKorByDayNum( dayNum) {
+	var result = "";
+	switch( dayNum ) {
+		case 0:  result = "일"; break;
+		case 1:  result = "월"; break;
+		case 2:  result = "화"; break;
+		case 3:  result = "수"; break;
+		case 4:  result = "목"; break;
+		case 5:  result = "금"; break;
+		case 6:  result = "토"; break;
+		default :break;
+	}
+	return result;
 }

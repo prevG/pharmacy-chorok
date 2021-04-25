@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface ConsultingRepository {
     
     public List<ResultConsultingVo> selectConsultingChartByCustId( TbPpCnstChart cnstInfo ) throws Exception;
+    public ResultConsultingVo selectConsultingChartByCnstId( TbPpCnstChart cnstInfo ) throws Exception;
     public Long selectNewCnstId() throws Exception;
     public int insertTpPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;
     public int updateTpPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;

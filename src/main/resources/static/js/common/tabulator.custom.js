@@ -31,7 +31,7 @@ var dateEditor = function(cell, onRendered, success, cancel) {
 //cellEdited:function(cell){ displayEdited(cell)}}   
 function displayEdited(cell){
     if(cell.getValue() != cell.getInitialValue()){
-      cell.getElement().style.backgroundColor = "#DCDCDC";
+      cell.getElement().style.backgroundColor = "#99CC99";//"#DCDCDC";
       }
   }
 

@@ -3,6 +3,7 @@ package com.pharm.chorok.web.main.controller;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
+import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.ChartService;
 import com.pharm.chorok.web.main.service.CustomerService;
@@ -32,6 +33,15 @@ public class ReservationScheduleController {
 	private ChartService chartSvc;
 
 
+	@RequestMapping(value = "/dashboard/refresh", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView refreshDashboard(
+			ReservationPagination reservationPagination) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("index :: time-table");
+		reservationSvc.getDashBoardReservationByDt( mv,  reservationPagination );
+        return mv;
+	}
+
 	@GetMapping("/RS1001MV")
 	public ModelAndView goRS1001ML(
 			ReservationPagination reservationPagination,
@@ -51,22 +61,6 @@ public class ReservationScheduleController {
 		return mv;
 	}
 
-
-	@PostMapping("/RS1001PU02")
-	public ModelAndView goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
-
-		ModelAndView mv = new ModelAndView("main/RS1001PU02");
-		reservationSvc.findCustomerByRsvtId( mv, rsvt );
-		return mv;
-	}
-
-	@PostMapping("/RS1001PU03")
-	public ModelAndView goRS1001P03(TbPpCnstChart cnstChart, Model model) throws Exception {
-
-		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: charts");
-		chartSvc.selectChartByDosgId( mv, cnstChart );
-        return mv;
-	}
 	
 	@PostMapping("/RS1001MV/detail")
 	public ModelAndView detail(TbPpRsvtSch rsvt) throws Exception {
@@ -86,14 +80,6 @@ public class ReservationScheduleController {
 	}
 
 
-	@RequestMapping(value = "/dashboard/refresh", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView refreshDashboard(
-			ReservationPagination reservationPagination) throws Exception {
-		
-		ModelAndView mv = new ModelAndView("index :: time-table");
-		reservationSvc.getDashBoardReservationByDt( mv,  reservationPagination );
-        return mv;
-	}
 
 
 	@PostMapping("/RS1001MV/moveWeek")
@@ -105,6 +91,23 @@ public class ReservationScheduleController {
         return mv;
 	}
 
+
+
+	@PostMapping("/RS1001PU02")
+	public ModelAndView goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU02");
+		reservationSvc.findCustomerByRsvtId( mv, rsvt );
+		return mv;
+	}
+
+	@PostMapping("/RS1001PU03")
+	public ModelAndView goRS1001P03(TbPpCnstChart cnstChart, Model model) throws Exception {
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: charts");
+		chartSvc.selectChartByDosgId( mv, cnstChart );
+        return mv;
+	}
 		
 	@RequestMapping(value = "/RS1001PU02/saveCustomer", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView saveCustomer(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
@@ -119,4 +122,12 @@ public class ReservationScheduleController {
         return mv;
 	}
 
+
+	@RequestMapping(value = "/RS1001PU02/findChartByCnstId", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView findChartByCnstId(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper ) throws Exception {
+		
+		ModelAndView mv = new ModelAndView("main/RS1001PU02 :: chart-area");
+		chartSvc.findChartByCnstId( mv, chartParam, tbPpCnstPaper );
+        return mv;
+	}
 }
