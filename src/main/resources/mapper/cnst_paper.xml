@@ -79,5 +79,17 @@
 			AND CNST_VER = 1
 	</insert>
 	
+	
+	
+	
+	<update id="updateTbPpSrvChart"  parameterType="com.pharm.chorok.domain.table.TbPpSrvChart">
+		UPDATE TB_PP_SRV_CHART
+		SET CNST_PAPER_VAL = #{cnstPaperVal}
+		WHERE CNST_ID = #{cnstId}
+		AND CNST_PAPER_ID = #{cnstPaperId}
+	</update>
+	
+	
+	
 
 </mapper>

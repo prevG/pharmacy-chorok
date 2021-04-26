@@ -2,13 +2,14 @@ package com.pharm.chorok.web.main.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.pharm.chorok.domain.main.ResultSrvVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
+import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.repository.CnstPaperRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CnstPaperService {
@@ -34,6 +35,22 @@ public class CnstPaperService {
     {
     	return cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
     }
+    
+    
+	public int saveSurveyChart(TbPpSrvChart srvChart) throws Exception {
+		
+		int result = -1;
+		
+		result = cnstPaperRepository.updateTbPpSrvChart(srvChart);
+		
+		/*
+		 * TbPpSrvChart tbPpSrvChart = cnstPaperRepository.getSrvChartId(srvChart); if(
+		 * tbPpSrvChart != null) { result =
+		 * cnstPaperRepository.updateTbPpSrvChart(srvChart); } else { result =
+		 * cnstPaperRepository.insertTbPpSrvChart(srvChart); }
+		 */
+		return result;
+	}
     
     
 

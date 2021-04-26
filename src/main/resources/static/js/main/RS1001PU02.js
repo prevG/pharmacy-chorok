@@ -61,7 +61,7 @@ $( document ).ready( function() {
 	$(document).off("click", "button[name='bntSaveCnstChart']").on("click", "button[name='bntSaveCnstChart']", function (e) {
 		var len = $("#surveyTbl tbody tr").length;
 		var cnstId = "1"; //임시
-		var param = [];
+		var params = [];
 		
 		console.log("kkj");
 		
@@ -100,7 +100,7 @@ $( document ).ready( function() {
 				}
 			}
 			
-			param.push({
+			params.push({
 				"cnstId":cnstId,
 				"cnstPaperId":cnstPaperId,
 				"cnstPaperVer":cnstPaperVer,
@@ -109,8 +109,28 @@ $( document ).ready( function() {
 			});
 		}
 		
+		
+		$.ajax({
+            type: 'post',
+            url: '/api/v1/main/survey/saveSrvChart',
+            data: {
+				"jsonData":JSON.stringify(params)	
+			},
+            success: function (result) {
 
-		console.log(param);
+                if (result.status == "success") {
+                    alert(result.message);
+                    //refreshTimeTable();
+                    //findReservationDetail( params );
+                } else {
+                    alert(result.errorMessage);
+                }
+                
+            }
+        });
+		
+
+		//console.log(param);
 	});	
 	
 
