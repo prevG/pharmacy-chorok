@@ -27,6 +27,5 @@ public interface CnstPaperRepository {
     public int updateTbPpSrvChart(TbPpSrvChart tbPpSrvChart) throws Exception;
     
     
-    public TbPpSrvChart getSrvChartId(TbPpSrvChart tbPpSrvChart) throws Exception;
     
 }
