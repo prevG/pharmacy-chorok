@@ -93,7 +93,7 @@ $( document ).ready( function() {
 				var c = 0; 
 				for ( var j = 0; j < $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length; j++) { 
 					if ($("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked == true ) { 
-						if (c > 0) cnstPaperVal = cnstPaperVal + "|" ; 
+						if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
 						cnstPaperVal = cnstPaperVal + $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
 						c++; 
 					} 
