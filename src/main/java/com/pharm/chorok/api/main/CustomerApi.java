@@ -66,11 +66,11 @@ public class CustomerApi {
 
 
 
-	@PostMapping("/recommandCustUser")
-    public ResponseEntity<ResponseMessage> selectCustomerByUsrNmOrCellNo(TbPpRsvtSch reservationParam) {
+	@PostMapping("/findCustomer")
+    public ResponseEntity<ResponseMessage> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) {
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( reservationParam );
+			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( customerParam );
 			
 			
 			resMsg.setData( result );

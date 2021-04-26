@@ -62,7 +62,7 @@ public class ReservationScheduleController {
 	}
 
 	
-	@PostMapping("/RS1001MV/detail")
+	@RequestMapping(value="/RS1001MV/detail", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView detail(TbPpRsvtSch rsvt) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("main/RS1001MV :: reservation-detail");

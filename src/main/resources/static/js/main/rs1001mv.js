@@ -13,16 +13,23 @@ $(document).ready(function () {
     });
 
     /**************************************************************
-     * 차트생성
+     * 상담하기
      **************************************************************/
     $(document).off("click", "button[name='btnNewChartView']").on("click", "button[name='btnNewChartView']", function (e) {
-
         e.preventDefault(); //remove href function
-        var params = {
-            "rsvtId": $("form[name='detailForm']").find("input[name='rsvtId']").val(),
-            "custId": $("form[name='detailForm']").find("input[name='custId']").val()
-        };
 
+        var rsvtId = $("form[name='detailForm']").find("input[name='rsvtId']").val();
+        var custId = $("form[name='detailForm']").find("input[name='custId']").val();
+
+        if( rsvtId == null || rsvtId == "" ) {
+            alert("선택된 예약정보가 없습니다.");
+            return;
+        }
+
+        var params = {
+            "rsvtId": rsvtId,
+            "custId": custId
+        };
         $("#modalCnstChart .modal-content").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
             $("#modalCnstChart").modal('show');
         });
@@ -75,9 +82,9 @@ $(document).ready(function () {
 
     });
 
-    /**
-	 * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
-	 */
+    /**************************************************************
+     * tabindex 문제로 라디오버튼을 체크박스로 변경 후 하나만 체크가능하도록 수정(성별)
+     **************************************************************/
      $(document).off("change", "input[name=genTpCd]").on("change", "input[name=genTpCd]", function( e ){
 
         if($(this).prop('checked')){
@@ -86,9 +93,9 @@ $(document).ready(function () {
         }
     });
 
-    /**
-     * tabindex 문제로 체크박스 변경 후 하나만 체크가능하도록 변경
-     */
+    /**************************************************************
+     * tabindex 문제로 라디오버튼을 체크박스로 변경 후 하나만 체크가능하도록 변경(상담구분)
+     **************************************************************/
      $(document).off("change", "input[name=rsvtTpCd]").on("change", "input[name=rsvtTpCd]", function( e ){
         
         if($(this).prop('checked')){
@@ -97,6 +104,110 @@ $(document).ready(function () {
         }
     });
 
+
+    /**************************************************************
+     * 예약자명 포커스가 올 경우 autocomplete 생성
+     **************************************************************/
+    $( document ).off("focus", "input[name='rsvtUsrNm']").on("focus", "input[name='rsvtUsrNm']", function(e){
+        
+        $( this ).autocomplete({
+            source : function( request, response ) {
+                $.ajax({
+                    type: 'post',
+                    url: "/api/v1/main/customer/findCustomer",
+                    dataType: "json",
+                    data: {
+                        "custUsrNm"  : $("input[name='rsvtUsrNm']" ).val(),
+                        "custCellNo" : $("input[name='rsvtCellNo']").val()
+                    },
+                    success: function(result) {
+                        response(
+                            $.map(result.data, function(item) {    //json[i] 번째 에 있는게 item 임.
+                                return {
+                                    label   : item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                                    value   : item.custUsrNm,
+                                    id      : item.custId,
+                                    usrNm   : item.custUsrNm,
+                                    cellNo  : item.custCellNo,
+                                    genTpCd : item.custGenTpCd
+                                }
+                            })
+                        );
+                    }
+                });
+            },
+            select : function(event, ui) {
+                $("input[name='rsvtCellNo']").val( ui.item.cellNo  );
+                $("input[name='custId']"    ).val( ui.item.id );
+                $("input[name='genTpCd']"   ).each(function() {
+                    if(this.value == ui.item.genTpCd){ //값 비교
+                        this.checked = true; //checked 처리
+                    } else {
+                        this.checked = false; //checked 처리
+                    }
+                });
+            },
+            change : function(event, ui) {
+                if( ui.item == null ) {
+                    $("input[name='custId']").val("");
+                };
+            },
+            focus : function(event, ui) {
+                return true;
+            },
+            minLength: 2,
+            autoFocus: false, 
+            delay: 200
+        });
+    });
+
+
+    /**************************************************************
+     * 추천인 포커스가 올 경우 autocomplete 생성
+     **************************************************************/
+    $( document ).off("focus", "input[name='rcmdUsrNm']").on("focus", "input[name='rcmdUsrNm']", function(e){
+        $( this ).autocomplete({
+            source : function( request, response ) {
+                $.ajax({
+                    type: 'post',
+                    url: "/api/v1/main/customer/findCustomer",
+                    dataType: "json",
+                    data: {
+                        "custUsrNm"  : $("input[name='rcmdUsrNm']" ).val(),
+                        "custCellNo" : $("input[name='rcmdCellNo']").val()
+                    },
+                    success: function(result) {
+                        response(
+                            $.map(result.data, function(item) {    //json[i] 번째 에 있는게 item 임.
+                                return {
+                                    label  : item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                                    value  : item.custUsrNm,
+                                    id     : item.custId,
+                                    usrNm  : item.custUsrNm,
+                                    cellNo : item.custCellNo
+                                }
+                            })
+                        );
+                    }
+                });
+            },
+            select : function(event, ui) {
+                $("input[name='rcmdCellNo']").val( ui.item.cellNo  );
+                $("input[name='rcmdUsrNo']" ).val( ui.item.id    );
+            },
+            change : function(event, ui) {
+                if( ui.item == null ) {
+                    $("input[name='rcmdUsrNo']").val("");
+                }
+            },
+            focus : function(event, ui) {
+                return true;
+            },
+            minLength: 2,
+            autoFocus: false, 
+            delay: 200
+        });
+    });
 
     /**************************************************************
      * 상담하기 팝업이 닫힐때 처음 상담한 고객인 경우 refresh
@@ -133,7 +244,7 @@ $(document).ready(function () {
     });
 
     /**************************************************************
-     * 저장하기
+     * 예약문자보내기
      **************************************************************/
      $(document).off("click", "button[name='btnSendSms']").on("click", "button[name='btnSendSms']", function (e) {
 

@@ -132,18 +132,14 @@ public class CustomerService {
 	}
 
 
-    public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbPpRsvtSch reservationParam) throws Exception {
+    public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) throws Exception {
 
-		String rcmdUsrNm  = reservationParam.getRcmdUsrNm();
-		String rcmdCellNo = reservationParam.getRcmdCellNo();
+		String cstUsrNm  = customerParam.getCustUsrNm();
+		String custCellNo = customerParam.getCustCellNo();
 
-		if( !StringUtils.hasLength(rcmdUsrNm) && !StringUtils.hasLength(rcmdCellNo)) {
+		if( !StringUtils.hasLength(cstUsrNm) && !StringUtils.hasLength(custCellNo)) {
 			return null;
 		}
-
-		TbCustomer customerParam = new TbCustomer();
-		customerParam.setCustUsrNm( rcmdUsrNm );
-		customerParam.setCustCellNo( rcmdCellNo );
 		return customerRepo.selectCustomerByUsrNmOrCellNo( customerParam );
 	}
 }
