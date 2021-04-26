@@ -439,7 +439,7 @@
 																		<div class="row">
 																			<div class="col-12">
 																				<div class="overflow-auto" style="max-height:530px;">
-																					<table class="table table-xs table-bordered .table-striped" >
+																					<table class="table table-xs table-bordered .table-striped" id="surveyTbl">
 																						<thead>
 																							<tr>
 																								<th>번호</th>
@@ -451,21 +451,21 @@
 																							<tr th:each="item:${cnstPaper}">
 																								<th th:text="${item.num}"></th>
 																								<td th:text="${item.questText}"></td>
-																								<td>
+																								<td th:attr="data-el=${item.examCd}">
 																									<!--textbox-->
 																									<div class="input-group input-group-sm" th:if="${item.examCd} =='TEXT'">
-																										<input type="text" th:attr="id=${item.id}" class="form-control input-sm">
+																										<input type="text" th:attr="name=${item.id}" class="form-control input-sm">
 																									</div>
 																									
 																									<!-- radio -->
-																									<div class="form-check form-check-inline" th:if="${item.examCd} =='RADIO'" th:each="el : ${#strings.arraySplit(item.exam,',')}">
-																										<input class="form-check-input" type="radio" th:attr="name=${item.id}"/>
+																									<div class="form-check form-check-inline" th:if="${item.examCd} =='RADIO'" th:each="el, index : ${#strings.arraySplit(item.exam,',')}">
+																										<input class="form-check-input" type="radio" th:attr="name=${item.id}" th:value="${index.count}"/>
 																										<label class="form-check-label" th:text="${el}"></label>
 																									</div>
 																									
 																									<!-- checkbox -->
-																									<div class="form-check form-check-inline" th:if="${item.examCd} =='CHECK'" th:each="el : ${#strings.arraySplit(item.exam,',')}">
-																										<input type="checkbox" class="form-check-input mr-7" th:attr="name=${item.id}"/>
+																									<div class="form-check form-check-inline" th:if="${item.examCd} =='CHECK'" th:each="el, index : ${#strings.arraySplit(item.exam,',')}">
+																										<input type="checkbox" class="form-check-input mr-7" th:attr="name=${item.id}" th:value="${index.count}"/>
 																										<label class="form-check-label mr-4"  th:text="${el}"></label>
 																									</div>
 																								</td>

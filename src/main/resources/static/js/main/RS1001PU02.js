@@ -56,6 +56,63 @@ $( document ).ready( function() {
             }
         });
 	});
+	
+
+	$(document).off("click", "button[name='bntSaveCnstChart']").on("click", "button[name='bntSaveCnstChart']", function (e) {
+		var len = $("#surveyTbl tbody tr").length;
+		var cnstId = "1"; //임시
+		var param = [];
+		
+		console.log("kkj");
+		
+		for(var i=0; i<len; i++){
+			var cnstPaperId = "";
+			var cnstPaperVer = "";
+			var cnstPaperNum = "";
+			var cnstPaperVal = "";
+			
+			var elKind = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).attr("data-el");
+			
+			if(elKind == "TEXT"){
+				cnstPaperId = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='text']").attr("name");
+				cnstPaperVer = cnstPaperId.split("_")[0];
+				cnstPaperNum = cnstPaperId.split("_")[1];
+				cnstPaperVal = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='text']").val();
+				
+			}else if(elKind == "RADIO"){
+				cnstPaperId = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='radio']").attr("name");
+				cnstPaperVer = cnstPaperId.split("_")[0];
+				cnstPaperNum = cnstPaperId.split("_")[1];
+				cnstPaperVal = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='radio']:checked").val();
+
+			}else if(elKind == "CHECK"){
+				cnstPaperId = $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']").attr("name");
+				cnstPaperVer = cnstPaperId.split("_")[0];
+				cnstPaperNum = cnstPaperId.split("_")[1];
+				
+				var c = 0; 
+				for ( var j = 0; j < $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length; j++) { 
+					if ($("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked == true ) { 
+						if (c > 0) cnstPaperVal = cnstPaperVal + "|" ; 
+						cnstPaperVal = cnstPaperVal + $("#surveyTbl tbody tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
+						c++; 
+					} 
+				}
+			}
+			
+			param.push({
+				"cnstId":cnstId,
+				"cnstPaperId":cnstPaperId,
+				"cnstPaperVer":cnstPaperVer,
+				"cnstPaperNum":cnstPaperNum,
+				"cnstPaperVal":cnstPaperVal
+			});
+		}
+		
+
+		console.log(param);
+	});	
+	
 
 	/**************************************************************
      * 차트 생성
