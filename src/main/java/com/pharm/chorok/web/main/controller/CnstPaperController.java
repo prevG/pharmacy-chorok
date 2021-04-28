@@ -32,5 +32,7 @@ public class CnstPaperController {
 		mv.setViewName("/main/CP1001P01");
 		return mv;
 	}
+	
+
 
 }

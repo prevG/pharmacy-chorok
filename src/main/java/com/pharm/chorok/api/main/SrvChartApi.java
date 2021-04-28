@@ -76,5 +76,34 @@ public class SrvChartApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 	
+	
+	
+	@PostMapping("/getSrvChart")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> getSrvChart(@RequestParam String jsonData) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			 List<TbPpSrvChart> tbPpSrvChart= Arrays.asList(mapper.readValue(jsonData, TbPpSrvChart[].class));
+			 
+
+			 for(int i=0; i<tbPpSrvChart.size(); i++){
+				 cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
+			 }
+			 
+		 	resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 저장되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+	
+	
 }
 
