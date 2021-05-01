@@ -58,9 +58,12 @@ $( document ).ready( function() {
 	});
 	
 
+    /**************************************************************
+     * 차트저장
+     **************************************************************/
 	$(document).off("click", "button[name='bntSaveCnstChart']").on("click", "button[name='bntSaveCnstChart']", function (e) {
 		var len = $("#surveyTbl tbody tr").length;
-		var cnstId = $("#cnstId").val();
+		var cnstId = $("#selectedCnstId").val();
 		var params = [];
 		
 		alert(cnstId);
@@ -137,14 +140,14 @@ $( document ).ready( function() {
 	
 
 	/**************************************************************
-     * 차트 생성
+     * 상담 마스터 및 설문차트 생성
      **************************************************************/
 	$(document).off("click", "button[name='btnNewChart']").on("click", "button[name='btnNewChart']", function (e) {
 
 		var params = $("form[name=saveCustForm]").serialize();
 		$.ajax({
 			type : 'post',
-	        url  : '/api/v1/main/customer/createNewChart',
+	        url  : '/api/v1/main/chart/createNewChart',
 	        data : params,
 			success : function( result ) {
 				if( result.status == "success" ) {
@@ -153,10 +156,46 @@ $( document ).ready( function() {
 					// console.log("result.data.cnstList", result.data.cnstList);
 					// console.log("result.data.dosgList", result.data.dosgList);
 					setDataOnConsultingChart( result.data.cnstList );
-					setDataOnDosingChart( result.data.dosgList );
-					console.log('aa');
-					setDataOnSrvChart(result.data.srvList);
-					console.log('aa1');
+					table01.selectRow(1);
+
+					// var row =  table01.getSelectedRows()[0];
+					// loadChartByCnstId( row );
+					// callSrvChart( row );
+				} else {
+					alert( result.errorMessage );
+				}
+			}
+		});
+	});
+
+	/**************************************************************
+     * 복용차트 생성
+     **************************************************************/
+	 $(document).off("click", "button[name='btnDosgChart']").on("click", "button[name='btnDosgChart']", function (e) {
+		var selectedCnstId = $("#selectedCnstId").val();
+		var startDosgDt    = $("#startDosgDt").val();
+		if( selectedCnstId == null ) {
+			alert( "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+			return false;
+		}if( startDosgDt == null ) {
+			alert( "복용시작 일자를 입력해주세요. 복용스케쥴이 자동생성됩니다.");
+			return false;
+		}
+
+
+		var params = {
+			"cnstId" 	  : selectedCnstId,
+			"startDosgDt" : startDosgDt	
+		};
+		$.ajax({
+			type : 'post',
+	        url  : '/api/v1/main/chart/createDosingChart',
+	        data : params,
+			success : function( result ) {
+				if( result.status == "success" ) {
+
+					alert( result.message );
+					setDataOnDosingChart( result.data );
 				} else {
 					alert( result.errorMessage );
 				}
@@ -173,7 +212,6 @@ function setDataOnConsultingChart( data ) {
 function setDataOnDosingChart( data ) {
 	table02.setData( data )
 }
-
 function setDataOnSrvChart(data){
 	alert("setDataOnSrvChart");
 }
@@ -201,7 +239,9 @@ function loadChartByCnstId( row ) {
 
 }
 
-
+/*************************************************
+ * 차트번호에 해당하는 복용차트 조회
+ **************************************************/
 function callDosingChart( row ) {
 
 	var cnstDt = row.getCell("cnstDt").getValue();
@@ -230,7 +270,9 @@ function callDosingChart( row ) {
 	});
 }
 
-
+/*************************************************
+ * 차트번호에 해당하는 설문차트 조회
+ **************************************************/
 function callSrvChart(row){
 	
 	var params = {
@@ -279,7 +321,10 @@ function weightCheck( cell ) {
 	}
 	return true;
 }
-function trashIcon(cell, formatterParams, onRendered){ //plain text value
+function getBtnViewChart(cell, formatterParams, onRendered){ //plain text value
+    return "<i class='bi'>차트보기</i>";
+}
+function getBtnDelChart(cell, formatterParams, onRendered){ //plain text value
     return "<i class='bi bi-trash'></i>";
 }
 function doChangeNextDate( cell ) {
@@ -305,9 +350,22 @@ function doChangeNextDate( cell ) {
 		nextRow.getCell("daysStrKor").setValue( nextDaysStrKor );
 	}
 }
-function deleteConsultingChart(e, cell) {
+function deleteChart(e, cell) {
 	var cnstId = cell.getRow().getCell("cnstId").getValue();
 }
+
+function loadChart(e, cell) {
+	
+	var row = cell.getRow();
+	loadChartByCnstId( row );
+	callSrvChart( row  );
+
+	var cnstId = row.getCell("cnstId").getValue();
+	$("#selectedCnstId").val( cnstId );
+}
+
+
+
 
 function getDaysStrKorByDayNum( dayNum) {
 	var result = "";

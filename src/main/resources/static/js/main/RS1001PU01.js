@@ -77,7 +77,9 @@ $( document ).ready( function() {
      **************************************************************/
 	$("button[name='btnSaveRsvtSch']").off("click").on("click", function (e) {
 
-		var params = $("form[name=detailForm]").serialize();
+		var params = {
+			"dosgDt" : $("#startDosgDt").val()
+		}
 		$.ajax({
 			type: 'post',
 			url: '/api/v1/main/reservation/saveRsvtSch',

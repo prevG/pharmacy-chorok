@@ -33,15 +33,7 @@ public class CustomerService {
     private ConsultingRepository consultingRepo;
 
     @Autowired
-    private DosingRepository dosingRepo;
-
-    @Autowired
-    private ReservationScheduleRepository reservationRepo;
-    
-    @Autowired
-    private CnstPaperRepository cnstPaperRepository;
-
-    
+    private ReservationScheduleRepository reservationRepo;    
     
     public Map<String,Object> getUsrTotInfo(TbSurvey tbSurvey) throws Exception {
     	Map<String,Object> result = new HashMap<String, Object>();
@@ -77,44 +69,6 @@ public class CustomerService {
 		return result;
 	}
 
-	@Transactional
-	public HashMap<String, Object> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
-		
-
-		//신규 상담차트번호 생성
-		Long newCnstId = consultingRepo.selectNewCnstId();
-
-		String usrNo = SecurityContextUtil.getAuthenticatedUser().getUsrNo();
-
-		//상담차트 생성
-		TbPpCnstChart cnstInfo = new TbPpCnstChart();
-		cnstInfo.setCnstId( newCnstId );
-		cnstInfo.setCustId( custInfo.getCustId() );
-		cnstInfo.setPicUsrNo( usrNo );
-		consultingRepo.insertTpPpCnstChart( cnstInfo );
-
-		//복용차트 생성(오늘날짜로 디폴트 생성)
-		TbPpDosgChart dosingInfo = new TbPpDosgChart();
-		dosingInfo.setCnstId( newCnstId );
-		dosingRepo.insertTbPpDosgChart( dosingInfo );
-		
-		//설문조사 차트 생성
-		TbPpCnstPaper tbPpCnstPaper = new TbPpCnstPaper();
-		tbPpCnstPaper.setCnstVer(1);		
-		tbPpCnstPaper.setUpdUsrNo(Long.parseLong(usrNo));
-		tbPpCnstPaper.setCnstId(newCnstId);
-		cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
-
-		//고객의 전체 상담차트 조회
-		List<ResultConsultingVo> cnstList = consultingRepo.selectConsultingChartByCustId( cnstInfo );
-
-		// //상담차트번호에 대한 복용차트 조회
-		// List<TbPpDosgChart> dosgList = dosingRepo.selectDosingChartByCustId( dosingInfo );
-		
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		result.put("cnstList",  cnstList);
-		return result;
-	}
 
 	public int deleteConsultingChart(TbPpCnstChart cnstInfo) throws Exception {
 		

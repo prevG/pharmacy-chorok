@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.web.main.service.CustomerService;
+import com.pharm.chorok.web.main.service.ChartService;
+import com.pharm.chorok.web.main.service.DosingChartService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,42 +18,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-@RequestMapping(value = "/api/v1/main/customer")
+@RequestMapping(value = "/api/v1/main/chart")
 @RestController
-public class CustomerApi {
+public class ChartApi {
+
 
 	@Autowired
-	private CustomerService customerSvc;
+	private ChartService chartSvc;
+    
+	@Autowired
+	private DosingChartService dosingSvc;
 
-
-	@PostMapping("/saveCustomer")
-	public ResponseEntity<ResponseMessage> saveCustomer(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
+    @PostMapping("/createNewChart")
+	public ResponseEntity<ResponseMessage> createNewChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			customerSvc.saveCustomer( custInfo, rsvtInfo );
-
-
-			resMsg.setStatus("success");
-			resMsg.setMessage("정상적으로 저장되었습니다.");
-			
-		} catch(Exception e) {
-			resMsg.setStatus("error");
-			resMsg.setMessage( e.getMessage() );
-		}
-		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
-	}
-
-	@PostMapping("/findCustomer")
-    public ResponseEntity<ResponseMessage> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) {
-		ResponseMessage resMsg = new ResponseMessage();
-		try {
-			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( customerParam );
+			HashMap<String, Object> result = chartSvc.createNewConsultingChart( custInfo, rsvtInfo );
 			
 			
 			resMsg.setData( result );
 			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
 			
 		} catch(Exception e) {
 			resMsg.setStatus("error");
@@ -58,5 +47,26 @@ public class CustomerApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
-	
+
+
+
+    @PostMapping("/createDosingChart")
+	public ResponseEntity<ResponseMessage> createDosgChart(TbPpCnstChart inCnstChart) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			List<ResultDosingVo> result = dosingSvc.createDosingChartByCnstId( inCnstChart );
+			
+			resMsg.setData( result );
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 복용차트가 생성 되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+
+
 }

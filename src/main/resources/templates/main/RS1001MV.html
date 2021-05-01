@@ -103,7 +103,7 @@
 											<th>예약일시</th>
 											<td>
 												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1">
+													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1" required>
 												</div>
 											</td>
 											<th>상담구분</th>
@@ -126,7 +126,7 @@
 											<th>이름</th>
 											<td>
 												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo?.rsvtUsrNm}"  tabindex="3">
+													<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" th:value="${schInfo?.rsvtUsrNm}"  tabindex="3" required>
 												</div>
 											</td>
 											<th>성별</th>
@@ -145,7 +145,7 @@
 											<th>휴대전화</th>
 											<td colspan="3">
 												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}" maxlength="13" tabindex="5">
+													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" th:value="${schInfo?.rsvtCellNo}" maxlength="13" tabindex="5" required>
 												</div>
 											</td>
 										</tr>
