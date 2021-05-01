@@ -29,7 +29,7 @@
 	</select>
 	
 	
-	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSrvVo">
+	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSurveyChartVo">
 			SELECT CONCAT_WS('_', B.CNST_VER, B.NUM) AS 'ID',
 				   B.CNST_VER,
 				   B.NUM,

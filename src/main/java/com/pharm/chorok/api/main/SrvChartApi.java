@@ -1,9 +1,7 @@
 package com.pharm.chorok.api.main;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultSrvVo;
+import com.pharm.chorok.domain.main.ResultSurveyChartVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.service.CnstPaperService;
@@ -35,11 +33,11 @@ public class SrvChartApi {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			List<ResultSrvVo> srvList = cnstPaperService.selectSurveyChartByCnstId( chartParam );
+			List<ResultSurveyChartVo> srvList = cnstPaperService.selectSurveyChartByCnstId( chartParam );
 
 			resMsg.setData( srvList );
 			resMsg.setStatus("success");
-			resMsg.setMessage("정상적으로 저장되었습니다.");
+			//resMsg.setMessage("정상적으로 저장되었습니다.");
 			
 		} catch(Exception e) {
 			resMsg.setStatus("error");

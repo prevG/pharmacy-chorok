@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pharm.chorok.domain.main.ResultSrvVo;
+import com.pharm.chorok.domain.main.ResultSurveyChartVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpSrvChart;
@@ -24,9 +24,9 @@ public class CnstPaperService {
     }
     
     
-    public List<ResultSrvVo> selectSurveyChartByCnstId(TbPpCnstChart chartParam) throws Exception
+    public List<ResultSurveyChartVo> selectSurveyChartByCnstId(TbPpCnstChart chartParam) throws Exception
     {
-    	List<ResultSrvVo> cnstPaper = cnstPaperRepository.selectSurveyChartByCnstId(chartParam);
+    	List<ResultSurveyChartVo> cnstPaper = cnstPaperRepository.selectSurveyChartByCnstId(chartParam);
     	return cnstPaper;
     }
     
