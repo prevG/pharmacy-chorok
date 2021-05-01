@@ -53,6 +53,7 @@
 						<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
 							<div id="customer-table" th:fragment="customer-table">
 								<form name="saveCustForm" id="saveCustForm" method="post">
+									<input type="hidden" name="cnstId" id="cnstId" value=""/>
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="card">
@@ -380,6 +381,7 @@
 														loadChartByCnstId( row );
 														// callDosingChart( row  );
 														 callSrvChart( row  );
+														 $("#cnstId").val(row.getCell("cnstId").getValue());
 													}
 												});
 											</script>

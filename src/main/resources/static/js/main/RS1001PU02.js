@@ -60,8 +60,10 @@ $( document ).ready( function() {
 
 	$(document).off("click", "button[name='bntSaveCnstChart']").on("click", "button[name='bntSaveCnstChart']", function (e) {
 		var len = $("#surveyTbl tbody tr").length;
-		var cnstId = "1"; //임시
+		var cnstId = $("#cnstId").val();
 		var params = [];
+		
+		alert(cnstId);
 		
 		console.log("kkj");
 		
@@ -234,6 +236,8 @@ function callSrvChart(row){
 	var params = {
 		"cnstId" : row.getCell("cnstId").getValue()
 	};
+	
+	console.log("param",params);
 
 	$.ajax({
 		type : 'post',
