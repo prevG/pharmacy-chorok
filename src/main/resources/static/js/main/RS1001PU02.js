@@ -68,8 +68,6 @@ $( document ).ready( function() {
 		
 		alert(cnstId);
 		
-		console.log("kkj");
-		
 		for(var i=0; i<len; i++){
 			var cnstPaperId = "";
 			var cnstPaperVer = "";
@@ -288,8 +286,23 @@ function callSrvChart(row){
 		success : function( result ) {
 
 			if( result.status == "success" ) {
-				//table02.setData( result.data )
-				console.log(result.data);
+				
+				var data = result.data;
+				
+				for(var i=0; i<data.length; i++){
+					var examCd = data[i].examCd;
+					var examCnt = data[i].examCnt;
+					var cnstPaperVal = data[i].cnstPaperVal;
+					var id = data[i].id;
+					
+					if(examCd == "TEXT"){
+						$("input[type='text'][name='"+id+"']").val(cnstPaperVal);
+					}else if(examCd == "RADIO"){
+						$("input:radio[name='"+id+"']:input[value='"+cnstPaperVal+"']").attr("checked", true);
+					}						
+				}
+				
+				
 			} else {
 				alert( result.errorMessage );
 			}
