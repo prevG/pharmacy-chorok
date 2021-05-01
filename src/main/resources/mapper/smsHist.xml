@@ -5,7 +5,28 @@
 <mapper namespace="com.pharm.chorok.common.repository.SmsRepository.java">
 
 	<insert id="insertSmsHist" parameterType="com.pharm.chorok.domain.table.TbPpSmsHist">
-		
+		INSERT INTO TB_PP_SMS_HIST
+					(
+						SND_GRP_KEY,
+						RST_CD,
+						RST_MSG,
+						RCP_NO,
+						RCP_RST_CD,
+						RCP_RST_MSG,
+						SND_NO,
+						REG_DT
+					)
+					VALUES
+					(
+						#{sndGrpKey},
+						#{rstCd},
+						#{rstMsg},
+						#{rcpNo},
+						#{rcpRstCd},
+						#{rcpRstMsg},
+						#{sndNo},
+						NOW()
+					)
 	</insert>
 	
 	
