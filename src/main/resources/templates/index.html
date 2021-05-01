@@ -3,6 +3,8 @@
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">	
+
+	<link rel="stylesheet" th:href="@{/webjars/tabulator-tables/4.9.3/dist/css/tabulator.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
 </th:block>
@@ -10,9 +12,11 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 	
-	<script th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
-	<script th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
-	<script th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/tabulator.custom.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
 </th:block>
 
 
@@ -81,7 +85,20 @@
 								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
 							</div>
 		              	</div>
-						<div class="card-body"></div>
+						<div class="card-body">
+							<div id="table01"></div>
+						</div>
+					</div>
+					<div class="card">
+		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
+		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>복용보류 고객</h3>
+							<div class="card-tools">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">전체보기</button>
+							</div>
+		              	</div>
+						<div class="card-body">
+							<div id="table03"></div>
+						</div>
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -92,7 +109,20 @@
 								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
 							</div>
 		              	</div>
-						<div class="card-body"></div>
+						<div class="card-body">
+							<div id="table02"></div>
+						</div>
+					</div>
+					<div class="card">
+		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
+		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>택배발송해야할 목록</h3>
+							<div class="card-tools">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">전체보기</button>
+							</div>
+		              	</div>
+						<div class="card-body">
+							<div id="table04"></div>
+						</div>
 					</div>
 				</div>
 			</div>

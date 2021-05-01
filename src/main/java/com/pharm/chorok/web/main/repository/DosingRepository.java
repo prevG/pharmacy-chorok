@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface DosingRepository {
     
     public List<ResultDosingVo> selectDosingChartByCnstId( TbPpCnstChart chartParam ) throws Exception;
-    public int insertTbPpDosgChart(TbPpDosgChart dosingInfo ) throws Exception;
+    public List<ResultDosingVo> selectDosingChartByCallYn( TbPpCnstChart chartParam ) throws Exception;
+    public int insertTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int updateTbPpDosgChart(TbPpDosgChart dosingInfo ) throws Exception;
 }

@@ -1,6 +1,71 @@
 $( document ).ready( function() {
 
 
+    var table01 = new Tabulator("#table01", {
+        height: "270px",
+        selectable : 1,
+        headerSort:false,
+        layout:"fitDataFill",
+        columns: [
+            { title: "차트번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"}
+        ],
+        rowDblClick:function(e, row){
+            row.toggleSelect();
+            loadChartByCnstId( row );
+            callSrvChart( row  );
+        }
+    });
+    var table02 = new Tabulator("#table02", {
+        height: "270px",
+        selectable : 1,
+        headerSort:false,
+        layout:"fitDataFill",
+        columns: [
+            { title: "차트번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"}
+        ],
+        rowDblClick:function(e, row){
+            row.toggleSelect();
+            loadChartByCnstId( row );
+            callSrvChart( row  );
+        }
+    });
+    var table03 = new Tabulator("#table03", {
+        height: "270px",
+        selectable : 1,
+        headerSort:false,
+        layout:"fitDataFill",
+        columns: [
+            { title: "차트번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"}
+        ],
+        rowDblClick:function(e, row){
+            row.toggleSelect();
+            loadChartByCnstId( row );
+            callSrvChart( row  );
+        }
+    });
+    var table04 = new Tabulator("#table04", {
+        height: "270px",
+        selectable : 1,
+        headerSort:false,
+        layout:"fitDataFill",
+        columns: [
+            { title: "차트번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
+            { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"}
+        ],
+        rowDblClick:function(e, row){
+            row.toggleSelect();
+            loadChartByCnstId( row );
+            callSrvChart( row  );
+        }
+    });
+    
     /**************************************************************
      * 예약고객 상세스케쥴 클릭시 상세스케쥴 확인
      **************************************************************/
