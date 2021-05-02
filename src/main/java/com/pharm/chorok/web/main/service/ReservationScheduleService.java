@@ -64,6 +64,8 @@ public class ReservationScheduleService {
 		//업무시간 목록을 조회
         List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
 
+		//DATETIMEPICKER 시간대를 조회한다.
+
 
 		mv.addObject( "currDt" , currDt        ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
@@ -166,7 +168,7 @@ public class ReservationScheduleService {
     }
     
 	/**
-	 * 상담하기(접수)버튼을 클릭한 경우 예약고객정보를 가지고 고객테이블에서 기본정보 조회
+	 * 상담하기버튼을 클릭한 경우 예약고객정보를 가지고 고객테이블에서 기본정보 조회
 	 * 신규고객일 경우 예약정보를 사용한다.
 	 * 
 	 * @param ModelAndView mv
@@ -185,16 +187,10 @@ public class ReservationScheduleService {
 		TbCustomer custInfo = null;
 		List<ResultConsultingVo> cnstList = null;
 		if( custId != null && custId > 0 ) {
-			
 			params.put("custId", custId );
     		custInfo = customerRepo.findCustomerByCustId( params );
 
-			//상담차트 목록
-			TbPpCnstChart cnstInfo = new TbPpCnstChart();
-			cnstInfo.setCustId( custInfo.getCustId() );
-			cnstList = consultingRepo.selectConsultingChartByCustId( cnstInfo );
 		} else  {
-
 			params.put("rsvtId", rsvtId );
 			custInfo = rsvtSchRepo.findCustomerByRsvtSchId( params );
 		}

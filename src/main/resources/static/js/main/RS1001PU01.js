@@ -45,62 +45,33 @@ $( document ).ready( function() {
     	}
 	});
 	
-	
-
-	$("#rsvtCellNo").keydown(function(event) {
-
-/*	    var key = event.charCode || event.keyCode || 0;
-	    $text = $(this);
-	    if (key !== 8 && key !== 9) {
-		
-		    
-			var changedVal = $text.val().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
-			
-			console.log( "changedVal", changedVal );
-	        $text.val( changedVal );
-
-	        if ($text.val().length === 3) {
-	            $text.val($text.val() + '-');
-	        }
-	        if ($text.val().length === 8) {
-	            $text.val($text.val() + '-');
-	        }
-	    }
-	 
-	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));        
-*/  
-	});
-	
 
 	/**************************************************************
      * 저장하기
      **************************************************************/
-	$("button[name='btnSaveRsvtSch']").off("click").on("click", function (e) {
+	 $(document).off("click", "button[name='btnSaveRsvtSch']").on("click", "button[name='btnSaveRsvtSch']", function (e) {
 
-		var params = {
-			"dosgDt" : $("#startDosgDt").val()
-		}
-		$.ajax({
-			type: 'post',
-			url: '/api/v1/main/reservation/saveRsvtSch',
-			data: params,
-			success: function (result) {
+        var params = $("form[name=detailForm]").serialize();
+        $.ajax({
+            type: 'post',
+            url: '/api/v1/main/reservation/saveRsvtSch',
+            data: params,
+            success: function (result) {
 
-				if (result.status == "success") {
+                if (result.status == "success") {
 					alert(result.message);
-					$(".modal").modal("hide")
-
+					$(".modal").modal("hide");
 					refreshTimeTable();
 				} else {
 					alert(result.errorMessage);
 				}
-			}
-		});
-	});
+            }
+        });
+	 });
 
 	//저장후 타임테이블 새로고침
 	refreshTimeTable = function () {
-		var url = "/reservation/dashboard/refresh";
+		var url = "/reservation/dashboard/reload";
 		var params = {
 			"currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
 		};

@@ -2,21 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
 
 <!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">	
-
-	<link rel="stylesheet" th:href="@{/webjars/tabulator-tables/4.9.3/dist/css/tabulator.min.css}">
-	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
-	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+<th:block layout:fragment="css">
 </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-	
-	<script type="text/javascript" th:src="@{/js/common/tabulator.custom.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
 </th:block>
 
 
@@ -62,8 +52,7 @@
 							<tbody>
 								<tr th:each="row, idx : ${rowList}" style="height:34px;">
 									<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
-									<td th:each="col, colIdx : ${colList}"
-										th:data-row="${row.id}" th:data-col="${col.daysNum}">
+									<td th:each="col, colIdx : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
 									
 										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 										<div th:data-id="${data.rsvtId}">
@@ -233,7 +222,7 @@
 
 
 	<div class="modal" id="modalCnstChart" tabindex="-1" role="dialog">
-		<div class="modal-dialog" style="min-width:1400px;min-height:800px;">
+		<div class="modal-dialog" style="min-width:1480px;min-height:800px;">
             <div class="modal-content"></div>
 		</div>
 	</div>

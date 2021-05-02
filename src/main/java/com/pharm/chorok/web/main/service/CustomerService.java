@@ -69,14 +69,6 @@ public class CustomerService {
 		return result;
 	}
 
-
-	public int deleteConsultingChart(TbPpCnstChart cnstInfo) throws Exception {
-		
-		int result = -1;
-		result = consultingRepo.deleteTpPpCnstChart( cnstInfo );
-		return result;
-	}
-
 	public TbCustomer findCustomerByCustId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("custId", rsvtParam.getCustId() );

@@ -36,6 +36,11 @@ public class CnstPaperService {
     	return cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
     }
     
+    public int deleteSurveyChartByCnstId(TbPpCnstChart tbPpCnstChart) throws Exception
+    {
+    	return cnstPaperRepository.deleteTbPpSrvChart(tbPpCnstChart);
+    }
+    
     
 	public int saveSurveyChart(TbPpSrvChart srvChart) throws Exception {
 		

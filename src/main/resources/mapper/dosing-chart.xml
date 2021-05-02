@@ -102,6 +102,13 @@
 	]]>
 	</insert>
 
+    <delete id="deleteTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+    DELETE FROM TB_PP_DOSG_CHART
+     WHERE CNST_ID = #{cnstId}
+	]]>
+	</delete>
+
     <update id="updatetTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
     UPDATE TB_PP_DOSG_CHART 
@@ -111,6 +118,7 @@
          , DOSG_TP_CD  = #{dosgTpCd}
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
+         , PAUS_YN     = #{pausYn}
          , CUST_WGT    = #{custWgt} 
          , LOSS_WGT    = #{lossWgt}
          , RMI_WGT     = #{rmiWgt}

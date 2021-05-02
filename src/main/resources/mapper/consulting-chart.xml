@@ -7,7 +7,7 @@
 	<![CDATA[    
     SELECT CASE WHEN MAX( CNST_ID ) IS NULL THEN 1
                 ELSE MAX( CNST_ID ) + 1 
-	       END AS "newId"
+	         END AS "newId"
       FROM TB_PP_CNST_CHART
 	]]>
 	</select>
@@ -40,7 +40,7 @@
   SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
        , CNST_ID
        , CUST_ID
-       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%m' ) AS CNST_DT
+       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
        , PIC_USR_NO
        , DEL_YN
        , CNST_DESC
@@ -59,7 +59,7 @@
 	]]>
 	</select>
 
-  <insert id="insertTpPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+  <insert id="insertTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
     INSERT INTO TB_PP_CNST_CHART (
            CNST_ID
@@ -80,5 +80,13 @@
     )
 	]]>
 	</insert>
+
+
+  <delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+  DELETE FROM TB_PP_CNST_CHART
+   WHERE CNST_ID = #{cnstId}
+	]]>
+	</delete>
 	
 </mapper>

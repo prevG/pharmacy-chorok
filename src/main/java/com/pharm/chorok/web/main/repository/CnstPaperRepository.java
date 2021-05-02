@@ -21,11 +21,6 @@ public interface CnstPaperRepository {
     public List<ResultSurveyChartVo> selectSurveyChartByCnstId(TbPpCnstChart tbPpCnstChart) throws Exception;
     
     public int insertTbPpSrvChart(TbPpCnstPaper tbPpCnstPaper) throws Exception;
-    
-    //public int insertTbPpSrvChart(TbPpSrvChart tbPpSrvChart) throws Exception;
-    
-    public int updateTbPpSrvChart(TbPpSrvChart tbPpSrvChart) throws Exception;
-    
-    
-    
+    public int updateTbPpSrvChart(TbPpSrvChart  tbPpSrvChart) throws Exception;
+    public int deleteTbPpSrvChart(TbPpCnstChart tbPpCnstChart) throws Exception;
 }

@@ -47,24 +47,24 @@ public class SrvChartApi {
 	}
 	
 	
-	
+	/**
+	 * 고객의 설문답변을 저장한다.
+	 * @param jsonData
+	 * @return
+	 */
 	@PostMapping("/saveSrvChart")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> saveSrvChart(@RequestParam String jsonData) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			
 			ObjectMapper mapper = new ObjectMapper();
-			
-			 List<TbPpSrvChart> tbPpSrvChart= Arrays.asList(mapper.readValue(jsonData, TbPpSrvChart[].class));
-			 
-
-			 for(int i=0; i<tbPpSrvChart.size(); i++){
-				 cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
-		        
-			 }
-		 			resMsg.setStatus("success");
+			List<TbPpSrvChart> tbPpSrvChart= Arrays.asList(mapper.readValue(jsonData, TbPpSrvChart[].class));
+			for(int i=0; i<tbPpSrvChart.size(); i++){
+				cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
+			}
+		 	
+			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
 			
 		} catch(Exception e) {

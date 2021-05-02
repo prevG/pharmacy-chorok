@@ -4,56 +4,69 @@
 <mapper namespace="com.pharm.chorok.web.main.repository.CnstPaperRepository">
 
 	<select id="selectCnstPaper" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper" resultType="com.pharm.chorok.domain.table.TbPpCnstPaper">
-	SELECT CONCAT_WS('_', CNST_VER, NUM) AS 'ID',
-		   CNST_VER,
-		   NUM,
-		   QUEST_TEXT,
-		   EXAM_CD,
-		   EXAM_CNT,
-		   EXAM1,
-		   EXAM2,
-		   EXAM3,
-		   EXAM4,
-		   EXAM5,
-		   EXAM6,
-		   EXAM7,
-		   CONCAT_WS(',', EXAM1,EXAM2,EXAM3,EXAM4,EXAM5,EXAM6,EXAM7) AS EXAM,
-		   USE_YN,
-		   REG_ID,
-		   REG_DTTM,
-		   UPD_ID,
-		   UPD_DTTM
-		FROM TB_COMM_CNST_PAPER
-		WHERE CNST_VER = #{cnstVer}
-		AND USE_YN = 'Y'
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectCnstPaper */
+	SELECT CONCAT_WS('_', CNST_VER, NUM) AS 'ID'
+		 , CNST_VER
+		 , NUM
+		 , QUEST_TEXT
+		 , EXAM_CD
+		 , EXAM_CNT
+		 , EXAM1
+		 , EXAM2
+		 , EXAM3
+		 , EXAM4
+		 , EXAM5
+		 , EXAM6
+		 , EXAM7
+		 , CONCAT_WS(',', EXAM1,EXAM2,EXAM3,EXAM4,EXAM5,EXAM6,EXAM7) AS EXAM
+		 , USE_YN
+		 , REG_ID
+		 , REG_DTTM
+		 , UPD_ID
+		 , UPD_DTTM
+	  FROM TB_COMM_CNST_PAPER
+	 WHERE CNST_VER = #{cnstVer}
+	   AND USE_YN = 'Y'
+	]]>
 	</select>
 	
 	
 	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSurveyChartVo">
-			SELECT CONCAT_WS('_', B.CNST_VER, B.NUM) AS 'ID',
-				   B.CNST_VER,
-				   B.NUM,
-				   B.QUEST_TEXT,
-				   B.EXAM_CD,
-				   B.EXAM_CNT,
-				   B.EXAM1,
-				   B.EXAM2,
-				   B.EXAM3,
-				   B.EXAM4,
-				   B.EXAM5,
-				   B.EXAM6,
-				   B.EXAM7,
-				   CONCAT_WS(',', B.EXAM1,B.EXAM2,B.EXAM3,B.EXAM4,B.EXAM5,B.EXAM6,B.EXAM7) AS EXAM,
-				   B.USE_YN, 
-				   A.CNST_PAPER_VAL
-			FROM TB_PP_SRV_CHART A LEFT OUTER JOIN TB_COMM_CNST_PAPER B
-			ON A.CNST_PAPER_VER = B.CNST_VER AND A.CNST_PAPER_NUM = B.NUM
-			WHERE A.CNST_ID = #{cnstId}
-			AND B.USE_YN = 'Y'
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
+	SELECT CONCAT_WS('_', B.CNST_VER, B.NUM) AS 'ID'
+		 , B.CNST_VER
+		 , B.NUM
+		 , B.QUEST_TEXT
+		 , B.EXAM_CD
+		 , B.EXAM_CNT
+		 , B.EXAM1
+		 , B.EXAM2
+		 , B.EXAM3
+		 , B.EXAM4
+		 , B.EXAM5
+		 , B.EXAM6
+		 , B.EXAM7
+		 , CONCAT_WS(',', B.EXAM1,B.EXAM2,B.EXAM3,B.EXAM4,B.EXAM5,B.EXAM6,B.EXAM7) AS EXAM
+		 , B.USE_YN
+		 , A.CNST_PAPER_VAL
+	  FROM TB_PP_SRV_CHART A 
+	  LEFT OUTER JOIN 
+	       TB_COMM_CNST_PAPER B
+	    ON A.CNST_PAPER_VER = B.CNST_VER 
+	   AND A.CNST_PAPER_NUM = B.NUM
+	 WHERE A.CNST_ID = #{cnstId}
+	   AND B.USE_YN  = 'Y'
+	 ORDER
+        BY A.CNST_PAPER_NUM
+	]]>
 	</select>
 	
 	
 	<insert id="insertTbPpSrvChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
 		INSERT INTO TB_PP_SRV_CHART
 		(
 		 	CNST_ID,
@@ -77,19 +90,26 @@
 			WHERE 1=1
 			AND USE_YN = 'Y'
 			AND CNST_VER = 1
+	]]>
 	</insert>
 	
-	
-	
-	
 	<update id="updateTbPpSrvChart"  parameterType="com.pharm.chorok.domain.table.TbPpSrvChart">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.updateTbPpSrvChart */
 		UPDATE TB_PP_SRV_CHART
-		SET CNST_PAPER_VAL = #{cnstPaperVal}
-		WHERE CNST_ID = #{cnstId}
-		AND CNST_PAPER_ID = #{cnstPaperId}
+		   SET UPD_DT 			= NOW()
+			 , UPD_USR_NO 		= #{updUsrNo}
+		     , CNST_PAPER_VAL 	= #{cnstPaperVal}
+		 WHERE CNST_ID       	= #{cnstId}
+		   AND CNST_PAPER_ID 	= #{cnstPaperId}
+	]]>
 	</update>
 	
-	
-	
-
+	<delete id="deleteTbPpSrvChart"  parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.deleteTbPpSrvChart */
+	DELETE FROM TB_PP_SRV_CHART
+	 WHERE CNST_ID = #{cnstId}
+	]]>
+	</delete>
 </mapper>

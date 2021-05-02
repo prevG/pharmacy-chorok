@@ -33,8 +33,14 @@ public class ReservationScheduleController {
 	private ChartService chartSvc;
 
 
-	@RequestMapping(value = "/dashboard/refresh", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView refreshDashboard(
+	/**
+	 * 메인페이지의 스케쥴테이블을 재조회한다.
+	 * @param reservationPagination
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/dashboard/reload", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView reloadDashboard(
 			ReservationPagination reservationPagination) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("index :: time-table");
@@ -70,8 +76,8 @@ public class ReservationScheduleController {
         return mv;
 	}
 	
-	@RequestMapping(value = "/RS1001MV/refresh", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView refresh(
+	@RequestMapping(value = "/RS1001MV/reload", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView reloadReservation(
 			ReservationPagination reservationPagination) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("main/RS1001MV :: time-table");
@@ -91,8 +97,6 @@ public class ReservationScheduleController {
         return mv;
 	}
 
-
-
 	@PostMapping("/RS1001PU02")
 	public ModelAndView goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
 
@@ -105,7 +109,7 @@ public class ReservationScheduleController {
 	public ModelAndView goRS1001P03(TbPpCnstChart cnstChart, Model model) throws Exception {
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: charts");
-		chartSvc.selectChartByDosgId( mv, cnstChart );
+		chartSvc.findDosingChartByDosgId( mv, cnstChart );
         return mv;
 	}
 		
@@ -117,16 +121,22 @@ public class ReservationScheduleController {
 		TbCustomer custInfo = customerSvc.findCustomerByCustId( custParam, rsvtParam  );
 
 
-		ModelAndView mv = new ModelAndView("main/RS1001PU02 :: customer-table");
+		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: customer-table");
 		mv.addObject("custInfo", custInfo);
         return mv;
 	}
 
-
+	/**
+	 * 상담차트번호에 해당하는 설문차트정보를 조회한다.
+	 * @param chartParam
+	 * @param tbPpCnstPaper
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/RS1001PU02/findChartByCnstId", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView findChartByCnstId(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper ) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("main/RS1001PU02 :: chart-area");
+		ModelAndView mv = new ModelAndView("main/RS1001PU04 :: chart-area");
 		chartSvc.findChartByCnstId( mv, chartParam, tbPpCnstPaper );
         return mv;
 	}

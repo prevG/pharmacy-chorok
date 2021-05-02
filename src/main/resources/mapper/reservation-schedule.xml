@@ -35,6 +35,7 @@
 		BY BASE_DT
 	]]>
 	</select>
+
 	
 	
 	<select id="selectDateAdd" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
@@ -258,23 +259,23 @@
 	
 	<select id="selectDayRsv" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[    
-		SELECT SRSVT_ID,
-				RSVT_USR_NM,
-				RSVT_DT,
-				RSVT_CELL_NO,
-				RSVT_PHN_NO,
-				RSVT_TP_CD,
-				GEN_TP_CD,
-				RSVT_DESC,
-				RCMD_USR_NO,
-				PIC_USR_NO,
-				CUST_ID,
-				REG_DT,
-				REG_USR_NO,
-				UPD_DT,
-				UPD_USR_NO
-		FROM TB_PP_RSVT_SCH
-		where DATE_FORMAT(RSVT_DT, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')
+	SELECT SRSVT_ID
+		 , RSVT_USR_NM
+		 , RSVT_DT
+		 , RSVT_CELL_NO
+		 , RSVT_PHN_NO
+		 , RSVT_TP_CD
+		 , GEN_TP_CD
+		 , RSVT_DESC
+		 , RCMD_USR_NO
+		 , PIC_USR_NO
+		 , CUST_ID
+		 , REG_DT
+		 , REG_USR_NO
+		 , UPD_DT
+		 , UPD_USR_NO
+	  FROM TB_PP_RSVT_SCH
+	 WHERE DATE_FORMAT(RSVT_DT, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d')
 	]]>
 	</select>
 	

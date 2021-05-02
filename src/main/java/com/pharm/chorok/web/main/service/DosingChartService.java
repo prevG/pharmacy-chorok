@@ -18,7 +18,13 @@ public class DosingChartService {
     @Autowired
     private DosingRepository dosingRepo;
 
-    public List<ResultDosingVo> selectDosingChartByCnstId( TbPpCnstChart chartParam ) throws Exception {
+    /**
+     * 상담번호에 대한 복용차트 조회
+     * @param chartParam
+     * @return
+     * @throws Exception
+     */
+    public List<ResultDosingVo> findDosingChartByCnstId( TbPpCnstChart chartParam ) throws Exception {
 
 		//상담차트번호에 대한 복용차트 조회
 		List<ResultDosingVo> resultList = dosingRepo.selectDosingChartByCnstId( chartParam );
@@ -26,7 +32,13 @@ public class DosingChartService {
         return resultList;
     }
 
-    public List<ResultDosingVo> selectDosingChartByCallYn( TbPpCnstChart chartParam ) throws Exception {
+    /**
+     * 오늘 복용상담 목록조회
+     * @param chartParam
+     * @return
+     * @throws Exception
+     */
+    public List<ResultDosingVo> findDosingListByCallYnAndToday( TbPpCnstChart chartParam ) throws Exception {
 
 		//상담차트번호에 대한 복용차트 조회
 		List<ResultDosingVo> resultList = dosingRepo.selectDosingChartByCallYn( chartParam );
@@ -35,15 +47,32 @@ public class DosingChartService {
     }
     
 
+    /**
+     * 복용차트 생성
+     * 
+     * @param inCnstParam
+     * @return
+     * @throws Exception
+     */
     @Transactional
-    public List<ResultDosingVo> createDosingChartByCnstId( TbPpCnstChart inCnstParam ) throws Exception {
+    public int createDosingChartByCnstId( TbPpCnstChart inCnstParam ) throws Exception {
 
         //복용차트 생성(오늘날짜로 디폴트 생성)
-		dosingRepo.insertTbPpDosgChart( inCnstParam );
-		
-        //상담차트번호에 대한 복용차트 조회
-		List<ResultDosingVo> resultList = selectDosingChartByCnstId( inCnstParam );
+		int result = dosingRepo.insertTbPpDosgChart( inCnstParam );
+        return result;
+    }	
 
-        return resultList;
+    /**
+     * 복용차트 삭제
+     * @param inCnstParam
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+    public int deleteDosingChartByCnstId( TbPpCnstChart inCnstParam ) throws Exception {
+
+        //복용차트 생성(오늘날짜로 디폴트 생성)
+		int result = dosingRepo.deleteTbPpDosgChart( inCnstParam );
+        return result;
     }	
 }

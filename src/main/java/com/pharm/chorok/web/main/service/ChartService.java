@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.ResultSurveyChartVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
@@ -28,16 +29,23 @@ public class ChartService {
     @Autowired
     private ConsultingRepository consultingRepo;
 
-	@Autowired
-	private DosingChartService dosingChartSvc;
-
-    @Autowired
-    private CnstPaperService cnstPaperService;
-
     @Autowired
     private CnstPaperRepository cnstPaperRepository;
 
-    public ModelAndView selectChartByDosgId( ModelAndView mv, TbPpCnstChart chartParam ) throws Exception {
+	@Autowired
+	private DosingChartService dosingChartSvc;
+
+	@Autowired
+	private ConsultingChartService consultingChartSvc;
+
+    @Autowired
+    private CnstPaperService cnstPaperSvc;
+
+
+    /**
+     * 차트번호에 해당하는 차트마스터/설문차트/복용차트 정보조회
+     */
+    public ModelAndView findDosingChartByDosgId( ModelAndView mv, TbPpCnstChart chartParam ) throws Exception {
 
         List<ResultDosingVo> dosgList = dosingRepo.selectDosingChartByCnstId( chartParam );
         mv.addObject( "dosingList"   , dosgList );
@@ -45,19 +53,28 @@ public class ChartService {
         return mv;
     }
 
+    /**
+     * 고객번호에 해당하는 차트목록을 조회
+     */
+    public List<ResultConsultingVo> findChartListByCustId( TbPpCnstChart inCnstParam ) throws Exception {
 
-    public ModelAndView findChartByCnstId( ModelAndView mv, TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper ) throws Exception {
+        //상담차트 목록
+        List<ResultConsultingVo> chartList = consultingRepo.selectConsultingChartByCustId( inCnstParam );
+        return chartList;
+    }
+    
 
-        ResultConsultingVo cnstInfo =  consultingRepo.selectConsultingChartByCnstId( chartParam );
-        List<ResultDosingVo> dosingList = dosingChartSvc.selectDosingChartByCnstId( chartParam );
+    /**
+     * 차트번호에 해당하는 차트마스터/설문차트/복용차트 정보조회
+     */
+    public ModelAndView findChartByCnstId( ModelAndView mv, TbPpCnstChart inCnstParam, TbPpCnstPaper inCnstPaper ) throws Exception {
 
-        tbPpCnstPaper.setCnstVer(1);
-		List<TbPpCnstPaper> cnstPaper = cnstPaperService.getCnstPaper(tbPpCnstPaper);
-        
 
-        mv.addObject( "cnstInfo", cnstInfo   );
-        mv.addObject( "dosgList", dosingList );
-        mv.addObject( "cnstPaper", cnstPaper );
+        ResultConsultingVo  cnstInfo =  consultingRepo.selectConsultingChartByCnstId( inCnstParam );
+		List<ResultSurveyChartVo> cnstPaper = cnstPaperSvc.selectSurveyChartByCnstId( inCnstParam );
+
+        mv.addObject( "cnstInfo" , cnstInfo  ); //차트마스터정보
+        mv.addObject( "cnstPaper", cnstPaper ); //설문차트번호
         return mv;
     }
 
@@ -75,7 +92,7 @@ public class ChartService {
 		cnstInfo.setCnstId( newCnstId );
 		cnstInfo.setCustId( custInfo.getCustId() );
 		cnstInfo.setPicUsrNo( usrNo );
-		consultingRepo.insertTpPpCnstChart( cnstInfo );
+		consultingRepo.insertTbPpCnstChart( cnstInfo );
 
 		
 		//설문조사 차트 생성
@@ -92,7 +109,34 @@ public class ChartService {
 		result.put("cnstList",  cnstList);
 		return result;
 	}
-    
+
+    /**
+     * 차트번호에 해당하는 차트마스터/설문차트/복용차트 삭제
+     * 
+     * @param inCnstParam
+     * @throws Exception
+     */
+    @Transactional
+    public void deleteChart( TbPpCnstChart inCnstParam ) throws Exception {
+
+        consultingChartSvc.deleteConsultingChart(inCnstParam); //상담차트마스터 삭제
+        dosingChartSvc.deleteDosingChartByCnstId(inCnstParam); //복용차트마스터 삭제
+        cnstPaperSvc.deleteSurveyChartByCnstId(inCnstParam);   //설문차트마스터 삭제
+    }
+
+    /**
+     * 상담번호에 대한 복용차트 조회
+     * 
+     * @param chartParam
+     * @return
+     * @throws Exception
+     */
+    public List<ResultDosingVo> findDosingChartByCnstId( TbPpCnstChart chartParam ) throws Exception {
+
+		//상담차트번호에 대한 복용차트 조회
+		List<ResultDosingVo> resultList = dosingChartSvc.findDosingChartByCnstId( chartParam );
+        return resultList;
+    }
 }
 
         

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div id="charts-table" th:fragment="charts-table">
+    <div class="row" >
+        <div class="col-sm-3">
+            <div class="row mb-1">
+                <div class="col-sm-8">
+                    <h6><i class="fas fa-chart-pie mr-1"></i>상담차트 목록</h6>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button type="button" id="btnNewChart" name="btnNewChart" class="btn btn-success btn-sm">차트생성</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="tabulator-chart-list"></div>
+                    <script type="text/javascript" th:inline="javascript">
+                        var table01 = new Tabulator("#tabulator-chart-list", {
+                            ajaxURL		: "/api/v1/main/chart/findAllChartByCustId",
+                            ajaxConfig	: "POST",
+                            ajaxParams	: {"custId" : $("input[name='custId']").val()},
+                            height		: "120px",
+                            selectable 	: 1,
+                            headerSort	: false,
+                            layout		: "fitDataFill",
+                            columns: [
+                                { title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
+                                { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
+                                { title: "담당약사", field: "picUsrNo", width:70, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true,cellEdited:function(cell){ displayEdited(cell);}},
+                                { title: "보기"   , formatter:getBtnViewChart, width:70, hozAlign:"center", cellClick:function(e, cell){ loadChartByCnstId(e, cell)}},
+                                { title: "삭제"   , formatter:getBtnDelChart, width:40, hozAlign:"center" , cellClick:function(e, cell){ deleteChartByCnstId(e, cell)}}
+                            ]
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <h6><i class="fas fa-chart-pie mr-1"></i>기타메모</h6>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-sm-12 text-right">
+                    <textarea class="form-control form-control-sm" id="rsvtDesc"
+                        name="rsvtDesc" rows="19" th:text="${schInfo?.rsvtDesc}"
+                        placeholder="기타메모" tabindex="9"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-12 text-right" style="margin-bottom:0px;">
+
+                    <div id="chart-area" th:fragment="chart-area">
+                        <script type="text/javascript" th:inline="javascript">
+                            var cnstInfo  = /*[[${cnstInfo}]]*/'';
+                            var dosgList  = /*[[${dosgList}]]*/'';
+                            var cnstPaper  = /*[[${cnstPaper}]]*/'';
+                    
+                            // console.log("cnstInfo", cnstInfo);
+                            // console.log("dosgList", dosgList);
+                            // console.log("cnstPaper", cnstPaper);
+                        </script>	
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-primary card-outline card-outline-tabs">
+                                    <div class="card-header p-0 border-bottom-0">
+                                        <ul class="nav nav-tabs" id="custom-tabs-four-tab111"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="custom-tabs-four-home-tab111"
+                                                    data-toggle="pill" href="#custom-tabs-four-home111"
+                                                    role="tab" aria-controls="custom-tabs-four-home111"
+                                                    aria-selected="true">설문차트</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="custom-tabs-four-profile-tab111"
+                                                    data-toggle="pill" href="#custom-tabs-four-profile111"
+                                                    role="tab" aria-controls="custom-tabs-four-profile111"
+                                                    aria-selected="false">복용차트</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="custom-tabs-four-tabContent111">
+                                            <div class="tab-pane fade" id="custom-tabs-four-home111" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab111">
+                                                <div class="row" style="margin-top:2px;">
+                                                    <div class="col-sm-12">
+                                                        <table class="table-sm table-borderless">
+                                                            <colgroup>
+                                                                <col width="60px;" />
+                                                                <col width="120px" />
+                                                                <col width="*" />
+                                                            </colgroup>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>상담일시</th>
+                                                                    <td>
+                                                                        <span th:text="${cnstInfo?.cnstDt}" ></span>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="overflow-auto" style="max-height:500px;">
+                                                            <table class="table-sm table table-bordered" id="surveyTbl">
+                                                                <colgroup>
+                                                                    <col width="5%"/>
+                                                                    <col width="45%"/>
+                                                                    <col width="55%"/>
+                                                                </colgroup>
+                                                                <thead class="thead-light">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>번호</th>
+                                                                            <th>질문</th>
+                                                                            <th>답변</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                <tbody>
+                                                                    <tr th:each="item:${cnstPaper}">
+                                                                        <th th:text="${item.num}"></th>
+                                                                        <td th:text="${item.questText}"></td>
+                                                                        <td th:attr="data-el=${item.examCd}" style="text-align:left;">
+                                                                            <div class="input-group input-group-sm" th:if="${item.examCd} =='TEXT'">
+                                                                                <input type="text" th:name="${item.id}" class="form-control input-sm" th:value="${item.cnstPaperVal}">
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline" th:if="${item.examCd} =='RADIO'" th:each="el, idx : ${#strings.arraySplit(item.exam,',')}">
+                                                                                <input class="form-check-input" th:id="|${item.id}_${idx.index}|" type="radio" th:name="${item.id}" th:value="${el}" th:checked="${el==item.cnstPaperVal}"/>
+                                                                                <label class="form-check-label" th:for="|${item.id}_${idx.index}|"  th:text="${el}"></label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline" th:if="${item.examCd} =='CHECK'" th:each="el, idx : ${#strings.arraySplit(item.exam,',')}">
+                                                                                <input type="checkbox" class="form-check-input mr-7" th:id="|${item.id}_${idx.index}|" th:name="${item.id}" th:value="${el}" th:checked="${el==item.cnstPaperVal}"/>
+                                                                                <label class="form-check-label mr-4" th:for="|${item.id}_${idx.index}|" th:text="${el}"></label>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade active show" id="custom-tabs-four-profile111" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab111">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table class="table-sm table-borderless">
+                                                            <colgroup>
+                                                                <col width="60px;" />
+                                                                <col width="120px" />
+                                                                <col width="80px;" />
+                                                                <col width="80px" />
+                                                                <col width="100px" />
+                                                                <col width="80px" />
+                                                                <col width="100px" />
+                                                                <col width="200px" />
+                                                                <col width="*" />
+                                                            </colgroup>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>상담일시</th>
+                                                                    <td>
+                                                                        <span th:text="${cnstInfo?.cnstDt}" ></span>
+                                                                    </td>
+                                                                    <th>시작 체중</th>
+                                                                    <td>
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" id="orgWgt" name="orgWgt" th:value="${cnstInfo?.orgWgt}" class="form-control" tabindex="1">
+                                                                        </div>
+                                                                    </td>
+                                                                    <th>희망체중</th>
+                                                                    <td>
+                                                                        <div class="input-group input-group-sm">
+                                                                            <input type="text" id="tgtWgt" name="tgtWgt" th:value="${cnstInfo?.tgtWgt}" class="form-control" tabindex="2">
+                                                                        </div>
+                                                                    </td>
+                                                                    <th>복용시작일자</th>
+                                                                    <td>
+                                                                        <div class="input-group input-group-sm input-group-inline">
+                                                                            <input type="text"    id="startDosgDt" name="startDosgDt"  th:value="${cnstInfo?.startDosgDt}" class="form-control" tabindex="3" style="margin-right:5px;">
+                                                                            <button type="button" id="btnDosgChart" name="btnDosgChart" class="btn btn-success btn-sm">복용차트생성</button>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="tabulator-dosing-list"></div>
+                                                        <script type="text/javascript" th:inline="javascript">
+                                                            $(function() {    //화면 다 뜨면 시작
+                                                                /** 예약일시 datetimepicker 적용 */
+                                                                $.datetimepicker.setLocale('ko');
+                                                                $( "#startDosgDt" ).datetimepicker({
+                                                                    timepicker : false,
+                                                                    minDate	: '2021-01-01',
+                                                                    format	: 'Y-m-d',
+                                                                    weeks   : true
+                                                                });
+                                                            });
+                                                            var table02 = new Tabulator("#tabulator-dosing-list", {
+                                                                ajaxURL		: "/api/v1/main/chart/findDosingChartByCnstId",
+                                                                ajaxConfig	: "POST",
+                                                                ajaxParams	: {"cnstId" : $("input[name='selectedCnstId']").val()},
+                                                                height      : "490px",
+                                                                selectable  : 1,
+                                                                headerSort  : false,
+                                                                columns : [
+                                                                    { title: "일수"    , field: "seqStr"     , width:50,  hozAlign:"right", frozen:true},
+                                                                    { title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"center", frozen:true, editor:"select", cellEdited:function(cell){ displayEdited(cell);},editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
+                                                                    { title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", frozen:true, editor:dateEditor, cellEdited:function(cell){ displayEdited(cell);doChangeNextDate(cell);}, editable:cellEditCheck},
+                                                                    { title: "요일"    , field: "daysStrKor" , width:50, hozAlign:"center",},
+                                                                    { title: "상담예약"  , field: "callYn"    , width:70,  hozAlign:"center", editor:"select",cellEdited:function(cell){ displayEdited(cell);}, editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+                                                                    { title: "복용여부"  , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select" ,cellEdited:function(cell){ displayEdited(cell);}, editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+                                                                    { title: "보류여부"  , field: "dosgYn" 	  , width:70, hozAlign:"center", editor:"select" ,cellEdited:function(cell){ displayEdited(cell);}, editorParams:{values:selectParam02}, formatter:"lookup", formatterParams:selectParam02, editable:cellEditCheck},
+                                                                    { title: "현재체중"  , field: "currWgt"   , width:70,  hozAlign:"right", editor:"number",  cellEdited:function(cell){ displayEdited(cell);weightCheck(cell);}, editable:true},
+                                                                    { title: "감량체중"  , field: "lossWgt"   , width:70,  hozAlign:"right"},
+                                                                    { title: "남은체중"  , field: "rmiWgt"    , width:70,  hozAlign:"right"},
+                                                                    { title: "몸상태"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true},
+                                                                    { title: "약반응"   , field: "dosgDesc1"  , width:400, editor:"textarea", tooltip:true}
+                                                                ]
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <input type="text" name="selectedCnstId" id="selectedCnstId" />
+            <button type="button" id="bntSaveCnstChart" name="bntSaveCnstChart"   class="btn btn-primary btn-sm">저장</button>
+        </div>
+    </div>
+</div>

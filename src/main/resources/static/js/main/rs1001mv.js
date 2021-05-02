@@ -294,7 +294,7 @@ $(document).ready(function () {
 
     //저장후 타임테이블 새로고침
     refreshTimeTable = function () {
-        var url = "/reservation/RS1001MV/refresh";
+        var url = "/reservation/RS1001MV/reload";
         var params = {
             "currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
         };

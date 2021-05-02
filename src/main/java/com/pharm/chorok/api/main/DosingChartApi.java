@@ -28,12 +28,17 @@ public class DosingChartApi {
 	private DosingChartService dosgChartSvc;
 	
 
-	@PostMapping("/selectDosingChartByDosgId")
-	public ResponseEntity<ResponseMessage> selectDosingChartByDosgId(TbPpCnstChart chartParam) {
+	/**
+	 * 상담차트번호에 해당하는 복용차트 조회
+	 * @param chartParam
+	 * @return
+	 */
+	@PostMapping("/findDosingChartByCnstId")
+	public ResponseEntity<ResponseMessage> findDosingChartByCnstId(TbPpCnstChart chartParam) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			List<ResultDosingVo> dosingList = dosgChartSvc.selectDosingChartByCnstId( chartParam );
+			List<ResultDosingVo> dosingList = dosgChartSvc.findDosingChartByCnstId( chartParam );
 
 			resMsg.setData( dosingList );
 			resMsg.setStatus("success");
