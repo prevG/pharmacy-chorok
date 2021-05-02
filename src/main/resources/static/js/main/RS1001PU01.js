@@ -4,10 +4,10 @@ $( document ).ready( function() {
 	 * timepicker에 사용될 값 조회
 	 */
 	var allowTimeList = [];
-    rowList.find( function( obj) {
-        var hhmm = moment( obj["startHm"] ).format("HH:mm");
-        allowTimeList.push( hhmm );
-    });
+	$(timeList).each(function(index, item) {
+		var hhmm = moment( item["startHm"] ).format("HH:mm");
+		allowTimeList.push( hhmm );
+	});
 
 	/**
 	 * 예약일시 datetimepicker 적용
@@ -17,9 +17,6 @@ $( document ).ready( function() {
         minDate	: '2021-01-01',
         format	: 'Y-m-d H:i',
         weeks   : true,
-        lang    : "ko",
-        //scrollMonth : false,
-        //scrollInput : false,
         allowTimes: allowTimeList
     });
 

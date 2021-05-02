@@ -108,6 +108,16 @@
 	]]>
 	</select>
 
+	<select id="selectTimeList" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">
+	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectTimeList */
+	SELECT STR_TO_DATE(CONCAT(HH, MM), '%H%i') AS START_HM
+      FROM (SELECT LPAD(n   , 2, '0') AS HH FROM t where n between 9 and 18) HRS
+         , (SELECT LPAD(n*10, 2, '0') AS MM FROM t where n between 0 and 5) MINS
+     WHERE 1 = 1     
+	]]>
+	</select>
+
 	<select id="selectChemistList" resultType="com.pharm.chorok.domain.table.TbCommUser">
 	<![CDATA[
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectChemistList */
@@ -235,24 +245,24 @@
 	
 	<select id="selectOneDayBeforeRsv" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[    
-		SELECT SRSVT_ID,
-				RSVT_USR_NM,
-				RSVT_DT,
-				RSVT_CELL_NO,
-				RSVT_PHN_NO,
-				RSVT_TP_CD,
-				GEN_TP_CD,
-				RSVT_DESC,
-				RCMD_USR_NO,
-				PIC_USR_NO,
-				CUST_ID,
-				REG_DT,
-				REG_USR_NO,
-				UPD_DT,
-				UPD_USR_NO
-		FROM TB_PP_RSVT_SCH
-		where RSVT_DT >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + 1 DAY ), '%Y%m%d')
-		AND RSVT_DT < DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + 2 DAY ), '%Y%m%d')
+	SELECT SRSVT_ID
+		 , RSVT_USR_NM
+		 , RSVT_DT
+		 , RSVT_CELL_NO
+		 , RSVT_PHN_NO
+		 , RSVT_TP_CD
+		 , GEN_TP_CD
+		 , RSVT_DESC
+		 , RCMD_USR_NO
+		 , PIC_USR_NO
+		 , CUST_ID
+		 , REG_DT
+		 , REG_USR_NO
+		 , UPD_DT
+		 , UPD_USR_NO
+	  FROM TB_PP_RSVT_SCH
+  	 WHERE RSVT_DT >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + 1 DAY ), '%Y%m%d')
+	   AND RSVT_DT < DATE_FORMAT(DATE_ADD(NOW(), INTERVAL + 2 DAY ), '%Y%m%d')
 	]]>
 	</select>
 

@@ -18,6 +18,8 @@ public interface ReservationScheduleRepository {
     
     public List<TbPpWorkTime> selectWorkTime() throws Exception;
 
+    public List<TbPpWorkTime> selectTimeList() throws Exception;
+
     public TbCommCalendar selectDateAdd( HashMap<String, Object> params ) throws Exception;
 
 	public List<TbCommCalendar> selectSameWeekDateListByDt( TbCommCalendar cal ) throws Exception;

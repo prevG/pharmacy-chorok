@@ -65,12 +65,14 @@ public class ReservationScheduleService {
         List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
 
 		//DATETIMEPICKER 시간대를 조회한다.
+        List<TbPpWorkTime> timeList = rsvtSchRepo.selectTimeList();
 
 
 		mv.addObject( "currDt" , currDt        ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
         mv.addObject( "colList" , currDtList   ); //Column
         mv.addObject( "dataList", rsvtSchList  ); //Cell
+        mv.addObject( "timeList", timeList  ); //Cell
 
         return mv;
     } 
@@ -94,12 +96,16 @@ public class ReservationScheduleService {
         
 		//업무시간 목록을 조회
         List<TbPpWorkTime> workTimeList = rsvtSchRepo.selectWorkTime();
+
+		//DATETIMEPICKER 시간대를 조회한다.
+        List<TbPpWorkTime> timeList = rsvtSchRepo.selectTimeList();
 		
 
 		mv.addObject( "currDt" , currDt        ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row
         mv.addObject( "colList" , currDtList   ); //Column
         mv.addObject( "dataList", rsvtSchList  ); //Cell
+        mv.addObject( "timeList", timeList  ); //Cell
 
 
 		//약사목록 을 조회

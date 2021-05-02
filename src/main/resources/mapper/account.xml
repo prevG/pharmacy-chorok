@@ -4,21 +4,18 @@
 <mapper namespace="com.pharm.chorok.web.main.repository.TbCommUserRepository">
 
 
-	<select id="selectComUsrByUsrEml"
-		parameterType="com.pharm.chorok.domain.table.TbCommUser"
-		resultType="com.pharm.chorok.domain.table.TbCommUser">
-		/** UserDetailRepository.selectComUsrByUsrEml */
+	<select id="selectComUsrByUsrEml" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbCommUser">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.TbCommUserRepository.selectComUsrByUsrEml */
 	SELECT *
 	  FROM TB_COMM_USER
 	 WHERE USR_EML = #{usrEml} OR USR_PHN_NO = #{usrEml}
 	]]>
 	</select>
 
-	<select id="getUserList" parameterType="map"
-		resultType="com.pharm.chorok.domain.table.TbCommUser">
-		/** UserDetailRepository.getUserList */
+	<select id="getUserList" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommUser">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.TbCommUserRepository.getUserList */
 	SELECT *
 	  FROM TB_COMM_USER
 	]]>
