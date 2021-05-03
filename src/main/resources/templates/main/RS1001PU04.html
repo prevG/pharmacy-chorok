@@ -130,11 +130,11 @@
                                                                                 <input type="text" th:name="${item.id}" class="form-control input-sm" th:value="${item.cnstPaperVal}">
                                                                             </div>
                                                                             <div class="form-check form-check-inline" th:if="${item.examCd} =='RADIO'" th:each="el, idx : ${#strings.arraySplit(item.exam,',')}">
-                                                                                <input class="form-check-input" th:id="|${item.id}_${idx.index}|" type="radio" th:name="${item.id}" th:value="${el}" th:checked="${el==item.cnstPaperVal}"/>
+                                                                                <input class="form-check-input" th:id="|${item.id}_${idx.index}|" type="radio" th:name="${item.id}" th:value="${el}" th:checked="${#strings.trim(el)==#strings.trim(item.cnstPaperVal)}"/>
                                                                                 <label class="form-check-label" th:for="|${item.id}_${idx.index}|"  th:text="${el}"></label>
                                                                             </div>
                                                                             <div class="form-check form-check-inline" th:if="${item.examCd} =='CHECK'" th:each="el, idx : ${#strings.arraySplit(item.exam,',')}">
-                                                                                <input type="checkbox" class="form-check-input mr-7" th:id="|${item.id}_${idx.index}|" th:name="${item.id}" th:value="${el}" th:checked="${el==item.cnstPaperVal}"/>
+                                                                                <input type="checkbox" class="form-check-input mr-7" th:id="|${item.id}_${idx.index}|" th:name="${item.id}" th:value="${el}" th:checked="${#strings.contains(#strings.trim(item.cnstPaperVal),#strings.trim(el))}"/>
                                                                                 <label class="form-check-label mr-4" th:for="|${item.id}_${idx.index}|" th:text="${el}"></label>
                                                                             </div>
                                                                         </td>

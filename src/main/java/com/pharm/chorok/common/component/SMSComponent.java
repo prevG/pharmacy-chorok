@@ -5,7 +5,9 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -21,6 +23,11 @@ public class SMSComponent {
 	static final String hostNameUrl = "https://api-sms.cloud.toast.com";
 	static final String method = "POST";
 	static final String sendNo = "01038252547";
+	public static enum MESSAGETYPE{
+		SMSTYPE,
+		MMSTYPE,
+		TEMPLATETYPE
+	}
 	
 	/*
 	SMS 본문	255자	90바이트(한글 45자, 영문 90자)
@@ -29,81 +36,232 @@ public class SMSComponent {
 	*/
 	
 	
-
-	
-	//toast 메세지 전송
-	public List<TbPpSmsHist> sendToastSms() {
+	public List<TbPpSmsHist> sendMessage(MESSAGETYPE smsType){
 		List<TbPpSmsHist> ret = null;
+		String requestUrl = "";
+		String apiUrl = "";
 		
-		String requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/sms";                   		// 요청 URL
-		String apiUrl = hostNameUrl + requestUrl;
+		if(smsType == MESSAGETYPE.SMSTYPE) {
+			requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/sms";
+			apiUrl = hostNameUrl + requestUrl;
+			
+			
+			JSONObject bodyJson = new JSONObject();
+			JSONObject toJson = new JSONObject();
+		    JSONArray  toArr = new JSONArray();
+
+		    bodyJson.put("sendNo",sendNo);
+			bodyJson.put("body","sms");
+			//bodyJson.put("senderGroupingKey","senderGroupingKey");
+			
+			
+		    //곽경준전화번호(받는사람)
+		    toJson.put("recipientNo","01030038397");
+		    //toJson.put("recipientGroupingKey","recipientGroupingKey");
+		    toArr.add(toJson);
+		    //받는사람
+		    bodyJson.put("recipientList", toArr);
+		    
+		    
+		    String body = bodyJson.toJSONString();
+		    System.out.println(body);
+		    
+		    
+		    try {
+
+	        	System.out.println("apiUrl : "+apiUrl);
+	            URL url = new URL(apiUrl);
+
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setUseCaches(false);
+	            con.setDoOutput(true);
+	            con.setDoInput(true);
+	            con.setRequestProperty("content-type", "application/json");
+	            con.setRequestMethod(method);
+	            con.setDoOutput(true);
+	            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+	            
+	            wr.write(body.getBytes());
+	            wr.flush();
+	            wr.close();
+
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            System.out.println("responseCode" +" " + responseCode);
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+
+	            String inputLine;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            
+	            
+	            ret = getTbPpSmsHists(response.toString());
+
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+		    
+		    
+			
+		}else if(smsType == MESSAGETYPE.MMSTYPE) {
+			requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";
+			apiUrl = hostNameUrl + requestUrl;	
+			
+			
+			JSONObject bodyJson = new JSONObject();
+			JSONObject toJson = new JSONObject();
+		    JSONArray  toArr = new JSONArray();
+			
+		    //최일준과장님 번호(보내는사람)
+		  	bodyJson.put("sendNo",sendNo);
+		    bodyJson.put("title","mms title");
+			bodyJson.put("body","mms content");
+						
+		    
+		    //곽경준전화번호(받는사람)
+		    toJson.put("recipientNo","01030038397");			
+		    toArr.add(toJson);
+		    
+			//받는사람
+		    bodyJson.put("recipientList", toArr);
+		    
+		    String body = bodyJson.toJSONString();
+		    
+		    System.out.println(body);
+		    
+		    
+		    try {
+
+	        	System.out.println("apiUrl : "+apiUrl);
+	            URL url = new URL(apiUrl);
+
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setUseCaches(false);
+	            con.setDoOutput(true);
+	            con.setDoInput(true);
+	            con.setRequestProperty("content-type", "application/json");
+	            con.setRequestMethod(method);
+	            con.setDoOutput(true);
+	            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+	            
+	            wr.write(body.getBytes());
+	            wr.flush();
+	            wr.close();
+
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            System.out.println("responseCode" +" " + responseCode);
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+
+	            String inputLine;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            
+	            ret = getTbPpSmsHists(response.toString());
+
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+			
+		}else if(smsType == MESSAGETYPE.TEMPLATETYPE) {
+			
+			//템플릿으로 보내야됨...
+			/*
+			* requestId 또는 startRequestDate + endRequestDate 또는 startCreateDate + endCreateDate는 필수입니다.
+			* 등록 날짜/발송 날짜를 동시에 검색하는 경우, 발송 날짜는 무시됩니다.
+			**/
+			
+			requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";
+			apiUrl = hostNameUrl + requestUrl;
+			
+			
+			JSONObject bodyJson = new JSONObject();
+			JSONObject toJson = new JSONObject();
+		    JSONArray  toArr = new JSONArray();
+		    
+		    SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+		    String time = format.format(new Date());
+		    
+		    //testTemplate
+			//최일준과장님 번호(보내는사람)
+			bodyJson.put("sendNo",sendNo);
+			bodyJson.put("templateId","testTemplate");
+			bodyJson.put("startRequestDate","2021-05-03 15:15:00");
+			bodyJson.put("endRequestDate","2021-05-03 15:15:00");
+			
+		    //곽경준전화번호(받는사람)
+		    toJson.put("recipientNo","01035017145");			
+		    toArr.add(toJson);
+		    
+			//받는사람
+		    bodyJson.put("recipientList", toArr);
+		    
+		    String body = bodyJson.toJSONString();
+		    
+		    System.out.println(body);
+		    
+		    
+		    try {
+
+	        	System.out.println("apiUrl : "+apiUrl);
+	            URL url = new URL(apiUrl);
+
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setUseCaches(false);
+	            con.setDoOutput(true);
+	            con.setDoInput(true);
+	            con.setRequestProperty("content-type", "application/json");
+	            con.setRequestMethod(method);
+	            con.setDoOutput(true);
+	            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+	            
+	            wr.write(body.getBytes());
+	            wr.flush();
+	            wr.close();
+
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            System.out.println("responseCode" +" " + responseCode);
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+
+	            String inputLine;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            
+	            ret = getTbPpSmsHists(response.toString());
+
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+			
+		}
 		
-		JSONObject bodyJson = new JSONObject();
-		JSONObject toJson = new JSONObject();
-	    JSONArray  toArr = new JSONArray();
-
-	    bodyJson.put("sendNo",sendNo);
-		bodyJson.put("body","sms");
-		//bodyJson.put("senderGroupingKey","senderGroupingKey");
-		
-		
-	    //곽경준전화번호(받는사람)
-	    toJson.put("recipientNo","01030038397");
-	    //toJson.put("recipientGroupingKey","recipientGroupingKey");
-	    toArr.add(toJson);
-	    //받는사람
-	    bodyJson.put("recipientList", toArr);
-	    
-	    
-	    String body = bodyJson.toJSONString();
-	    System.out.println(body);
-	    
-	    
-	    try {
-
-        	System.out.println("apiUrl : "+apiUrl);
-            URL url = new URL(apiUrl);
-
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setRequestProperty("content-type", "application/json");
-            con.setRequestMethod(method);
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            
-            wr.write(body.getBytes());
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            System.out.println("responseCode" +" " + responseCode);
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            
-            
-            ret = getTbPpSmsHists(response.toString());
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-	    
-	    return ret;
+		return ret;
 	}
 	
 	
+
 	private List<TbPpSmsHist> getTbPpSmsHists(String resStr){
 		
 		List<TbPpSmsHist> ret = new ArrayList<TbPpSmsHist>();
@@ -139,207 +297,5 @@ public class SMSComponent {
 	
 	
 	
-	public void getSmsStatus() {
-		String requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/sms";                   		// 요청 URL
-		String apiUrl = hostNameUrl + requestUrl;
-		
-		JSONObject bodyJson = new JSONObject();
-		JSONObject toJson = new JSONObject();
-	    JSONArray  toArr = new JSONArray();
-
-	    bodyJson.put("sendNo",sendNo);
-		bodyJson.put("body","sms");
-		//bodyJson.put("senderGroupingKey","senderGroupingKey");
-		
-		
-	    //곽경준전화번호(받는사람)
-	    toJson.put("recipientNo","01030038397");
-	    //toJson.put("recipientGroupingKey","recipientGroupingKey");
-	    toArr.add(toJson);
-	    //받는사람
-	    bodyJson.put("recipientList", toArr);
-	    
-	    
-	    String body = bodyJson.toJSONString();
-	    System.out.println(body);
-	    
-	    
-	    try {
-
-        	System.out.println("apiUrl : "+apiUrl);
-            URL url = new URL(apiUrl);
-
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setRequestProperty("content-type", "application/json");
-            con.setRequestMethod(method);
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            
-            wr.write(body.getBytes());
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            System.out.println("responseCode" +" " + responseCode);
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            
-            System.out.println(response.toString());
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-	}
-	
-	
-	public void sendToastMms() {
-		String requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";                   		// 요청 URL
-		String apiUrl = hostNameUrl + requestUrl;				
-		
-		JSONObject bodyJson = new JSONObject();
-		JSONObject toJson = new JSONObject();
-	    JSONArray  toArr = new JSONArray();
-		
-	    //최일준과장님 번호(보내는사람)
-	  	bodyJson.put("sendNo",sendNo);
-	    
-	    bodyJson.put("title","mms title");
-		bodyJson.put("body","mms content");
-					
-	    
-	    //곽경준전화번호(받는사람)
-	    toJson.put("recipientNo","01030038397");			
-	    toArr.add(toJson);
-	    
-		//받는사람
-	    bodyJson.put("recipientList", toArr);
-	    
-	    String body = bodyJson.toJSONString();
-	    
-	    System.out.println(body);
-	    
-	    
-	    try {
-
-        	System.out.println("apiUrl : "+apiUrl);
-            URL url = new URL(apiUrl);
-
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setRequestProperty("content-type", "application/json");
-            con.setRequestMethod(method);
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            
-            wr.write(body.getBytes());
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            System.out.println("responseCode" +" " + responseCode);
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            
-            System.out.println(response.toString());
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-	}
-	
-	
-	public void sendToastMmsWithFile() {
-		String requestUrl= "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";
-		String apiUrl = hostNameUrl + requestUrl;				
-		
-		JSONObject bodyJson = new JSONObject();
-		JSONObject toJson = new JSONObject();
-	    JSONArray  toArr = new JSONArray();
-
-		//최일준과장님 번호(보내는사람)
-		bodyJson.put("sendNo",sendNo);
-	    
-	    bodyJson.put("title","mms title");
-		bodyJson.put("body","mms content");
-		
-	    //곽경준전화번호(받는사람)
-	    toJson.put("recipientNo","01030038397");			
-	    toArr.add(toJson);
-	    
-		//받는사람
-	    bodyJson.put("recipientList", toArr);
-	    
-	    String body = bodyJson.toJSONString();
-	    
-	    System.out.println(body);
-	    
-	    
-	    try {
-
-        	System.out.println("apiUrl : "+apiUrl);
-            URL url = new URL(apiUrl);
-
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setDoInput(true);
-            con.setRequestProperty("content-type", "application/json");
-            con.setRequestMethod(method);
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            
-            wr.write(body.getBytes());
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            System.out.println("responseCode" +" " + responseCode);
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            
-            System.out.println(response.toString());
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-	}
 	
 }

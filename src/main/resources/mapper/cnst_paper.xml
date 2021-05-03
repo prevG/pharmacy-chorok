@@ -31,10 +31,10 @@
 	]]>
 	</select>
 	
-	
+																												  
 	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSurveyChartVo">
 	<![CDATA[    
-	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
+	
 	SELECT CONCAT_WS('_', B.CNST_VER, B.NUM) AS 'ID'
 		 , B.CNST_VER
 		 , B.NUM

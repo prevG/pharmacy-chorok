@@ -21,7 +21,7 @@ public class SMSService {
 	//파라미터 받아야됨... 누구한테 보낼지.. 
 	public void insertSmsHist() throws Exception{
 		//파라미터 넘겨줘야됨..
-		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendToastSms();
+		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendMessage(SMSComponent.MESSAGETYPE.SMSTYPE);
 		
 		for(int i=0; i<tbPpSmsHists.size(); i++) {
 			smsRepository.insertSmsHist(tbPpSmsHists.get(i));	

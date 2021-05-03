@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.common.component.SMSComponent;
 import com.pharm.chorok.common.service.SMSService;
 
 @RequestMapping(value = "/admin")
@@ -17,12 +18,18 @@ public class ADSMSController {
 	@Autowired
 	SMSService smsService;
 	
+
+	@Autowired
+	private SMSComponent SmsComponent;
+	
 	@GetMapping("/sms")
 	public ModelAndView sms( Model model ) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/sms");
 		
-		smsService.insertSmsHist();
+		//smsService.insertSmsHist();
+		
+		SmsComponent.sendMessage(SMSComponent.MESSAGETYPE.SMSTYPE);
 		return mv;
 	}
 	

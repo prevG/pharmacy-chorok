@@ -245,6 +245,7 @@ function callSrvChart(row){
 					var cnstPaperVal = data[i].cnstPaperVal;
 					var id = data[i].id;
 					
+					
 					if(examCd == "TEXT"){
 						$("input[type='text'][name='"+id+"']").val(cnstPaperVal);
 					}else if(examCd == "RADIO"){

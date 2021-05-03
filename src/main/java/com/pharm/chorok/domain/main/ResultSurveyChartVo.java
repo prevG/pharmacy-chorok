@@ -1,5 +1,5 @@
 package com.pharm.chorok.domain.main;
-
+		
 import com.pharm.chorok.domain.table.TbCommColumn;
 
 import lombok.Data;
