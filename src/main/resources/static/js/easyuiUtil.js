@@ -15,3 +15,31 @@ function initComboBox(target, srvUrl, param){
 }
 
 
+function initCodeData(grpCd){
+	var retVal = {};
+	
+	var params = {
+		"grpCd":grpCd,
+		"useYn":"Y"
+	};
+	
+	$.ajax({
+		type: 'post',
+		url: '/admin/getCodes',
+		data: params,
+		success: function (result) {
+			
+			console.log(result);
+			retVal = result.data;
+			if (result.status == "success") {
+				alert(result.message);
+			} else {
+				alert(result.errorMessage);
+			}
+			
+		}
+	});
+	
+	return retVal;
+}
+

@@ -41,7 +41,7 @@
 	
 	function fnInit(){
 		$('#cb_grpCd').combobox({
-			url:'/admin/getGrpCd?GrpCd=00000&target=combo',
+			url:'/admin/getGrpCdWithCombo?GrpCd=00000&target=combo',
 		    valueField:'ditcCd',
 		    textField:'ditcCdNm',
 		    onSelect:function(rec){
@@ -66,7 +66,7 @@
 		 			$("#cdRg").hide();
 		 			
 		 			$('#grpRg_grpCd').combobox({
-						url:'/admin/getGrpCd?GrpCd=00000&target=combo',
+						url:'/admin/getGrpCdWithCombo?GrpCd=00000&target=combo',
 					    valueField:'ditcCd',
 					    textField:'ditcCdNm',
 					    onSelect:function(rec){

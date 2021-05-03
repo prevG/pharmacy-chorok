@@ -8,6 +8,8 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 	<script>
+	
+		var C1010_Data; // 
 		
 		function fnSearch(){
 			var queryParams=$("#dg").datagrid('options').queryParams;
@@ -22,8 +24,10 @@
 		
 		function fnInit(){
 			
-			initComboBox($('#cb_usrAuth'), '/admin/getGrpCd', {GrpCd:'C1002',target:'combo', targetKind:'0'});
-			initComboBox($('#cb_usrAprv'), '/admin/getGrpCd', {GrpCd:'C1010',target:'combo', targetKind:'0'});
+			initComboBox($('#cb_usrAuth'), '/admin/getGrpCdWithCombo', {GrpCd:'C1002',target:'combo', targetKind:'0'});
+			initComboBox($('#cb_usrAprv'), '/admin/getGrpCdWithCombo', {GrpCd:'C1010',target:'combo', targetKind:'0'});
+			
+			C1010_Data = initCodeData('C1010');
 			
 			$('#dg').datagrid({
 			    url: '/admin/getAdmin',
@@ -107,10 +111,10 @@
 			 $('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
 	         $('#addFrm').form('clear');
 	         
-	         initComboBox($('#dlg_usrGrade'), '/admin/getGrpCd', {GrpCd:'C1003',target:'combo', targetKind:'1'});
-	         initComboBox($('#dlg_usrAuth'), '/admin/getGrpCd', {GrpCd:'C1002',target:'combo', targetKind:'1'});
-	         initComboBox($('#dlg_usrAprv'), '/admin/getGrpCd', {GrpCd:'C1010',target:'combo', targetKind:'1'});
-	         initComboBox($('#dlg_delYn'), '/admin/getGrpCd', {GrpCd:'C1012',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_usrGrade'), '/admin/getGrpCdWithCombo', {GrpCd:'C1003',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_usrAuth'), '/admin/getGrpCdWithCombo', {GrpCd:'C1002',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_usrAprv'), '/admin/getGrpCdWithCombo', {GrpCd:'C1010',target:'combo', targetKind:'1'});
+	         initComboBox($('#dlg_delYn'), '/admin/getGrpCdWithCombo', {GrpCd:'C1012',target:'combo', targetKind:'1'});
 		}
 		
 		
@@ -220,6 +224,8 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a> -->
+		
+		<!--http://www.jeasyui.com/tutorial/datagrid/datagrid12_demo.html-->
 			
 			<div class="card shadow mb-4">
 				<div class="card-header">
@@ -251,7 +257,7 @@
 					          <th field='usrEml' width='250' align='center' editor='{type:"validatebox",options:{required:true,validType:"email"}}'>이메일</th>
 					          <th field='usrPhnNo' width='200' align='center' editor='text'>핸드폰번호</th>
 					          <th field='usrGrade' width='100' align='center' editor='text'>직위</th>
-					          <th field='usrAuth' width='100' align='center' editor='text'>권한</th>
+					          <th field='usrAuth' width='100' align='center' editor='{type:"combobox",options:{valueField:"ditcCd",textField:"ditcNm",data:C1010_Data,required:true}}'>권한</th>
 					          <th field='usrAprv' width='100' align='center' editor='text'>승인여부</th>
 					          <th field='delYn' width='150' align='center' editor='{type:"checkbox",options:{on:"Y",off:"N"}}'>삭제여부</th>
 					          <th field='regDt' width='200' align='center' editor='text' formatter="formatDate">등록날짜</th>

@@ -13,6 +13,9 @@ public interface ADCodeRepository {
 
 	public ArrayList<TbCommCode> selectCodesByGroupCd(TbCommCode tbCommCode);
 	
+	public ArrayList<TbCommCode> selectCodes(TbCommCode tbCommCode);
+	
+	
 	public int saveCode(TbCommCode tbCommCode);
 	
 	public int removeCode(TbCommCode tbCommCode);

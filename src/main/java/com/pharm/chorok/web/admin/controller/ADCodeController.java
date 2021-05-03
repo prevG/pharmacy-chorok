@@ -61,9 +61,9 @@ public class ADCodeController {
 	}
 	
 	
-	@PostMapping("/getGrpCd")
+	@PostMapping("/getGrpCdWithCombo")
 	@ResponseBody
-	public String getGrpCd(TbCommCode tbCommCode) throws Exception {
+	public String getGrpCdWithCombo(TbCommCode tbCommCode) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonStr = "";
 		
@@ -72,6 +72,23 @@ public class ADCodeController {
 		jsonStr = objectMapper.writeValueAsString(tbCommCodes);
 		return jsonStr;
 	}
+	
+	
+	
+	@PostMapping("/getCodes")
+	@ResponseBody
+	public String getCodes(TbCommCode tbCommCode) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		ArrayList<TbCommCode> tbCommCodes = codeService.selectCodes(tbCommCode);
+		
+		jsonStr = objectMapper.writeValueAsString(tbCommCodes);
+		return jsonStr;
+	}
+	
+	
+	
 	
 	@PostMapping("/removeCode")
 	@ResponseBody
