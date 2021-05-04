@@ -35,6 +35,12 @@ public class ADCodeService{
     }
     
     
+    public ArrayList<TbCommCode> selectAbbrCodes(TbCommCode tbCommCode){
+    	return codeRepository.selectAbbrCodes(tbCommCode);
+    }
+    
+    
+    
     public int saveCode(TbCommCode tbCommCode) {
     	return codeRepository.saveCode(tbCommCode);
     }

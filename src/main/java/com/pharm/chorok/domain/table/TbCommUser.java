@@ -43,6 +43,10 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	//private String dataOwnrId;
 	//private String regUsrNo;
 	
+	private String usrGradeVal;
+	private String usrAuthVal;
+	private String usrAprvVal;
+	
 	//화면에서 쓸거임..
 	private String cbSrch;
 	private String cbAuth;

@@ -16,7 +16,8 @@ function initComboBox(target, srvUrl, param){
 
 
 function initCodeData(grpCd){
-	var retVal = {};
+	
+	var ret = new Array();
 	
 	var params = {
 		"grpCd":grpCd,
@@ -25,21 +26,19 @@ function initCodeData(grpCd){
 	
 	$.ajax({
 		type: 'post',
-		url: '/admin/getCodes',
+		url: '/admin/getAbbrCodes',
 		data: params,
+		async: false,
 		success: function (result) {
-			
-			console.log(result);
-			retVal = result.data;
-			if (result.status == "success") {
-				alert(result.message);
-			} else {
-				alert(result.errorMessage);
+			result = JSON.parse(result);
+			for(var i=0; i<result.length;i++){
+				var temp = {ditcCd:result[i].ditcCd, ditcNm:result[i].ditcNm}; 
+				ret.push(temp);
 			}
-			
 		}
 	});
 	
-	return retVal;
+	
+	return ret;
 }
 

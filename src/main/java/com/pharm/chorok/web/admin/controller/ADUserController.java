@@ -58,6 +58,11 @@ public class ADUserController {
 			data.put("usrPhnNo", tbCommUsers.get(i).getUsrPhnNo());
 			data.put("usrPwd", tbCommUsers.get(i).getUsrPwd());
 			data.put("usrAprv",tbCommUsers.get(i).getUsrAprv());
+			
+			data.put("usrGradeVal",tbCommUsers.get(i).getUsrGradeVal());
+			data.put("usrAuthVal",tbCommUsers.get(i).getUsrAuthVal());
+			data.put("usrAprvVal",tbCommUsers.get(i).getUsrAprvVal());
+			
 			data.put("delYn",tbCommUsers.get(i).getDelYn());
 			data.put("regDt",tbCommUsers.get(i).getRegDt());
 			arr.put(data);

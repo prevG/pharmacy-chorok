@@ -15,6 +15,9 @@ public interface ADCodeRepository {
 	
 	public ArrayList<TbCommCode> selectCodes(TbCommCode tbCommCode);
 	
+	public ArrayList<TbCommCode> selectAbbrCodes(TbCommCode tbCommCode);
+	
+	
 	
 	public int saveCode(TbCommCode tbCommCode);
 	

@@ -99,6 +99,19 @@
 		 ORDER BY V_ORDER
 	</select>
 	
+	
+	<select id="selectAbbrCodes" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
+		SELECT DITC_CD,
+			DITC_NM
+		  FROM TB_COMM_CODE
+		 WHERE 1=1
+		 AND GRP_CD = #{grpCd}
+		 <if test='useYn!=null and !useYn.equals("A")'>
+		 AND USE_YN = #{useYn}
+		 </if>
+		 ORDER BY V_ORDER
+	</select>
+	
 	<update id="removeCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
 		UPDATE TB_COMM_CODE
 		SET USE_YN = 'N'

@@ -88,6 +88,19 @@ public class ADCodeController {
 	}
 	
 	
+	@PostMapping("/getAbbrCodes")
+	@ResponseBody
+	public String getAbbrCodes(TbCommCode tbCommCode) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		ArrayList<TbCommCode> tbCommCodes = codeService.selectAbbrCodes(tbCommCode);
+		
+		jsonStr = objectMapper.writeValueAsString(tbCommCodes);
+		return jsonStr;
+	}
+	
+	
 	
 	
 	@PostMapping("/removeCode")
