@@ -58,13 +58,9 @@
 					</form>
 				</div>
 			</div>
-			<!-- 
-			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">New</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a> -->
+			
 		
-		<!--http://www.jeasyui.com/tutorial/datagrid/datagrid12_demo.html-->
+			<!--http://www.jeasyui.com/tutorial/datagrid/datagrid12_demo.html-->
 			
 			<div class="card shadow mb-4">
 				<div class="card-header">
@@ -72,11 +68,16 @@
 				</div>
 				<div class="card-body" style="min-height: 530px;">
 
-					<div style="padding: 5px 0;">
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addAdmin();">추가</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeAdmin();">삭제</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editAdmin();">편집</a> 
-						<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
+					<div class="d-flex justify-content-between">
+						<div>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addAdmin();">추가</a> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeAdmin();">삭제</a> 
+						</div>
+						<div> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editAdmin();">편집</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="cancelAdmin();">취소</a>
+						</div>
 					</div>
 					
 					<table id="dg" style="width:100%"></table>

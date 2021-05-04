@@ -56,11 +56,23 @@ function fnInit(){
         	{field:'regDt', title:'등록날짜', align:'center', width:'200', formatter:function formatDate(value, row){return value;}}
         ]],
 	    onEndEdit:function(index,row){
-            var ed = $(this).datagrid('getEditor', {
+			alert("a");
+            /*var ed = $(this).datagrid('getEditor', {
                 index: index,
-                field: 'productid'
+                field: 'usrNo'
             });
-            row.productname = $(ed.target).combobox('getText');
+            row.productname = $(ed.target).combobox('getText');*/
+            //row.editing = false;
+            
+            var usrNo = row.usrNo;
+            var usrNm = row.usrNm;
+            var usrEml = row.usrEml;
+            var usrPhnNo = row.usrPhnNo;
+            
+            
+            $(this).datagrid('refreshRow', index);
+            console.log(usrNo+":"+usrNm+":"+usrEml+":"+usrPhnNo);
+                
         },
         onBeforeEdit:function(index,row){
             row.editing = true;
@@ -79,34 +91,58 @@ function fnInit(){
 
 
 
-function getRowIndex(target){
-    var tr = $(target).closest('tr.datagrid-row');
+function getRowIndex(){
+/*    var tr = $(target).closest('tr.datagrid-row');
     return parseInt(tr.attr('datagrid-row-index'));
+
+*/
+	var idx = -1;
+    var row = $('#dg').datagrid('getSelected');
+	if (row){
+	  	idx = $('#dg').datagrid('getRowIndex', row);
+	}
+	
+	return idx;
+
 }
-function editrow(target){
-    $('#dg').datagrid('beginEdit', getRowIndex(target));
+
+
+
+function cancelAdmin(){
+	var idx = -1;
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		idx = getRowIndex();
+	}
+	
+	if (row.editing && idx > -1){
+		$('#dg').datagrid('cancelEdit', idx);
+	}
 }
-function deleterow(target){
-    $.messager.confirm('Confirm','Are you sure?',function(r){
-        if (r){
-            $('#dg').datagrid('deleteRow', getRowIndex(target));
-        }
-    });
-}
-function saverow(target){
-    $('#dg').datagrid('endEdit', getRowIndex(target));
-}
-function cancelrow(target){
-    $('#dg').datagrid('cancelEdit', getRowIndex(target));
+
+function saveAdmin(){
+	var idx = -1;
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		idx = getRowIndex();
+	}
+	
+	if (row.editing && idx > -1){
+		$('#dg').datagrid('endEdit', idx);
+		//저장로직 추가
+	}
 }
 
 
 function removeAdmin(){
 	var row = $("#dg").datagrid("getSelected");
-	//console.log(row);
+	
 	if(row){
 		$.messager.confirm('Confirm','사용자를 삭제하겠습니까?',function(r){
              if (r){
+	
+				//$('#dg').datagrid('deleteRow', getRowIndex());
+				
                  $.post('/admin/removeAdmin',{usrNo:row.usrNo},function(result){
                      if (result.success){
                          //$('#dg').datagrid('reload');    // reload the user data
