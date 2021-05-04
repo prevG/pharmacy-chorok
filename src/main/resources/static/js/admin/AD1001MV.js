@@ -1,12 +1,9 @@
 var gDataArr = new Array();
-var temp = [
-	{ditcCd:'A00',ditcNm:'승인'},
-	{ditcCd:'A01',ditcNm:'비승인'}
-];
 
 var gC1003; //직윈 
 var gC1002; //권한
 var gC1010; //승인
+var editingRowIdx = -1; 
 
 function fnSearch(){
 	var queryParams=$("#dg").datagrid('options').queryParams;
@@ -64,14 +61,14 @@ function fnInit(){
             row.productname = $(ed.target).combobox('getText');*/
             //row.editing = false;
             
-            var usrNo = row.usrNo;
+        /*    var usrNo = row.usrNo;
             var usrNm = row.usrNm;
             var usrEml = row.usrEml;
             var usrPhnNo = row.usrPhnNo;
             
             
             $(this).datagrid('refreshRow', index);
-            console.log(usrNo+":"+usrNm+":"+usrEml+":"+usrPhnNo);
+            console.log(usrNo+":"+usrNm+":"+usrEml+":"+usrPhnNo);*/
                 
         },
         onBeforeEdit:function(index,row){
@@ -90,7 +87,7 @@ function fnInit(){
 }
 
 
-
+//수정해야됨... 수정되고 있는 행을 찾아야됨.. 선택된 행이 아니라.. 
 function getRowIndex(){
 /*    var tr = $(target).closest('tr.datagrid-row');
     return parseInt(tr.attr('datagrid-row-index'));
@@ -109,7 +106,7 @@ function getRowIndex(){
 
 
 function cancelAdmin(){
-	var idx = -1;
+	/*var idx = -1;
 	var row = $('#dg').datagrid('getSelected');
 	if (row){
 		idx = getRowIndex();
@@ -117,20 +114,66 @@ function cancelAdmin(){
 	
 	if (row.editing && idx > -1){
 		$('#dg').datagrid('cancelEdit', idx);
+	}*/
+	
+	if (editingRowIdx > -1){
+		$('#dg').datagrid('cancelEdit', editingRowIdx);
+		editingRowIdx = -1;
 	}
 }
 
 function saveAdmin(){
-	var idx = -1;
+	/*var idx = -1;
 	var row = $('#dg').datagrid('getSelected');
 	if (row){
 		idx = getRowIndex();
+	}*/
+	
+	
+	
+	if (editingRowIdx > -1){
+		console.log(editingRowIdx);
+		$('#dg').datagrid('endEdit', editingRowIdx);
+		//저장로직 추가
+		
+		var row = $('#dg').datagrid('getRows')[editingRowIdx];
+		
+		var usrNo = row.usrNo;
+        var usrNm = row.usrNm;
+        var usrEml = row.usrEml;
+        var usrPhnNo = row.usrPhnNo;
+        
+        
+        var usrGrade = row.usrGrade;
+        var usrAuth = row.usrAuth;
+        var usrAprv = row.usrAprv;
+        var delYn = row.delYn;
+        /*
+        var ed = $('#dg').datagrid('getEditor', {
+            index: editingRowIdx,
+            field: 'usrAuth'
+        });
+        var temp = $(ed.target).combobox('getText');*/
+        
+        console.log(usrNo+":"+usrNm+":"+usrEml+":"+usrPhnNo+":"+usrGrade+":"+usrAuth+":"+usrAprv+":"+delYn);
+        row.editing = false;
+		$('#dg').datagrid('refreshRow', editingRowIdx);
+		editingRowIdx=-1;
+	}
+}
+
+function editAdmin(){
+	var idx = -1;
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+	  idx = $('#dg').datagrid('getRowIndex', row);
 	}
 	
-	if (row.editing && idx > -1){
-		$('#dg').datagrid('endEdit', idx);
-		//저장로직 추가
-	}
+	if(idx < 0) return;
+	
+	editingRowIdx = idx;
+	
+	$('#dg').datagrid('beginEdit', idx);
 }
 
 
@@ -213,14 +256,3 @@ $(document).ready(function(){
 	fnInit();
 });
 
-function editAdmin(){
-	var idx = -1;
-	var row = $('#dg').datagrid('getSelected');
-	if (row){
-	  idx = $('#dg').datagrid('getRowIndex', row);
-	}
-	
-	if(idx < 0) return;
-	
-	$('#dg').datagrid('beginEdit', idx);
-}
