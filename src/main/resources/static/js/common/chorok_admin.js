@@ -1,5 +1,6 @@
+
+/*콤보박스 세팅*/
 function initComboBox(target, srvUrl, param){
-	console.log(target);
 	$(target).combobox({
 		url:srvUrl+'?GrpCd='+param.GrpCd+'&target='+param.target+'&targetKind='+param.targetKind,
 	    valueField:'ditcCd',
@@ -14,8 +15,8 @@ function initComboBox(target, srvUrl, param){
 	});
 }
 
-
-function initCodeData(grpCd){
+/*코드리턴*/
+function getCodeData(grpCd){
 	
 	var ret = new Array();
 	
@@ -38,7 +39,33 @@ function initCodeData(grpCd){
 		}
 	});
 	
-	
 	return ret;
+}
+
+/*ajax 콜*/
+function callAsynAjax(pUrl, pParam, pMethod='post'){
+	
+	$.ajax({
+		type: pMethod,
+		url: pUrl,
+		data: pParam,
+		async: true,
+		success: function (result) {
+			console.log(result);
+		}
+	});
+}
+
+/*ajax 콜*/
+function callSynAjax(pUrl, pParam, pMethod='post'){
+	$.ajax({
+		type: pMethod,
+		url: pUrl,
+		data: pParam,
+		async: false,
+		success: function (result) {
+			console.log(result);
+		}
+	});
 }
 

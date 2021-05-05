@@ -1,28 +1,14 @@
-
+var editingRowIdx = -1;
 
 
 function fnSearch() {
-
-	var param = {
-		grpCd: $('#cb_grpCd').combobox('getValue'),
-		useYn: $('#cb_useYn').combobox('getValue'),
-		target: "grid",
-		srchKind: $('#cb_cd').combobox('getValue'),
-		srchTxt: $("#srchTxt").val()
-	};
-
-	$.ajax({
-		type: "POST",
-		url: '/admin/getCodesByGrpCd',
-		dataType: 'json',
-		//data:$('#searchUser').serialize(),    
-		data: param,
-	}).done(function(responseJson) {
-		console.log(responseJson);
-		$('#dg').datagrid('loadData', responseJson);
-
-	});
-
+	var queryParams=$("#dg").datagrid('options').queryParams;
+	queryParams.grpCd= $('#cb_grpCd').combobox('getValue');
+	queryParams.useYn= $('#cb_useYn').combobox('getValue');
+	queryParams.target= "grid";
+	queryParams.srchKind= $('#cb_cd').combobox('getValue');
+	queryParams.srchTxt= $("#srchTxt").val();
+	$('#dg').datagrid('reload');
 }
 
 
@@ -31,7 +17,100 @@ function fnChkDup(target) {
 }
 
 
+
+function fn_cancel(){
+	if (editingRowIdx > -1){
+		$('#dg').datagrid('cancelEdit', editingRowIdx);
+		editingRowIdx = -1;
+	}
+}
+
+function fn_save(){
+	
+	if (editingRowIdx > -1){
+		console.log(editingRowIdx);
+		$('#dg').datagrid('endEdit', editingRowIdx);
+		//저장로직 추가
+		
+		var row = $('#dg').datagrid('getRows')[editingRowIdx];
+		
+		
+        var grpCd = row.grpCd;
+        var ditcCd = row.ditcCd;
+        var ditcNm = row.ditcNm;
+        var cdExp = row.cdExp;
+        var vOrder = row.vOrder;
+        var lockYn = row.lockYn;
+        var useYn = row.useYn;
+        
+        console.log(grpCd+":"+ditcCd+":"+ditcNm+":"+cdExp+":"+vOrder+":"+lockYn+":"+useYn);
+		//저장로직
+
+        row.editing = false;
+		$('#dg').datagrid('refreshRow', editingRowIdx);
+		editingRowIdx=-1;
+	}
+}
+
+function fn_edit(){
+	var idx = -1;
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+	  idx = $('#dg').datagrid('getRowIndex', row);
+	}
+	
+	if(idx < 0) return;
+	
+	editingRowIdx = idx;
+	
+	$('#dg').datagrid('beginEdit', idx);
+}
+
+
+
 function fnInit() {
+	
+	$('#dg').datagrid({
+	    url: '/admin/getCodesByGrpCd',
+	    saveUrl: '/admin/saveCode',
+	    updateUrl: '/admin/modifyCode',
+	    destroyUrl: '/admin/removeCode',
+	    singleSelect:true, 
+	    ctrlSelect:true,
+	    idField:'usrNo',
+	    rownumbers:true,
+		fitColumns:true, 
+        fit:true,
+        emptyMsg:'검색 조건에 해당하는 자료가 없습니다.',
+        pagination:true,pageSize:50,pageList:[50],
+        dragSelection: true,
+        columns:[[
+        	{field:'grpCd', title:'그룹코드', align:'center', width:'150'},
+        	{field:'ditcCd', title:'상세코드', align:'center', width:'150', editor:'text'},
+        	{field:'ditcNm', title:'상세코드이름', align:'center', width:'200', editor:'text'},
+        	{field:'cdExp', title:'코드설명', align:'center', width:'350', editor:'text'},
+        	{field:'vOrder', title:'순서', align:'center', width:'150', editor:'numberbox'},
+        	{field:'lockYn', title:'잠금여부', align:'center', width:'100', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
+        	{field:'useYn', title:'사용여부', align:'center', width:'100', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
+        ]],
+	    onEndEdit:function(index,row){
+			alert("a");
+        },
+        onBeforeEdit:function(index,row){
+            row.editing = true;
+            $(this).datagrid('refreshRow', index);
+        },
+        onAfterEdit:function(index,row){
+            row.editing = false;
+            $(this).datagrid('refreshRow', index);
+        },
+        onCancelEdit:function(index,row){
+            row.editing = false;
+            $(this).datagrid('refreshRow', index);
+        }
+	});
+	
+	
 	$('#cb_grpCd').combobox({
 		url: '/admin/getGrpCdWithCombo?GrpCd=00000&target=combo',
 		valueField: 'ditcCd',
@@ -82,13 +161,13 @@ function chgSeLCdKind() {
 	alert("a");
 }
 
-function addCode() {
+function fn_add() {
 	$('#addDlg').dialog('open').dialog('center').dialog('setTitle', '코드추가');
 	$('#addFrm').form('clear');
 }
 
 
-function removeCode() {
+function fn_remove() {
 	var row = $("#dg").datagrid("getSelected");
 
 	console.log(row);
@@ -116,14 +195,6 @@ function removeCode() {
 	}
 }
 
-function editCode() {
-	var row = $('#dg').datagrid('getSelected');
-	if (row) {
-		$('#dlg').dialog('open').dialog('center').dialog('setTitle', '코드수정');
-		$('#fm').form('load', row);
-		//url = 'update_user.php?id='+row.id;
-	}
-}
 
 function saveDlgCode(x) {
 	if (x == 1) {

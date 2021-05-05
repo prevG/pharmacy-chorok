@@ -21,9 +21,9 @@ function fnInit(){
 	initComboBox($('#cb_usrAuth'), '/admin/getGrpCdWithCombo', {GrpCd:'C1002',target:'combo', targetKind:'0'});
 	initComboBox($('#cb_usrAprv'), '/admin/getGrpCdWithCombo', {GrpCd:'C1010',target:'combo', targetKind:'0'});
 	
-	gC1003 = initCodeData('C1003');
-	gC1002 = initCodeData('C1002');
-	gC1010 = initCodeData('C1010');
+	gC1003 = getCodeData('C1003');
+	gC1002 = getCodeData('C1002');
+	gC1010 = getCodeData('C1010');
 	
 	//console.log("gC1010",gC1010);
 	

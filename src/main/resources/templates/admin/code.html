@@ -31,7 +31,7 @@
 				</div>
 				<div class="card-body">
 					<form class="form-inline">
-						<div class="form-group">
+						<div class="form-group" style="display:none;">
 							<select id="cb_cd" class="easyui-combobox" name="cb_cd" style="width:200px;" label="검색어">
 								<option value="0" selected="selected">선택</option>
 							    <option value="ko">코드명</option>
@@ -39,8 +39,6 @@
 							</select>
 							&nbsp;
 							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px" id="srchTxt">
-							&nbsp;
-							<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 						</div>
 					</form>
 					<hr class="mt-2 mb-2" />
@@ -48,6 +46,8 @@
 						<div class="form-group">
 							<select id="cb_grpCd" class="easyui-combobox" name="cb_grpCd" style="width:300px;" label="그룹코드">
 							</select>
+							&nbsp;
+							<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
 							&nbsp;
 							※ 그룹코드를 선택하지 않으면 그룸코드 목록이 조회됩니다.
 						</div>
@@ -74,13 +74,13 @@
 				<div class="card-body" style="min-height: 530px;">
 					<div class="d-flex justify-content-between">
 						<div>
-							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addCode();">추가</a> 
-							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeCode();">삭제</a> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="fn_add();">추가</a> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="fn_remove();">삭제</a> 
 						</div>
 						<div> 
-							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editCode();">편집</a>
-							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveCode();">저장</a>
-							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="cancelCode();">취소</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="fn_edit();">편집</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="fn_save();">저장</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="fn_cancel();">취소</a>
 						</div>
 					</div>
 				
