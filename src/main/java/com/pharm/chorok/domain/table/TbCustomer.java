@@ -1,7 +1,7 @@
 package com.pharm.chorok.domain.table;
 
 import java.util.Date;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
@@ -20,7 +20,9 @@ public class TbCustomer extends TbCommColumn {
 	private String addr1;
 	private String addr2;
 	private String delYn;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updDt;
 	
 	//검색용으로 추가
