@@ -2,18 +2,6 @@ package com.pharm.chorok.web.main.controller;
 
 import java.util.Map;
 
-import com.common.exception.CustomException;
-import com.common.exception.DatabaseInsertException;
-import com.common.exception.EmailCheckException;
-import com.common.exception.EmptyCheckException;
-import com.common.exception.ExceptionItem;
-import com.common.exception.NumberCheckException;
-import com.common.exception.SizeCheckException;
-import com.common.util.Check;
-import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.web.admin.service.ADUserService;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,12 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.common.exception.CustomException;
+import com.common.exception.DatabaseInsertException;
+import com.common.exception.EmailCheckException;
+import com.common.exception.EmptyCheckException;
+import com.common.exception.ExceptionItem;
+import com.common.exception.NumberCheckException;
+import com.common.exception.SizeCheckException;
+import com.common.util.Check;
+import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.table.TbCommUser;
+import com.pharm.chorok.web.admin.service.ADAdminService;
+
 @RequestMapping(value = "/account")
 @Controller
 public class AccountController {
 
 	@Autowired
-	private ADUserService adUserService;
+	private ADAdminService adUserService;
 
 	// 로그인 페이지
 	@GetMapping("/login")

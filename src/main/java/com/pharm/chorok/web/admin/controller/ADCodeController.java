@@ -25,10 +25,10 @@ public class ADCodeController {
 	private ADCodeService codeService;
 	
 	
-	@GetMapping("/code")
+	@GetMapping("/AD1002MV")
 	public ModelAndView code( Model model ) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("admin/code");
+		mv.setViewName("admin/AD1002MV");
 		return mv;
 	}
 	

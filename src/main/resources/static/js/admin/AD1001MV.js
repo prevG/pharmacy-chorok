@@ -16,16 +16,21 @@ function fnSearch(){
 }
 
 
+
+
 function fnInit(){
 	
 	initComboBox($('#cb_usrAuth'), '/admin/getGrpCdWithCombo', {GrpCd:'C1002',target:'combo', targetKind:'0'});
 	initComboBox($('#cb_usrAprv'), '/admin/getGrpCdWithCombo', {GrpCd:'C1010',target:'combo', targetKind:'0'});
 	
+	//debugger;
 	gC1003 = getCodeData('C1003');
 	gC1002 = getCodeData('C1002');
 	gC1010 = getCodeData('C1010');
 	
-	//console.log("gC1010",gC1010);
+	console.log("gC1003",gC1003);
+	console.log("gC1002",gC1002);
+	console.log("gC1010",gC1010);
 	
 	$('#dg').datagrid({
 	    url: '/admin/getAdmin',
@@ -50,7 +55,7 @@ function fnInit(){
         	{field:'usrAuth', title:'권한', align:'center', width:'100', editor:{type:'combobox',options:{valueField:'ditcCd',textField:'ditcNm',data:gC1002,required:true}}, formatter:function(value,row){return row.usrAuthVal||value;}},
         	{field:'usrAprv', title:'승인여부', align:'center', width:'100', editor:{type:'combobox',options:{valueField:'ditcCd',textField:'ditcNm',data:gC1010,required:true}}, formatter:function(value,row){return row.usrAprvVal||value;}},
         	{field:'delYn', title:'삭제여부', align:'center', width:'150', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
-        	{field:'regDt', title:'등록날짜', align:'center', width:'200', formatter:function formatDate(value, row){return value;}}
+        	{field:'regDt', title:'등록날짜', align:'center', width:'200', formatter:formattedDate}
         ]],
 	    onEndEdit:function(index,row){
 			alert("a");

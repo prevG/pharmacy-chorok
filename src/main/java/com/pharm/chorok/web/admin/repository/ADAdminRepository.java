@@ -10,9 +10,15 @@ import com.pharm.chorok.domain.table.TbCommUser;
 
 @Mapper
 @Repository
-public interface ADUserRepository {
+public interface ADAdminRepository {
 
-	public ArrayList<TbCommCode> selectUsers(String grpCd);
+	
+	public ArrayList<TbCommUser> selectAdmin(TbCommUser tbCommUser);
+	
+	public int removeAdmin(TbCommUser tbCommUser);
+	
+	public int saveAdmin(TbCommUser tbCommUser);
+	
 	
 }
 

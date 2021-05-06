@@ -18,18 +18,5 @@ public class ADUserService{
     	//codeRepository.insertCommCode()
     }
     
-    
-    public ArrayList<TbCommUser> getAdmin(TbCommUser tbCommUser) throws Exception{
-    	return userRepository.selectAdmin(tbCommUser);
-    }
-    
-    
-    public int removeAdmin(TbCommUser tbCommUser) throws Exception{
-    	return userRepository.removeAdmin(tbCommUser);
-    }
-    
-    public int saveAdmin(TbCommUser tbCommUser) throws Exception{
-    	return userRepository.saveAdmin(tbCommUser);
-    }
 
 }

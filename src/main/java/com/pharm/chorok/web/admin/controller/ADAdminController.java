@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pharm.chorok.domain.table.TbCommUser;
+import com.pharm.chorok.web.admin.service.ADAdminService;
 import com.pharm.chorok.web.admin.service.ADUserService;
 
 @RequestMapping(value = "/admin")
@@ -20,12 +21,12 @@ import com.pharm.chorok.web.admin.service.ADUserService;
 public class ADAdminController {
 
 	@Autowired
-	private ADUserService userService;
+	private ADAdminService adminService;
 	
-	@GetMapping("/admin")
+	@GetMapping("/AD1001MV")
 	public ModelAndView admin() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/admin");
+		mv.setViewName("/admin/AD1001MV");
 		return mv;
 	}
 	
@@ -34,7 +35,7 @@ public class ADAdminController {
 	@PostMapping("/getAdmin")
 	@ResponseBody
 	public String getAdmins( TbCommUser tbCommUser ) throws Exception {
-		ArrayList<TbCommUser> tbCommUsers = userService.getAdmin(tbCommUser);
+		ArrayList<TbCommUser> tbCommUsers = adminService.selectAdmin(tbCommUser);
 		
 		JSONObject result = new JSONObject();
 		
@@ -88,7 +89,7 @@ public class ADAdminController {
 	public String removeAdmin(TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
 		
-		int ret = userService.removeAdmin(tbCommUser);
+		int ret = adminService.removeAdmin(tbCommUser);
 		
 		if(ret > 0) {
 			result.put("success", true);
@@ -108,7 +109,7 @@ public class ADAdminController {
 	public String saveAdmin( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
 		
-		int ret = userService.saveAdmin(tbCommUser);
+		int ret = adminService.saveAdmin(tbCommUser);
 		
 		if(ret > 0) {
 			result.put("success", true);
