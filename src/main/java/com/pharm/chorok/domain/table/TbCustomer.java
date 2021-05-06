@@ -1,5 +1,7 @@
 package com.pharm.chorok.domain.table;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -17,4 +19,15 @@ public class TbCustomer extends TbCommColumn {
 	private String zipCode;
 	private String addr1;
 	private String addr2;
+	private String delYn;
+	private Date regDt;
+	private Date updDt;
+	
+	//검색용으로 추가
+	private String cbSrch;
+	private String srchTxt;
+	private String cbDelYn;
+	private Date startDttm;
+	private Date endDttm;
+	
 }

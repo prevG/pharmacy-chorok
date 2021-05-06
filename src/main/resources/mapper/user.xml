@@ -4,4 +4,56 @@
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADUserRepository">
 	
 	
+	<select id="selectUsers" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	
+		SELECT  CUST_ID,
+			    CUST_USR_NM,
+			    CUST_CELL_NO,
+			    CUST_BIRTH_DT,
+			    CUST_GEN_TP_CD,
+			    MRG_YN,
+			    PCRT_CHD_CNT,
+			    LST_PCRT_YEAR,
+			    BRST_FDG_YN,
+			    VIST_TP_CD,
+			    ZIP_CODE,
+			    ADDR1,
+			    ADDR2,
+			    DEL_YN,
+			    REG_DT,
+			    REG_USR_NO,
+			    UPD_DT,
+			    UPD_USR_NO
+			FROM TB_CUSTOMER
+			WHERE 1=1
+			<choose>
+				<when test='cbSrch!=null and cbSrch.equals("N")'>
+					AND CUST_USR_NM LIKE CONCAT('%',#{srchTxt},'%')
+				</when>
+				<when test='cbSrch!=null and cbSrch.equals("P")'>
+					AND CUST_CELL_NO LIKE CONCAT('%',#{srchTxt},'%')
+				</when>
+			</choose>
+			<choose>
+				<when test='cbDelYn!=null and cbDelYn.equals("Y")'>
+					AND DEL_YN = 'Y'
+				</when>
+				<when test='cbDelYn!=null and cbDelYn.equals("N")'>
+					AND DEL_YN = 'N'
+				</when>
+			</choose>
+			<if test='startDttm != null'>
+			<![CDATA[    
+				AND REG_DT >= DATE(#{startDttm})
+			]]>
+ 			</if>
+ 			<if test='endDttm != null'>
+ 			<![CDATA[    
+				AND REG_DT <= DATE(#{endDttm})
+			]]>
+ 			</if>
+			
+			
+	</select>
+	
 </mapper>

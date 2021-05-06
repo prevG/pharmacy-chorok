@@ -3,11 +3,12 @@ var editingRowIdx = -1;
 
 function fnSearch() {
 	var queryParams=$("#dg").datagrid('options').queryParams;
-	queryParams.grpCd= $('#cb_grpCd').combobox('getValue');
-	queryParams.useYn= $('#cb_useYn').combobox('getValue');
-	queryParams.target= "grid";
-	queryParams.srchKind= $('#cb_cd').combobox('getValue');
+	queryParams.cbSrch= $('#cbSrch').combobox('getValue');
 	queryParams.srchTxt= $("#srchTxt").val();
+	queryParams.cbDelYn= $('#cbDelYn').combobox('getValue');
+	queryParams.startDttm= $('#startDttm').combobox('getValue');
+	queryParams.endDttm= $('#endDttm').combobox('getValue');
+	
 	$('#dg').datagrid('reload');
 }
 
@@ -71,13 +72,13 @@ function fn_edit(){
 function fnInit() {
 	
 	$('#dg').datagrid({
-	    url: '/admin/getCodesByGrpCd',
-	    saveUrl: '/admin/saveCode',
-	    updateUrl: '/admin/modifyCode',
-	    destroyUrl: '/admin/removeCode',
+	    url: '/admin/getUser',
+	    saveUrl: '/admin/saveUser',
+	    updateUrl: '/admin/modifyUser',
+	    destroyUrl: '/admin/removeUser',
 	    singleSelect:true, 
 	    ctrlSelect:true,
-	    idField:'usrNo',
+	    idField:'custId',
 	    rownumbers:true,
 		fitColumns:true, 
         fit:true,
@@ -85,13 +86,13 @@ function fnInit() {
         pagination:true,pageSize:50,pageList:[50],
         dragSelection: true,
         columns:[[
-        	{field:'grpCd', title:'그룹코드', align:'center', width:'150'},
-        	{field:'ditcCd', title:'상세코드', align:'center', width:'150', editor:'text'},
-        	{field:'ditcNm', title:'상세코드이름', align:'center', width:'200', editor:'text'},
-        	{field:'cdExp', title:'코드설명', align:'center', width:'350', editor:'text'},
-        	{field:'vOrder', title:'순서', align:'center', width:'150', editor:'numberbox'},
-        	{field:'lockYn', title:'잠금여부', align:'center', width:'100', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
-        	{field:'useYn', title:'사용여부', align:'center', width:'100', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
+			{field:'custId', title:'고객ID', hidden:true, width:'0'},
+        	{field:'custUsrNm', title:'고객이름', align:'center', width:'150', editor:'text'},
+        	{field:'custCellNo', title:'핸드폰번호', align:'center', width:'150', editor:'numberbox'},
+        	{field:'custBirthDt', title:'생년월일', align:'center', width:'200', editor:'text'},
+        	{field:'custGenTpCd', title:'성별', align:'center', width:'350', editor:'text'}, //코드
+        	{field:'mrgYn', title:'결혼유무', align:'center', width:'150', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
+        	{field:'delYn', title:'삭제여부', align:'center', width:'100', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
         ]],
 	    onEndEdit:function(index,row){
 			alert("a");
