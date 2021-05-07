@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.repository.ADVersionRepository">
+
+<select id="selectVersions" parameterType="com.pharm.chorok.domain.table.TbCommVer" resultType="com.pharm.chorok.domain.table.TbCommVer">
+	SELECT TRG
+		   ,VER
+		   ,TRG_DES
+		   ,DEL_YN
+	FROM TB_COMM_VER
+	WHERE TRG = #{trg}
+</select>
+
+
+</mapper>
