@@ -19,6 +19,7 @@
 		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1010' AND DITC_CD = USR_AUTH AND USE_YN = 'Y') AS USR_APRV_VAL,
 		        DEL_YN,
 		        REG_USR_NO,
+		       <!--  REG_DT, -->
 		        DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
 		        UPD_USR_NO, 
 		        DATE_FORMAT(UPD_DT, '%Y-%m-%d') AS UPD_DT
