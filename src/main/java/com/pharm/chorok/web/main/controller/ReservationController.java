@@ -7,24 +7,26 @@ import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.ChartService;
 import com.pharm.chorok.web.main.service.CustomerService;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
+import com.pharm.chorok.web.main.service.ReservationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @RequestMapping(value = "/reservation")
 @Controller
-public class ReservationScheduleController {
+public class ReservationController {
 
 	@Autowired
-	private ReservationScheduleService reservationSvc;
+	private ReservationService reservationSvc;
 
 	@Autowired
 	private CustomerService customerSvc;
@@ -98,10 +100,25 @@ public class ReservationScheduleController {
 	}
 
 	@PostMapping("/RS1001PU02")
-	public ModelAndView goRS1001P02(TbPpRsvtSch rsvt, Model model) throws Exception {
+	public ModelAndView goRS1001P02(
+		@RequestParam("custId") String custId,
+		@RequestParam("rsvtId") String rsvtId,
+		Model model) throws Exception {
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU02");
-		reservationSvc.findCustomerByRsvtId( mv, rsvt );
+
+		TbCustomer outCustomer = null;
+		if( StringUtils.hasLength(custId) ) {
+			TbCustomer customer = new TbCustomer();
+			customer.setCustId( Long.valueOf(custId) );
+			outCustomer = customerSvc.findCustomerByCustId( customer );
+		} else {
+			TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
+			rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
+			outCustomer = customerSvc.findCustomerByRsvtId( rsvtSch );
+
+		}
+		mv.addObject("custInfo", outCustomer);
 		return mv;
 	}
 
@@ -118,7 +135,7 @@ public class ReservationScheduleController {
 		
 			
 		customerSvc.saveCustomer( custParam, rsvtParam );
-		TbCustomer custInfo = customerSvc.findCustomerByCustId( custParam, rsvtParam  );
+		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam  );
 
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: customer-table");

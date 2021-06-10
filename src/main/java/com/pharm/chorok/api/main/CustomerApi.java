@@ -1,6 +1,5 @@
 package com.pharm.chorok.api.main;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
@@ -58,5 +57,10 @@ public class CustomerApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
-	
+
+
+	@PostMapping("/findAllCustomer")
+    public List<TbCustomer> selectAllCustomer(TbCustomer inCustomer) throws Exception {
+		return customerSvc.findAllCustomer(inCustomer);
+	}
 }

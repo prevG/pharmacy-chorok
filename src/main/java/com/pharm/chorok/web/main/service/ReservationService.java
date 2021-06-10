@@ -14,7 +14,7 @@ import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
 import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.CustomerRepository;
-import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
+import com.pharm.chorok.web.main.repository.ReservationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 @Service
-public class ReservationScheduleService {
+public class ReservationService {
     
     @Autowired
     private CalendarService calSvc;
 
     @Autowired
-    private ReservationScheduleRepository rsvtSchRepo;
+    private ReservationRepository rsvtSchRepo;
 
     @Autowired
     private ConsultingRepository consultingRepo;
@@ -170,42 +170,6 @@ public class ReservationScheduleService {
 
     	mv.addObject( "schInfo", rsvtSchInfo );
         mv.addObject( "chemistList", chemistList  ); //약사목록
-    	return mv;
-    }
-    
-	/**
-	 * 상담하기버튼을 클릭한 경우 예약고객정보를 가지고 고객테이블에서 기본정보 조회
-	 * 신규고객일 경우 예약정보를 사용한다.
-	 * 
-	 * @param ModelAndView mv
-	 * @param TbPpRsvtSch rsvtSch 
-	 * @return
-	 * @throws Exception
-	 */
-    public ModelAndView findCustomerByRsvtId( ModelAndView mv, TbPpRsvtSch rsvtSch  ) throws Exception {
-
-
-		Long rsvtId = rsvtSch.getRsvtId();
-		Long custId = rsvtSch.getCustId();
-
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		
-		TbCustomer custInfo = null;
-		List<ResultConsultingVo> cnstList = null;
-		if( custId != null && custId > 0 ) {
-			params.put("custId", custId );
-    		custInfo = customerRepo.findCustomerByCustId( params );
-
-		} else  {
-			params.put("rsvtId", rsvtId );
-			custInfo = rsvtSchRepo.findCustomerByRsvtSchId( params );
-		}
-		TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
-
-
-    	mv.addObject( "cnstList", cnstList );
-    	mv.addObject( "rsvtInfo", rsvtSchInfo );
-    	mv.addObject( "custInfo", custInfo );
     	return mv;
     }
 

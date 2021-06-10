@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pharm.chorok.web.main.repository.ReservationScheduleRepository">
+<mapper namespace="com.pharm.chorok.web.main.repository.ReservationRepository">
 
 	<select id="selectSameWeekDateListByDt" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCommCalendar">
 	<![CDATA[    
@@ -135,7 +135,7 @@
 	     , RSVT_USR_NM
          , RSVT_CELL_NO
 	     , RSVT_PHN_NO
-	     , RSVT_DT
+	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
 	     , RSVT_TP_CD
 	     , GEN_TP_CD
 	     , RSVT_DESC

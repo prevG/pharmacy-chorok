@@ -19,7 +19,7 @@
 	/** 차트번호에 대한 차트마스터 정보 조회 */
   SELECT CNST_ID
        , CUST_ID
-       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%m' ) AS CNST_DT
+       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
        , PIC_USR_NO
        , DEL_YN
        , CNST_DESC

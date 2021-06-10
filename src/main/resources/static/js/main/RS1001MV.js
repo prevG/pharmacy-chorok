@@ -29,7 +29,7 @@ $(document).ready(function () {
             "rsvtId": rsvtId,
             "custId": custId
         };
-        $("#modalCnstChart .modal-content").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
+        $("#modalCnstChart .modal-body").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
             $("#modalCnstChart").modal('show');
         });
     });

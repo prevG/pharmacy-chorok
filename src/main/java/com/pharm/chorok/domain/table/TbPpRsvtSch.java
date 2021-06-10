@@ -17,9 +17,8 @@ public class TbPpRsvtSch extends TbCommColumn {
     private String rsvtTpCd;
     private Long custId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date rsvtDt;
-
+    
+    private String rsvtDt;
     private String rsvtDesc;
     private String picUsrNo;
     private Long rcmdUsrNo;

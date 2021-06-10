@@ -27,7 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
 	@Override 
 	protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.sessionManagement()
+                .invalidSessionUrl("/account/login")
+                .and()
 			.csrf()
 				.disable()
             .headers()
@@ -35,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 			.authorizeRequests()
 				.antMatchers("/account/**").permitAll()
+				.antMatchers("/customer/**").permitAll()
 				.anyRequest().authenticated()
             	.and()
 			.formLogin()
@@ -63,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
         customAuthenticationFilter.setFilterProcessesUrl("/account/doLogin");
         customAuthenticationFilter.setAuthenticationSuccessHandler( customLoginSuccessHandler());
+        customAuthenticationFilter.setAuthenticationFailureHandler( customLoginFailureHandler());
         customAuthenticationFilter.afterPropertiesSet();
         return customAuthenticationFilter;
     }
@@ -71,7 +75,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CustomLoginSuccessHandler customLoginSuccessHandler() {
         return new CustomLoginSuccessHandler();
     }
-    
+
+    @Bean
+    public CustomLoginFailureHandler customLoginFailureHandler() {
+        return new CustomLoginFailureHandler();
+    }
+
     @Bean
     public CustomLogoutSuccessHandler customLogoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();

@@ -3,7 +3,7 @@ package com.pharm.chorok.web.main.controller;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.util.SecurityContextUtil;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
+import com.pharm.chorok.web.main.service.ReservationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class WebController {
 
 	@Autowired
-	private ReservationScheduleService rsvtSchSvc;
+	private ReservationService rsvtSchSvc;
 
 	@GetMapping("/")
 	public ModelAndView goIndex(

@@ -2,7 +2,7 @@ package com.pharm.chorok.api.main;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
+import com.pharm.chorok.web.main.service.ReservationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationScheduleApi {
 
 	@Autowired
-	private ReservationScheduleService rsvtSchSvc;
+	private ReservationService rsvtSchSvc;
 
 
 	@PostMapping("/saveRsvtSch")

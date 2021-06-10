@@ -7,7 +7,7 @@ import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.DosingChartService;
-import com.pharm.chorok.web.main.service.ReservationScheduleService;
+import com.pharm.chorok.web.main.service.ReservationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DosingChartApi {
 
 	@Autowired
-	private ReservationScheduleService rsvtSchSvc;
+	private ReservationService rsvtSchSvc;
 
 	@Autowired
 	private DosingChartService dosgChartSvc;

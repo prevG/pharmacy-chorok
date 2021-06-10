@@ -30,39 +30,32 @@
 		padding-right:10px !important; 
 		vertical-align: middle;
 	}
-	</style>
-<div class="modal-header">
-	<h5 class="modal-title">상담하기</h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-</div>
-<div class="modal-body">
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="card card-primary card-outline card-outline-tabs">
-				<div class="card-header p-0 border-bottom-0">
-					<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill"
-								href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
-								aria-selected="true">고객정보</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill"
-								href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile"
-								aria-selected="false">차트정보</a>
-						</li>
-					</ul>
-				</div>
-				<div class="card-body">
-					<div class="tab-content" id="custom-tabs-four-tabContent">
-						<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
-							<div th:replace="main/RS1001PU03 :: customer-table"></div>
-						</div>
-						<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
-							<div th:replace="main/RS1001PU04 :: charts-table"></div>
-						</div>
+</style>
+
+<div class="row" id="customer-main-table" th:fragment="customer-main-table">
+	<div class="col-sm-12">
+		<div class="card card-primary card-outline card-outline-tabs">
+			<div class="card-header p-0 border-bottom-0">
+				<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill"
+							href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
+							aria-selected="true">고객정보</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill"
+							href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile"
+							aria-selected="false">차트정보</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content" id="custom-tabs-four-tabContent">
+					<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+						<div th:replace="main/RS1001PU03 :: customer-table"></div>
+					</div>
+					<div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+						<div th:replace="main/RS1001PU04 :: charts-table"></div>
 					</div>
 				</div>
 			</div>

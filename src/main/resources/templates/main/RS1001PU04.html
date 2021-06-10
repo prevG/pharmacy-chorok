@@ -13,6 +13,8 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
+
+                    <input type="text" name="selectedCnstId" id="selectedCnstId" />
                     <div id="tabulator-chart-list"></div>
                     <script type="text/javascript" th:inline="javascript">
                         var table01 = new Tabulator("#tabulator-chart-list", {
@@ -27,9 +29,20 @@
                                 { title: "상담번호", field: "cnstId"  , width:60, hozAlign:"center", visible : false},
                                 { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"},
                                 { title: "담당약사", field: "picUsrNo", width:70, hozAlign:"center", editor:"select", editorParams:{values:picUsrList}, formatter:"lookup", formatterParams:picUsrList, editable:true,cellEdited:function(cell){ displayEdited(cell);}},
-                                { title: "보기"   , formatter:getBtnViewChart, width:70, hozAlign:"center", cellClick:function(e, cell){ loadChartByCnstId(e, cell)}},
-                                { title: "삭제"   , formatter:getBtnDelChart, width:40, hozAlign:"center" , cellClick:function(e, cell){ deleteChartByCnstId(e, cell)}}
-                            ]
+                                { title: "보기"   , formatter:getBtnViewChart, width:70, hozAlign:"center", cellClick:function(e, cell){ loadChart(e, cell)}},
+                                { title: "삭제"   , formatter:getBtnDelChart, width:40, hozAlign:"center" , cellClick:function(e, cell){ deleteChart(e, cell)}}
+                            ],
+                            dataLoaded:function(data){
+                                
+                                var rows = table01.getRows();
+                                if( rows.length > 0 ) {
+                                    rows[0].select();
+
+                                    var cnstId = data[0].cnstId
+                                    $("input[name='selectedCnstId']").val( cnstId );
+                                    loadChartByCnstId();
+                                }
+                            }
                         });
                     </script>
                 </div>
@@ -213,6 +226,7 @@
                                                                 selectable  : 1,
                                                                 headerSort  : false,
                                                                 columns : [
+                                                                    { title: "dosgId" , field: "dosgId"     , width:50,  hozAlign:"right", frozen:true},
                                                                     { title: "일수"    , field: "seqStr"     , width:50,  hozAlign:"right", frozen:true},
                                                                     { title: "복용단계" , field: "dosgTpCd"   , width:110, hozAlign:"center", frozen:true, editor:"select", cellEdited:function(cell){ displayEdited(cell);},editorParams:{values:selectParam03}, formatter:"lookup", formatterParams:selectParam03, editable:false},
                                                                     { title: "복용일자" , field: "dosgDt"     , width:130, hozAlign:"center", frozen:true, editor:dateEditor, cellEdited:function(cell){ displayEdited(cell);doChangeNextDate(cell);}, editable:cellEditCheck},
@@ -243,7 +257,6 @@
     </div>
     <div class="row">
         <div class="col-sm-12 text-right">
-            <input type="text" name="selectedCnstId" id="selectedCnstId" />
             <button type="button" id="bntSaveCnstChart" name="bntSaveCnstChart"   class="btn btn-primary btn-sm">저장</button>
         </div>
     </div>

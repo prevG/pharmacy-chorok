@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface ReservationScheduleRepository {
+public interface ReservationRepository {
     
     public List<TbPpWorkTime> selectWorkTime() throws Exception;
 
@@ -29,8 +29,6 @@ public interface ReservationScheduleRepository {
     public List<TbPpRsvtSch> selectRsvtSchByWeek( TbCommCalendar cal )  throws Exception;
 
     public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;
-    
-    public TbCustomer findCustomerByRsvtSchId(HashMap<String, Object> params) throws Exception;
     
     public int insertTbPpRsvtSch(TbPpRsvtSch param) throws Exception;
     

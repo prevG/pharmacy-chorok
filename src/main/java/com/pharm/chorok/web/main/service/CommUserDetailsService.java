@@ -16,27 +16,15 @@ import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.main.repository.TbCommUserRepository;
 
 @Service
-public class CommUserDetailsService implements UserDetailsService {
+public class CommUserDetailsService {
 
 	@Autowired
 	private TbCommUserRepository comUsrRepo;
 
-    @Override
-    public UserDetails loadUserByUsername(String usrEml) throws UsernameNotFoundException {
+    
+    public TbCommUser loadUserByUsername(String usrEml) throws UsernameNotFoundException {
     	
-        TbCommUser comUsr = comUsrRepo.selectComUsrByUsrEml( usrEml );
-        if( comUsr == null ) {
-        	new UsernameNotFoundException( usrEml );
-        }
-        
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-//        if( memberId.equals("admin")) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-//        } else {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
-//        }
-
-        return comUsr;
+        return comUsrRepo.selectComUsrByUsrEml( usrEml );
     }
 
     // UserService에서 이곳으로 이동

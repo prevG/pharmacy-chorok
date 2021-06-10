@@ -35,7 +35,7 @@
 							</div>
 							<form action="/account/doLogin" method="POST">
 								<div class="form-group">
-									<label for="usrEml">이메일 또는 휴대전화번호</label> <input type="text" class="form-control" id="usrEml" name="usrEml">
+									<label for="usrEml">이메일 또는 휴대전화번호</label> <input type="text" class="form-control" id="usrEml" name="usrEml" th:value="${usrEml}">
 
 								</div>
 								<div class="form-group">
@@ -47,7 +47,9 @@
 										</div>
 									</div>
 								</div>
-
+								<div class="row col-sm-12">
+									<span th:text="${errMsg}" style="color:red;"></span>
+								</div>
 								<!-- <div class="d-flex mb-5 align-items-center">
 									<label class="control control--checkbox mb-0">
 										<span class="caption">Remember me</span>

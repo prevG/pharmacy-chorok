@@ -61,6 +61,7 @@ $( document ).ready( function() {
      **************************************************************/
 	$(document).off("click", "button[name='bntSaveCnstChart']").on("click", "button[name='bntSaveCnstChart']", function (e) {
 		saveSurveyChart( e );
+		saveDosingChart( e );
 	});	
 
 	/**************************************************************
@@ -104,31 +105,6 @@ function createChart() {
 	});
 }
 
-/*************************************************
- * 차트삭제 (차트마스터/설문차트/복용차트)
- **************************************************/
- function deleteChartByCnstId(e, cell) {
-	if( confirm("삭제하시겠습니까?") ) {
-		var cnstId = cell.getRow().getCell("cnstId").getValue();
-		var params = {
-			"cnstId" : cnstId
-		};
-		$.ajax({
-			type : 'post',
-			url  : '/api/v1/main/chart/deleteChart',
-			data : params,
-			success : function( result ) {
-	
-				if( result.status == "success" ) {
-					alert( result.message );
-					reloadTabulator( table01 );
-				} else {
-					alert( result.errorMessage );
-				}
-			}
-		});
-	}
-}
 
 /*************************************************
  * 복용차트 생성
@@ -164,18 +140,56 @@ function createChart() {
 		}
 	});
 }
+/*************************************************
+ * 차트삭제 (차트마스터/설문차트/복용차트)
+ **************************************************/
+ function deleteChart(e, cell) {
+	var row = cell.getRow();
+	var cnstId = row.getCell("cnstId").getValue();
+
+	deleteChartByCnstId( cnstId );
+}
+
+function deleteChartByCnstId( cnstId ) {
+	if( confirm("삭제하시겠습니까?") ) {
+		var cnstId = cell.getRow().getCell("cnstId").getValue();
+		var params = {
+			"cnstId" : cnstId
+		};
+		$.ajax({
+			type : 'post',
+			url  : '/api/v1/main/chart/deleteChart',
+			data : params,
+			success : function( result ) {
+	
+				if( result.status == "success" ) {
+					alert( result.message );
+					reloadTabulator( table01 );
+				} else {
+					alert( result.errorMessage );
+				}
+			}
+		});
+	}
+}
+
 
 /*************************************************
  * 차트목록에서 '차트보기' 버튼 클릭시 - 설문차트/복용차트 조회
  **************************************************/
-function loadChartByCnstId( e, cell ) {
+function loadChart( e, cell ) {
 
 	var row    = cell.getRow();
 	var cnstId = row.getCell("cnstId").getValue();
+	
+	$("#selectedCnstId").val( cnstId );
+	loadChartByCnstId();
+}
 
-	$("input[name='selectedCnstId']").val( cnstId );
+function loadChartByCnstId() {
+
 	var params = {
-		"cnstId" : cnstId
+		"cnstId" : $("#selectedCnstId").val()
 	};
 	var url = "/reservation/RS1001PU02/findChartByCnstId";
 	$("#chart-area").load( url, params, function (response, status, xhr) {
@@ -184,10 +198,9 @@ function loadChartByCnstId( e, cell ) {
 			$("#chart-area").html(response);
 		} else {
 			console.log(response, status, xhr);
-			alert("관리자에게 문의하세요 : loadChartByCnstId");
+			alert("관리자에게 문의하세요 : loadChart");
 		}
 	});
-
 }
 
 /*************************************************
@@ -321,6 +334,62 @@ function callSrvChart(row){
 		data: {
 			"jsonData":JSON.stringify(params)	
 		},
+		success: function (result) {
+
+			if (result.status == "success") {
+				alert(result.message);
+			} else {
+				alert(result.errorMessage);
+			}
+			
+		}
+	});
+}
+
+
+/*************************************************
+ * 설문차트 저장버튼 클릭시 - 복용차트내용을 저장한다.
+ **************************************************/
+ function saveDosingChart( e ){
+	const changedRowsSet    = new Set();   //수정된 행의 DB ID 를 중복 없이 저장하기 위함
+	const changedDosingList = new Array(); // 수정된 행, patch 할 정보  --> controller로 보낼 친구
+	let editedCells = table02.getEditedCells(); // 수정된 "Cell" arrays, 중복 있음
+
+	//변경된 객체 가져오기
+	if(editedCells.length>0){
+
+		var data = table02.getData();
+	    for(var i = 0 ; i < data.length ; i++){
+			var tmpRow = data[i]; // 수정된 "행"
+
+			let changedDoing = {
+				"dosgId"    : tmpRow.dosgId,
+				"dosgDt"    : tmpRow.dosgDt,
+				"callYn"    : tmpRow.callYn,
+				"dosgYn"    : tmpRow.dosgYn,
+				"dosgTpCd"  : tmpRow.dosgTpCd,
+				"pauseYn"   : tmpRow.pauseYn,
+				"currWgt"   : tmpRow.currWgt,
+				"lossWgt"   : tmpRow.lossWgt,
+				"rmiWgt"    : tmpRow.rmiWgt,
+				"dosgDesc1" : tmpRow.dosgDesc1,
+				"dosgDesc1" : tmpRow.dosgDesc1
+			};
+			changedDosingList.push(changedDoing);
+			// //set 에 해당 id 가 없는지 체크하고, 없을 때만 해당 id 에 해당하는 class 를 Array 에 넣는다. 
+			// if(!changedRowsSet.has(tmpRow.getCell("dosgId").getValue())){
+			// 	changedRowsSet.add(tmpRow.getCell("dosgId").getValue());
+			// 	changedDosingList.push(changedDoing);
+			// }
+	   }
+	}
+
+	$.ajax({
+		type: 'post',
+		url: '/api/v1/main/survey/saveDosingChart',
+		data: {
+			"jsonData":JSON.stringify(changedDosingList)	
+	    }, 
 		success: function (result) {
 
 			if (result.status == "success") {

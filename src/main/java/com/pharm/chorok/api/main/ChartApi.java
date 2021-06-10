@@ -9,6 +9,7 @@ import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.service.ChartService;
 import com.pharm.chorok.web.main.service.DosingChartService;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping(value = "/api/v1/main/chart")
+@RequestMapping(value = "/api/v1/main/chart/")
 @RestController
 public class ChartApi {
 
@@ -28,6 +29,9 @@ public class ChartApi {
     
 	@Autowired
 	private DosingChartService dosingSvc;
+
+	@Autowired
+	private DosingRepository dosingRepo;
 
 
     /**
@@ -110,6 +114,12 @@ public class ChartApi {
     @PostMapping("/findDosingChartByCnstId")
 	public List<ResultDosingVo> findDosingChartByCnstId(TbPpCnstChart inCnstParam) throws Exception {
 		List<ResultDosingVo> chartList =  chartSvc.findDosingChartByCnstId( inCnstParam );
+		return chartList;
+	}
+
+	@PostMapping("/dashList01")
+	public List<HashMap<String, Object>> selectDashDosingList01() throws Exception {
+		List<HashMap<String, Object>> chartList =  dosingRepo.selectDashDosingList01();
 		return chartList;
 	}
 }

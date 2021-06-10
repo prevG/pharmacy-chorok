@@ -2,16 +2,7 @@ package com.pharm.chorok.web.main.controller;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
 
 import com.common.exception.CustomException;
 import com.common.exception.DatabaseInsertException;
@@ -24,6 +15,20 @@ import com.common.util.Check;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADAdminService;
+
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RequestMapping(value = "/account")
 @Controller
@@ -44,6 +49,21 @@ public class AccountController {
 		return "account/signup";
 	}
 
+	@PostMapping("/loginFailRedirect")
+	public ModelAndView loginFailRedirect( 
+		TbCommUser inCommUser,
+		HttpServletRequest req,
+		RedirectAttributes redirectAttr) {
+
+		ModelAndView mv = new ModelAndView();
+		String usrEml = req.getParameter("usrEml") != null ? req.getParameter("usrEml").toString() : "";
+		String errMsg = req.getAttribute("errMsg").toString();
+
+		redirectAttr.addFlashAttribute( "errMsg", errMsg );
+		redirectAttr.addFlashAttribute( "usrEml", usrEml );
+		mv.setView( new RedirectView( "/account/login"));
+		return mv;
+	}
 	// 회원가입 처리
 	@PostMapping("/signupProc")
 	@ResponseBody

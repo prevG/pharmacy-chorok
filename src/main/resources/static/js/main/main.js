@@ -5,11 +5,13 @@ $( document ).ready( function() {
         height: "270px",
         selectable : 1,
         headerSort:false,
+        ajaxURL		: "/api/v1/main/chart/dashList01",
+        ajaxConfig	: "POST",
         layout:"fitDataFill",
         columns: [
-            { title: "차트번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
-            { title: "상담번호", field: "cnstId"  , width:60,  hozAlign:"center", visible : true},
-            { title: "상담일시", field: "cnstDt"  , width:120, hozAlign:"center"}
+            { title: "차트번호", field: "cnstId"     , width:60,  hozAlign:"center", visible : true},
+            { title: "고객명",  field: "custUsrNm"  , width:120,  hozAlign:"center", visible : true},
+            { title: "연락처", field: "custCellNo"  , width:120, hozAlign:"center"}
         ],
         rowDblClick:function(e, row){
             row.toggleSelect();

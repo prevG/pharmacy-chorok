@@ -7,6 +7,18 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+	<script type="text/javascript" th:inline="javascript">
+		/**
+		 * timepicker에 사용될 값 조회
+		 */
+		var allowTimeList = [];
+
+		var timeList  = /*[[${timeList}]]*/'';
+		$(timeList).each(function(index, item) {
+			var hhmm = moment( item["startHm"] ).format("HH:mm");
+			allowTimeList.push( hhmm );
+		});	
+	</script> 
 </th:block>
 
 
@@ -92,7 +104,7 @@
 											<th>예약일시</th>
 											<td>
 												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1" required>
+													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker" th:value="${schInfo?.rsvtDt}" tabindex="1" required>
 												</div>
 											</td>
 											<th>상담구분</th>
@@ -177,20 +189,10 @@
 								
 								<script type="text/javascript" th:inline="javascript">
 								/**
-								 * timepicker에 사용될 값 조회
-								 */
-								var allowTimeList = [];
-								$(timeList).each(function(index, item) {
-									var hhmm = moment( item["startHm"] ).format("HH:mm");
-									allowTimeList.push( hhmm );
-								});
-
-								/**
 								 * 예약일시 datetimepicker 적용
 								 */
 								$.datetimepicker.setLocale('ko');
 								$( "#rsvtDt" ).datetimepicker({
-									minDate	: '2021-01-01',
 									format	: 'Y-m-d H:i',
 									weeks   : true,
 									allowTimes: allowTimeList
@@ -218,13 +220,18 @@
 
 	<div class="modal" id="modalCnstChart" tabindex="-1" role="dialog">
 		<div class="modal-dialog" style="min-width:1480px;min-height:800px;">
-            <div class="modal-content"></div>
+            <div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">상담하기</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<script type="text/javascript" th:inline="javascript">
-		var timeList  = /*[[${timeList}]]*/'';
-	</script> 
 	<script type="text/javascript" th:src="@{/js/main/RS1001MV.js}"></script> 
 </div>
 </html>

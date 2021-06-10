@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
@@ -18,4 +19,6 @@ public interface DosingRepository {
     public int insertTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int deleteTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int updateTbPpDosgChart(TbPpDosgChart dosingInfo ) throws Exception;
+
+    public List<HashMap<String, Object>> selectDashDosingList01() throws Exception;
 }

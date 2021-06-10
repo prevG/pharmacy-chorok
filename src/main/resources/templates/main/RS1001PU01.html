@@ -18,7 +18,7 @@
 					<th>예약일시</th>
 					<td>
 						<div class="input-group input-group-sm" style="width:200px;" >
-							<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${#dates.format( schInfo?.rsvtDt, 'YYYY-MM-dd HH:mm')}" tabindex="1">
+							<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker"th:value="${schInfo?.rsvtDt}" tabindex="1">
 						</div>
 					</td>
 					<th>상담구분</th>
@@ -107,7 +107,7 @@
     </div>
     <div class="modal-footer">
 		<button type="button" name="btnSaveRsvtSch" class="btn btn-primary" tabindex="10">저장</button>
-  		<button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="11" >닫기</button>
+  		<button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="11">닫기</button>
     </div>
 	<script type="text/javascript" th:inline="javascript">
 		var chemistList  = /*[[${chemistList}]]*/'';

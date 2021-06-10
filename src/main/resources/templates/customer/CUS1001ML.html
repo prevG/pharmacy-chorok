@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>고객목록</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row g-3">
+				<div class="col-auto">
+				  <input type="text" class="form-control" id="custUsrNm" name="custUsrNm" placeholder="고객이름">
+				</div>
+				<div class="col-auto">
+				  <input type="text" class="form-control" id="custCellNo" name="custUsrNm" placeholder="핸드폰 뒷4자리" maxlength="4">
+				</div>
+				<div class="col-auto">
+				  <button type="submit" class="btn btn-primary mb-3" id="btnSearch" name="btnSearch" >조회</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="table01"></div>
+                </div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+                </div>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript" th:src="@{/js/customer/CUS1001ML.js}"></script> 
+</div>
+</html>

@@ -59,6 +59,20 @@
 	]]>
     </select>
 
+    <select id="selectDashDosingList01"  resultType="HashMap">
+	<![CDATA[    
+    SELECT C.CUST_USR_NM     as "custUsrNm"
+        , C.CUST_CELL_NO     as "custCellNo"
+        , C.ADDR1            as "addr1"
+    FROM bazzarmall.TB_PP_DOSG_CHART A
+        , bazzarmall.TB_PP_CNST_CHART B
+        , bazzarmall.TB_CUSTOMER C
+    WHERE A.CNST_ID = B.CNST_ID
+    AND B.CUST_ID = C.CUST_ID
+    AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+	]]>
+    </select>
+
 
     <insert id="insertTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
@@ -109,17 +123,15 @@
 	]]>
 	</delete>
 
-    <update id="updatetTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+    <update id="updateTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
     UPDATE TB_PP_DOSG_CHART 
-       SET UPD_DT      = #{regDt} 
-         , UPD_USR_NO  = #{regUsrNo} 
-         , DOSG_DT     = #{dosgDt}
+       SET DOSG_DT     = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
          , DOSG_TP_CD  = #{dosgTpCd}
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
          , PAUS_YN     = #{pausYn}
-         , CUST_WGT    = #{custWgt} 
+         , CURR_WGT    = #{currWgt} 
          , LOSS_WGT    = #{lossWgt}
          , RMI_WGT     = #{rmiWgt}
          , DOSG_DESC1  = #{dosgDesc1} 

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSmsMsg;
 import com.pharm.chorok.web.admin.repository.ADSMSRepository;
-import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
+import com.pharm.chorok.web.main.repository.ReservationRepository;
 
 import lombok.SneakyThrows;
 import net.minidev.json.JSONArray;
@@ -33,7 +33,7 @@ public class SchedulingService {
 	private ADSMSRepository SMSRepository;
 	
 	@Autowired
-    private ReservationScheduleRepository rsvtSchRepo;
+    private ReservationRepository rsvtSchRepo;
 	
 	
 	 public void job(String option) { 

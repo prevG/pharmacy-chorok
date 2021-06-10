@@ -4,24 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.domain.table.TbSurvey;
+import com.pharm.chorok.web.main.repository.CustomerRepository;
+import com.pharm.chorok.web.main.repository.ReservationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import com.pharm.chorok.domain.main.ResultConsultingVo;
-import com.pharm.chorok.domain.table.TbCustomer;
-import com.pharm.chorok.domain.table.TbPpCnstChart;
-import com.pharm.chorok.domain.table.TbPpCnstPaper;
-import com.pharm.chorok.domain.table.TbPpDosgChart;
-import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.domain.table.TbSurvey;
-import com.pharm.chorok.util.SecurityContextUtil;
-import com.pharm.chorok.web.main.repository.CnstPaperRepository;
-import com.pharm.chorok.web.main.repository.ConsultingRepository;
-import com.pharm.chorok.web.main.repository.CustomerRepository;
-import com.pharm.chorok.web.main.repository.DosingRepository;
-import com.pharm.chorok.web.main.repository.ReservationScheduleRepository;
 
 @Service
 public class CustomerService {
@@ -29,11 +21,11 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepo;
 
-    @Autowired
-    private ConsultingRepository consultingRepo;
+    // @Autowired
+    // private ConsultingRepository consultingRepo;
 
     @Autowired
-    private ReservationScheduleRepository reservationRepo;    
+    private ReservationRepository reservationRepo;    
     
     public Map<String,Object> getUsrTotInfo(TbSurvey tbSurvey) throws Exception {
     	Map<String,Object> result = new HashMap<String, Object>();
@@ -69,12 +61,46 @@ public class CustomerService {
 		return result;
 	}
 
-	public TbCustomer findCustomerByCustId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
+	public TbCustomer findCustomerByCustIdOrRsvtId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("custId", rsvtParam.getCustId() );
 		TbCustomer custInfo = customerRepo.findCustomerByCustId( params );
 
 		return custInfo;
+	}
+
+	/**
+	 * 상담하기버튼을 클릭한 경우 예약고객정보를 가지고 고객테이블에서 기본정보 조회
+	 * 신규고객일 경우 예약정보를 사용한다.
+	 * 
+	 * @param ModelAndView mv
+	 * @param TbPpRsvtSch rsvtSch 
+	 * @return
+	 * @throws Exception
+	 */
+    public TbCustomer findCustomerByRsvtId( TbPpRsvtSch rsvtSch  ) throws Exception {
+
+
+		Long rsvtId = rsvtSch.getRsvtId();
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("rsvtId", rsvtId );
+
+		TbCustomer custInfo = customerRepo.findCustomerByRsvtId( params );
+		return custInfo;
+    }
+	public TbCustomer findCustomerByCustId(TbCustomer inCustomer) throws Exception {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("custId", inCustomer.getCustId() );
+		TbCustomer custInfo = customerRepo.findCustomerByCustId( params );
+
+		return custInfo;
+	}
+
+
+	public List<TbCustomer> findAllCustomer(TbCustomer inCustomer) throws Exception {
+		List<TbCustomer> resultList = customerRepo.findAllCustomer(inCustomer);
+		return resultList;
 	}
 
 

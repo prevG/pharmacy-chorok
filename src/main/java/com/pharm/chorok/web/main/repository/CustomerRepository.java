@@ -15,8 +15,13 @@ public interface CustomerRepository {
     public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) throws Exception;
     public TbCustomer selectUsrInfo(TbCustomer tbSurvey) throws Exception;
     public TbCustomer findCustomerByCustId(HashMap<String, Object> params) throws Exception;
+    public TbCustomer findCustomerByRsvtId(HashMap<String, Object> params) throws Exception;
+    
+    public List<TbCustomer> findAllCustomer(TbCustomer inCustomer) throws Exception;
     public Long selectNewCustId() throws Exception;
     public int insertTbCustomer(TbCustomer custInfo) throws Exception;
     public int updateTbCustomer(TbCustomer custInfo) throws Exception;
     public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
+
+
 }
