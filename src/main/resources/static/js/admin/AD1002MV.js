@@ -111,7 +111,7 @@ function fnInit() {
 	});
 	
 	
-	$('#cb_grpCd').combobox({
+/*	$('#cb_grpCd').combobox({
 		url: '/admin/getGrpCdWithCombo?GrpCd=00000&target=combo',
 		valueField: 'ditcCd',
 		textField: 'ditcCdNm',
@@ -121,8 +121,10 @@ function fnInit() {
 		onLoadSuccess: function() {
 			$(this).combobox('setValue', '00000');
 		}
-	});
-
+	});*/
+	
+	
+	initComboBox($('#cb_grpCd'), '/admin/getGrpCdWithCombo', {GrpCd:'00000',target:'combo', targetKind:'0'});
 
 
 	$("#selCdKind").combobox({
@@ -135,15 +137,19 @@ function fnInit() {
 			} else if (rec.value == "C") {
 				$("#grpRg").show();
 				$("#cdRg").hide();
+				
+				
+				
+				initComboBox($('#grpRg_grpCd'), '/admin/getGrpCdWithCombo', {GrpCd:'00000',target:'combo', targetKind:'1'});
 
-				$('#grpRg_grpCd').combobox({
+			/*	$('#grpRg_grpCd').combobox({
 					url: '/admin/getGrpCdWithCombo?GrpCd=00000&target=combo',
 					valueField: 'ditcCd',
 					textField: 'ditcCdNm',
 					onSelect: function(rec) {
 						console.log(rec);
 					}
-				});
+				});*/
 
 				$('#addFrm').form('clear');
 			}
@@ -164,6 +170,7 @@ function chgSeLCdKind() {
 function fn_add() {
 	$('#addDlg').dialog('open').dialog('center').dialog('setTitle', '코드추가');
 	$('#addFrm').form('clear');
+	$("#selCdKind").combobox('setValue', 'S');
 }
 
 

@@ -16,7 +16,10 @@ function fnSearch(){
 }
 
 
-
+function formatDate(value,row){
+  var d = new Date(value);
+  return $.fn.datebox.defaults.formatter(d);
+}
 
 function fnInit(){
 	
@@ -54,8 +57,12 @@ function fnInit(){
         	{field:'usrGrade', title:'직위', align:'center', width:'100', editor:{type:'combobox',options:{valueField:'ditcCd',textField:'ditcNm',data:gC1003,required:true}}, formatter:function(value,row){return row.usrGradeVal||value;}},
         	{field:'usrAuth', title:'권한', align:'center', width:'100', editor:{type:'combobox',options:{valueField:'ditcCd',textField:'ditcNm',data:gC1002,required:true}}, formatter:function(value,row){return row.usrAuthVal||value;}},
         	{field:'usrAprv', title:'승인여부', align:'center', width:'100', editor:{type:'combobox',options:{valueField:'ditcCd',textField:'ditcNm',data:gC1010,required:true}}, formatter:function(value,row){return row.usrAprvVal||value;}},
-        	{field:'delYn', title:'삭제여부', align:'center', width:'150', editor:{type:'checkbox',options:{on:'Y',off:'N'}}},
-        	{field:'regDt', title:'등록날짜', align:'center', width:'200', formatter:formattedDate}
+        	{field:'delYn', title:'삭제여부', align:'center', width:'150', editor:{type:'checkbox',options:{on:'Y',off:'N'}}}
+        	/*{field:'regDt', title:'등록날짜', align:'center', width:'200', editor:'text', formatter:function(value){
+				console.log(value);
+			  	var d = new Date(value);
+			  	return $.fn.datebox.defaults.formatter(d);
+			}}*/
         ]],
 	    onEndEdit:function(index,row){
 			alert("a");
@@ -235,6 +242,7 @@ function saveDlgAdmin(){
 		usrAprv : $('#dlg_usrAprv').combobox('getValue'),
 		delYn : $('#dlg_delYn').textbox('getValue')
 	};
+	
 	
 	
 	$.post('/admin/saveAdmin',param,function(result){
