@@ -59,17 +59,51 @@
 	]]>
     </select>
 
-    <select id="selectDashDosingList01"  resultType="HashMap">
+    <select id="selectDashDosingList01"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
-    SELECT C.CUST_USR_NM     as "custUsrNm"
-        , C.CUST_CELL_NO     as "custCellNo"
-        , C.ADDR1            as "addr1"
-    FROM bazzarmall.TB_PP_DOSG_CHART A
-        , bazzarmall.TB_PP_CNST_CHART B
-        , bazzarmall.TB_CUSTOMER C
-    WHERE A.CNST_ID = B.CNST_ID
-    AND B.CUST_ID = C.CUST_ID
-    AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+    SELECT C.CUST_USR_NM
+         , C.CUST_CELL_NO
+         , C.ADDR1
+      FROM bazzarmall.TB_PP_DOSG_CHART A
+         , bazzarmall.TB_PP_CNST_CHART B
+         , bazzarmall.TB_CUSTOMER C
+     WHERE A.CNST_ID = B.CNST_ID
+       AND B.CUST_ID = C.CUST_ID
+       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+	]]>
+    </select>
+
+    <select id="selectDashDosingList02"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
+	<![CDATA[    
+    SELECT C.CUST_USR_NM
+         , C.CUST_CELL_NO
+         , C.ADDR1
+      FROM bazzarmall.TB_PP_DOSG_CHART A
+         , bazzarmall.TB_PP_CNST_CHART B
+         , bazzarmall.TB_CUSTOMER C
+     WHERE A.CNST_ID = B.CNST_ID
+       AND B.CUST_ID = C.CUST_ID
+       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+	]]>
+    </select>
+
+    <select id="selectDashDosingList03"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
+	<![CDATA[    
+    SELECT B.CNST_ID
+         , C.CUST_USR_NM
+         , C.CUST_CELL_NO
+         , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
+         , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
+	  FROM bazzarmall.TB_PP_DOSG_CHART A
+         , bazzarmall.TB_PP_CNST_CHART B
+         , bazzarmall.TB_CUSTOMER C
+     WHERE A.CNST_ID = B.CNST_ID
+       AND B.CUST_ID = C.CUST_ID
+       -- AND A.PAUS_YN = 'Y'
+	 GROUP
+        BY B.CNST_ID
+         , C.CUST_USR_NM
+         , C.CUST_CELL_NO
 	]]>
     </select>
 

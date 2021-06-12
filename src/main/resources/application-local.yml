@@ -33,16 +33,7 @@ spring:
     cache: false
   banner:
     location: banner_account.txt
-  mvc:
-    contentnegotiation: 
-      favor-parameter: true 
-      favor-path-extension: true 
-      media-types: 
-        xls: application/vnd.ms-excel
-
-
-       
-### MyBatis ############################################################
+### MyBatis############################################################
 mybatis:
   mapper-locations: mapper/**/*.xml # mapper.xml 위치 지정
   configuration:

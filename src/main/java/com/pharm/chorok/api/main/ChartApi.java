@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultConsultingVo;
+import com.pharm.chorok.domain.main.ResultDashBoard01VO;
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
@@ -117,9 +118,38 @@ public class ChartApi {
 		return chartList;
 	}
 
+
+	/**
+	 * INDEX 화면 오늘 약사님 상담목록
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/dashList01")
-	public List<HashMap<String, Object>> selectDashDosingList01() throws Exception {
-		List<HashMap<String, Object>> chartList =  dosingRepo.selectDashDosingList01();
+	public List<ResultDashBoard01VO> selectDashDosingList01() throws Exception {
+		List<ResultDashBoard01VO> chartList =  dosingRepo.selectDashDosingList01();
+		return chartList;
+	}
+
+	/**
+	 * INDEX 화면 오늘 상담실장 상담목록
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/dashList02")
+	public List<ResultDashBoard01VO> selectDashDosingList02() throws Exception {
+		List<ResultDashBoard01VO> chartList =  dosingRepo.selectDashDosingList02();
+		return chartList;
+	}
+
+
+	/**
+	 * INDEX 화면 오늘 복용보류 목록
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/dashList03")
+	public List<ResultDashBoard01VO> selectDashDosingList03() throws Exception {
+		List<ResultDashBoard01VO> chartList =  dosingRepo.selectDashDosingList03();
 		return chartList;
 	}
 }
