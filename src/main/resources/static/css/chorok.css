@@ -6,3 +6,11 @@
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
 }
+.req {
+    color: crimson;
+    top: 10px;
+    margin-left: 5px;
+}
+.w-readonly{
+    background-color: white !important;
+}

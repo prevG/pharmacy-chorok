@@ -1297,11 +1297,11 @@ function getCookie(name) {
 	return "";
 }
 
-if (getCookie("Notice1") != "done") {
-	noticeWindow = window.open('newwin/pop.htm', 'Notice1', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=363,height=733,left=30,top=120');
-	noticeWindow.opener = self;
+// if (getCookie("Notice1") != "done") {
+// 	noticeWindow = window.open('newwin/pop.htm', 'Notice1', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=363,height=733,left=30,top=120');
+// 	noticeWindow.opener = self;
 
-}
+// }
 
 
 
@@ -1344,7 +1344,7 @@ document.onkeypress = getKey;
 
 * String 문자 자르기.
 ---------------------------------------------*/
-String.prototype.cut = function(len) {
+String.prototype.cut = function (len) {
 	var str = this;
 	var l = 0;
 	for (var i = 0; i < str.length; i++) {
@@ -1358,7 +1358,7 @@ String.prototype.cut = function(len) {
 
 * String 공백 지우기.
 ---------------------------------------------*/
-String.prototype.trim = function() {
+String.prototype.trim = function () {
 	// Use a regular expression to replace leading and trailing
 	// spaces with the empty string
 	return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -1367,7 +1367,7 @@ String.prototype.trim = function() {
 /*---------------------------------------------
 * String 총 바이트 수 구하기.
 ---------------------------------------------*/
-String.prototype.bytes = function() {
+String.prototype.bytes = function () {
 	var str = this;
 	var l = 0;
 	for (var i = 0; i < str.length; i++) l += (str.charCodeAt(i) > 128) ? 2 : 1;
