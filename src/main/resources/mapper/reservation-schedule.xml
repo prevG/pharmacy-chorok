@@ -52,7 +52,7 @@
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.selectRsvtSchByWeek */
 	/** 주간예약스케쥴의 예약고객 */
     SELECT WT.ID                  AS "wt.id"
-         , WT.START_HM            AS "wt.startHm"
+         , WT.START_HM            AS "wt.startHm"ㄲ
          , WT.END_HM              AS "wt.endHm"
          , SCH.RSVT_ID                 
          , SCH.RSVT_DT            

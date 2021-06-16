@@ -3,7 +3,6 @@
 
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADAdminRepository">
 
-
 	<select id="selectAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbCommUser">
 		SELECT USR_NO,
 				USR_EML,
@@ -52,16 +51,12 @@
 		</choose>
 	</select>
 	
-	
 	<update id="removeAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser">
 		UPDATE TB_COMM_USER
 		SET DEL_YN = 'Y'
 		WHERE 1=1
 		AND USR_NO = ${usrNo}
 	</update>
-
-
-	
 
 	<insert id="saveAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser">
 		INSERT INTO TB_COMM_USER
@@ -94,5 +89,6 @@
 		)
 	</insert>
 	
+	<select id="countAdminEmail" resultType="java.lang.Integer"></select>
 	
 </mapper>
