@@ -92,7 +92,7 @@
     SELECT B.CNST_ID
          , C.CUST_USR_NM
          , C.CUST_CELL_NO
-         , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
+         , MAX(ABS(DATEDIFF( dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
          , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
 	  FROM bazzarmall.TB_PP_DOSG_CHART A
          , bazzarmall.TB_PP_CNST_CHART B

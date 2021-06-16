@@ -55,7 +55,7 @@
 												<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 												<div th:data-id="${data.rsvtId}">
 													<button type="button" name="rsvtSch" class="btn btn-sm" 
-														th:classappend="${data.picUsrNo} == 1 ? btn-outline-success : btn-outline-primary"
+													th:classappend="${data.picUsrNo eq '1' ? 'btn-outline-success' : (data.picUsrNo eq '2' ? 'btn-outline-primary' : 'btn-outline-secondary') }"
 													style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 												</div>
 												</th:block>
@@ -128,6 +128,7 @@
 	<script type="text/javascript" th:inline="javascript">
 	var timeList  = /*[[${timeList}]]*/'';
 	</script>
-	<script type="text/javascript" th:src="@{/js/main/index.js}"></script> 
+	<script type="text/javascript" th:src="@{/js/main/index.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main/RS1001PU01.js}"></script> 
 </div>
 </html>

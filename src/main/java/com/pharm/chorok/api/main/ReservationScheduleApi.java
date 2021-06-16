@@ -20,7 +20,7 @@ public class ReservationScheduleApi {
 	private ReservationService rsvtSchSvc;
 
 
-	@PostMapping("/saveRsvtSch")
+	@PostMapping("/saveReservation")
 	public ResponseEntity<ResponseMessage> saveRsvtSch(TbPpRsvtSch rsvt) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
@@ -37,8 +37,8 @@ public class ReservationScheduleApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 		
-	@PostMapping("/deleteSchedule")
-	public ResponseEntity<ResponseMessage>  deleteRsvtSch(TbPpRsvtSch rsvt) throws Exception {
+	@PostMapping("/deleteReservation")
+	public ResponseEntity<ResponseMessage> deleteReservation(TbPpRsvtSch rsvt) throws Exception {
 
 		ResponseMessage resMsg = new ResponseMessage();
 		try {

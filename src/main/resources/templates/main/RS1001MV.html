@@ -35,7 +35,7 @@
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-7">
+				<div class="col-sm-8">
 					<div class="row mb-1">
 					    <div class="col-sm-12 text-right">
 							<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
@@ -45,7 +45,7 @@
 					</div>
 					<div id="time-table" th:fragment="time-table">
 						<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
-						<table class="table-sm table table-bordered table-hover">
+						<table class="table-sm table table-bordered table-hover" id="table-schedule">
 							<colgroup>
 								<col width=""/>
 								<col width="15%"/>
@@ -69,8 +69,8 @@
 										<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 										<div th:data-id="${data.rsvtId}">
 											<button type="button" name="rsvtSch" class="btn btn-sm" 
-											th:classappend="${data.picUsrNo} == 1 ? btn-outline-success : btn-outline-primary"
-										style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+											 th:classappend="${data.picUsrNo eq '1' ? 'btn-outline-success' : (data.picUsrNo eq '2' ? 'btn-outline-primary' : 'btn-outline-secondary') }"
+											style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 										</div>
 										</th:block>
 									</td>
@@ -79,10 +79,10 @@
 						</table>
 					</div>
 				</div>
-				<div class="col-sm-5 border border-light">
+				<div class="col-sm-4 border border-light">
 					<div class="row mb-1">
 						<div class="col-sm-12 text-right">
-					    	<button type="button" id="btnNewSch" name="btnNewSch" class="btn btn-success btn-sm">새 스케쥴 등록하기</button>
+					    	<button type="button" id="btnNewSch" name="btnNewSch" class="btn btn-success btn-sm" style="display:block;">새 스케쥴 등록하기</button>
 						</div>
 					</div>
 					<div class="card">
@@ -94,89 +94,113 @@
 		                  		<form name="detailForm" id="detailForm" action="POST" autocomplete="off">
 						        <table class="table-sm table table-borderless">
 									<colgroup>
-										<col width="12%" style="text-align:right;"/>
-										<col width="10%"/>
-										<col width="12%" style="text-align:right;"/>
-										<col width="*%"/>
+										<col width="24%" style="text-align:left;"/>
+										<col width="*"   style="text-align:left;"/>
+										<col width="38%" style="text-align:left;"/>
 									</colgroup>
 									<tbody>
 										<tr>
 											<th>예약일시<strong class="req">*</strong></th>
 											<td>
-												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtDt" name="rsvtDt" class="form-control datetimepicker w-readonly" 
-															th:value="${schInfo?.rsvtDt}" tabindex="1" required maxlength="16" readonly>
+												<div class="input-group input-group-sm" >
+													<input type="text" id="rsvtDtYyyymmdd" name="rsvtDtYyyymmdd" class="form-control datetimepicker w-readonly"
+															th:value="${schInfo?.rsvtDtYyyymmdd}" tabindex="1" required maxlength="10" readonly placeholder="예약일자">
 												</div>
 											</td>
-											<th>상담구분<strong class="req">*</strong></th>
 											<td>
-												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd1" value="C"   th:checked="${'C' eq schInfo?.rsvtTpCd}" tabindex="2">
-													<label class="form-check-label" for="rsvtTpCd1">전화상담</label>
-												</div>
-												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd2" value="R"  th:checked="${'R' eq schInfo?.rsvtTpCd}" tabindex="2">
-													<label class="form-check-label" for="rsvtTpCd2">예약방문</label>
-												</div>
-												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd3" value="D"  th:checked="${'D' eq schInfo?.rsvtTpCd}" tabindex="2">
-													<label class="form-check-label" for="rsvtTpCd3">당일방문</label>
+												<div class="input-group input-group-sm">
+													<select id="rsvtDtHh" name="rsvtDtHh" class="form-control" style="margin-right:8px;" tabindex="2" required>
+														<option value="">시</option>
+														<option value="09" th:selected="${ '09' eq schInfo?.rsvtDtHh}">09시</option>
+														<option value="10" th:selected="${ '10' eq schInfo?.rsvtDtHh}">10시</option>
+														<option value="11" th:selected="${ '11' eq schInfo?.rsvtDtHh}">11시</option>
+														<option value="12" th:selected="${ '12' eq schInfo?.rsvtDtHh}">12시</option>
+														<option value="13" th:selected="${ '13' eq schInfo?.rsvtDtHh}">13시</option>
+														<option value="14" th:selected="${ '14' eq schInfo?.rsvtDtHh}">14시</option>
+														<option value="15" th:selected="${ '15' eq schInfo?.rsvtDtHh}">15시</option>
+														<option value="16" th:selected="${ '16' eq schInfo?.rsvtDtHh}">16시</option>
+														<option value="17" th:selected="${ '17' eq schInfo?.rsvtDtHh}">17시</option>
+														<option value="18" th:selected="${ '18' eq schInfo?.rsvtDtHh}">18시</option>
+													</select>
+													<select id="rsvtDtMm" name="rsvtDtMm" class="form-control" tabindex="3" required>
+														<option value="">분</option>
+														<option value="00"  th:selected="${ '00' eq schInfo?.rsvtDtMm}">00분</option>
+														<option value="10"  th:selected="${ '10' eq schInfo?.rsvtDtMm}">10분</option>
+														<option value="20"  th:selected="${ '20' eq schInfo?.rsvtDtMm}">20분</option>
+														<option value="30"  th:selected="${ '30' eq schInfo?.rsvtDtMm}">30분</option>
+														<option value="40"  th:selected="${ '40' eq schInfo?.rsvtDtMm}">40분</option>
+														<option value="50"  th:selected="${ '50' eq schInfo?.rsvtDtMm}">50분</option>
+													</select>
 												</div>
 											</td>
 										</tr>
 										<tr>
-											<th>이름<strong class="req">*</strong></th>
-											<td>
-												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control" 
-															th:value="${schInfo?.rsvtUsrNm}"  tabindex="3" required maxlength="20">
+											<th>상담구분<strong class="req">*</strong></th>
+											<td colspan="2">
+												<div class="form-check form-check-inline">
+													<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd1" value="C"   th:checked="${'C' eq schInfo?.rsvtTpCd}" tabindex="4">
+													<label class="form-check-label" for="rsvtTpCd1"><span>전화</span></label>
+												</div>
+												<div class="form-check form-check-inline">
+													<input class="form-check-input" type="checkbox" name="rsvtTpCd" id="rsvtTpCd2" value="R"  th:checked="${'R' eq schInfo?.rsvtTpCd}" tabindex="4">
+													<label class="form-check-label" for="rsvtTpCd2"><span>방문</span></label>
 												</div>
 											</td>
-											<th>성별</th>
+										</tr>
+										<tr>
+											<th>예약자명<strong class="req">*</strong></th>
+											<td>
+												<div class="input-group input-group-sm input-group-inline">
+													<input type="text" id="rsvtUsrNm" name="rsvtUsrNm" class="form-control"
+															th:value="${schInfo?.rsvtUsrNm}" required maxlength="20" placeholder="예약자성명" tabindex="5">
+												</div>
+											</td>
 											<td>
 												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="4">
+													<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd1" value="F"  th:checked="${'F' eq schInfo?.genTpCd}" tabindex="6">
 													<label class="form-check-label" for="genTpCd1">여성</label>
 												</div>
 												<div class="form-check form-check-inline">
-													<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="4">
+													<input class="form-check-input" type="checkbox" name="genTpCd" id="genTpCd2" value="M"  th:checked="${'M' eq schInfo?.genTpCd}" tabindex="6">
 													<label class="form-check-label" for="genTpCd2">남성</label>
 												</div>
 											</td>
 										</tr>
 										<tr>
-											<th>휴대전화<strong class="req">*</strong></th>
+											<th>예약자 연락처<strong class="req">*</strong></th>
 											<td>
-												<div class="input-group input-group-sm" style="width:150px;" >
-													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control" 
-														th:value="${schInfo?.rsvtCellNo}" tabindex="5" required maxlength="13">
+												<div class="input-group input-group-sm input-group-inline">
+													<input type="text" id="rsvtCellNo" name="rsvtCellNo" class="form-control"
+															th:value="${schInfo?.rsvtCellNo}" required maxlength="13" placeholder="예약자 휴대전화번호" tabindex="7" >
 												</div>
 											</td>
-											<td colspan="2">
-												<button type="button" id="btnSendSms" name="btnSendSms" class="btn btn-success btn-sm" style="display:none;">예약문자보내기</button>
-											</td>
+											<td></td>
 										</tr>
 										<tr>
-											<th>추천인</th>
-											<td colspan="3">
-												<div class="input-group input-group-sm input-group-inline" style="width:308px;">
-													<input type="text" id="rcmdUsrNm"  name="rcmdUsrNm"  class="form-control" style="margin-right:8px;" tabindex="7" placeholder ="추천인 이름" maxlength="20"> 
-													<input type="text" id="rcmdCellNo" name="rcmdCellNo" class="form-control" style="margin-right:8px;" tabindex="8" placeholder="추천인 연락처" maxlength="13">
-													<input type="hidden" id="rcmdUsrNo"  name="rcmdUsrNo" class="form-control" tabindex="8" placeholder="추천인 고객번호"> 
+											<th>추천인 정보</th>
+											<td>
+												<div class="input-group input-group-sm input-group-inline">
+													<input type="text" id="rcmdUsrNm"  name="rcmdUsrNm"  class="form-control" tabindex="8" placeholder ="추천인 이름" maxlength="20"> 
+												</div>
+											</td>
+											<td>
+												<div class="input-group input-group-sm input-group-inline">
+													<input type="text" id="rcmdCellNo" name="rcmdCellNo" class="form-control" tabindex="9" placeholder="추천인 연락처" maxlength="13">
+													<input type="hidden" id="rcmdUsrNo"  name="rcmdUsrNo" class="form-control" tabindex="9" placeholder="추천인 고객번호"> 
 												</div>
 											</td>
 										</tr>
 										<tr>
 											<th>기타메모</th>
-											<td colspan="3">
+											<td colspan="2">
 												<textarea class="form-control form-control-sm" id="rsvtDesc" name="rsvtDesc" rows="10" 
-												th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="9" maxlength="300"></textarea>
+														th:text="${schInfo?.rsvtDesc}" placeholder="기타메모" tabindex="10" maxlength="300"></textarea>
 											</td>
 										</tr>
 										<tr>
 											<th>담당약사</th>
-											<td colsapn="3">
-												<select class="form-control form-control-sm" name="picUsrNo" tabindex="10">
+											<td colsapn="2">
+												<select class="form-control form-control-sm" id="picUsrNo" name="picUsrNo" tabindex="11">
 													<option value=""  th:selected="${''  eq schInfo?.picUsrNo}">선택하세요</option>
 													<option th:each="data, index : ${chemistList}" 
 																th:value="${data?.usrNo}" 
@@ -187,8 +211,8 @@
 										</tr>
 									</tbody>
 								</table>
-								<input type="text" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" placeholder="예약번호">
-								<input type="text" id="custId" name="custId" th:value="${schInfo?.custId}" placeholder="고객번호">
+								<input type="hidden" id="rsvtId" name="rsvtId" th:value="${schInfo?.rsvtId}" placeholder="예약번호">
+								<input type="hidden" id="custId" name="custId" th:value="${schInfo?.custId}" placeholder="고객번호">
 								</form>
 								
 								<script type="text/javascript" th:inline="javascript">
@@ -196,10 +220,15 @@
 								 * 예약일시 datetimepicker 적용
 								 */
 								$.datetimepicker.setLocale('ko');
-								$( "#rsvtDt" ).datetimepicker({
-									format	: 'Y-m-d H:i',
+								// $( "#rsvtDt" ).datetimepicker({
+								// 	format	: 'Y-m-d H:i',
+								// 	weeks   : true,
+								// 	allowTimes: allowTimeList
+								// });
+								$( "#rsvtDtYyyymmdd" ).datetimepicker({
+									format	: 'Y-m-d',
 									weeks   : true,
-									allowTimes: allowTimeList
+ 									timepicker:false
 								});
 								</script>
 		                	</div>
@@ -207,11 +236,11 @@
 		              	<div class="card-footer clearfix">
 		              		<div class="row">
 				            	<div class="col-sm-6">
-									<button type="button" name="btnSaveRsvtSch"   class="btn btn-primary btn-sm">저장</button>
-									<button type="button" name="btnDeleteRsvtSch" class="btn btn-danger btn-sm">삭제</button>
+									<button type="button" id="btnDeleteRsvtSch" name="btnDeleteRsvtSch" class="btn btn-danger btn-sm" style="display:none;">삭제하기</button>
 							    </div>
 								<div class="col-sm-6 text-right">
-									<button type="button" name="btnNewChartView" class="btn btn-success btn-sm">상담하기</button>
+									<button type="button" id="btnNewChartView"  name="btnNewChartView" class="btn btn-success btn-sm" style="display:none;">상담하기</button>
+									<button type="button" id="btnSaveRsvtSch"   name="btnSaveRsvtSch"   class="btn btn-primary btn-sm">저장하기</button>
 								</div>
 						    </div>
 			            </div>
