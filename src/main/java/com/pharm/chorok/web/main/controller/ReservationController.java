@@ -140,6 +140,7 @@ public class ReservationController {
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU02");
 
+		TbPpRsvtSch outRsvtSch = null;
 		TbCustomer outCustomer = null;
 		if( StringUtils.hasLength(custId) ) {
 			TbCustomer customer = new TbCustomer();
@@ -149,13 +150,14 @@ public class ReservationController {
 			TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
 			rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
 
-			rsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
-			outCustomer = new TbCustomer();
-			outCustomer.setCustUsrNm( rsvtSch.getRsvtUsrNm());
-			outCustomer.setCustCellNo( rsvtSch.getRsvtCellNo());
-			outCustomer.setCustGenTpCd(rsvtSch.getGenTpCd());
+			outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+			// outCustomer = new TbCustomer();
+			// outCustomer.setCustUsrNm( rsvtSch.getRsvtUsrNm());
+			// outCustomer.setCustCellNo( rsvtSch.getRsvtCellNo());
+			// outCustomer.setCustGenTpCd(rsvtSch.getGenTpCd());
 
 		}
+		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
 		return mv;
 	}

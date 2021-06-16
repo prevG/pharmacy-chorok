@@ -42,7 +42,7 @@
 							href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
 							aria-selected="true">고객정보</a>
 					</li>
-					<li class="nav-item" th:style="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0} ? 'display:none' : 'display:block'">
+					<li class="nav-item" id="tab-charts" th:style="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0} ? 'display:none' : 'display:block'">
 						<a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill"
 							href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile"
 							aria-selected="false">차트정보</a>
