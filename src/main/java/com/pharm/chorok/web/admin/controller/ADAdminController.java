@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADAdminService;
-import com.pharm.chorok.web.admin.service.ADUserService;
 
 @RequestMapping(value = "/admin")
 @Controller
@@ -30,7 +29,12 @@ public class ADAdminController {
 		return mv;
 	}
 	
-	
+	@GetMapping("/AD1001MV_2")
+	public ModelAndView admin2() throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/AD1001MV_2");
+		return mv;
+	}
 	
 	@PostMapping("/getAdmin")
 	@ResponseBody
@@ -73,8 +77,6 @@ public class ADAdminController {
 		return result.toString();
 	}
 	
-	
-	
 	@GetMapping("/modifyAdmin")
 	@ResponseBody
 	public String modifyUser( TbCommUser tbCommUser ) throws Exception {
@@ -82,11 +84,9 @@ public class ADAdminController {
 		return result.toString();
 	}
 	
-	
-	
 	@PostMapping("/removeAdmin")
 	@ResponseBody
-	public String removeAdmin(TbCommUser tbCommUser ) throws Exception {
+	public String removeAdmin( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
 		
 		int ret = adminService.removeAdmin(tbCommUser);
@@ -102,23 +102,27 @@ public class ADAdminController {
 		return result.toString();
 	}
 	
-	
-	
 	@PostMapping("/saveAdmin")
 	@ResponseBody
 	public String saveAdmin( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
 		
-		int ret = adminService.saveAdmin(tbCommUser);
+		int count = adminService.countAdminEmail(tbCommUser);
+		if (count > 0) {
+			result.put("success", false);
+			result.put("Msg", "이메일이 존재합니다.");
+		}
 		
-		if(ret > 0) {
+		int ret = adminService.saveAdmin(tbCommUser);
+		if (ret > 0) {
 			result.put("success", true);
 			result.put("Msg", "작업성공하였습니다.");
-		}else {
+		} else {
 			result.put("success", false);
 			result.put("Msg", "작업실패했습니다.");
 		}
 		
 		return result.toString();
 	}
+	
 }

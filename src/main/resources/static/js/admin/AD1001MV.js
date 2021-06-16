@@ -188,18 +188,17 @@ function editAdmin(){
 	$('#dg').datagrid('beginEdit', idx);
 }
 
-
-function removeAdmin(){
+function removeAdmin() {
 	var row = $("#dg").datagrid("getSelected");
 	
-	if(row){
-		$.messager.confirm('Confirm','사용자를 삭제하겠습니까?',function(r){
-             if (r){
+	if (row) {
+		$.messager.confirm('Confirm','사용자를 삭제하겠습니까?',function(r) {
+             if (r) {
 	
 				//$('#dg').datagrid('deleteRow', getRowIndex());
 				
-                 $.post('/admin/removeAdmin',{usrNo:row.usrNo},function(result){
-                     if (result.success){
+                 $.post('/admin/removeAdmin',{usrNo: row.usrNo},function(result) {
+                     if (result.success) {
                          //$('#dg').datagrid('reload');    // reload the user data
                          
                           $.messager.show({    // show error message
@@ -208,7 +207,7 @@ function removeAdmin(){
                          });
                          fnSearch();
                      } else {
-                         $.messager.show({    // show error message
+                         $.messager.show({     // show error message
                              title: 'Error',
                              msg: result.Msg
                          });
@@ -239,11 +238,9 @@ function saveDlgAdmin(){
 		usrPhnNo : $('#dlg_usrPhnNo').textbox('getValue'),
 		usrGrade : $('#dlg_usrGrade').combobox('getValue'),
 		usrAuth : $('#dlg_usrAuth').combobox('getValue'),
-		usrAprv : $('#dlg_usrAprv').combobox('getValue'),
-		delYn : $('#dlg_delYn').textbox('getValue')
+		usrAprv : $('#dlg_usrAprv').combobox('getValue') === '00000' ? 'A01' : $('#dlg_usrAprv').combobox('getValue'),
+		delYn : $('#dlg_delYn').combobox('getValue') === '00000' ? 'N' : $('#dlg_delYn').combobox('getValue')
 	};
-	
-	
 	
 	$.post('/admin/saveAdmin',param,function(result){
           if (result.success){

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="configFragment">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- easyui -->
+  <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/bootstrap/easyui.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/fontawesome-free/css/all.min.css}">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
+  <!-- iCheck -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/jqvmap/jqvmap.min.css}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/daterangepicker/daterangepicker.css}">
+  <!-- summernote -->
+  <link rel="stylesheet" th:href="@{/adminlte/plugins/summernote/summernote-bs4.min.css}">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/adminlte/dist/css/adminlte.min.css}">
+  <!-- SB Admin -->
+  <!-- <link rel="stylesheet" th:href="@{/css/sb-admin-2.css}"> -->
+  
+  <!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
+  <th:block layout:fragment="css"></th:block>
+</head>
+</html>

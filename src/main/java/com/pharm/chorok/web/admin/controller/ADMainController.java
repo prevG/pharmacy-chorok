@@ -25,9 +25,19 @@ public class ADMainController {
 		return mv;
 	}
 	
+	@GetMapping("/index2")
+	public ModelAndView index2( Model model ) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		/*ArrayList<TbCommUser> usrList = userService.getUserList();
 	
-	
-
-	
+		
+		 * Map data = new HashMap<>(); data.put("usrList", usrList );
+		 * data.put("usr","곽경준"); mv.addAllObjects(data);
+		 */
+		mv.setViewName("admin/index2");
+		
+		
+		return mv;
+	}
 	
 }

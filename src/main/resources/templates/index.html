@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="layouts/chorok_layout">
 
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">	
@@ -55,8 +57,9 @@
 												<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 												<div th:data-id="${data.rsvtId}">
 													<button type="button" name="rsvtSch" class="btn btn-sm" 
+														style="padding-top:0px;padding-bottom:0px;margin-top:1px;"
 														th:classappend="${data.picUsrNo} == 1 ? btn-outline-success : btn-outline-primary"
-													style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+														th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 												</div>
 												</th:block>
 											</td>
