@@ -42,6 +42,7 @@ public class CustomerService {
 		
 		int result = -1;
 
+		Long rsvtId = rsvtInfo.getRsvtId();
 		Long custId = custInfo.getCustId();
 		if( custId != null && custId > 0) {
 			result = customerRepo.updateTbCustomer( custInfo );
@@ -55,8 +56,11 @@ public class CustomerService {
 			custInfo.setCustId( newCustId );
 			result = customerRepo.insertTbCustomer( custInfo );
 
-			rsvtInfo.setCustId( newCustId );
-			result = reservationRepo.updateCustIdByRsvtId( rsvtInfo );
+			//예약테이블 고객번호 update
+			if( rsvtId != null && rsvtId > 0) {
+				rsvtInfo.setCustId( newCustId );
+				result = reservationRepo.updateCustIdByRsvtId( rsvtInfo );
+			}
 		}
 		return result;
 	}

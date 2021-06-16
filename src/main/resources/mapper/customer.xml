@@ -56,6 +56,33 @@
 	]]>
 	</select>
 
+    <select id="findCustomerByRsvtId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+    SELECT CUST.CUST_ID
+         , CUST.CUST_USR_NM
+         , CUST.CUST_CELL_NO
+         , CUST.CUST_BIRTH_DT
+         , CUST.CUST_GEN_TP_CD
+         , CUST.MRG_YN
+         , CUST.PCRT_CHD_CNT
+         , CUST.LST_PCRT_YEAR
+         , CUST.BRST_FDG_YN
+         , CUST.VIST_TP_CD
+         , CUST.ZIP_CODE
+         , CUST.ADDR1
+         , CUST.ADDR2
+         , CUST.REG_DT
+         , CUST.REG_USR_NO
+         , CUST.UPD_DT
+         , CUST.UPD_USR_NO
+      FROM TB_CUSTOMER CUST
+      LEFT OUTER JOIN
+           TB_PP_RSVT_SCH RSVT
+        ON CUST.CUST_ID = RSVT.CUST_ID
+     WHERE RSVT_ID = #{rsvtId}
+	]]>
+	</select>
+
     <select id="findAllCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
     SELECT CUST_ID

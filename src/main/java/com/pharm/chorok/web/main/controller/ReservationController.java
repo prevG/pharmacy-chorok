@@ -1,6 +1,9 @@
 package com.pharm.chorok.web.main.controller;
 
+import java.util.List;
+
 import com.pharm.chorok.domain.main.ReservationPagination;
+import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
@@ -65,19 +68,49 @@ public class ReservationController {
 	public ModelAndView goRS1001PU01(TbPpRsvtSch rsvt) throws Exception {
 		
 		ModelAndView mv = new ModelAndView( "main/RS1001PU01" );
-		reservationSvc.findReservationInfoByRsvtId( mv, rsvt );
+
+		//예약상세정보 조회
+		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+
+		//약사목록 조회
+        List<TbCommUser> chemistList = reservationSvc.selectChemistList();
+		
+
+    	mv.addObject( "schInfo", rsvtSchInfo );
+        mv.addObject( "chemistList", chemistList  );
 		return mv;
 	}
 
-	
+	/**
+	 * 주간예약스케쥴표에서 선택된 예약고객의 상세정보 조회
+	 * 
+	 * @param rsvt
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/RS1001MV/detail", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView detail(TbPpRsvtSch rsvt) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("main/RS1001MV :: reservation-detail");
-		reservationSvc.findReservationInfoByRsvtId( mv, rsvt );
+
+		//예약상세정보 조회
+		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+
+		//약사목록 조회
+        List<TbCommUser> chemistList = reservationSvc.selectChemistList();
+
+    	mv.addObject( "schInfo", rsvtSchInfo );
+        mv.addObject( "chemistList", chemistList  );
         return mv;
 	}
 	
+	/**
+	 * 주간예약스케쥴표 새로고침
+	 * 
+	 * @param rsvt
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/RS1001MV/reload", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView reloadReservation(
 			ReservationPagination reservationPagination) throws Exception {
@@ -115,7 +148,12 @@ public class ReservationController {
 		} else {
 			TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
 			rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
-			outCustomer = customerSvc.findCustomerByRsvtId( rsvtSch );
+
+			rsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+			outCustomer = new TbCustomer();
+			outCustomer.setCustUsrNm( rsvtSch.getRsvtUsrNm());
+			outCustomer.setCustCellNo( rsvtSch.getRsvtCellNo());
+			outCustomer.setCustGenTpCd(rsvtSch.getGenTpCd());
 
 		}
 		mv.addObject("custInfo", outCustomer);
@@ -133,7 +171,7 @@ public class ReservationController {
 	@RequestMapping(value = "/RS1001PU02/saveCustomer", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView saveCustomer(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
 		
-			
+		
 		customerSvc.saveCustomer( custParam, rsvtParam );
 		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam  );
 
