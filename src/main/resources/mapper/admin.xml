@@ -4,6 +4,7 @@
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADAdminRepository">
 
 	<select id="selectAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbCommUser">
+		/** com.pharm.chorok.web.admin.repository.ADAdminRepository */
 		SELECT USR_NO,
 				USR_EML,
 		        USR_PWD,
@@ -15,7 +16,7 @@
 		        USR_AUTH,
 		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1002' AND DITC_CD = USR_AUTH AND USE_YN = 'Y') AS USR_AUTH_VAL,
 		        USR_APRV,
-		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1010' AND DITC_CD = USR_AUTH AND USE_YN = 'Y') AS USR_APRV_VAL,
+		        (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1010' AND DITC_CD = USR_APRV AND USE_YN = 'Y') AS USR_APRV_VAL,
 		        DEL_YN,
 		        REG_USR_NO,
 		       <!--  REG_DT, -->
@@ -23,32 +24,25 @@
 		        UPD_USR_NO, 
 		        DATE_FORMAT(UPD_DT, '%Y-%m-%d') AS UPD_DT
 		FROM TB_COMM_USER
-		WHERE 1=1
-		<choose>
-			<when test='cbSrch!=null and cbSrch.equals("all")'>
-				AND (USR_NM LIKE CONCAT('%',#{srchTxt},'%') OR USR_EML LIKE CONCAT('%',#{srchTxt},'%'))
-			</when>
-			<when test='cbSrch!=null and cbSrch.equals("nm")'>
-				AND USR_NM LIKE CONCAT('%',#{srchTxt},'%')
-			</when>
-			<when test='cbSrch!=null and cbSrch.equals("em")'>
-				AND USR_EML LIKE CONCAT('%',#{srchTxt},'%')
-			</when>
-		</choose>
-		<choose>
-			<when test='cbAuth!=null and cbAuth.equals("00000")'>
-			</when>
-			<otherwise>
-			AND USR_AUTH = #{cbAuth}
-			</otherwise>
-		</choose>
-		<choose>
-			<when test='cbAppv!=null and cbAppv.equals("00000")'>
-			</when>
-			<otherwise>
-			AND USR_APRV = #{cbAppv}
-			</otherwise>
-		</choose>
+		<where>
+			<choose>
+				<when test='cbSrch != null and cbSrch.equals("all")'>
+					(USR_NM LIKE CONCAT('%',#{srchTxt},'%') OR USR_EML LIKE CONCAT('%',#{srchTxt},'%'))
+				</when>
+				<when test='cbSrch != null and cbSrch.equals("nm")'>
+					USR_NM LIKE CONCAT('%',#{srchTxt},'%')
+				</when>
+				<when test='cbSrch != null and cbSrch.equals("em")'>
+					USR_EML LIKE CONCAT('%',#{srchTxt},'%')
+				</when>
+			</choose>
+			<if test="cbAuth != null and !cbAuth.equals('00000')">
+				AND USR_AUTH = #{cbAuth}
+			</if>
+			<if test="cbAppv != null and cbAppv.equals('00000')">
+				AND USR_APRV = #{cbAppv}
+			</if>
+		</where>
 	</select>
 	
 	<update id="removeAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser">
@@ -89,6 +83,16 @@
 		)
 	</insert>
 	
-	<select id="countAdminEmail" resultType="java.lang.Integer"></select>
+	<select id="countAdminEmail" resultType="java.lang.Integer">
+		SELECT COUNT(USR_NO)
+		FROM TB_COMM_USER
+		WHERE USR_EML = #{usrEml}
+	</select>
+	
+	<select id="countAdminPhone" resultType="java.lang.Integer">
+		SELECT COUNT(USR_NO)
+		FROM TB_COMM_USER
+		WHERE USR_PHN_NO = #{usrPhnNo}
+	</select>
 	
 </mapper>

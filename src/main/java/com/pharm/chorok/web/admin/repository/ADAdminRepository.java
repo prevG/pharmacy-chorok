@@ -18,6 +18,8 @@ public interface ADAdminRepository {
 	public int saveAdmin(TbCommUser tbCommUser);
 
 	public int countAdminEmail(TbCommUser tbCommUser);
+
+	public int countAdminPhone(TbCommUser tbCommUser);
 	
 }
 

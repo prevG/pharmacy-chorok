@@ -30,4 +30,8 @@ public class ADAdminService {
     	return adminRepository.countAdminEmail(tbCommUser);
     }
 
+	public int countAdminPhone(TbCommUser tbCommUser) {
+		return adminRepository.countAdminPhone(tbCommUser);
+	}
+
 }
