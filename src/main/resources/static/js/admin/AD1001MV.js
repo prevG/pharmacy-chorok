@@ -242,9 +242,24 @@ function saveDlgAdmin(){
 		delYn : $('#dlg_delYn').combobox('getValue') === '00000' ? 'N' : $('#dlg_delYn').combobox('getValue')
 	};
 	
-	$.post('/admin/saveAdmin',param,function(result){
-          if (result.success){
-              
+	$.post('/admin/saveAdmin', param, function(result) {
+		if (result.success) {
+			$.messager.show({ title: 'Success', msg: result.Msg });
+			fnSearch();
+		} else {
+			$.messager.show({ title: 'Error', msg: result.Msg });
+			return;
+		}
+		$('#addDlg').dialog('close');
+	}, 'json')
+	.fail(function(xhr, status, error) {
+		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		return;
+	});
+	
+	/**
+	$.post('/admin/saveAdmin', param, function(result) {
+          if (result.success) {
                $.messager.show({    // show error message
                   title: 'Success',
                   msg: result.Msg
@@ -260,6 +275,7 @@ function saveDlgAdmin(){
           
           $('#addDlg').dialog('close');
       },'json')
+      **/
 }
 
 $(document).ready(function(){

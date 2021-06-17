@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,11 +107,17 @@ public class ADAdminController {
 	@ResponseBody
 	public String saveAdmin( TbCommUser tbCommUser ) throws Exception {
 		JSONObject result = new JSONObject();
+		Assert.hasLength(tbCommUser.getUsrEml(), "Email must be not empty.");
+		Assert.hasLength(tbCommUser.getUsrPwd(), "Password must be not empty.");
+		Assert.hasLength(tbCommUser.getUsrNm(), "User name must be not empty.");
+		Assert.hasLength(tbCommUser.getUsrPhnNo(), "Phone number must be not empty.");
 		
 		int count = adminService.countAdminEmail(tbCommUser);
 		if (count > 0) {
 			result.put("success", false);
 			result.put("Msg", "이메일이 존재합니다.");
+			
+			return result.toString();
 		}
 		
 		int ret = adminService.saveAdmin(tbCommUser);
