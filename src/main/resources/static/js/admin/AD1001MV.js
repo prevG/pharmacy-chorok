@@ -21,24 +21,22 @@ function formatDate(value, row) {
 }
 
 function fnInit() {
-	// set combo
-	initComboBox($('#cb_usrAuth'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind:'0' });
-	initComboBox($('#cb_usrAprv'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind:'0' });
-	
-	//debugger;
+	// init combo
+	initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '0' });
+	initComboBox($('#cb_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '0' });
+
+	// get combo	
 	gC1003 = getCodeData('C1003');
 	gC1002 = getCodeData('C1002');
 	gC1010 = getCodeData('C1010');
 	
-	console.log("gC1003", gC1003);
-	console.log("gC1002", gC1002);
-	console.log("gC1010", gC1010);
-	
 	$('#dg').datagrid({
 	    url: '/admin/getAdmin',
+	    /*
 	    saveUrl: '/admin/saveAdmin',
 	    updateUrl: '/admin/modifyAdmin',
 	    destroyUrl: '/admin/removeAdmin',
+	    */
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'usrNo',
@@ -126,37 +124,8 @@ function fnInit() {
 			  	var d = new Date(value);
 			  	return $.fn.datebox.defaults.formatter(d);
 			}}*/
-        ]]/*,
-	    onEndEdit: function(index, row) {
-			alert("a");
-            var ed = $(this).datagrid('getEditor', {
-                index: index,
-                field: 'usrNo'
-            });
-            row.usrGrade = $(ed.target).combobox('getText');
-        },
-        onBeforeEdit: function(index, row) {
-            row.editing = true;
-            $(this).datagrid('refreshRow', index);
-        },
-        onAfterEdit: function(index, row) {
-            row.editing = false;
-            $(this).datagrid('refreshRow', index);
-        },
-        onCancelEdit: function(index, row) {
-            row.editing = false;
-            $(this).datagrid('refreshRow', index);
-        }*/
+        ]]
 	});
-}
-
-function getRowIndex() {
-    var row = $('#dg').datagrid('getSelected');
-    if (!row) return;
-    
-    var rowIdx = $('#dg').datagrid('getRowIndex', row);
-	
-	return rowIdx;
 }
 
 function cancelAdmin() {
@@ -193,12 +162,23 @@ function editAdmin() {
 	var row = $('#dg').datagrid('getSelected');
 	if (!row) return;
 	
-	var rowIdx = $('#dg').datagrid('getRowIndex', row);
-	if (rowIdx < 0) return;
-	
-	editingRowIdx = rowIdx;
-	
-	$('#dg').datagrid('beginEdit', rowIdx);
+	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
+	$('#addFrm').form('clear');
+
+    initComboBox($('#dlg_usrGrade'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_delYn'), 		'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
+
+	$('#dlg_usrNo').val('setValue', row.usrNo);
+	$('#dlg_em').textbox('setValue', row.usrEml);
+	/*$('#dlg_pw').textbox('setValue', row.usrPwd);*/
+	$('#dlg_usrNm').textbox('setValue', row.usrNm);
+	$('#dlg_usrPhnNo').textbox('setValue', row.usrPhnNo);
+	$('#dlg_usrGrade').combobox('setValue', row.usrGrade);
+	$('#dlg_usrAuth').combobox('setValue', row.usrAuth);
+	$('#dlg_usrAprv').combobox('setValue', row.usrAprv);
+	$('#dlg_delYn').combobox('setValue', row.delYn);
 }
 
 function removeAdmin() {
@@ -223,17 +203,18 @@ function removeAdmin() {
 }
 
 function addAdmin() {
-	 $('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
-     $('#addFrm').form('clear');
+	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
+    $('#addFrm').form('clear');
      
-     initComboBox($('#dlg_usrGrade'), '/admin/getGrpCdWithCombo', {GrpCd:'C1003',target:'combo', targetKind:'1'});
-     initComboBox($('#dlg_usrAuth'), '/admin/getGrpCdWithCombo', {GrpCd:'C1002',target:'combo', targetKind:'1'});
-     initComboBox($('#dlg_usrAprv'), '/admin/getGrpCdWithCombo', {GrpCd:'C1010',target:'combo', targetKind:'1'});
-     initComboBox($('#dlg_delYn'), '/admin/getGrpCdWithCombo', {GrpCd:'C1012',target:'combo', targetKind:'1'});
+    initComboBox($('#dlg_usrGrade'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
+    initComboBox($('#dlg_delYn'), 		'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
 }
 
 function saveDlgAdmin() {
 	var param = {
+		usrNo : $('#dlg_usrNo').textbox('getValue'),
 		usrEml : $('#dlg_em').textbox('getValue'),
 		usrPwd : $('#dlg_pw').textbox('getValue'),
 		usrNm : $('#dlg_usrNm').textbox('getValue'),

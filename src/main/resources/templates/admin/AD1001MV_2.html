@@ -76,6 +76,7 @@
     
 	<div id="addDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
+			<input type="hidden" name="dlg_usrNo" id="dlg_usrNo" class="textbox-value">
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
 					<input name="dlg_em" id="dlg_em" class="easyui-textbox" data-options="label:'이메일:',required:true,validType:'email'" style="width:100%">
@@ -116,7 +117,8 @@
 			</div>
 		</form>
 		<div style="text-align:center;padding:5px 0">
-			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgAdmin();">저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="saveDlgAdmin();">저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onClick="javascript:$('#addDlg').dialog('close');">취소</a>
 		</div>
 	</div>
 	

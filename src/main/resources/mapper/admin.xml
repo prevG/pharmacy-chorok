@@ -39,7 +39,7 @@
 			<if test="cbAuth != null and !cbAuth.equals('00000')">
 				AND USR_AUTH = #{cbAuth}
 			</if>
-			<if test="cbAppv != null and cbAppv.equals('00000')">
+			<if test="cbAppv != null and !cbAppv.equals('00000')">
 				AND USR_APRV = #{cbAppv}
 			</if>
 		</where>
