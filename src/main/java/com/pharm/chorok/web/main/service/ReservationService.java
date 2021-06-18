@@ -153,24 +153,10 @@ public class ReservationService {
 
 	
     
-	/**
-	 * 예약스케쥴 정보 조회
-	 * @param ModelAndView mv
-	 * @param TbPpRsvtSch rsvtSch 
-	 * @return
-	 * @throws Exception
-	 */
-    public ModelAndView findReservationInfoByRsvtId( ModelAndView mv, TbPpRsvtSch rsvtSch  ) throws Exception {
 
-    	TbPpRsvtSch rsvtSchInfo = rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
+    public TbPpRsvtSch findReservationInfoByRsvtId( TbPpRsvtSch rsvtSch  ) throws Exception {
 
-		//약사목록 을 조회
-        List<TbCommUser> chemistList = selectChemistList();
-		
-
-    	mv.addObject( "schInfo", rsvtSchInfo );
-        mv.addObject( "chemistList", chemistList  ); //약사목록
-    	return mv;
+    	return rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
     }
 
     

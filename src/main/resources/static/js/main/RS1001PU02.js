@@ -40,7 +40,9 @@ $( document ).ready( function() {
      * 고객정보 저장
      **************************************************************/
 	$(document).off("click", "button[name='btnSaveCustomer']").on("click", "button[name='btnSaveCustomer']", function (e) {
-
+		if( !confirm("고객정보를 저장하시겠습니까?")) {
+			return false;
+		}
 
         var url = "/reservation/RS1001PU02/saveCustomer";
         var params = $("form[name=saveCustForm]").serialize();
@@ -49,6 +51,9 @@ $( document ).ready( function() {
             if (200 == xhr.status) {
 				alert("고객정보가 정상적으로 저장 되었습니다.")
                 $("#customer-table").html(response);
+
+				//고객정보가 생성된 후에 차트생성가능하도록 한다.
+				$("#tab-charts").css("display", "block");
             } else {
                 console.log(response, status, xhr);
             }

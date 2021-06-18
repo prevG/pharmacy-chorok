@@ -21,9 +21,9 @@
                                     <th>이름</th>
                                     <td>
                                         <div class="input-group input-group-sm" style="width:200px;">
-                                            <input type="text" name="custUsrNm" th:value="${custInfo?.custUsrNm}" class="form-control" tabindex="1">
-                                            <input type="text" name="custId"    th:value="${custInfo?.custId}"    class="form-control">
-                                            <input type="text" name="rsvtId"    th:value="${rsvtInfo?.rsvtId}"    class="form-control">
+                                            <input type="text" name="custUsrNm" th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}" class="form-control" tabindex="1">
+                                            <input type="text" name="custId"    th:value="${#strings.isEmpty(custInfo?.custId)} ? 0 : ${custInfo?.custId}"    class="form-control">
+                                            <input type="text" name="rsvtId"    th:value="${#strings.isEmpty(rsvtInfo?.rsvtId)} ? 0 : ${rsvtInfo?.rsvtId}"    class="form-control">
                                         </div>
                                     </td>
                                     <th>연락처</th>
@@ -31,7 +31,7 @@
                                         <div class="input-group input-group-sm"
                                             style="width:200px;">
                                             <input type="text" id="custCellNo" name="custCellNo"
-                                                th:value="${custInfo?.custCellNo}"
+                                                th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}"
                                                 class="form-control" maxlength="13"
                                                 tabindex="2">
                                         </div>
@@ -54,7 +54,7 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
                                                 name="custGenTpCd" id="custGenTpCd1" value="F"
-                                                th:checked="${'F' eq custInfo?.custGenTpCd}"
+                                                th:checked="${#strings.isEmpty(custInfo?.custGenTpCd)} ? ${'F' eq rsvtInfo?.genTpCd} : ${'F' eq custInfo?.custGenTpCd}"  
                                                 tabindex="4">
                                             <label class="form-check-label"
                                                 for="custGenTpCd1">여성</label>
@@ -62,7 +62,7 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
                                                 name="custGenTpCd" id="custGenTpCd2" value="M"
-                                                th:checked="${'M' eq custInfo?.custGenTpCd}"
+                                                th:checked="${#strings.isEmpty(custInfo?.custGenTpCd)} ? ${'M' eq rsvtInfo?.genTpCd} : ${'M' eq custInfo?.custGenTpCd}"  
                                                 tabindex="4">
                                             <label class="form-check-label"
                                                 for="custGenTpCd2">남성</label>

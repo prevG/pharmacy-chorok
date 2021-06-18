@@ -54,7 +54,10 @@
          , WT.START_HM            AS "wt.startHm"
          , WT.END_HM              AS "wt.endHm"
          , SCH.RSVT_ID                 
-         , SCH.RSVT_DT            
+         , SCH.RSVT_DT       
+		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d') AS RSVT_DT_YYYYMMDD
+		 , DATE_FORMAT( SCH.RSVT_DT, '%H') AS RSVT_DT_HH
+		 , DATE_FORMAT( SCH.RSVT_DT, '%i') AS RSVT_DT_MM
          , SCH.RSVT_USR_NM
 		 , SCH.PIC_USR_NO
          , CASE LENGTH(RSVT_CELL_NO)
@@ -82,7 +85,7 @@
 								FROM TB_COMM_CALENDAR 
 								WHERE BASE_DT_STR = #{baseDtStr}
 							)
-            AND CAL.DAYS_NUM > 1
+            AND CAL.DAYS_NUM > 0
         ) SCH
         ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
     AND WT.END_HM   >= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
@@ -136,6 +139,9 @@
          , RSVT_CELL_NO
 	     , RSVT_PHN_NO
 	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
+		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d') AS RSVT_DT_YYYYMMDD
+		 , DATE_FORMAT( SCH.RSVT_DT, '%H') AS RSVT_DT_HH
+		 , DATE_FORMAT( SCH.RSVT_DT, '%i') AS RSVT_DT_MM
 	     , RSVT_TP_CD
 	     , GEN_TP_CD
 	     , RSVT_DESC
@@ -190,8 +196,8 @@
 	   , REG_DT
 	   , REG_USR_NO
 	) VALUES (
-	     #{rsvtUsrNm}
-	   , STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
+	     #{rsvtUsrNm}	   
+	   , STR_TO_DATE( CONCAT(#{rsvtDtYyyymmdd},#{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
 	   , REPLACE( #{rsvtCellNo}, '-', '')
 	   , REPLACE( #{rsvtPhnNo} , '-', '') 
 	   , #{rsvtTpCd}
@@ -221,8 +227,8 @@
 	UPDATE TB_PP_RSVT_SCH
 	   SET UPD_DT        = now()
 		 , UPD_USR_NO    = #{updUsrNo}
-		 , RSVT_USR_NM   = #{rsvtUsrNm}
-		 , RSVT_DT       = STR_TO_DATE( #{rsvtDt}, '%Y-%m-%d %H:%i:%s')
+		 , RSVT_USR_NM   = #{rsvtUsrNm}		 
+		 , RSVT_DT       = STR_TO_DATE( CONCAT(#{rsvtDtYyyymmdd},#{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
 		 , RSVT_CELL_NO  = REPLACE( #{rsvtCellNo}, '-', '') 
 		 , RSVT_PHN_NO   = REPLACE( #{rsvtPhnNo} , '-', '') 
 		 , RSVT_TP_CD    = #{rsvtTpCd} 

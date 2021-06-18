@@ -1,10 +1,37 @@
 $(document).ready(function () {
 
+    var isExistChangedData = false;
+    $( document).off("change", "#reservation-detail INPUT,SELECT,TEXTAREA").on("change", "#reservation-detail INPUT,SELECT,TEXTAREA", function(e) {
+
+        switch( this.name ){
+            case "rsvtDtYyyymmdd" :
+            case "rsvtDtHh" :
+            case "rsvtDtMm" :
+            case "rsvtTpCd" :
+            case "rsvtUsrNm" :
+            case "rsvtCellNo" :
+            case "genTpCd" :
+            case "rcmdUsrNm" :
+            case "rcmdCellNo" :
+            case "rsvtDesc" :
+            case "picUsrNo" :
+                isExistChangedData = true;
+                break;
+            default :
+                break;
+        }
+    })
+
+
     /**************************************************************
      * 예약고객의 상세스케쥴 보기
      **************************************************************/
     $(document).off("click", "button[name='rsvtSch']").on("click", "button[name='rsvtSch']", function (e) {
 
+        //변경된 데이터가 있는지 확인
+        if( !checkExistChangedData() ) {
+            return false;
+        }
         var params = {
             "rsvtId": $(e.target).closest("div").attr("data-id")
         }
@@ -12,9 +39,25 @@ $(document).ready(function () {
     });
 
     /**************************************************************
+     * 주간 스케쥴표에 빈칸을 클릭한 경우 
+     **************************************************************/
+    $(document).off("click", "#table-schedule tbody tr td").on("click", "#table-schedule tbody tr td", function (e) {
+        
+        //변경된 데이터가 있는지 확인
+        if( !checkExistChangedData() ) {
+            return false;
+        }
+
+        var rsvtSchBtn = $( this ).children().find("button");
+        if( rsvtSchBtn == null || rsvtSchBtn.length ==0 ) {
+            findReservationDetail( "" );
+        }
+    });
+
+    /**************************************************************
      * 상담하기
      **************************************************************/
-    $(document).off("click", "button[name='btnNewChartView']").on("click", "button[name='btnNewChartView']", function (e) {
+     $(document).off("click", "button[name='btnNewChartView']").on("click", "button[name='btnNewChartView']", function (e) {
         e.preventDefault(); //remove href function
 
         var rsvtId = $("form[name='detailForm']").find("input[name='rsvtId']").val();
@@ -161,9 +204,9 @@ $(document).ready(function () {
             focus: function (event, ui) {
                 return true;
             },
-            minLength: 2,
+            minLength: 1,
             autoFocus: false,
-            delay: 200
+            delay: 100
         });
     });
 
@@ -227,7 +270,7 @@ $(document).ready(function () {
 
 
     /**************************************************************
-     * 저장하기
+     * 에약정보 저장하기
      **************************************************************/
     $(document).off("click", "button[name='btnSaveRsvtSch']").on("click", "button[name='btnSaveRsvtSch']", function (e) {
 
@@ -236,7 +279,7 @@ $(document).ready(function () {
             return false;
         }
 
-        isOk = confirm("저장하시겠습니까?");
+        isOk = confirm("예약정보를 저장하시겠습니까?");
         if (!isOk) {
             return false;
         }
@@ -244,14 +287,15 @@ $(document).ready(function () {
         var params = $("form[name=detailForm]").serialize();
         $.ajax({
             type: 'post',
-            url: '/api/v1/main/reservation/saveRsvtSch',
+            url: '/api/v1/main/reservation/saveReservation',
             data: params,
             success: function (result) {
 
                 if (result.status == "success") {
-                    alert(result.message);
+                    alert("예약정보가 저장되었습니다.");
                     refreshTimeTable();
                     findReservationDetail(params);
+                    isExistChangedData = false;
                 } else {
                     alert(result.errorMessage);
                 }
@@ -259,33 +303,28 @@ $(document).ready(function () {
         });
     });
 
-
     /**************************************************************
-     * 예약문자보내기
+     * 삭제하기 버튼 클릭
      **************************************************************/
-    $(document).off("click", "button[name='btnSendSms']").on("click", "button[name='btnSendSms']", function (e) {
+    $(document).off("click", "button[name='btnDeleteRsvtSch']").on("click", "button[name='btnDeleteRsvtSch']", function (e) {
 
-        var isOk = validateSubmit();
-        if( !isOk ) {
-            return false;
-        }
-
-        isOk = confirm("예약문자를 발송하시겠습니까?\n즉시 문자가 발송됩니다.");
-        if( !isOk ) {
+        isOk = confirm("예약정보를 삭제하시겠습니까?");
+        if (!isOk) {
             return false;
         }
 
         var params = $("form[name=detailForm]").serialize();
         $.ajax({
             type: 'post',
-            url: '/api/v1/sms/reservation',
+            url: '/api/v1/main/reservation/deleteReservation',
             data: params,
             success: function (result) {
 
                 if (result.status == "success") {
-                    alert(result.message);
+                    alert("예약정보가 삭제되었습니다.");
                     refreshTimeTable();
                     findReservationDetail(params);
+                    isExistChangedData = false;
                 } else {
                     alert(result.errorMessage);
                 }
@@ -293,6 +332,21 @@ $(document).ready(function () {
         });
     });
 
+    //저장하지 않고 다른 데이터 로딩시
+    checkExistChangedData = function() {
+    
+        if( isExistChangedData ) {
+            var isOk = confirm( "저장하지 않은 정보가 있습니다.\n저장하지 않고 이동하시겠습니까?");
+            if( !isOk ) {
+                return false;
+            }
+            isExistChangedData = false; //초기화
+        }
+        return true;
+    }
+    
+
+        
     //예약 상세정보조회
     findReservationDetail = function (params) {
 
@@ -305,11 +359,14 @@ $(document).ready(function () {
                 //예약번호가 존재할 경우 문자보내기버튼 활성화
                 var rsvtId = $("#rsvtId").val();
                 if( $isEmpty(rsvtId)) {
-                    $("#btnSendSms").hide();
+                    $("#btnDeleteRsvtSch").hide();
+                    $("#btnNewChartView").hide();
+                    // $("#reservation-detail").children().remove();
                 } else {
                     $("#btnSendSms").show();
+                    $("#btnDeleteRsvtSch").show();
+                    $("#btnNewChartView").show();
                 }
-
             } else {
                 console.log(response, status, xhr);
             }
@@ -349,28 +406,44 @@ $(document).ready(function () {
     //저장하기전 데이터 검증
     validateSubmit = function () {
         var rsvtDt = $("input[name='rsvtDt']").val(); //예약일시
+        var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
+        var rsvtDtHh = $("SELECT[name='rsvtDtHh']").val(); //예약일시
+        var rsvtDtMm = $("SELECT[name='rsvtDtMm']").val(); //예약일시
         var rsvtTpCd = $("input:checkbox[name=rsvtTpCd]:checked").length //상담구분
         var rsvtUsrNm = $("input[name='rsvtUsrNm']").val(); //예약자명
         var rsvtCellNo = $("input[name='rsvtCellNo']").val(); //예약자휴대전화번호
 
-
-        if ($isEmpty(rsvtDt)) {
-            alert("예약일시를 입력해주세요.");
-            $("input[name='rsvtDt']").focus();
+        // if ($isEmpty(rsvtDt)) {
+        //     alert("예약일시를 입력해주세요.");
+        //     $("input[name='rsvtDt']").focus();
+        //     return false;
+        // }
+        if ($isEmpty(rsvtDtYyyymmdd)) {
+            alert("예약 [일자]를 입력해주세요.");
+            $("input[name='rsvtDtYyyymmdd']").focus();
+            return false;
+        }if ($isEmpty(rsvtDtHh)) {
+            alert("예약 [시]을 입력해주세요.");
+            $("input[name='rsvtDtHh']").focus();
+            return false;
+        }if ($isEmpty(rsvtDtMm)) {
+            alert("예약 [분]을 입력해주세요.");
+            $("input[name='rsvtDtMm']").focus();
             return false;
         }
+
         if (rsvtTpCd == 0) {
-            alert("상담구분을 선택해주세요.");
+            alert("[상담구분]을 선택해주세요.");
             $("input[name='rsvtTpCd']").focus();
             return false;
         }
         if ($isEmpty(rsvtUsrNm)) {
-            alert("예약자명을 입력해주세요.");
+            alert("[예약자명]을 입력해주세요.");
             $("input[name='rsvtUsrNm']").focus();
             return false;
         }
         if ($isEmpty(rsvtCellNo)) {
-            alert("예약자 휴대전화번호를 입력해주세요.");
+            alert("[예약자 휴대전화번호]를 입력해주세요.");
             $("input[name='rsvtCellNo']").focus();
             return false;
         }

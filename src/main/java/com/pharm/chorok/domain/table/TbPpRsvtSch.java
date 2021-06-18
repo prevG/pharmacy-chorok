@@ -1,9 +1,5 @@
 package com.pharm.chorok.domain.table;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 
 @Data
@@ -19,6 +15,9 @@ public class TbPpRsvtSch extends TbCommColumn {
 
     
     private String rsvtDt;
+    private String rsvtDtYyyymmdd;
+    private String rsvtDtHh;
+    private String rsvtDtMm;
     private String rsvtDesc;
     private String picUsrNo;
     private Long rcmdUsrNo;
