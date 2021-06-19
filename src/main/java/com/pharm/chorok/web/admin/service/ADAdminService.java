@@ -18,12 +18,20 @@ public class ADAdminService {
     	return adminRepository.selectAdmin(tbCommUser);
 	}
 
-	public int removeAdmin(TbCommUser tbCommUser) throws Exception {
-    	return adminRepository.removeAdmin(tbCommUser);
+    public int addAdmin(TbCommUser tbCommUser) {
+    	return adminRepository.addAdmin(tbCommUser);
     }
     
-    public int saveAdmin(TbCommUser tbCommUser) throws Exception {
-    	return adminRepository.saveAdmin(tbCommUser);
+    public int modifyAdmin(TbCommUser tbCommUser) {
+    	return adminRepository.modifyAdmin(tbCommUser);
+    }
+    
+	public int modifyAdminPwd(TbCommUser tbCommUser) {
+		return adminRepository.modifyAdminPwd(tbCommUser);
+	}
+
+	public int removeAdmin(TbCommUser tbCommUser) {
+    	return adminRepository.removeAdmin(tbCommUser);
     }
     
     public int countAdminEmail(TbCommUser tbCommUser) {
@@ -32,6 +40,14 @@ public class ADAdminService {
 
 	public int countAdminPhone(TbCommUser tbCommUser) {
 		return adminRepository.countAdminPhone(tbCommUser);
+	}
+
+	public int countAdminEmailByExcludeUsrNo(TbCommUser tbCommUser) {
+		return adminRepository.countAdminEmailByExcludeUsrNo(tbCommUser);
+	}
+
+	public int countAdminPhoneByExcludeUsrNo(TbCommUser tbCommUser) {
+		return adminRepository.countAdminPhoneByExcludeUsrNo(tbCommUser);
 	}
 
 }

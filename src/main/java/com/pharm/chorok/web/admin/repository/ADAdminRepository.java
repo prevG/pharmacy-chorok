@@ -13,13 +13,21 @@ public interface ADAdminRepository {
 
 	public ArrayList<TbCommUser> selectAdmin(TbCommUser tbCommUser);
 	
+	public int addAdmin(TbCommUser tbCommUser);
+
+	public int modifyAdmin(TbCommUser tbCommUser);
+	
+	public int modifyAdminPwd(TbCommUser tbCommUser);
+
 	public int removeAdmin(TbCommUser tbCommUser);
 	
-	public int saveAdmin(TbCommUser tbCommUser);
-
 	public int countAdminEmail(TbCommUser tbCommUser);
 
 	public int countAdminPhone(TbCommUser tbCommUser);
-	
+
+	public int countAdminEmailByExcludeUsrNo(TbCommUser tbCommUser);
+
+	public int countAdminPhoneByExcludeUsrNo(TbCommUser tbCommUser);
+
 }
 

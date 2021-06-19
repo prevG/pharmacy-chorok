@@ -3,7 +3,7 @@
 
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADAdminRepository">
 
-	<select id="selectAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser" resultType="com.pharm.chorok.domain.table.TbCommUser">
+	<select id="selectAdmin" resultType="com.pharm.chorok.domain.table.TbCommUser">
 		/** com.pharm.chorok.web.admin.repository.ADAdminRepository */
 		SELECT USR_NO,
 				USR_EML,
@@ -45,18 +45,10 @@
 		</where>
 	</select>
 	
-	<update id="removeAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser">
-		UPDATE TB_COMM_USER
-		SET DEL_YN = 'Y'
-		WHERE 1=1
-		AND USR_NO = ${usrNo}
-	</update>
-
-	<insert id="saveAdmin" parameterType="com.pharm.chorok.domain.table.TbCommUser">
+	<insert id="addAdmin">
 		INSERT INTO TB_COMM_USER
 		(	
 			USR_EML,
-			USR_PWD,
 			USR_NM,
 			USR_PHN_NO,
 			DATA_OWNR_ID,
@@ -70,7 +62,6 @@
 		VALUES
 		(
 			#{usrEml},
-			#{usrPwd},
 			#{usrNm},
 			#{usrPhnNo},
 			#{dataOwnrId},
@@ -83,6 +74,34 @@
 		)
 	</insert>
 	
+	<update id="modifyAdmin">
+		UPDATE TB_COMM_USER
+		SET USR_EML = #{usrEml}
+		  , USR_PWD = #{usrPwd}
+		  , USR_NM = #{usrNm}
+		  , USR_PHN_NO = #{usrPhnNo}
+		  , DATA_OWNR_ID = #{dataOwnrId}
+		  , USR_GRADE = #{usrGrade}
+		  , USR_AUTH = #{usrAuth}
+		  , USR_APRV = #{usrAprv}
+		  , DEL_YN = 'Y'
+		  , UPD_DT = NOW()
+		  , UPD_USR_NO = #{updUsrNo}
+		WHERE USR_NO = ${usrNo}
+	</update>
+	
+	<update id="modifyAdminPwd">
+		UPDATE TB_COMM_USER
+		SET USR_PWD = #{usrPwd}
+		WHERE USR_NO = ${usrNo}
+	</update>
+	
+	<update id="removeAdmin">
+		UPDATE TB_COMM_USER
+		SET DEL_YN = 'Y'
+		WHERE USR_NO = ${usrNo}
+	</update>
+
 	<select id="countAdminEmail" resultType="java.lang.Integer">
 		SELECT COUNT(USR_NO)
 		FROM TB_COMM_USER
@@ -93,6 +112,20 @@
 		SELECT COUNT(USR_NO)
 		FROM TB_COMM_USER
 		WHERE USR_PHN_NO = #{usrPhnNo}
+	</select>
+	
+	<select id="countAdminEmailByExcludeUsrNo" resultType="java.lang.Integer">
+		SELECT COUNT(USR_NO)
+		FROM TB_COMM_USER
+		WHERE USR_EML = #{usrEml}
+		AND USR_NO != ${usrNo}
+	</select>
+	
+	<select id="countAdminPhoneByExcludeUsrNo" resultType="java.lang.Integer">
+		SELECT COUNT(USR_NO)
+		FROM TB_COMM_USER
+		WHERE USR_PHN_NO = #{usrPhnNo}
+		AND USR_NO != ${usrNo}
 	</select>
 	
 </mapper>

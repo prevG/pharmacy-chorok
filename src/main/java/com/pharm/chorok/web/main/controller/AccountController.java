@@ -120,7 +120,7 @@ public class AccountController {
 			user.setUsrPwd(usrPwd);
 			
 			// DB에 저장
-			int ret = adUserService.saveAdmin(user);
+			int ret = adUserService.addAdmin(user);
 			
 			if(ret > 0) {
 				resMsg.setStatus(CustomException.SUCCESS);

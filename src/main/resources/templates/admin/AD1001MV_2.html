@@ -60,13 +60,12 @@
 		<div class="easyui-panel p-3 mb-2" title="조회결과">
 		  <div class="d-flex justify-content-between mb-1">
 			<div>
-			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addAdmin();">추가</a> 
+			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="addAdminPop();">추가</a> 
 			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="removeAdmin();">삭제</a> 
 			</div>
 			<div> 
-			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="editAdmin();">편집</a>
-			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveAdmin();">저장</a>
-			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="cancelAdmin();">취소</a>
+			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="modifyAdminPop();">편집</a>
+			  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-lock'" onClick="modifyAdminPwdPop();">비밀번호 변경</a>
 			</div>
 		  </div>
 		  <table id="dg" style="width:100%;min-height:530px;"></table>
@@ -75,41 +74,40 @@
     </section>
     
 	<div id="addDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
-			<input type="hidden" name="dlg_usrNo" id="dlg_usrNo" class="textbox-value">
+		<form id="addFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
-					<input name="dlg_em" id="dlg_em" class="easyui-textbox" data-options="label:'이메일:',required:true,validType:'email'" style="width:100%">
+					<input name="dlg_usrEml" class="easyui-textbox" data-options="label:'이메일:',required:true,validType:'email'" style="width:100%">
 				</div>
 				<div class="col">
-				  	<input name="dlg_pw" id="dlg_pw" class="easyui-passwordbox" placeholder="Password" data-options="label:'패스워드:',required:true" style="width:100%;">
+				  	<input name="dlg_usrPwd" class="easyui-passwordbox" placeholder="Password" data-options="label:'패스워드:',required:true" style="width:100%;">
 				</div>
 			</div>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
-					<input name="dlg_usrNm" id="dlg_usrNm" class="easyui-textbox" data-options="label:'사용자이름:',required:true" style="width: 100%">
+					<input name="dlg_usrNm" class="easyui-textbox" data-options="label:'사용자이름:',required:true" style="width: 100%">
 				</div>
 				<div class="col">
-				  	<input name="dlg_usrPhnNo" id="dlg_usrPhnNo" class="easyui-textbox" data-options="label:'핸드폰번호:',required:true" style="width:100%">
+				  	<input name="dlg_usrPhnNo" class="easyui-textbox" data-options="label:'핸드폰번호:',required:true" style="width:100%">
 				</div>
 			</div>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
-					<select id="dlg_usrGrade" name="dlg_usrGrade" class="easyui-combobox" data-options="label:'직위:',required:true" style="width:100%;">
+					<select name="dlg_usrGrade" class="easyui-combobox" data-options="label:'직위:',required:true" style="width:100%;">
 					</select>
 				</div>
 				<div class="col">
-					<select id="dlg_usrAuth" name="dlg_usrAuth" class="easyui-combobox" data-options="label:'권한:',required:true" style="width:100%;">
+					<select name="dlg_usrAuth" class="easyui-combobox" data-options="label:'권한:',required:true" style="width:100%;">
 					</select>
 				</div>
 			</div>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col-6">
-					<select id="dlg_usrAprv" name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부:',required:true" style="width:100%;">
+					<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부:',required:true" style="width:100%;">
 					</select>
 				</div>
 				<div class="col-6">
-					<select id="dlg_delYn" name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부:',required:true" style="width:100%;">
+					<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부:',required:true" style="width:100%;">
 						<option value="N" selected="selected">비삭제</option>
 					    <option value="Y">삭제</option>
 					</select>
@@ -117,8 +115,74 @@
 			</div>
 		</form>
 		<div style="text-align:center;padding:5px 0">
-			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="saveDlgAdmin();">저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="addAdmin();">저장</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onClick="javascript:$('#addDlg').dialog('close');">취소</a>
+		</div>
+	</div>
+	
+	<div id="modDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="modFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
+			<input type="hidden" name="dlg_usrNo" class="textbox-value">
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<input name="dlg_usrEml" class="easyui-textbox" data-options="label:'이메일:',required:true,validType:'email'" style="width:100%">
+				</div>
+				<div class="col">
+				</div>
+			</div>
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<input name="dlg_usrNm" class="easyui-textbox" data-options="label:'사용자이름:',required:true" style="width: 100%">
+				</div>
+				<div class="col">
+				  	<input name="dlg_usrPhnNo" class="easyui-textbox" data-options="label:'핸드폰번호:',required:true" style="width:100%">
+				</div>
+			</div>
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<select name="dlg_usrGrade" class="easyui-combobox" data-options="label:'직위:',required:true" style="width:100%;">
+					</select>
+				</div>
+				<div class="col">
+					<select name="dlg_usrAuth" class="easyui-combobox" data-options="label:'권한:',required:true" style="width:100%;">
+					</select>
+				</div>
+			</div>
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col-6">
+					<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부:',required:true" style="width:100%;">
+					</select>
+				</div>
+				<div class="col-6">
+					<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부:',required:true" style="width:100%;">
+						<option value="N" selected="selected">비삭제</option>
+					    <option value="Y">삭제</option>
+					</select>
+				</div>
+			</div>
+		</form>
+		<div style="text-align:center;padding:5px 0">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="modifyAdmin();">저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onClick="javascript:$('#modDlg').dialog('close');">취소</a>
+		</div>
+	</div>
+	
+	
+	<div id="pwdDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="pwdFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
+			<input type="hidden" name="dlg_usrNo" class="textbox-value">
+			<div style="margin-bottom: 10px" class="row">
+				<div class="col">
+					<input name="dlg_usrPwd" class="easyui-passwordbox" placeholder="Password" data-options="label:'패스워드:',required:true" style="width:100%;">
+				</div>
+				<div class="col">
+				  	<input name="dlg_usrPwdCfm" class="easyui-passwordbox" placeholder="Password" data-options="label:'패스워드 확인:',required:true" style="width:100%;">
+				</div>
+			</div>
+		</form>
+		<div style="text-align:center;padding:5px 0">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="modifyAdminPwd();">저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onClick="javascript:$('#pwdDlg').dialog('close');">취소</a>
 		</div>
 	</div>
 	

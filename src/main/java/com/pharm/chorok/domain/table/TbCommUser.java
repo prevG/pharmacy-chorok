@@ -18,6 +18,7 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	public static final String USR_PHN_NO = "usrPhnNo";
 	public static final String USR_EML = "usrEml";
 	public static final String USR_PWD = "usrPwd";
+	public static final String USR_PWD_CFM = "usrPwdCfm";
 
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +43,7 @@ public class TbCommUser extends TbCommColumn implements UserDetails {
 	private String delYn;
 	//private String dataOwnrId;
 	//private String regUsrNo;
+	private String usrPwdCfm;
 	
 	private String usrGradeVal;
 	private String usrAuthVal;

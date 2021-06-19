@@ -39,7 +39,7 @@ public class ADAdminController {
 	
 	@PostMapping("/getAdmin")
 	@ResponseBody
-	public String getAdmins( TbCommUser tbCommUser ) throws Exception {
+	public String getAdmin(TbCommUser tbCommUser) {
 		ArrayList<TbCommUser> tbCommUsers = adminService.selectAdmin(tbCommUser);
 		
 		JSONObject result = new JSONObject();
@@ -53,9 +53,9 @@ public class ADAdminController {
 			data.put("updUsrNo", tbCommUsers.get(i).getUpdUsrNo());
 			data.put("dataOwnrId", tbCommUsers.get(i).getDataOwnrId());
 			data.put("password", tbCommUsers.get(i).getPassword());
-			data.put("userName", tbCommUsers.get(i).getUsername());
-			data.put("userAuth", tbCommUsers.get(i).getUsrAuth());
-			data.put("userGrade", tbCommUsers.get(i).getUsrGrade());
+			data.put("usrName", tbCommUsers.get(i).getUsername());
+			data.put("usrAuth", tbCommUsers.get(i).getUsrAuth());
+			data.put("usrGrade", tbCommUsers.get(i).getUsrGrade());
 			data.put("usrNm", tbCommUsers.get(i).getUsrNm());
 			data.put("usrPhnNo", tbCommUsers.get(i).getUsrPhnNo());
 			data.put("usrPwd", tbCommUsers.get(i).getUsrPwd());
@@ -75,34 +75,9 @@ public class ADAdminController {
 		return result.toString();
 	}
 	
-	@GetMapping("/modifyAdmin")
+	@PostMapping("/addAdmin")
 	@ResponseBody
-	public String modifyUser( TbCommUser tbCommUser ) throws Exception {
-		JSONObject result = new JSONObject();
-		return result.toString();
-	}
-	
-	@PostMapping("/removeAdmin")
-	@ResponseBody
-	public String removeAdmin( TbCommUser tbCommUser ) throws Exception {
-		Assert.hasLength(tbCommUser.getUsrNo(), "User id must not be empty");
-		
-		JSONObject result = new JSONObject();
-		int ret = adminService.removeAdmin(tbCommUser);
-		if (ret > 0) {
-			result.put("success", true);
-			result.put("Msg", "작업성공하였습니다.");
-		} else {
-			result.put("success", false);
-			result.put("Msg", "작업실패했습니다.");
-		}
-		
-		return result.toString();
-	}
-	
-	@PostMapping("/saveAdmin")
-	@ResponseBody
-	public String saveAdmin( TbCommUser tbCommUser ) throws Exception {
+	public String saveAdmin(TbCommUser tbCommUser) {
 		Assert.hasLength(tbCommUser.getUsrEml(), "Email must not be empty");
 		Assert.hasLength(tbCommUser.getUsrPwd(), "Password must not be empty");
 		Assert.hasLength(tbCommUser.getUsrNm(), "User name must not be empty");
@@ -124,7 +99,85 @@ public class ADAdminController {
 			return result.toString();
 		}
 		
-		int ret = adminService.saveAdmin(tbCommUser);
+		int ret = adminService.addAdmin(tbCommUser);
+		if (ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공하였습니다.");
+		} else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
+		return result.toString();
+	}
+	
+	@PostMapping("/modifyAdmin")
+	@ResponseBody
+	public String modifyAdmin(TbCommUser tbCommUser) {
+		Assert.hasLength(tbCommUser.getUsrNo(), "User id must not be empty");
+		Assert.hasLength(tbCommUser.getUsrEml(), "Email must not be empty");
+		Assert.hasLength(tbCommUser.getUsrNm(), "User name must not be empty");
+		Assert.hasLength(tbCommUser.getUsrPhnNo(), "Phone number must not be empty");
+
+		JSONObject result = new JSONObject();
+		int emailCount = adminService.countAdminEmailByExcludeUsrNo(tbCommUser);
+		if (emailCount > 0) {
+			result.put("success", false);
+			result.put("Msg", "이메일이 이미 존재합니다.");
+			
+			return result.toString();
+		}
+		int phoneCount = adminService.countAdminPhoneByExcludeUsrNo(tbCommUser);
+		if (phoneCount > 0) {
+			result.put("success", false);
+			result.put("Msg", "핸드폰번호가 이미 존재합니다.");
+			
+			return result.toString();
+		}
+		
+		int ret = adminService.modifyAdmin(tbCommUser);
+		if (ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공하였습니다.");
+		} else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
+		return result.toString();
+	}
+	
+	@PostMapping("/modifyAdminPwd")
+	@ResponseBody
+	public String modifyAdminPwd(TbCommUser tbCommUser) {
+		Assert.hasLength(tbCommUser.getUsrPwd(), "Passworrd must not be empty");
+		Assert.hasLength(tbCommUser.getUsrPwdCfm(), "Confirm passworrd must not be empty");
+		
+		JSONObject result = new JSONObject();
+		if (!tbCommUser.getUsrPwd().equals(tbCommUser.getUsrPwdCfm())) {
+			result.put("success", false);
+			result.put("Msg", "패스워드가 일치하지 않습니다.");
+		}
+		
+		int ret = adminService.modifyAdminPwd(tbCommUser);
+		if (ret > 0) {
+			result.put("success", true);
+			result.put("Msg", "작업성공하였습니다.");
+		} else {
+			result.put("success", false);
+			result.put("Msg", "작업실패했습니다.");
+		}
+		
+		return result.toString();
+	}
+	
+	@PostMapping("/removeAdmin")
+	@ResponseBody
+	public String removeAdmin(TbCommUser tbCommUser) {
+		Assert.hasLength(tbCommUser.getUsrNo(), "User id must not be empty");
+		
+		JSONObject result = new JSONObject();
+		int ret = adminService.removeAdmin(tbCommUser);
 		if (ret > 0) {
 			result.put("success", true);
 			result.put("Msg", "작업성공하였습니다.");
