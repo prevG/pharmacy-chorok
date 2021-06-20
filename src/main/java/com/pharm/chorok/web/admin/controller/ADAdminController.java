@@ -77,7 +77,7 @@ public class ADAdminController {
 	
 	@PostMapping("/addAdmin")
 	@ResponseBody
-	public String saveAdmin(TbCommUser tbCommUser) {
+	public String addAdmin(TbCommUser tbCommUser) {
 		Assert.hasLength(tbCommUser.getUsrEml(), "Email must not be empty");
 		Assert.hasLength(tbCommUser.getUsrPwd(), "Password must not be empty");
 		Assert.hasLength(tbCommUser.getUsrNm(), "User name must not be empty");

@@ -1,9 +1,11 @@
-var gDataArr = new Array();
-
+/******************************************************
+ * 
+ * administrator
+ * 
+ ******************************************************/
 var gC1003; //직윈 
 var gC1002; //권한
 var gC1010; //승인
-var editingRowIdx = -1; 
 
 function fnSearch() {
 	var queryParams = $("#dg").datagrid('options').queryParams;
@@ -12,14 +14,15 @@ function fnSearch() {
 	queryParams.cbAppv = $('#cb_usrAprv').combobox('getValue');
 	queryParams.target = "grid";
 	queryParams.srchTxt = $("#srchTxt").val();
+	
 	$('#dg').datagrid('reload');
 }
-
+/*
 function formatDate(value, row) {
   var d = new Date(value);
   return $.fn.datebox.defaults.formatter(d);
 }
-
+*/
 function fnInit() {
 	// init combo
 	initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '0' });

@@ -35,12 +35,12 @@
 		<div class="easyui-panel p-3 mb-2" title="검색">
 		  <div class="form-inline mb-2">
 		    <select class="easyui-combobox" id="cb_srch" name="cb_srch" label="검색어 :" labelPosition="left" style="width:250px;" required="required">
-		      <option value="all" selected="selected">선택</option>
-		      <option value="nm">이름</option>
+		      <option value="all" selected="selected">전체</option>
+		      <option value="nm">사용자이름</option>
 		      <option value="em">이메일</option>
 		    </select>
 		    <div class="ml-3">
-			  <input class="easyui-searchbox" id="srchTxt" style="width:300px;">		    
+			  <input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width:300px;">		    
 		    </div>
 		    <div class="ml-3">
 			  <a href="#" class="easyui-linkbutton" iconCls="icon-ok" style="width:100px;height:32px" onClick="fnSearch();">검색</a>		    
@@ -122,7 +122,7 @@
 	
 	<div id="modDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="modFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
-			<input type="hidden" name="dlg_usrNo" class="textbox-value">
+			<input type="hidden" name="dlg_usrNo">
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
 					<input name="dlg_usrEml" class="easyui-textbox" data-options="label:'이메일:',required:true,validType:'email'" style="width:100%">
@@ -170,7 +170,7 @@
 	
 	<div id="pwdDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="pwdFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
-			<input type="hidden" name="dlg_usrNo" class="textbox-value">
+			<input type="hidden" name="dlg_usrNo">
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
 					<input name="dlg_usrPwd" class="easyui-passwordbox" placeholder="Password" data-options="label:'패스워드:',required:true" style="width:100%;">
