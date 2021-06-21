@@ -1,22 +1,20 @@
-package com.pharm.chorok.web.common.controller;
+package com.pharm.chorok.common.controller;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import groovyjarjarpicocli.CommandLine.Help.TextTable.Cell;
+
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
-
-//import groovyjarjarpicocli.CommandLine.Help.TextTable.Cell;
-
-import org.apache.poi.ss.usermodel.Cell;
 @Component("sampleXls")
 public class SampleXlsView extends AbstractXlsView {
 	@Override

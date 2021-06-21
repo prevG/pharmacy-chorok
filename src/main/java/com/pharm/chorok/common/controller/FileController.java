@@ -1,4 +1,4 @@
-package com.pharm.chorok.web.common.controller;
+package com.pharm.chorok.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
