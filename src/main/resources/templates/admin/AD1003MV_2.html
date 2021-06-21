@@ -40,23 +40,33 @@
 		      <option value="P">핸드폰번호</option>
 		    </select>
 		    <div class="ml-3">
-			  <input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width:300px;">		    
+			  <input id="srchTxt" name="srchTxt" 
+			  		 class="easyui-searchbox" 
+			  		 style="width:300px;">		    
 		    </div>
 		    <div class="ml-3">
 			  <a href="#" class="easyui-linkbutton" iconCls="icon-ok" style="width:100px;height:32px" onClick="fnSearch();">검색</a>		    
 		    </div>
 		  </div>
 		  <div class="form-inline mb-2">
-	        <input class="easyui-datebox" id="startDttm" name="startDttm" label="등록기간 : " labelPosition="left" style="width: 250px;">
+	        <input id="startDttm" name="startDttm" 
+	        	   class="easyui-datebox" 
+	        	   label="등록기간 : " 
+	        	   labelPosition="left" 
+	        	   data-options="formatter:myformatter,parser:myparser"
+	        	   style="width: 250px;">
 		    <div class="ml-1">
 		      ~
 		    </div>
 		    <div class="ml-2">
-		      <input class="easyui-datebox" id="endDttm" name="endDttm" style="width: 190px;">
+		      <input id="endDttm" name="endDttm"
+		      		 class="easyui-datebox" 
+		      		 data-options="formatter:myformatter,parser:myparser"
+		      		 style="width: 190px;">
 		    </div>
 		  </div>
 		  <div class="form-inline">
-		    <select class="easyui-combobox" id="cbDelYn" name="cbDelYn" label="삭제유무 :" labelPosition="left" style="width: 250px;">
+		    <select id="cbDelYn" name="cbDelYn" class="easyui-combobox" label="삭제유무 : " labelPosition="left" style="width: 250px;">
 		      <option value="A" selected="selected">전체</option>
 		      <option value="Y">삭제</option>
 		      <option value="N">비삭제</option>
@@ -80,38 +90,103 @@
       </div><!-- /.container-fluid -->
     </section>
     
-	<div id="addDlg" class="easyui-dialog" style="width:700px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="addFrm" method="post" style="margin: 0; padding: 20px 50px" novalidate>
-			<div style="margin-bottom: 10px" class="row">
-				<div class="col">
-					<input name="dlg_custUsrNm" class="easyui-textbox" data-options="label:'고객이름 : ',required:true" style="width:100%">
-				</div>
-				<div class="col">
-				  	<input name="dlg_custCellNo" class="easyui-textbox" data-options="label:'핸드폰번호 : ',required:true" style="width:100%;">
+	<div id="addDlg" class="easyui-dialog" style="width:1200px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="addFrm" method="post" novalidate>
+		<div class="row">
+			<div class="col">
+				<div class="easyui-accordion" style="width:580px;height:250px;">
+					<div title="기본정보" data-options="collapsible:false" style="padding: 10px;">
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col">
+								<input name="dlg_custUsrNm" class="easyui-textbox" data-options="label:'고객이름',required:true" style="width:100%">
+							</div>
+							<div class="col">
+							  	<input name="dlg_custCellNo" class="easyui-textbox" data-options="label:'핸드폰번호',required:true" style="width:100%;">
+							</div>
+						</div>
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col">
+								<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'생년월일',required:true" style="width: 100%">
+							</div>
+							<div class="col">
+								<div class="form-inline" style="padding-top: 5px;">
+									<label style="margin-right: 55px;">성별</label>
+									<input name="dlg_custGenTpCd" class="easyui-radiobutton" label="여성" labelWidth="50" labelPosition="after">
+									<input name="dlg_custGenTpCd" class="easyui-radiobutton" label="남성" labelWidth="50" labelPosition="after">
+								</div>
+							</div>
+						</div>
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col-6">
+								<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부',required:true" style="width:100%;">
+								</select>
+							</div>
+							<div class="col-6">
+								<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부',required:true" style="width:100%;">
+									<option value="N" selected="selected">비삭제</option>
+								    <option value="Y">삭제</option>
+								</select>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div style="margin-bottom: 10px" class="row">
-				<div class="col">
-					<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'생년월일 : ',required:true" style="width: 100%">
-				</div>
-				<div class="col">
-				  	<input name="dlg_custGenTpCd" class="easyui-textbox" data-options="label:'성별 : ',required:true" style="width:100%">
-				</div>
-			</div>
-			<div style="margin-bottom: 10px" class="row">
-				<div class="col-6">
-					<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부 : ',required:true" style="width:100%;">
-					</select>
-				</div>
-				<div class="col-6">
-					<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부 : ',required:true" style="width:100%;">
-						<option value="N" selected="selected">비삭제</option>
-					    <option value="Y">삭제</option>
-					</select>
+			<div class="col">
+				<div class="easyui-accordion" style="width:580px;height:250px;">
+					<div title="결혼정보" data-options="collapsed:false,collapsible:false" style="padding: 10px;">
+					
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="row" style="padding-top: 10px;">
+			<div class="col">
+				<div class="easyui-accordion" style="width:580px;height:250px;">
+					<div title="주소정보" data-options="collapsible:false" style="padding: 10px;">
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col">
+								<input name="dlg_custUsrNm" class="easyui-textbox" data-options="label:'우편번호'" style="width:100%">
+							</div>
+							<div class="col">
+							</div>
+						</div>
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col-12">
+								<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'주소'" style="width: 90%">
+							</div>
+						</div>
+						<div style="margin-bottom: 10px" class="row">
+							<div class="col-12">
+								<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'상세주소'" style="width: 90%">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="easyui-accordion" style="width:580px;height:250px;">
+					<div title="내원경로" data-options="collapsed:false,collapsible:false" style="padding: 10px;">
+						<div class="col-12" style="margin-bottom: 10px;">
+							<input name="chk" class="easyui-checkbox" label="지인소개" labelWidth="100" labelPosition="after">
+						</div>
+						<div class="col-12" style="margin-bottom: 10px;">
+							<input name="chk" class="easyui-checkbox" label="홈페이지" labelWidth="100" labelPosition="after">
+						</div>
+						<div class="col-12" style="margin-bottom: 10px;">
+							<input name="chk" class="easyui-checkbox" label="카카오톡 검색창" labelWidth="100" labelPosition="after">
+						</div>
+						<div class="col-12" style="margin-bottom: 10px;">
+							<input name="chk" class="easyui-checkbox" label="블로그 및 인터넷" labelWidth="100" labelPosition="after">
+						</div>
+						<div class="col-12" style="margin-bottom: 10px;">
+							<input name="chk" class="easyui-checkbox" label="기타" labelWidth="100" labelPosition="after">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		</form>
-		<div style="text-align:center;padding:5px 0">
+		<div style="text-align:center;padding:10px 0">
 			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="addUser();">저장</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onClick="javascript:$('#addDlg').dialog('close');">취소</a>
 		</div>
@@ -122,27 +197,27 @@
 			<input type="hidden" name="dlg_custId">
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
-					<input name="dlg_custUsrNm" class="easyui-textbox" data-options="label:'고객이름 : ',required:true" style="width:100%">
+					<input name="dlg_custUsrNm" class="easyui-textbox" data-options="label:'고객이름',required:true" style="width:100%">
 				</div>
 				<div class="col">
-					<input name="dlg_custCellNo" class="easyui-textbox" data-options="label:'핸드폰번호 : ',required:true" style="width:100%;">
+					<input name="dlg_custCellNo" class="easyui-textbox" data-options="label:'핸드폰번호',required:true" style="width:100%;">
 				</div>
 			</div>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col">
-					<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'생년월일 : ',required:true" style="width: 100%">
+					<input name="dlg_custBirthDt" class="easyui-textbox" data-options="label:'생년월일',required:true" style="width: 100%">
 				</div>
 				<div class="col">
-				  	<input name="dlg_custGenTpCd" class="easyui-textbox" data-options="label:'성별 : ',required:true" style="width:100%">
+				  	<input name="dlg_custGenTpCd" class="easyui-textbox" data-options="label:'성별',required:true" style="width:100%">
 				</div>
 			</div>
 			<div style="margin-bottom: 10px" class="row">
 				<div class="col-6">
-					<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부 : ',required:true" style="width:100%;">
+					<select name="dlg_usrAprv" class="easyui-combobox" data-options="label:'승인여부',required:true" style="width:100%;">
 					</select>
 				</div>
 				<div class="col-6">
-					<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부 : ',required:true" style="width:100%;">
+					<select name="dlg_delYn" class="easyui-combobox" data-options="label:'삭제여부',required:true" style="width:100%;">
 						<option value="N" selected="selected">비삭제</option>
 					    <option value="Y">삭제</option>
 					</select>

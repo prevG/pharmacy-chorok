@@ -26,6 +26,9 @@
 		FROM TB_CUSTOMER
 		<where>
 			<choose>
+				<when test='cbSrch != null and cbSrch.equals("A")'>
+					(CUST_USR_NM LIKE CONCAT('%',#{srchTxt},'%') OR CUST_CELL_NO LIKE CONCAT('%',#{srchTxt},'%'))
+				</when>
 				<when test='cbSrch != null and cbSrch.equals("N")'>
 					CUST_USR_NM LIKE CONCAT('%',#{srchTxt},'%')
 				</when>
@@ -42,7 +45,7 @@
 				</when>
 			</choose>
 			<if test='startDttm != null'>
-				AND REG_DT <![CDATA[ >= ]]> DATE(#{startDttm})
+				AND REG_DT >= DATE(#{startDttm})
  			</if>
  			<if test='endDttm != null'>
 				AND REG_DT <![CDATA[ <= ]]> DATE(#{endDttm})
