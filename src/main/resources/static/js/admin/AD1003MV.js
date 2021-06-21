@@ -70,18 +70,39 @@ function fnInit() {
         		field: 'custGenTpCd', 
         		title: '성별', 
         		align: 'center', 
-        		width: '350', 
+        		width: '100', 
         		editor: 'text'
         	},
         	{
         		field: 'mrgYn', 
         		title: '결혼유무', 
         		align: 'center', 
-        		width: '150', 
+        		width: '100', 
         		editor: {
         			type: 'checkbox',
         			options: { on: 'Y', off: 'N' }
         		}
+        	},
+        	{
+        		field: 'zipCode', 
+        		title: '우편번호', 
+        		align: 'center', 
+        		width: '100', 
+        		editor: 'text'
+        	},
+        	{
+        		field: 'addr1', 
+        		title: '주소', 
+        		align: 'center', 
+        		width: '200', 
+        		editor: 'text'
+        	},
+        	{
+        		field: 'addr2', 
+        		title: '상세주소', 
+        		align: 'center', 
+        		width: '150', 
+        		editor: 'text'
         	},
         	{
         		field: 'delYn', 
@@ -101,6 +122,9 @@ function addUserPop() {
 	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','회원 추가');
     $('#addFrm').form('clear');
     $('#addFrm').form('load', {
+    	/*dlg_custGenTpCd : 'F',
+    	dlg_mrgYn : 'Y',
+    	dlg_brstFdgYn : 'N',*/
 		dlg_delYn : '00000'
 	});
 }
@@ -117,6 +141,14 @@ function modifyUserPop() {
 		dlg_custCellNo : row.custCellNo,
 		dlg_custBirthDt : row.custBirthDt,
 		dlg_custGenTpCd : row.custGenTpCd,
+    	dlg_mrgYn : row.mrgYn,
+    	dlg_pcrtChdCnt : row.pcrtChdCnt,
+    	dlg_lstPcrtYear : row.lstPcrtYear,
+    	dlg_brstFdgYn : row.brstFdgYn,
+		dlg_zipCode : row.zipCode,
+		dlg_addr1 : row.addr1,
+		dlg_addr2 : row.addr2,
+		dlg_vistTpCd : row.vistTpCd,
 		dlg_delYn : row.delYn
 	});
 }
@@ -126,7 +158,15 @@ function addUser() {
 		custUsrNm : $('#addFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
 		custCellNo : $('#addFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
 		custBirthDt : $('#addFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-		custGenTpCd : $('#addFrm input[textboxName=dlg_custGenTpCd]').textbox('getValue'),
+		custGenTpCd : $('#addFrm input[name=dlg_custGenTpCd]:checked').val(),
+		mrgYn : $('#addFrm input[name=dlg_mrgYn]:checked').val(),
+		pcrtChdCnt : $('#addFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+		lstPcrtYear : $('#addFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+		brstFdgYn : $('#addFrm input[name=dlg_brstFdgYn]:checked').val(),
+		vistTpCd : $('#addFrm input[name=dlg_vistTpCd]:checked').val(),
+		zipCode : $('#addFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+		addr1 : $('#addFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+		addr2 : $('#addFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 		delYn : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue')
 	};
 	
@@ -152,10 +192,17 @@ function modifyUser() {
 		custUsrNm : $('#modFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
 		custCellNo : $('#modFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
 		custBirthDt : $('#modFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-		custGenTpCd : $('#modFrm input[textboxName=dlg_custGenTpCd]').textbox('getValue'),
+		custGenTpCd : $('#modFrm input[name=dlg_custGenTpCd]:checked').val(),
+		mrgYn : $('#modFrm input[name=dlg_mrgYn]:checked').val(),
+		pcrtChdCnt : $('#modFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+		lstPcrtYear : $('#modFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+		brstFdgYn : $('#modFrm input[name=dlg_brstFdgYn]:checked').val(),
+		vistTpCd : $('#modFrm input[name=dlg_vistTpCd]:checked').val(),
+		zipCode : $('#modFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+		addr1 : $('#modFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+		addr2 : $('#modFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 		delYn : $('#modFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#modFrm select[textboxName=dlg_delYn]').combobox('getValue')
 	};
-	
 	$.post('/admin/modifyUser', param, function(result) {
 		if (result.success) {
 			$.messager.show({ title: 'Success', msg: result.Msg });
