@@ -54,7 +54,7 @@
 	</select>
 	
 	<insert id="addUser">
-		INSERT INTO TB_CUSTOMER_22222
+		INSERT INTO TB_CUSTOMER
 		(	
 			CUST_USR_NM
 			, CUST_CELL_NO
