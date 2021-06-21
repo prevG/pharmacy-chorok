@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/chorok_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>복용상담스케쥴</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row g-3">
+				<div class="col-auto">
+				  <input type="text" class="form-control" id="dosgDt" name="dosgDt" placeholder="복용일자" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}">
+				</div>
+				<div class="col-auto">
+				  <button type="submit" class="btn btn-primary mb-3" id="btnSearch" name="btnSearch" >조회</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="table01"></div>
+                </div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+                </div>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript" th:src="@{/js/customer/CUS2001ML.js}"></script> 
+</div>
+</html>
