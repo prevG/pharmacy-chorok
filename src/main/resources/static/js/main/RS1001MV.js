@@ -24,7 +24,7 @@ $(document).ready(function () {
 
 
     /**************************************************************
-     * 예약고객의 상세스케쥴 보기
+     * 주간스케줄표의 예약고객을 클릭할 경우
      **************************************************************/
     $(document).off("click", "button[name='rsvtSch']").on("click", "button[name='rsvtSch']", function (e) {
 
@@ -35,6 +35,9 @@ $(document).ready(function () {
         var params = {
             "rsvtId": $(e.target).closest("div").attr("data-id")
         }
+
+        $( document ).removeClass("btn_sel");
+        $( this ).addClass("btn_sel");
         findReservationDetail(params);
     });
 

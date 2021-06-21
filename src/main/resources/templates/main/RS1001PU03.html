@@ -18,7 +18,7 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>이름</th>
+                                    <th>이름<strong class="req">*</strong></th>
                                     <td>
                                         <div class="input-group input-group-sm" style="width:200px;">
                                             <input type="text" name="custUsrNm" th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}" class="form-control" tabindex="1">
@@ -26,7 +26,7 @@
                                             <input type="text" name="rsvtId"    th:value="${#strings.isEmpty(rsvtInfo?.rsvtId)} ? 0 : ${rsvtInfo?.rsvtId}"    class="form-control">
                                         </div>
                                     </td>
-                                    <th>연락처</th>
+                                    <th>휴대전화번호<strong class="req">*</strong></th>
                                     <td>
                                         <div class="input-group input-group-sm"
                                             style="width:200px;">
@@ -38,7 +38,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>생년월일</th>
+                                    <th>생년월일<strong class="req">*</strong></th>
                                     <td>
                                         <div class="input-group input-group-sm"
                                             style="width:200px;">
@@ -49,7 +49,7 @@
                                                 tabindex="3">
                                         </div>
                                     </td>
-                                    <th>성별</th>
+                                    <th>성별<strong class="req">*</strong></th>
                                     <td>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
@@ -88,7 +88,7 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>결혼유무</th>
+                                    <th>결혼유무<strong class="req">*</strong></th>
                                     <td colspan="3">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
@@ -109,7 +109,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>출산 자녀수</th>
+                                    <th>출산 자녀수<strong class="req">*</strong></th>
                                     <td>
                                         <select name="pcrtChdCnt" class="form-select" style="min-width:100px;" tabindex="6">
                                             <option value="0"  th:selected="${'0'  eq custInfo?.pcrtChdCnt}">0 명</option>
@@ -123,11 +123,6 @@
                                             <option value="8"  th:selected="${'8'  eq custInfo?.pcrtChdCnt}">8 명</option>
                                             <option value="9"  th:selected="${'9'  eq custInfo?.pcrtChdCnt}">9 명</option>
                                             <option value="10" th:selected="${'10' eq custInfo?.pcrtChdCnt}">10 명</option>
-                                            <option value="11" th:selected="${'11' eq custInfo?.pcrtChdCnt}">11 명</option>
-                                            <option value="12" th:selected="${'12' eq custInfo?.pcrtChdCnt}">12 명</option>
-                                            <option value="13" th:selected="${'13' eq custInfo?.pcrtChdCnt}">13 명</option>
-                                            <option value="14" th:selected="${'14' eq custInfo?.pcrtChdCnt}">14 명</option>
-                                            <option value="15" th:selected="${'15' eq custInfo?.pcrtChdCnt}">15 명</option>
                                         </select>
                                     </td>
                                     <th>마지막 출산년도</th>
@@ -257,8 +252,10 @@
                                     <tr>
                                         <th>우편번호</th>
                                         <td>
-                                            <div class="input-group input-group-sm" style="width:100px;">
-                                                <input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="10">
+                                            <div class="input-group input-group-sm" style="width:200px;">
+                                                <input type="text" id="zipCode" name="zipCode" th:value="${custInfo?.zipCode}" class="form-control" tabindex="10"
+                                                style="margin-right:8px;" readonly>
+                                                <button type="button" class="btn btn-success btn-sm" name="btnZipCode">우편번호 찾기</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -266,7 +263,8 @@
                                         <th>주소</th>
                                         <td>
                                             <div class="input-group input-group-sm" style="width:400px;">
-                                                <input type="text" id="addr1" name="addr1" th:value="${custInfo?.addr1}" class="form-control" tabindex="11">
+                                                <input type="text" id="addr1" name="addr1" th:value="${custInfo?.addr1}" class="form-control" tabindex="11"
+                                                onfoucs="sample2_execDaumPostcode()">
                                             </div>
                                         </td>
                                     </tr>
@@ -274,7 +272,8 @@
                                         <th>상세주소</th>
                                         <td>
                                             <div class="input-group input-group-sm" style="width:400px;">
-                                                <input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="12">
+                                                <input type="text" id="addr2" name="addr2" th:value="${custInfo?.addr2}" class="form-control" tabindex="12"
+                                                onfoucs="sample2_execDaumPostcode()">
                                             </div>
                                         </td>
                                     </tr>
@@ -292,5 +291,8 @@
             <button type="button" id="btnSaveCustomer" name="btnSaveCustomer"
                 class="btn btn-primary btn-sm">저장</button>
         </div>
+    </div>
+    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
     </div>
 </div>

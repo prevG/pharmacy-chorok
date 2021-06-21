@@ -1,8 +1,10 @@
 package com.pharm.chorok.api.main;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.CustomerService;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -21,7 +24,6 @@ public class CustomerApi {
 
 	@Autowired
 	private CustomerService customerSvc;
-
 
 	@PostMapping("/saveCustomer")
 	public ResponseEntity<ResponseMessage> saveCustomer(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
@@ -58,9 +60,31 @@ public class CustomerApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 
-
+	/**
+	 * 고객정보 마스터 목록(타뷸레이터 그리드)
+	 * @param inCustomer
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/findAllCustomer")
     public List<TbCustomer> selectAllCustomer(TbCustomer inCustomer) throws Exception {
 		return customerSvc.findAllCustomer(inCustomer);
 	}
+
+	/**
+	 * 금일복용상담 목록(타뷸레이터 그리드)
+	 * @param inCustomer
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/findCustomerByDosgDt")
+    public List<ResultDosingVo> findCustomerByDosgDt(
+		@RequestParam("dosgDt") String dosgDt
+	) throws Exception {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("dosgDt", dosgDt);
+		return customerSvc.findCustomerByDosgDt( params );
+	}
+	
 }

@@ -1,5 +1,7 @@
 package com.pharm.chorok.web.main.controller;
 
+import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.main.service.CustomerService;
 
@@ -18,10 +20,24 @@ public class CustomerController {
     @Autowired
     private CustomerService customerSvc;
 
+	@Autowired
+	private CalendarService calendarSvc;
+
     //고객목록화면
 	@GetMapping("/CUS1001ML")
-	public String CUS1001ML() {
+	public String CUS1001ML(Model model) {
 		return "customer/CUS1001ML";
+	}
+
+
+    //금일상담스케쥴
+	@GetMapping("/CUS2001ML")
+	public String CUS2001ML(Model model) throws Exception{
+
+		TbCommCalendar cal = calendarSvc.selectCurrentDate();
+
+		model.addAttribute("dosgDt", cal.getBaseDt());
+		return "customer/CUS2001ML";
 	}
 
 

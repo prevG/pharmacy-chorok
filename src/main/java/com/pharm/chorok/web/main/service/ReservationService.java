@@ -5,11 +5,8 @@ import java.util.List;
 
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.main.ReservationPagination;
-import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.domain.table.TbCustomer;
-import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
 import com.pharm.chorok.web.main.repository.ConsultingRepository;
@@ -29,6 +26,9 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository rsvtSchRepo;
+
+	@Autowired
+	private CommUserDetailsService commUserDetailsSvc;
 
     @Autowired
     private ConsultingRepository consultingRepo;
@@ -109,7 +109,7 @@ public class ReservationService {
 
 
 		//약사목록 을 조회
-        List<TbCommUser> chemistList = selectChemistList();
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
         mv.addObject( "chemistList", chemistList  ); //약사목록
 
         return mv;
@@ -175,10 +175,5 @@ public class ReservationService {
 	
 	public int deleteReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
 		return rsvtSchRepo.deleteTbPpRsvtSch( rsvt );
-	}
-
-
-	public List<TbCommUser> selectChemistList() throws Exception {
-		return rsvtSchRepo.selectChemistList();
 	}
 }

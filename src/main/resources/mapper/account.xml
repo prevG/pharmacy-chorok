@@ -21,4 +21,14 @@
 	]]>
 	</select>
 
+
+	<select id="selectCommUsersByUsrAuth" resultType="com.pharm.chorok.domain.table.TbCommUser" parameterType="com.pharm.chorok.domain.table.TbCommUser">
+	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.TbCommUserRepository.selectCommUsersByUsrAuth */
+    SELECT *
+      FROM TB_COMM_USER
+     WHERE USR_AUTH = #{usrAuth}
+	]]>
+	</select>
+
 </mapper>

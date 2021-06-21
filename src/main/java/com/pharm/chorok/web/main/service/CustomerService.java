@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
@@ -105,6 +106,11 @@ public class CustomerService {
 
 	public List<TbCustomer> findAllCustomer(TbCustomer inCustomer) throws Exception {
 		List<TbCustomer> resultList = customerRepo.findAllCustomer(inCustomer);
+		return resultList;
+	}
+
+	public List<ResultDosingVo> findCustomerByDosgDt(HashMap<String, Object> inParams ) throws Exception {
+		List<ResultDosingVo> resultList = customerRepo.findCustomerByDosgDt(inParams);
 		return resultList;
 	}
 

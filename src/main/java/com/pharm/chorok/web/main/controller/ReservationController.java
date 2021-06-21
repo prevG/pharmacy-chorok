@@ -9,13 +9,14 @@ import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.main.service.ChartService;
+import com.pharm.chorok.web.main.service.CommUserDetailsService;
 import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.ReservationService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,9 @@ public class ReservationController {
 
 	@Autowired
 	private CustomerService customerSvc;
+
+	@Autowired
+	private CommUserDetailsService commUserDetailsSvc;
 
 	@Autowired
 	private ChartService chartSvc;
@@ -73,7 +77,7 @@ public class ReservationController {
 		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
 
 		//약사목록 조회
-        List<TbCommUser> chemistList = reservationSvc.selectChemistList();
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
 		
 
     	mv.addObject( "schInfo", rsvtSchInfo );
@@ -97,7 +101,7 @@ public class ReservationController {
 		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
 
 		//약사목록 조회
-        List<TbCommUser> chemistList = reservationSvc.selectChemistList();
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
 
     	mv.addObject( "schInfo", rsvtSchInfo );
         mv.addObject( "chemistList", chemistList  );
@@ -142,16 +146,16 @@ public class ReservationController {
 
 		TbPpRsvtSch outRsvtSch = null;
 		TbCustomer outCustomer = null;
-		if( StringUtils.hasLength(custId) ) {
+		if( !StringUtils.isEmpty(custId) && !"0".equals(custId)) {
 			TbCustomer customer = new TbCustomer();
 			customer.setCustId( Long.valueOf(custId) );
 			outCustomer = customerSvc.findCustomerByCustId( customer );
-		} else {
-			TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
-			rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
-
-			outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
 		}
+		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
+		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
+		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+
+
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
 		return mv;

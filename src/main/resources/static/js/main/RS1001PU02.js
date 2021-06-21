@@ -35,6 +35,13 @@ $( document ).ready( function() {
      		$(this).prop('checked',true);
     	}
    	});
+
+	//주소찾기
+	$(document).off("click", "BUTTON[name=btnZipCode]").on("click", "BUTTON[name=btnZipCode]", function(e){
+		e.preventDefault();
+
+		sample2_execDaumPostcode();
+   	});
 	
     /**************************************************************
      * 고객정보 저장
@@ -486,5 +493,78 @@ function reloadTabulator( obj ) {
 	.catch(function( err){
 	   console.log( err );
 	});
+}
+
+
+/*************************************************
+ * 복용차트 생성
+ **************************************************/
+function validateCustomer() {
+
+	var custUsrNmObj		= $("#input[name='custUsrNm']");
+	var custCellNoObj 		= $("#input[name='custCellNo']");
+	var custBirthYearObj 	= $("#input[name='custBirthYear']");
+	var custBirthMonthObj 	= $("#input[name='custBirthMonth']");
+	var custBirthDayObj 	= $("#input[name='custBirthDay']");
+	var custGenTpCdObj 		= $("#input[name='custGenTpCd']:checked"); //성별
+	var mrgYnObj 			= $("#input[name='mrgYn']:checked"); //성별
+
+	mrgYn
+
+	//고객명
+	if ($isEmpty( custUsrNmObj.val() )) {
+		alert("[고격명]을 입력해주세요.");
+		custUsrNmObj.focus();
+		return false;
+	}
+	//휴대전화번호
+	if ($isEmpty( custCellNoObj.val() )) {
+		alert("[휴대전화번호]를 입력해주세요.");
+		custCellNoObj.focus();
+		return false;
+	}
+	//태어난해
+	if ($isEmpty(custBirthYearObj.val() )) {
+		alert("[생년월일]을 입력해주세요.");
+		custBirthYearObj.focus();
+		return false;
+	}
+	//태어난 월
+	if ($isEmpty(custBirthMonthObj.val() )) {
+		alert("[생년월일]을 입력해주세요.");
+		custBirthMonthObj.focus();
+		return false;
+	}
+	//태어난 일자
+	if ($isEmpty(custBirthDayObj.val() )) {
+		alert("[생년월일]을 입력해주세요.");
+		custBirthDayObj.focus();
+		return false;
+	}
+	//성별
+	if (custGenTpCdObj.length == 0) {
+		alert("[성별]을 선택해주세요.");
+		custGenTpCdObj.focus();
+		return false;
+	}
+	if (mrgYnObj.length == 0) {
+		alert("[결혼유무]를 선택해주세요.");
+		mrgYnObj.focus();
+		return false;
+	}
+
+	if ($isEmpty(rsvtUsrNm)) {
+		alert("[예약자명]을 입력해주세요.");
+		$("input[name='rsvtUsrNm']").focus();
+		return false;
+	}
+	if ($isEmpty(rsvtCellNo)) {
+		alert("[예약자 휴대전화번호]를 입력해주세요.");
+		$("input[name='rsvtCellNo']").focus();
+		return false;
+	}
+	return true;
+	
+
 }
 

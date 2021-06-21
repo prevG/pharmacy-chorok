@@ -14,3 +14,15 @@
 .w-readonly{
     background-color: white !important;
 }
+.btn_sel{
+    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+}
+.btn_primary_sel{
+    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+}
+.btn_success_sel{
+    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+}
+.btn_secondary_sel{
+    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+}
