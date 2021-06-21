@@ -56,23 +56,39 @@
 	<insert id="addUser">
 		INSERT INTO TB_CUSTOMER
 		(	
-			CUST_USR_NM,
-			CUST_CELL_NO,
-			CUST_BIRTH_DT,
-			CUST_GEN_TP_CD,
-			DEL_YN,
-			REG_DT,
-			REG_USR_NO
+			CUST_USR_NM
+			, CUST_CELL_NO
+			, CUST_BIRTH_DT
+			, CUST_GEN_TP_CD
+			, MRG_YN
+			, PCRT_CHD_CNT
+			, LST_PCRT_YEAR
+			, BRST_FDG_YN
+			, VIST_TP_CD
+			, ZIP_CODE
+			, ADDR1
+			, ADDR2
+			, DEL_YN
+			, REG_DT
+			, REG_USR_NO
 		)
 		VALUES
 		(
-			#{custUsrNm},
-			#{custCellNo},
-			#{custBirthDt},
-			#{custGenTpCd},
-			#{delYn},
-			NOW(),
-			#{regUsrNo}
+			#{custUsrNm}
+			, #{custCellNo}
+			, #{custBirthDt}
+			, #{custGenTpCd}
+			, #{mrgYn}
+			, #{pcrtChdCnt}
+			, #{lstPcrtYear}
+			, #{brstFdgYn}
+			, #{vistTpCd}
+			, #{zipCode}
+			, #{addr1}
+			, #{addr2}
+			, #{delYn}
+			, NOW()
+			, #{regUsrNo}
 		)
 	</insert>
 	
@@ -82,6 +98,14 @@
 		  , CUST_CELL_NO = #{custCellNo}
 		  , CUST_BIRTH_DT = #{custBirthDt}
 		  , CUST_GEN_TP_CD = #{custGenTpCd}
+		  , MRG_YN = #{mrgYn}
+		  , PCRT_CHD_CNT = #{pcrtChdCnt}
+		  , LST_PCRT_YEAR = #{lstPcrtYear}
+		  , BRST_FDG_YN = #{brstFdgYn}
+		  , VIST_TP_CD = #{vistTpCd}
+		  , ZIP_CODE = #{zipCode}
+		  , ADDR1 = #{addr1}
+		  , ADDR2 = #{addr2}
 		  , DEL_YN = #{delYn}
 		  , UPD_DT = NOW()
 		  , UPD_USR_NO = #{updUsrNo}
