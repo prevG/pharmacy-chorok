@@ -14,7 +14,7 @@ public class TbCustomer extends TbCommColumn {
 	private String custBirthDt;
 	private String custGenTpCd;
 	private String mrgYn;
-	private String pcrtChdCnt;
+	private Integer pcrtChdCnt;
 	private String lstPcrtYear;
 	private String brstFdgYn;
 	private String vistTpCd;

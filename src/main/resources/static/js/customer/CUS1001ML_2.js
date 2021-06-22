@@ -123,6 +123,50 @@ function fnCustInfo() {
 	location.href = '/customer/CUS1002MV/'+ row.custId;
 }
 
+function fnNewCustPop() {
+	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','신규등록');
+    $('#addFrm').form('clear');
+    $('#addFrm').form('load', {
+    	/*dlg_custGenTpCd : 'F',
+    	dlg_mrgYn : 'Y',
+    	dlg_brstFdgYn : 'N',*/
+		dlg_delYn : '00000'
+	});
+}
+
+function addUser() {
+	var param = {
+		custUsrNm : $('#addFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
+		custCellNo : $('#addFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
+		custBirthDt : $('#addFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
+		custGenTpCd : $('#addFrm input[name=dlg_custGenTpCd]:checked').val(),
+		mrgYn : $('#addFrm input[name=dlg_mrgYn]:checked').val(),
+		pcrtChdCnt : $('#addFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+		lstPcrtYear : $('#addFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+		brstFdgYn : $('#addFrm input[name=dlg_brstFdgYn]:checked').val(),
+		vistTpCd : $('#addFrm input[name=dlg_vistTpCd]:checked').val(),
+		zipCode : $('#addFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+		addr1 : $('#addFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+		addr2 : $('#addFrm input[textboxName=dlg_addr2]').textbox('getValue'),
+		delYn : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue')
+	};
+	
+	$.post('/customer/add', param, function(result) {
+		if (result.status === 'success') {
+			$.messager.show({ title: 'Success', msg: result.message });
+			fnSearch();
+		} else {
+			$.messager.show({ title: 'Error', msg: result.message });
+			return;
+		}
+		$('#addDlg').dialog('close');
+	}, 'json')
+	.fail(function(xhr, status, error) {
+		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		return;
+	});
+}
+
 $(document).ready(function() {
 	fnInit();
 });

@@ -125,6 +125,14 @@ public class CustomerService {
 		}
 		return customerRepo.selectCustomerByUsrNmOrCellNo( customerParam );
 	}
+
+	public int countCustCellNo(TbCustomer tbCustomer) {
+		return 0;
+	}
+
+	public int addCust(TbCustomer tbCustomer) {
+		return 0;
+	}
 }
 
 
