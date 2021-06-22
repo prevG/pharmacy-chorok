@@ -29,6 +29,11 @@ public class CustomerController {
 		return "customer/CUS1001ML";
 	}
 
+    //고객목록화면
+	@GetMapping("/CUS1001ML_2")
+	public String CUS1001ML_2(Model model) {
+		return "customer/CUS1001ML_2";
+	}
 
     //금일상담스케쥴
 	@GetMapping("/CUS2001ML")

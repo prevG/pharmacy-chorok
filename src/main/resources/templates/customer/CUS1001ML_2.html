@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  layout:decorate="layouts/chorok_layout2">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<div layout:fragment="content" class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+		  	<div class="row mb-1">
+				<div class="col-sm-6">
+			  		<h1>고객목록</h1>
+				</div>
+		  	</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="easyui-panel mb-2 p-2" title="검색" style="width: 100%;height: 80px;overflow: hidden;">
+				<div class="row">
+					<div class="col-md-8 form-inline">
+						<!-- <form id="searchFrm" method="post"> -->
+							<input id="custUsrNm" name="custUsrNm" class="easyui-textbox"
+								   data-options="
+								   		label:'고객이름',
+								   		labelPosition:'left'"
+								   style="width: 300px;">
+							<div style="width: 10px;"></div>
+							<input id="custCellNo" name="custCellNo" class="easyui-numberbox"
+								   data-options="
+								   		label:'핸드폰번호',
+								   		labelPosition:'left'"
+								   style="width: 300px;">
+							<a href="javascript:void(0)" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
+							   data-options="iconCls:'icon-ok'" 
+							   onClick="fnSearch();">검색</a>
+						<!-- </form> -->
+					</div>
+					<div class="col-md-4 form-inline d-flex justify-content-end">
+							<a href="javascript:void(0)" class="easyui-linkbutton c1" style="width:100px;height:32px"
+							   onClick="fnCustInfo();">상세보기</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton c8 ml-3" style="width:100px;height:32px"
+							   onClick="fnNewCust();">신규등록</a>
+					</div>
+				</div>
+			</div>
+			<table id="dg" style="width:100%;min-height:730px;"></table>
+		</div>
+	</section>
+</div>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script type="text/javascript" th:src="@{/js/customer/CUS1001ML_2.js}"></script>
+</th:block>
+</html>
