@@ -2,27 +2,33 @@ package com.pharm.chorok.web.main.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.web.admin.service.ADUserService;
 import com.pharm.chorok.web.main.service.ChartService;
 import com.pharm.chorok.web.main.service.CommUserDetailsService;
 import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.ReservationService;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @RequestMapping(value = "/reservation")
@@ -40,6 +46,13 @@ public class ReservationController {
 
 	@Autowired
 	private ChartService chartSvc;
+	
+	/**
+	 * customerSvc 통합 필요.
+	 * 
+	 */
+	@Autowired
+	private ADUserService userService;
 
 
 	/**
@@ -136,6 +149,15 @@ public class ReservationController {
         return mv;
 	}
 
+	/**
+	 * @deprecated replace RS1001PU02_2
+	 * 
+	 * @param custId
+	 * @param rsvtId
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/RS1001PU02")
 	public ModelAndView goRS1001P02(
 		@RequestParam("custId") String custId,
@@ -143,6 +165,32 @@ public class ReservationController {
 		Model model) throws Exception {
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU02");
+
+		TbPpRsvtSch outRsvtSch = null;
+		TbCustomer outCustomer = null;
+		if( !StringUtils.isEmpty(custId) && !"0".equals(custId)) {
+			TbCustomer customer = new TbCustomer();
+			customer.setCustId( Long.valueOf(custId) );
+			outCustomer = customerSvc.findCustomerByCustId( customer );
+		}
+		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
+		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
+		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+
+
+		mv.addObject("rsvtInfo", outRsvtSch);
+		mv.addObject("custInfo", outCustomer);
+		return mv;
+
+	}
+
+	@PostMapping("/RS1001PU02_2")
+	public ModelAndView goRS1001P02_2(
+		@RequestParam("custId") String custId,
+		@RequestParam("rsvtId") String rsvtId,
+		Model model) throws Exception {
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU02_2");
 
 		TbPpRsvtSch outRsvtSch = null;
 		TbCustomer outCustomer = null;
@@ -181,6 +229,42 @@ public class ReservationController {
 		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: customer-table");
 		mv.addObject("custInfo", custInfo);
         return mv;
+	}
+	
+	/**
+	 * replace /RS1001PU02/saveCustomer
+	 * 
+	 * @param tbCustomer
+	 * @return
+	 */
+	@PostMapping("/RS1001PU02/saveCustomer_2")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> saveCustomer_2(TbCustomer tbCustomer) {
+		Assert.isTrue(tbCustomer.getCustId() > 0, "고객번호가 존재하지 않습니다.");
+		Assert.hasLength(tbCustomer.getCustUsrNm(), "고객이름을 입력하세요");
+		Assert.hasLength(tbCustomer.getCustCellNo(), "핸드폰번호를 입력하세요");
+		Assert.hasLength(tbCustomer.getCustBirthDt(), "생년월일을 입력하세요");
+		Assert.hasLength(tbCustomer.getCustGenTpCd(), "성별을 입력하세요");
+
+		ResponseMessage resMsg = new ResponseMessage();
+		int cellNoCount = userService.countUserCellNoByExcludeCustId(tbCustomer);
+		if (cellNoCount > 0) {
+			resMsg.setStatus("fail");
+			resMsg.setMessage("핸드폰번호가 이미 존재합니다.");
+			
+			return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
+		}
+		
+		int ret = userService.modifyUser(tbCustomer);
+		if (ret > 0) {
+			resMsg.setStatus("fail");
+			resMsg.setMessage("작업성공하였습니다.");
+		} else {
+			resMsg.setStatus("fail");
+			resMsg.setMessage("작업실패했습니다.");
+		}
+		
+		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
 	}
 
 	/**

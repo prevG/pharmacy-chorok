@@ -18,8 +18,8 @@ function fnInit() {
         pageSize: 50,
         pageList: [50],
         dragSelection: true,
-        onDblClickRow: function() {
-        alert('hi');
+        onDblClickRow: function(value) {
+        	fnCustInfo();
         },
         columns:[[
 			{
@@ -120,7 +120,7 @@ function fnCustInfo() {
 	var row = $("#dg").datagrid("getSelected");
 	if (!row) return;
 	
-	location.href = '/customer/CUS1002MV/'+ row.custId;
+	location.href = '/customer/CUS1002MV_2/'+ row.custId;
 }
 
 function fnNewCustPop() {

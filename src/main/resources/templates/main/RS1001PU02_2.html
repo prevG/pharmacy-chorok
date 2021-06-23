@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div class="row" id="customer-main-table" th:fragment="customer-main-table">
+	<div class="col-sm-12">
+		<div class="easyui-tabs" style="width: 100%;min-height: 730px;"
+			 data-options="tabWidth:120">
+			<div title="고객정보1" id="custom-tabs-four-home" class="p-2">
+				<div th:replace="main/RS1001PU03_2 :: customer-table"></div>
+			</div>
+			<div title="차트정보2" id="custom-tabs-four-profile" class="p-2"
+				 th:style="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0} ? 'display:none' : 'display:block'">
+				<div th:replace="main/RS1001PU04 :: charts-table"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

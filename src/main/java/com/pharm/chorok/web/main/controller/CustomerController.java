@@ -18,7 +18,6 @@ import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
 import com.pharm.chorok.web.main.service.CustomerService;
 
-
 @RequestMapping(value = "/customer")
 @Controller
 public class CustomerController {
@@ -54,6 +53,14 @@ public class CustomerController {
 		return "customer/CUS2001ML";
 	}
 
+	/**
+	 * @deprecated replace CUS1002MV_2
+	 * 
+	 * @param model
+	 * @param custId
+	 * @return
+	 * @throws Exception
+	 */
     //고객목록화면
 	@GetMapping("/CUS1002MV/{custId}")
 	public String CUS1002MV(
@@ -67,6 +74,21 @@ public class CustomerController {
 
         model.addAttribute("custInfo", customer);
 		return "customer/CUS1002MV";
+	}
+	
+    //고객목록화면
+	@GetMapping("/CUS1002MV_2/{custId}")
+	public String CUS1002MV_2(
+        Model model,
+        @PathVariable String custId
+    ) throws Exception {
+
+        TbCustomer customer = new TbCustomer();
+        customer.setCustId( Long.valueOf(custId) );
+		customer = customerSvc.findCustomerByCustId( customer );
+
+        model.addAttribute("custInfo", customer);
+		return "customer/CUS1002MV_2";
 	}
 	
 	@PostMapping("/add")
