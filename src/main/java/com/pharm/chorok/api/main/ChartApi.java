@@ -46,7 +46,6 @@ public class ChartApi {
 		try {
 			HashMap<String, Object> result = chartSvc.createNewConsultingChart( custInfo, rsvtInfo );
 			
-			
 			resMsg.setData( result );
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
@@ -100,6 +99,8 @@ public class ChartApi {
 	}
 
     /**
+     * @deprecated /deleteCnstChart 상담차트 삭제로 대체함.
+     * 
      * 차트번호에 해당하는 차트마스터 / 설문차트 / 복용차트 삭제
      */
     @PostMapping("/deleteChart")
@@ -119,6 +120,25 @@ public class ChartApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 
+    /**
+     * 차트번호에 해당하는 차트마스터 / 설문차트 / 복용차트 삭제
+     */
+    @PostMapping("/deleteCnstChart")
+	public ResponseEntity<ResponseMessage> deleteCnstChart(TbPpCnstChart inCnstChart) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			chartSvc.deleteChart( inCnstChart );
+			
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 차트가 삭제되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
 
     /**
      * 고객번호에 해당하는 차트목록 조회 (Tabulator 그리드용)

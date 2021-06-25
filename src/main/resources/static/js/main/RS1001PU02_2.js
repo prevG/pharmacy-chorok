@@ -17,8 +17,9 @@ function fnInit() {
         	let row = $('#dg').datagrid('getRows')[index];
         	if (!row) return;
         	
+        	$('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
         	$('#saveCnstFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
-        	fnDosingChart(row.cnstId);
+        	fnDosingChart();
         },
         columns:[[
 			{
@@ -185,7 +186,7 @@ function fnInit() {
  **************************************************************/
 function fnCnstChart() {
 	var queryParams = $("#dg").datagrid('options').queryParams;
-	queryParams.custId = $('#saveCustForm input[textboxName=dlg_custId]').textbox('getValue');
+	queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 	
 	$('#dg').datagrid('reload');
 }
@@ -193,10 +194,10 @@ function fnCnstChart() {
 /**************************************************************
  * 복용차트 조회
  **************************************************************/
-function fnDosingChart(cnstId) {
+function fnDosingChart() {
 	var queryParams = $("#dg2").datagrid('options').queryParams;
-	queryParams.custId = $('#saveCustForm input[textboxName=dlg_custId]').textbox('getValue');
-	queryParams.cnstId = cnstId;
+	queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
+	queryParams.cnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	
 	$('#dg2').datagrid('reload');
 }
@@ -209,7 +210,7 @@ function createCnstChart() {
 		if (!r) return;
 		
 		let formData = {
-			custId: $('#saveCustForm input[textboxName=dlg_custId]').textbox('getValue')
+			custId: $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue')
 		};
 		$.post('/api/v1/main/chart/createCnstChart', formData, function(res) {
 			if (res.status === 'success') {
@@ -226,6 +227,67 @@ function createCnstChart() {
 	});
 }
 
+/*************************************************
+ * 복용차트 생성
+ **************************************************/
+function createDosingChart() {
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	var startDosgDt    = $('#saveCnstFrm input[textboxName=startDosgDt]').textbox('getValue');
+	
+	if( selectedCnstId == "" ) {
+		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+		return false;
+	}
+	if( startDosgDt == "" ) {
+		$.messager.alert( "복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.\n복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
+		return false;
+	}
+	let formData = {
+		"cnstId" 	  : selectedCnstId,
+		"startDosgDt" : startDosgDt	
+	};
+	
+	$.messager.confirm('Confirm', '신규 복용차트를 생성하시겠습니까?', function(r) {
+		if (!r) return;
+		
+		$.post('/api/v1/main/chart/createDosingChart', formData, function(res) {
+			if (res.status === 'success') {
+				$.messager.show({ title: 'Success', msg: res.message });
+				fnDosingChart(); // 복용차트 조회
+			} else {
+				$.messager.show({ title: 'Error', msg: res.message });
+				return;
+			}
+		}, 'json')
+		.fail(function(xhr, status, error) {
+			$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+			return;
+		});
+	});
+}
+
+/*************************************************
+ * 상담차트 수정 (상담차트/설문차트)
+ **************************************************/
+function saveCnstChart( evt ) {
+
+	/*let formData = {
+		custId: $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue')
+	};
+	$.post('/api/v1/main/chart/saveCnstChart', formData, function(res) {
+		if (res.status === 'success') {
+			$.messager.show({ title: 'Success', msg: res.message });
+		} else {
+			$.messager.show({ title: 'Error', msg: res.message });
+			return;
+		}
+	}, 'json')
+	.fail(function(xhr, status, error) {
+		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		return;
+	});*/
+}
+
 $( document ).ready( function() {
 
 	fnInit();
@@ -240,19 +302,19 @@ $( document ).ready( function() {
 		$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
 			if (!r) return;
 			let formData = {
-				custId : $('#saveCustForm input[textboxName=dlg_custId]').textbox('getValue'),
-				custUsrNm : $('#saveCustForm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
-				custCellNo : $('#saveCustForm input[textboxName=dlg_custCellNo]').textbox('getValue'),
-				custBirthDt : $('#saveCustForm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-				custGenTpCd : $('#saveCustForm input[name=dlg_custGenTpCd]:checked').val(),
-				mrgYn : $('#saveCustForm input[name=dlg_mrgYn]:checked').val(),
-				pcrtChdCnt : $('#saveCustForm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
-				lstPcrtYear : $('#saveCustForm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
-				brstFdgYn : $('#saveCustForm input[name=dlg_brstFdgYn]:checked').val(),
-				vistTpCd : $('#saveCustForm input[name=dlg_vistTpCd]:checked').val(),
-				zipCode : $('#saveCustForm input[textboxName=dlg_zipCode]').textbox('getValue'),
-				addr1 : $('#saveCustForm input[textboxName=dlg_addr1]').textbox('getValue'),
-				addr2 : $('#saveCustForm input[textboxName=dlg_addr2]').textbox('getValue'),
+				custId : $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue'),
+				custUsrNm : $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
+				custCellNo : $('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
+				custBirthDt : $('#saveCustFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
+				custGenTpCd : $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val(),
+				mrgYn : $('#saveCustFrm input[name=dlg_mrgYn]:checked').val(),
+				pcrtChdCnt : $('#saveCustFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+				lstPcrtYear : $('#saveCustFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+				brstFdgYn : $('#saveCustFrm input[name=dlg_brstFdgYn]:checked').val(),
+				vistTpCd : $('#saveCustFrm input[name=dlg_vistTpCd]:checked').val(),
+				zipCode : $('#saveCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+				addr1 : $('#saveCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+				addr2 : $('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 				delYn : 'N'
 			};
 			
@@ -276,6 +338,26 @@ $( document ).ready( function() {
      **************************************************************/
 	$(document).off("click", "#btnNewCnstChart").on("click", "#btnNewCnstChart", function (e) {
 		createCnstChart();
+	});
+	
+	/**************************************************************
+     * "복용차트 생성" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnNewDosgChart").on("click", "#btnNewDosgChart", function (e) {
+		createDosingChart();
+	});
+
+	/**************************************************************
+     * 차트정보 저장 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnSaveCnstChart").on("click", "#btnSaveCnstChart", function (e) {
+		$.messager.confirm('Confirm', '차트정보를 저장하시겠습니까?', function(r) {
+			if (!r) return;
+			
+			saveCnstChart( e );
+			/*saveSurveyChart( e );
+			saveDosingChart( e );*/
+		});
 	});
 	
 });

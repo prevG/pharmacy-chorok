@@ -10,7 +10,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<input name="selectedCnstId" class="easyui-textbox" style="width: 200px;text-align: center;"
+							<input name="selectedCustId" class="easyui-textbox" style="width: 200px;text-align: center;"
 								   data-options="label:'고객번호',required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
 							<a href="#" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
@@ -39,30 +39,32 @@
 	 		 			<form id="saveCnstFrm" name="saveCnstFrm" method="post">
 			 		 	<div class="row mb-2">
 			 		 		<div class="col-md-12 form-inline">
-			 		 			<input name="cnstDt" class="easyui-textbox"
+								<input name="selectedCnstId" class="easyui-textbox" style="width: 200px;text-align: center;"
+									   data-options="
+									   		label:'상담번호',
+									   		required:true,
+									   		readonly:true">
+			 		 			<input name="cnstDt" class="easyui-textbox" style="width: 200px;text-align: center;"
 									   data-options="
 									   		label:'상담일시',
-									   		labelPosition:'left'"
-									   style="width: 200px;text-align: center;">
-			 		 			<input name="orgWgt" class="easyui-textbox"
+									   		labelPosition:'left',
+									   		required:true,
+									   		readonly:true">
+			 		 			<input name="orgWgt" class="easyui-textbox" style="width: 200px;"
 									   data-options="
 									   		label:'시작체중',
-									   		labelPosition:'left'"
-									   style="width: 200px;">
-			 		 			<input name="tgtWgt" class="easyui-textbox"
+									   		labelPosition:'left'">
+			 		 			<input name="tgtWgt" class="easyui-textbox" style="width: 200px;"
 									   data-options="
 									   		label:'희망체중',
-									   		labelPosition:'left'"
-									   style="width: 200px;">
-			 		 			<input name="startDosgDt" class="easyui-datebox"
+									   		labelPosition:'left'">
+			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;"
 									   data-options="
-									   		label:'복용시작일',
+									   		label:'복용시작일자',
 									   		formatter:myformatter,
-									   		parser:myparser"
-									   style="width: 200px;">
-								<a href="javascript:void(0)" class="easyui-linkbutton c8 ml-3" style="width:120px;"
-								   data-options="iconCls:'icon-edit'" 
-								   onClick="fnSearch();">복용차트 생성</a>
+									   		parser:myparser">
+								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-3" style="width:120px;"
+								   data-options="iconCls:'icon-edit'">복용차트 생성</a>
 			 		 		</div>
 			 		 	</div>
 	 		 			</form>
@@ -75,7 +77,7 @@
     <hr>
 	<div class="row">
 		<div class="col-md-12 d-flex justify-content-end">
-			<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
+			<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
 		</div>
 	</div>
 </div>
