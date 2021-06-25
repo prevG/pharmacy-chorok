@@ -1,8 +1,10 @@
 package com.pharm.chorok.domain.comm;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
  
 @Data
+@NoArgsConstructor
 public class ResponseMessage {
      
     // HttpStatus
@@ -15,4 +17,10 @@ public class ResponseMessage {
     private String errorCode;
 
     private Object data;
+
+	public ResponseMessage(String status, String message) {
+		this.status = status;
+		this.message = message;
+	}
+    
 }

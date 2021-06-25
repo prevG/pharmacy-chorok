@@ -27,28 +27,5 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
 <script type="text/javascript" th:src="@{/js/main/RS1001PU02_2.js}"></script>
-<script type="text/javascript" th:inline="javascript">
-	var cnstList  = /*[[${cnstList}]]*/'';
-	var selectParam01 = {
-		"Y": "예", 
-		"N":"아니요"
-	};
-	var selectParam02 = {
-		"N" : "",
-		"Y": "예"
-	};
-	var selectParam03 = {
-		"0": "복용 시작전", 
-		"1": "1단계(선식3일)",
-		"2": "2단계(안정기)", 
-		"3": "3단계(1주)", 
-		"4": "3단계(2주)", 
-		"5": "3단계(3주)", 
-	};
-	var picUsrList = {
-		"1" : "박정란",
-		"2" : "황진영"
-	};
-</script>
 </th:block>
 </html>

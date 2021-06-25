@@ -177,13 +177,20 @@ public class ReservationController {
 		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
 		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
 
-
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
 		return mv;
-
 	}
 
+	/**
+	 * TODO 예약번호가 파라메터로 넘어오는 화면 확인 필요.
+	 * 
+	 * @param custId
+	 * @param rsvtId
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/RS1001PU02_2")
 	public ModelAndView goRS1001P02_2(
 		@RequestParam("custId") String custId,
@@ -203,11 +210,9 @@ public class ReservationController {
 		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
 		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
 
-
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
 		return mv;
-
 	}
 
 	@PostMapping("/RS1001PU03")
@@ -217,14 +222,20 @@ public class ReservationController {
 		chartSvc.findDosingChartByDosgId( mv, cnstChart );
         return mv;
 	}
-		
+
+	/**
+	 * @deprecated replace /RS1001PU02/saveCustomer_2
+	 * 
+	 * @param custParam
+	 * @param rsvtParam
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/RS1001PU02/saveCustomer", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView saveCustomer(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
 		
-		
 		customerSvc.saveCustomer( custParam, rsvtParam );
 		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam  );
-
 
 		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: customer-table");
 		mv.addObject("custInfo", custInfo);
@@ -232,39 +243,30 @@ public class ReservationController {
 	}
 	
 	/**
-	 * replace /RS1001PU02/saveCustomer
+	 * TODO 해당 함수를 호출하는 화면 확인 필요함.
 	 * 
 	 * @param tbCustomer
 	 * @return
 	 */
 	@PostMapping("/RS1001PU02/saveCustomer_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> saveCustomer_2(TbCustomer tbCustomer) {
-		Assert.isTrue(tbCustomer.getCustId() > 0, "고객번호가 존재하지 않습니다.");
-		Assert.hasLength(tbCustomer.getCustUsrNm(), "고객이름을 입력하세요");
-		Assert.hasLength(tbCustomer.getCustCellNo(), "핸드폰번호를 입력하세요");
-		Assert.hasLength(tbCustomer.getCustBirthDt(), "생년월일을 입력하세요");
-		Assert.hasLength(tbCustomer.getCustGenTpCd(), "성별을 입력하세요");
+	public ResponseEntity<ResponseMessage> saveCustomer_2(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
+		Assert.isTrue(custParam.getCustId() > 0, "고객번호가 존재하지 않습니다.");
+		Assert.hasLength(custParam.getCustUsrNm(), "고객이름을 입력하세요");
+		Assert.hasLength(custParam.getCustCellNo(), "핸드폰번호를 입력하세요");
+		Assert.hasLength(custParam.getCustBirthDt(), "생년월일을 입력하세요");
+		Assert.hasLength(custParam.getCustGenTpCd(), "성별을 입력하세요");
 
-		ResponseMessage resMsg = new ResponseMessage();
-		int cellNoCount = userService.countUserCellNoByExcludeCustId(tbCustomer);
-		if (cellNoCount > 0) {
-			resMsg.setStatus("fail");
-			resMsg.setMessage("핸드폰번호가 이미 존재합니다.");
+		int cellNoCount = userService.countUserCellNoByExcludeCustId(custParam);
+		if (cellNoCount > 0)
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
+		
+		customerSvc.saveCustomer( custParam, rsvtParam );
+		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam );
+		if (custInfo == null)
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "작업 처리중에 문제가 발생했습니다."), HttpStatus.OK);
 			
-			return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
-		}
-		
-		int ret = userService.modifyUser(tbCustomer);
-		if (ret > 0) {
-			resMsg.setStatus("fail");
-			resMsg.setMessage("작업성공하였습니다.");
-		} else {
-			resMsg.setStatus("fail");
-			resMsg.setMessage("작업실패했습니다.");
-		}
-		
-		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다."), HttpStatus.OK);
 	}
 
 	/**

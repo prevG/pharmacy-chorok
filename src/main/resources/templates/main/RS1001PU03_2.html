@@ -4,12 +4,20 @@
 	  
 <div id="customer-table" th:fragment="customer-table">
     <form id="saveCustForm" name="saveCustForm" method="post">
-    <input type="hidden" name="dlg_custId" th:value="${custInfo?.custId}">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row p-2">
 				<div class="easyui-panel" title="기본정보" style="width: 100%;min-height: 200px;"
 					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col">
+							<input name="dlg_custId" class="easyui-textbox" style="width: 100%;text-align: center;"
+								   data-options="label:'고객번호',required:true,readonly:true"
+								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
+						</div>
+						<div class="col">
+						</div>
+					</div>
 					<div class="row m-2">
 						<div class="col">
 							<input name="dlg_custUsrNm" class="easyui-textbox" style="width: 100%;"
@@ -173,8 +181,8 @@
 	</div>
     </form>
     <hr>
-	<div class=" d-flex justify-content-end p-2">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="saveCust();">저장</a>
+	<div class="d-flex justify-content-end p-2">
+		<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
 	</div>
 
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">

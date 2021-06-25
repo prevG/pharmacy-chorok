@@ -76,6 +76,19 @@ public class CustomerController {
 		return "customer/CUS1002MV";
 	}
 	
+	/**
+	 * replace /CUS1002MV/{custId}
+	 * 
+	 * TODO 해당 함수를 호출하는 화면 확인 필요.
+	 *      1. 고객정보
+	 *      2. 복용삼담스케줄
+	 *      3. 주간예약스케줄 ...
+	 * 
+	 * @param model
+	 * @param custId
+	 * @return
+	 * @throws Exception
+	 */
     //고객목록화면
 	@GetMapping("/CUS1002MV_2/{custId}")
 	public String CUS1002MV_2(

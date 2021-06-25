@@ -34,8 +34,9 @@ public class ChartApi {
 	@Autowired
 	private DosingRepository dosingRepo;
 
-
     /**
+     * @deprecated /createCnstChart 함수로 대체함.
+     * 
      * 신규차트를 생성 ( 차트마스터/설문차트 )
      */
     @PostMapping("/createChart")
@@ -57,7 +58,26 @@ public class ChartApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 
-
+    /**
+     * 상담차트를 생성 ( 차트마스터/설문차트 )
+     */
+    @PostMapping("/createCnstChart")
+	public ResponseEntity<ResponseMessage> createCnstChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			HashMap<String, Object> result = chartSvc.createNewConsultingChart( custInfo, rsvtInfo );
+			
+			resMsg.setData( result );
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 차트가 생성 되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
 
     /**
      * 차트번호에 해당하는 복용차트 생성
