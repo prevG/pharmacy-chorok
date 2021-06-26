@@ -22,23 +22,26 @@
 	</section>
 	<section class="content">
 		<div class="container-fluid">
-			<div class="row g-3">
-				<div class="col-auto">
-				  <input type="text" class="form-control" id="dosgDt" name="dosgDt" placeholder="복용일자" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}">
+			<div class="easyui-panel mb-2 p-2" title="검색" style="width: 100%;height: 80px;overflow: hidden;">
+				<form id="searchFrm" method="post">
+				<div class="row">
+					<div class="col-md-8 form-inline">
+						<input class="easyui-datebox" id="dosgDt" name="dosgDt" placeholder="복용일자" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}" max
+							   data-options="
+							   		label:'복용일자',
+							   		labelPosition:'left',
+									formatter:myformatter,
+									parser:myparser"
+							   style="width: 200px;">
+						<div style="width: 10px;"></div>
+						<a href="javascript:void(0)" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
+						   data-options="iconCls:'icon-ok'" 
+						   onClick="fnSearch();">검색</a>
+					</div>
 				</div>
-				<div class="col-auto">
-				  <button type="submit" class="btn btn-primary mb-3" id="btnSearch" name="btnSearch" >조회</button>
-				</div>
+				</form>
 			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div id="table01"></div>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-                </div>
-			</div>
+			<table id="table01" style="width:100%;min-height:730px;"></table>
 		</div>
 	</section>
 	<script type="text/javascript" th:src="@{/js/customer/CUS2001ML.js}"></script> 
