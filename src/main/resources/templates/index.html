@@ -25,96 +25,101 @@
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-4">
-					<div class="card">
-		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
-		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>오늘 스케쥴</h3>
-							<div class="card-tools">
-								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">금주 스케쥴 보기</button>
+				<div class="col-md-4">
+					<div class="easyui-panel mb-2 p-2" title="오늘의 예약스케쥴" style="width: 100%;height:100%;overflow: hidden;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm btn float-right">바로가기</button>
 							</div>
-		              	</div>
-						<div class="card-body">
-							<div id="time-table" th:fragment="time-table">
-								<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
-								<table class="table-sm table table-bordered table-hover">
-									<colgroup>
-										<col width="20%"/>
-										<col width="40%"/>
-										<col width="40%"/>
-									</colgroup>
-									<thead class="thead-light">
-										<tr align="center">
-											<th>예약시간</th>
-											<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="row, idx : ${rowList}" style="height:34px;">
-											<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
-											<td th:each="col, colIdx : ${colList}"
-												th:data-row="${row.id}" th:data-col="${col.daysNum}">
-											
-												<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
-												<div th:data-id="${data.rsvtId}">
-													<button type="button" name="rsvtSch" class="btn btn-sm" 
-														style="padding-top:0px;padding-bottom:0px;margin-top:1px;"
-														th:classappend="${data.picUsrNo eq '1' ? 'btn-outline-success' : (data.picUsrNo eq '2' ? 'btn-outline-primary' : 'btn-outline-secondary') }"
-														th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
-												</div>
-												</th:block>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div id="time-table" th:fragment="time-table">
+									<input type="hidden" id="currDt" name="currDt" th:value="${currDt}" />
+									<table class="table-sm table table-bordered table-hover">
+										<colgroup>
+											<col width="20%"/>
+											<col width="40%"/>
+											<col width="40%"/>
+										</colgroup>
+										<thead class="thead-light">
+											<tr align="center">
+												<th>예약시간</th>
+												<th th:each="col, idx : ${colList}" th:text="|${col.baseDtStr} (${col.daysStrKor})|" ></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="row, idx : ${rowList}" style="height:34px;">
+												<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
+												<td th:each="col, colIdx : ${colList}"
+													th:data-row="${row.id}" th:data-col="${col.daysNum}">
+												
+													<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
+													<div th:data-id="${data.rsvtId}">
+														<button type="button" name="rsvtSch" class="btn btn-sm" 
+															style="padding-top:0px;padding-bottom:0px;margin-top:1px;"
+															th:classappend="${data.picUsrNo eq '1' ? 'btn-outline-success' : (data.picUsrNo eq '2' ? 'btn-outline-primary' : 'btn-outline-secondary') }"
+															th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+													</div>
+													</th:block>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-4">
-					<div class="card">
-		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
-		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>오늘 상담전화 (상담실장님)</h3>
-							<div class="card-tools">
-								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
+					<div class="easyui-panel mb-2 p-2" title="오늘의 복용상담스케쥴(약사님)" style="width: 100%;height: 49%;overflow: hidden;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" id="btnDosingListByChemist" name="btnDosingListByChemist" class="btn btn-link btn-sm btn float-right">바로가기</button>
 							</div>
-		              	</div>
-						<div class="card-body">
-							<div id="table01"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="table01"바로가기></table>
+							</div>
 						</div>
 					</div>
-					<div class="card">
-		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
-		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>복용보류 고객</h3>
-							<div class="card-tools">
-								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">전체보기</button>
+					<div class="easyui-panel mb-2 p-2" title="복용중단중인 고객" style="width: 100%;height: 49%;overflow: hidden;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" id="btnCustListByStopDosing" name="btnCustListByStopDosing" class="btn btn-link btn-sm btn float-right">바로가기</button>
 							</div>
-		              	</div>
-						<div class="card-body">
-							<div id="table03"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="table03"></table>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="card">
-		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
-		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>금일 상담전화 (약사님)</h3>
-							<div class="card-tools">
-								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">오늘 업무보기</button>
+				<div class="col-md-4">
+					<div class="easyui-panel mb-2 p-2" title="오늘의 복용상담전화(상담실장님)" style="width: 100%;height: 49%;overflow: hidden;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" id="btnDosingListByCounselor" name="btnDosingListByCounselor" class="btn btn-link btn-sm btn float-right">바로가기</button>
 							</div>
-		              	</div>
-						<div class="card-body">
-							<div id="table02"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="table02"></table>
+							</div>
 						</div>
 					</div>
-					<div class="card">
-		            	<div class="card-header ui-sortable-handle" style="cursor: move;">
-		                	<h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>택배발송해야할 목록</h3>
-							<div class="card-tools">
-								<button type="button" id="btnThisWeek" name="btnThisWeek" class="btn btn-link btn-sm">전체보기</button>
+					<div class="easyui-panel mb-2 p-2" title="택배발송해야할 목록" style="width: 100%;height: 49%;overflow: hidden;">
+						<div class="row">
+							<div class="col-sm-12">
+								<button type="button" id="btnTransitList" name="btnTransitList" class="btn btn-link btn-sm btn float-right">바로가기</button>
 							</div>
-		              	</div>
-						<div class="card-body">
-							<div id="table04"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<table id="table04"></table>
+							</div>
 						</div>
 					</div>
 				</div>
