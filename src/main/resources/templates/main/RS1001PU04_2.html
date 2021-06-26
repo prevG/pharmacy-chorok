@@ -13,7 +13,8 @@
 							<input name="selectedCustId" class="easyui-textbox" style="width: 200px;text-align: center;"
 								   data-options="label:'고객번호',required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
-							<a href="#" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
+							<a href="javascript:void(0);" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
+							<a href="javascript:void(0);" id="btnDelCnstChart" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cut'" style="width: 120px;">상담차트 삭제</a>
 						</div>
 					</div>
 					<div class="row m-2">
@@ -32,10 +33,216 @@
 			<div class="row p-2">
 				<div class="easyui-tabs" style="width: 100%;min-height: 500px;"
 			 		 data-options="pill:true,tabWidth:120">
-			 		 <div title="설문차트" class="p-2">
-			 		 	<table></table>
+			 		 <div title="설문차트" class="py-2" style="overflow: hidden;">
+			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
+			 		 	<div class="row mb-2">
+			 		 		<div class="col-md-12 form-inline">
+								<input name="selectedCnstId" class="easyui-textbox" style="width: 200px;text-align: center;"
+									   data-options="
+									   		label:'상담번호',
+									   		required:true,
+									   		readonly:true">
+			 		 			<input name="cnstDt" class="easyui-textbox" style="width: 200px;text-align: center;"
+									   data-options="
+									   		label:'상담일시',
+									   		labelPosition:'left',
+									   		required:true,
+									   		readonly:true">
+			 		 		</div>
+			 		 	</div>
+			 		 	<div style="height: 550px;overflow: auto;">
+				 		 	<table class="table table-sm table-hover">
+				 		 		<thead>
+				 		 			<tr>
+				 		 				<th scope="col" style="width: 100px;">번호</th>
+				 		 				<th scope="col" style="width: 250px;">질문</th>
+				 		 				<th scope="col">답변</th>
+				 		 			</tr>
+				 		 		</thead>
+				 		 		<tbody>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">1</th>
+				 		 				<td class="align-middle">키</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">2</th>
+				 		 				<td class="align-middle">체중</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">3</th>
+				 		 				<td class="align-middle">결혼여부</td>
+				 		 				<td>
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'미혼',labelWidth:50,labelPosition:'after'" 
+												   value="N">
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'기혼',labelWidth:50,labelPosition:'after'" 
+												   value="Y">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">4</th>
+				 		 				<td class="align-middle">출산자녀수</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">5</th>
+				 		 				<td class="align-middle">마지막 출산년도</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">6</th>
+				 		 				<td class="align-middle">지금까지 임신기간 제외하고 최고 몸무게</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">7</th>
+				 		 				<td class="align-middle">희망체중</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">8</th>
+				 		 				<td class="align-middle">다이어트 이력</td>
+				 		 				<td>
+											<input name="cnstDt13" class="easyui-radiobutton"
+												   data-options="label:'양약',labelWidth:50,labelPosition:'after'" 
+												   value="N">
+											<input name="cnstDt13" class="easyui-radiobutton"
+												   data-options="label:'한약',labelWidth:50,labelPosition:'after'" 
+												   value="Y">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">9</th>
+				 		 				<td class="align-middle">아침 기상시간</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">10</th>
+				 		 				<td class="align-middle">취침시간</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">11</th>
+				 		 				<td class="align-middle">아침 식사시간</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">12</th>
+				 		 				<td class="align-middle">점심 식사시간</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">13</th>
+				 		 				<td class="align-middle">저녁 식사시간</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">14</th>
+				 		 				<td class="align-middle">밥 / 반찬</td>
+				 		 				<td>
+											<input name="cnstDt14" class="easyui-radiobutton"
+												   data-options="label:'밥',labelWidth:50,labelPosition:'after'" 
+												   value="N">
+											<input name="cnstDt14" class="easyui-radiobutton"
+												   data-options="label:'반찬',labelWidth:50,labelPosition:'after'" 
+												   value="Y">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">15</th>
+				 		 				<td class="align-middle">식욕</td>
+				 		 				<td>
+											<input name="cnstDt15" class="easyui-radiobutton"
+												   data-options="label:'상',labelWidth:50,labelPosition:'after'" 
+												   value="N">
+											<input name="cnstDt15" class="easyui-radiobutton"
+												   data-options="label:'중',labelWidth:50,labelPosition:'after'" 
+												   value="Y">
+											<input name="cnstDt15" class="easyui-radiobutton"
+												   data-options="label:'하',labelWidth:50,labelPosition:'after'" 
+												   value="R">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">16</th>
+				 		 				<td class="align-middle">간식은 하루에 몇번 드시나요?</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">17</th>
+				 		 				<td class="align-middle">야식은 일주일에 몇 번 드시나요?</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">18</th>
+				 		 				<td class="align-middle">커피 마실떄 불편한점은?</td>
+				 		 				<td>
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'없다',labelWidth:50,labelPosition:'after'" 
+												   value="N">
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'불면',labelWidth:50,labelPosition:'after'" 
+												   value="Y">
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'떨림',labelWidth:50,labelPosition:'after'" 
+												   value="R">
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'심장 두근거림',labelWidth:100,labelPosition:'after'" 
+												   value="S">
+											<input name="cnstDt12" class="easyui-radiobutton"
+												   data-options="label:'기타',labelWidth:50,labelPosition:'after'" 
+												   value="Q">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">19</th>
+				 		 				<td class="align-middle">음주 횟수 (하루 / 일주일 / 한달)를 적어주세요.</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 			<tr>
+				 		 				<th scope="row" class="align-middle">20</th>
+				 		 				<td class="align-middle">현재하고 있는 운동이 있습니까?</td>
+				 		 				<td>
+						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
+				 		 				</td>
+				 		 			</tr>
+				 		 		</tbody>
+				 		 	</table>
+			 		 	</div>
+			 		 	</form>
 			 		 </div>
-			 		 <div title="복용차트" class="py-2">
+			 		 <div title="복용차트" class="py-2" style="overflow: hidden;">
 	 		 			<form id="saveCnstFrm" name="saveCnstFrm" method="post">
 			 		 	<div class="row mb-2">
 			 		 		<div class="col-md-12 form-inline">

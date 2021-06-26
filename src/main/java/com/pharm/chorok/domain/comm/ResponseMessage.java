@@ -19,8 +19,13 @@ public class ResponseMessage {
     private Object data;
 
 	public ResponseMessage(String status, String message) {
+		this(status, message, null);
+	}
+
+	public ResponseMessage(String status, String message, Object data) {
 		this.status = status;
 		this.message = message;
+		this.data = data;
 	}
     
 }

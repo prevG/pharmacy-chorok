@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ReservationPagination;
+import com.pharm.chorok.domain.main.ResultSurveyChartVo;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
@@ -136,9 +137,6 @@ public class ReservationController {
 		reservationSvc.getReservationByDt( mv,  reservationPagination );
         return mv;
 	}
-
-
-
 
 	@PostMapping("/RS1001MV/moveWeek")
 	public ModelAndView getPrevWeek(
@@ -270,6 +268,8 @@ public class ReservationController {
 	}
 
 	/**
+	 * @deprecated /RS1001PU02/findPaperChartByCnstId_2 함수로 대체함.
+	 * 
 	 * 상담차트번호에 해당하는 설문차트정보를 조회한다.
 	 * @param chartParam
 	 * @param tbPpCnstPaper
@@ -283,4 +283,22 @@ public class ReservationController {
 		chartSvc.findChartByCnstId( mv, chartParam, tbPpCnstPaper );
         return mv;
 	}
+	
+	/**
+	 * 상담차트번호에 해당하는 설문차트정보를 조회한다.
+	 * 
+	 * @param chartParam
+	 * @param tbPpCnstPaper
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/RS1001PU02/findPaperChartByCnstId_2")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> findPaperChartByCnstId_2(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper) throws Exception {
+		
+		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
+		
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다.", cnstPaper), HttpStatus.OK);
+	}
+	
 }

@@ -78,6 +78,10 @@ public class ChartService {
         return mv;
     }
 
+    public List<ResultSurveyChartVo> findPaperChartByCnstId( TbPpCnstChart inCnstParam, TbPpCnstPaper inCnstPaper ) throws Exception {
+    	List<ResultSurveyChartVo> cnstPaper = cnstPaperSvc.selectSurveyChartByCnstId( inCnstParam );
+    	return cnstPaper;
+    }
 
 	@Transactional
 	public HashMap<String, Object> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {

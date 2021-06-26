@@ -16,9 +16,15 @@ function fnInit() {
         onDblClickRow: function(index) {
         	let row = $('#dg').datagrid('getRows')[index];
         	if (!row) return;
-        	
+				
+        	// 설문차트 시트
+        	$('#saveSurvFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
+        	$('#saveSurvFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
+			// 복용차트 시트        	
         	$('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
         	$('#saveCnstFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
+
+        	fnPaperChart();
         	fnDosingChart();
         },
         columns:[[
@@ -26,7 +32,10 @@ function fnInit() {
 				field: 'cnstId', 
 				title: '상담번호',
 				align: 'center',  
-				width: '80'
+				width: '80',
+        		formatter: function(value, row, index) {
+        			return '<span style="font-weight:bold;">'+ value +'</span>';
+        		}
 			},
         	{
         		field: 'cnstDt', 
@@ -44,25 +53,16 @@ function fnInit() {
         		align: 'center', 
         		width: '100', 
         		editor: 'text'
-        	},
+        	}/*,
         	{
         		field: '보기', 
         		title: '보기', 
         		align: 'center', 
         		width: '80', 
         		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">차트보기</span>';
+        			return '<a href="javascript:void(0)" onclick="selectCnstChart();">차트보기</a>';
         		}
-        	},
-        	{
-        		field: '삭제', 
-        		title: '삭제', 
-        		align: 'center', 
-        		width: '80', 
-        		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">삭제</span>';
-        		}
-        	}
+        	}*/
         ]]
 	});
 	
@@ -182,6 +182,13 @@ function fnInit() {
 }
 
 /**************************************************************
+ * 상담차트 선택
+ **************************************************************/
+/*function selectCnstChart() {
+	alert('abc');
+}*/
+
+/**************************************************************
  * 상담차트 조회
  **************************************************************/
 function fnCnstChart() {
@@ -189,6 +196,27 @@ function fnCnstChart() {
 	queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 	
 	$('#dg').datagrid('reload');
+}
+
+/**************************************************************
+ * 설문차트 조회
+ **************************************************************/
+function fnPaperChart() {
+	let formData = {
+		cnstId : $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue')
+	};
+	$.post('/reservation/RS1001PU02/findPaperChartByCnstId_2', formData, function(res) {
+		/*if (res.status === 'success') {
+			$.messager.show({ title: 'Success', msg: res.message });
+		} else {
+			$.messager.show({ title: 'Error', msg: res.message });
+			return;
+		}*/
+	}, 'json')
+	.fail(function(xhr, status, error) {
+		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		return;
+	});
 }
 
 /**************************************************************
@@ -206,15 +234,53 @@ function fnDosingChart() {
  * 상담차트 생성 (상담차트/설문차트)
  **************************************************/
 function createCnstChart() {
+	var custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
+	let formData = {
+		"custId" 	: custId
+	};
+	
 	$.messager.confirm('Confirm', '신규 상담차트를 생성하시겠습니까?', function(r) {
 		if (!r) return;
 		
-		let formData = {
-			custId: $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue')
-		};
 		$.post('/api/v1/main/chart/createCnstChart', formData, function(res) {
 			if (res.status === 'success') {
 				$.messager.show({ title: 'Success', msg: res.message });
+    			fnCnstChart(); // 상담차트 조회
+			} else {
+				$.messager.show({ title: 'Error', msg: res.message });
+				return;
+			}
+		}, 'json')
+		.fail(function(xhr, status, error) {
+			$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+			return;
+		});
+	});
+}
+
+/*************************************************
+ * 상담차트 삭제 (상담차트/설문차트)
+ **************************************************/
+function removeCnstChart() {
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	if( selectedCnstId == "" ) {
+		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+		return false;
+	}
+	let formData = {
+		"cnstId" 	  : selectedCnstId
+	};
+
+	$.messager.confirm('Confirm', '선택한 상담차트를 삭제하시겠습니까?', function(r) {
+		if (!r) return;
+		
+		$.post('/api/v1/main/chart/deleteChart', formData, function(res) {
+			if (res.status === 'success') {
+				$.messager.show({ title: 'Success', msg: res.message });
+				
+				$('#saveSurvFrm')[0].reset();
+				$('#saveCnstFrm')[0].reset();
+				fnCnstChart(); // 상담차트 조회
 			} else {
 				$.messager.show({ title: 'Error', msg: res.message });
 				return;
@@ -338,6 +404,13 @@ $( document ).ready( function() {
      **************************************************************/
 	$(document).off("click", "#btnNewCnstChart").on("click", "#btnNewCnstChart", function (e) {
 		createCnstChart();
+	});
+	
+	/**************************************************************
+     * "상담차트 삭제" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnDelCnstChart").on("click", "#btnDelCnstChart", function (e) {
+		removeCnstChart();
 	});
 	
 	/**************************************************************
