@@ -415,7 +415,7 @@ $( document ).ready( function() {
 			});
 		});
 	});
-	
+
 	/**************************************************************
      * "상담차트 생성" 클릭시
      **************************************************************/
@@ -470,4 +470,8 @@ function myparser(s) {
 	} else {
 		return new Date();
 	}
+}
+
+function fnZipCode() {
+	sample2_execDaumPostcode2();
 }

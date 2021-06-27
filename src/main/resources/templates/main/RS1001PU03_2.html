@@ -158,19 +158,19 @@
 							<input name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
 								   data-options="label:'우편번호',labelPosition:'before'"
 								   th:value="${custInfo?.zipCode}">
-							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onClick="fnSearch();">우편번호 찾기</a>
+							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onclick="fnZipCode();">우편번호 찾기</a>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_addr1" class="easyui-textbox" style="width: 100%;"
+							<input id="addr1" name="dlg_addr1" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'주소'"
 								   th:value="${custInfo?.addr1}">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
+							<input id="addr2" name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'상세주소'"
 								   th:value="${custInfo?.addr2}">
 						</div>
