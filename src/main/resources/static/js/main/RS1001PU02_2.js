@@ -23,6 +23,10 @@ function fnInit() {
 			// 복용차트 시트        	
         	$('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
         	$('#saveCnstFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
+        	$('#cnstDesc').textbox('setValue', row.cnstDesc);
+        	$('#saveCnstFrm input[textboxName=orgWgt]').textbox('setValue', row.orgWgt);
+        	$('#saveCnstFrm input[textboxName=tgtWgt]').textbox('setValue', row.tgtWgt);
+        	$('#saveCnstFrm input[textboxName=startDosgDt]').datebox('setValue', row.startDosgDt);
 
         	fnPaperChart();
         	fnDosingChart();
@@ -336,10 +340,23 @@ function createDosingChart() {
  * 상담차트 수정 (상담차트/설문차트)
  **************************************************/
 function saveCnstChart( evt ) {
-
-	/*let formData = {
-		custId: $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue')
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	var cnstDesc = $('#cnstDesc').textbox('getValue');
+	var orgWgt = $('#saveCnstFrm input[textboxName=orgWgt]').textbox('getValue');
+	var tgtWgt = $('#saveCnstFrm input[textboxName=tgtWgt]').textbox('getValue');
+	var startDosgDt = $('#saveCnstFrm input[textboxName=startDosgDt]').datebox('getValue');
+	if( selectedCnstId == "" ) {
+		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+		return false;
+	}
+	let formData = {
+		"cnstId" 	: selectedCnstId,
+		"cnstDesc" 	: cnstDesc,
+		"orgWgt"	: orgWgt,
+		"tgtWgt"	: tgtWgt,
+		"startDosgDt" : startDosgDt
 	};
+
 	$.post('/api/v1/main/chart/saveCnstChart', formData, function(res) {
 		if (res.status === 'success') {
 			$.messager.show({ title: 'Success', msg: res.message });
@@ -351,7 +368,7 @@ function saveCnstChart( evt ) {
 	.fail(function(xhr, status, error) {
 		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
 		return;
-	});*/
+	});
 }
 
 $( document ).ready( function() {

@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(value = "/api/v1/main/chart/")
@@ -97,7 +98,31 @@ public class ChartApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
+    
+    /**
+     * 상담정보 수정
+     * 
+     * @param inCnstChart
+     * @return
+     */
+    @PostMapping("/saveCnstChart")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> saveCnstChart(TbPpCnstChart inCnstChart) {
+    	ResponseMessage resMsg = new ResponseMessage();
+    	try {
+    		chartSvc.updateTbPpCnstChart(inCnstChart);
 
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 상담차트가 수정 되었습니다.");
+
+		} catch (Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+    	
+    	return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+    }
+    
     /**
      * @deprecated /deleteCnstChart 상담차트 삭제로 대체함.
      * 

@@ -14,7 +14,13 @@ public class TbPpCnstChart extends TbCommColumn {
     private String picUsrNo;
     private String delYn;
     private String cnstDesc;
+    
+    /**
+     * @deprecated orgWgt 으로 데체함.
+     */
     private String curWgt;
     private String tgtWgt;
     private String startDosgDt;
+    
+    private String orgWgt;
 }

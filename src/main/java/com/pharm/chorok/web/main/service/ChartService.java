@@ -141,6 +141,19 @@ public class ChartService {
 		List<ResultDosingVo> resultList = dosingChartSvc.findDosingChartByCnstId( chartParam );
         return resultList;
     }
+
+    /**
+     * 상담정보 수정
+     * 
+     * @param inCnstChart
+     * @return
+     * @throws Exception
+     */
+    @Transactional
+	public int updateTbPpCnstChart(TbPpCnstChart inCnstChart) throws Exception {
+		return consultingRepo.updateTbPpCnstChart(inCnstChart);
+	}
+	
 }
 
         

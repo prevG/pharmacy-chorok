@@ -81,6 +81,14 @@
 	]]>
 	</insert>
 
+	<update id="updateTbPpCnstChart">
+		UPDATE TB_PP_CNST_CHART
+		SET    CNST_DESC = #{cnstDesc}
+			 , ORG_WGT = #{orgWgt}
+			 , TGT_WGT = #{tgtWgt}
+			 , START_DOSG_DT = #{startDosgDt}
+		WHERE CNST_ID = #{cnstId}
+	</update>
 
   <delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
