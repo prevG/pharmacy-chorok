@@ -25,4 +25,5 @@ public class ResultSurveyChartVo extends TbCommColumn {
     private String useYn; 
     private String cnstPaperVal;
 
+    private String paperHtml;
 }

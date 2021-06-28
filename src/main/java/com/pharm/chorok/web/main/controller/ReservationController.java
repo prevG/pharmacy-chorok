@@ -55,7 +55,6 @@ public class ReservationController {
 	@Autowired
 	private ADUserService userService;
 
-
 	/**
 	 * 메인페이지의 스케쥴테이블을 재조회한다.
 	 * @param reservationPagination
@@ -80,7 +79,6 @@ public class ReservationController {
 		reservationSvc.getReservationByDt( mv, reservationPagination );
 		return mv;
 	}
-	
 	
 	@PostMapping("/RS1001PU01")
 	public ModelAndView goRS1001PU01(TbPpRsvtSch rsvt) throws Exception {
@@ -296,16 +294,21 @@ public class ReservationController {
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> findPaperChartByCnstId_2(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper) throws Exception {
 		
-//		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
+		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
 		
-		String cnstPaper = ""
-				+ "<tr>\n"
-				+ "  <th scope=\"row\" class=\"align-middle\">1</th>\n"
-				+ "    <td class=\"align-middle\">키</td>\n"
-				+ "    <td>\n"
-				+ "      <input name=\"cnstDt11\" class=\"easyui-textbox\" style=\"width: 100%;\">\n"
-				+ "    </td>\n"
-				+ "  </tr>";
+		int i = 0;
+		for (ResultSurveyChartVo vo : cnstPaper) {
+			String cnstPaperHtml = ""
+					+ "<tr>\n"
+					+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
+					+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
+					+ "    <td>\n"
+					+ "      <input name=\"srvPaper[]\" class=\"easyui-textbox\" style=\"width: 100%;\">\n"
+					+ "    </td>\n"
+					+ "  </tr>\n";
+			i++;
+			vo.setPaperHtml(cnstPaperHtml);
+		}
 		
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다.", cnstPaper), HttpStatus.OK);
 	}

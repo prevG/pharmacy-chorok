@@ -239,7 +239,11 @@ function fnPaperChart() {
 	};
 	$.post('/reservation/RS1001PU02/findPaperChartByCnstId_2', formData, function(res) {
 		if (res.status === 'success') {
-			$('#cnstPaper').html(res.data);
+			var html = '';
+			$.each(res.data, function(index, item) {
+				html += item.paperHtml;
+			});
+			$('#cnstPaper').html(html);
 			$.parser.parse($('#cnstPaper'));
 		} else {
 			$.messager.show({ title: 'Error', msg: res.message });
@@ -331,7 +335,7 @@ function removeCnstChart() {
  **************************************************/
 function createDosingChart() {
 	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	var startDosgDt    = $('#saveCnstFrm input[textboxName=startDosgDt]').textbox('getValue');
+	var startDosgDt    = $('#saveDosgFrm input[textboxName=startDosgDt]').textbox('getValue');
 	
 	if( selectedCnstId == "" ) {
 		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
@@ -366,7 +370,7 @@ function createDosingChart() {
 }
 
 /*************************************************
- * 상담차트 수정 (상담차트/설문차트)
+ * 상담차트 저장 (상담차트/설문차트)
  **************************************************/
 function saveCnstChart( evt ) {
 	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
@@ -391,6 +395,40 @@ function saveCnstChart( evt ) {
 	};
 
 	$.post('/api/v1/main/chart/saveCnstChart', formData, function(res) {
+		if (res.status === 'success') {
+			$.messager.show({ title: 'Success', msg: res.message });
+		} else {
+			$.messager.show({ title: 'Error', msg: res.message });
+			return;
+		}
+	}, 'json')
+	.fail(function(xhr, status, error) {
+		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		return;
+	});
+}
+
+/*************************************************
+ * 설문차트 저장
+ **************************************************/
+function saveSurveyChart( evt ) {
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	var cnstDesc = $('#cnstDesc').textbox('getValue');
+	var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
+	var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
+	var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+	var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+	var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
+	if( selectedCnstId == "" ) {
+		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+		return false;
+	}
+	let formData = [];
+	for (var i = 1; i < 22; i++) {
+		formData.push({});
+	}
+
+	$.post('/api/v1/main/survey/saveSrvChart_2', formData, function(res) {
 		if (res.status === 'success') {
 			$.messager.show({ title: 'Success', msg: res.message });
 		} else {
@@ -471,7 +509,7 @@ $( document ).ready( function() {
 	});
 
 	/**************************************************************
-     * 차트정보 저장 클릭시
+     * "상담정보 저장" 클릭시
      **************************************************************/
 	$(document).off("click", "#btnSaveCnstChart").on("click", "#btnSaveCnstChart", function (e) {
 		$.messager.confirm('Confirm', '차트정보를 저장하시겠습니까?', function(r) {
@@ -480,6 +518,28 @@ $( document ).ready( function() {
 			saveCnstChart( e );
 			/*saveSurveyChart( e );
 			saveDosingChart( e );*/
+		});
+	});
+	
+	/**************************************************************
+     * "설문차트 저장" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnSaveSurvChart").on("click", "#btnSaveSurvChart", function (e) {
+		$.messager.confirm('Confirm', '설문차트 정보를 저장하시겠습니까?', function(r) {
+			if (!r) return;
+			
+			//saveSurveyChart( e );
+		});
+	});
+	
+	/**************************************************************
+     * "복용차트 저장" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnSaveDosgChart").on("click", "#btnSaveDosgChart", function (e) {
+		$.messager.confirm('Confirm', '복용차트 정보를 저장하시겠습니까?', function(r) {
+			if (!r) return;
+			
+			//saveDosingChart( e );
 		});
 	});
 	
