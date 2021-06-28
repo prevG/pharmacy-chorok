@@ -32,25 +32,66 @@
 		</div>
 		<div class="col-md-8">
 			<div class="row p-2">
+				<div class="easyui-panel" title="상담정보" style="width: 100%;min-height: 80px;"
+					 data-options="collapsible:true">
+					<form id="saveCnstFrm" name="saveCnstFrm" method="post">
+					<div class="row m-2">
+						<div class="col-md-2 form-inline">
+							<input name="selectedCnstId" class="easyui-textbox" style="width: 100%;text-align: center;"
+								   data-options="
+								   		label:'상담번호 *',
+								   		required:true,
+								   		readonly:true">
+						</div>
+						<div class="col-md-2">
+		 		 			<input name="cnstDt" class="easyui-textbox" style="width: 100%;text-align: center;"
+								   data-options="
+								   		label:'상담일시 *',
+								   		labelPosition:'left',
+								   		required:true,
+								   		readonly:true">
+						</div>
+						<div class="col-md-2">
+		 		 			<select name="picUsrNo" class="easyui-combobox" style="width: 100%;text-align: center;"
+								   data-options="
+								   		label:'상담약사',
+								   		labelPosition:'left',
+								   		required:true">
+								<option value="">선택</option>
+								<option value="1">박정란</option>
+								<option value="2">황진영</option>
+								<option value="8">곽경준</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+		 		 			<select name="pic2UsrNo" class="easyui-combobox" style="width: 100%;text-align: center;"
+								   data-options="
+								   		label:'상담실장',
+								   		labelPosition:'left',
+								   		required:true">
+								<option value="">선택</option>
+								<option value="1">박정란</option>
+								<option value="2">황진영</option>
+								<option value="8">곽경준</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">상담정보 저장</a>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="row p-2">
 				<div class="easyui-tabs" style="width: 100%;min-height: 500px;"
-			 		 data-options="pill:true,tabWidth:120">
+			 		 data-options="tabWidth:120">
 			 		 <div title="설문차트" class="py-2" style="overflow: hidden;">
-			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
 			 		 	<div class="row mb-2">
-			 		 		<div class="col-md-12 form-inline">
-								<input name="selectedCnstId" class="easyui-textbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'상담번호',
-									   		required:true,
-									   		readonly:true">
-			 		 			<input name="cnstDt" class="easyui-textbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'상담일시',
-									   		labelPosition:'left',
-									   		required:true,
-									   		readonly:true">
+			 		 		<div class="col-md-12 d-flex justify-content-end">
+			 		 			<a href="javascript:void(0)" id="btnSaveSurvChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">설문차트 저장</a>
 			 		 		</div>
 			 		 	</div>
+			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
 			 		 	<div style="height: 550px;overflow: auto;">
 				 		 	<table class="table table-sm table-hover">
 				 		 		<thead>
@@ -60,8 +101,8 @@
 				 		 				<th scope="col">답변</th>
 				 		 			</tr>
 				 		 		</thead>
-				 		 		<tbody>
-				 		 			<tr>
+				 		 		<tbody id="cnstPaper">
+				 		 			<!-- <tr>
 				 		 				<th scope="row" class="align-middle">1</th>
 				 		 				<td class="align-middle">키</td>
 				 		 				<td>
@@ -237,32 +278,21 @@
 				 		 				<td>
 						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
 				 		 				</td>
-				 		 			</tr>
+				 		 			</tr> -->
 				 		 		</tbody>
 				 		 	</table>
 			 		 	</div>
 			 		 	</form>
 			 		 </div>
 			 		 <div title="복용차트" class="py-2" style="overflow: hidden;">
-	 		 			<form id="saveCnstFrm" name="saveCnstFrm" method="post">
+	 		 			<form id="saveDosgFrm" name="saveDosgFrm" method="post">
 			 		 	<div class="row mb-2">
-			 		 		<div class="col-md-12 form-inline">
-								<input name="selectedCnstId" class="easyui-textbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'상담번호',
-									   		required:true,
-									   		readonly:true">
-			 		 			<input name="cnstDt" class="easyui-textbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'상담일시',
-									   		labelPosition:'left',
-									   		required:true,
-									   		readonly:true">
-			 		 			<input name="orgWgt" class="easyui-textbox" style="width: 200px;"
+			 		 		<div class="col-md-10 form-inline">
+			 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;"
 									   data-options="
 									   		label:'시작체중',
 									   		labelPosition:'left'">
-			 		 			<input name="tgtWgt" class="easyui-textbox" style="width: 200px;"
+			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;"
 									   data-options="
 									   		label:'희망체중',
 									   		labelPosition:'left'">
@@ -271,8 +301,11 @@
 									   		label:'복용시작일자',
 									   		formatter:myformatter,
 									   		parser:myparser">
-								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-3" style="width:120px;"
+								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-2" style="width:120px;"
 								   data-options="iconCls:'icon-edit'">복용차트 생성</a>
+			 		 		</div>
+			 		 		<div class="col-md-2 d-flex justify-content-end">
+			 		 			<a href="javascript:void(0)" id="btnSaveDosgChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">복용차트 저장</a>
 			 		 		</div>
 			 		 	</div>
 	 		 			</form>
@@ -280,12 +313,6 @@
 			 		 </div>
 				</div>
 			</div>
-		</div>
-	</div>
-    <hr>
-	<div class="row">
-		<div class="col-md-12 d-flex justify-content-end">
-			<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
 		</div>
 	</div>
 </div>

@@ -18,4 +18,8 @@ public class ResultConsultingVo extends TbCommColumn {
     private String orgWgt;
     private String tgtWgt;
     private String startDosgDt;
+    
+    private String picUsrNoVal;			// 상담약사 이름
+    private String pic2UsrNo;			// 상담실장 번호
+    private String pic2UsrNoVal;		// 상담실장 이름
 }

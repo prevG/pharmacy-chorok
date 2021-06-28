@@ -1,3 +1,9 @@
+var gPicUsers = [
+	{ 'ditcCd' : '1', 'ditcNm' : '박정란' },
+	{ 'ditcCd' : '2', 'ditcNm' : '황진영' },
+	{ 'ditcCd' : '8', 'ditcNm' : '곽경준' }
+];
+
 function fnInit() {
 	// 상담차트 목록
 	$('#dg').datagrid({
@@ -16,17 +22,20 @@ function fnInit() {
         onDblClickRow: function(index) {
         	let row = $('#dg').datagrid('getRows')[index];
         	if (!row) return;
-				
-        	// 설문차트 시트
-        	$('#saveSurvFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
-        	$('#saveSurvFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
-			// 복용차트 시트        	
-        	$('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('setValue', row.cnstId);
-        	$('#saveCnstFrm input[textboxName=cnstDt]').textbox('setValue', row.cnstDt);
-        	$('#cnstDesc').textbox('setValue', row.cnstDesc);
-        	$('#saveCnstFrm input[textboxName=orgWgt]').textbox('setValue', row.orgWgt);
-        	$('#saveCnstFrm input[textboxName=tgtWgt]').textbox('setValue', row.tgtWgt);
-        	$('#saveCnstFrm input[textboxName=startDosgDt]').datebox('setValue', row.startDosgDt);
+			
+			// 복용차트 시트
+			$('#saveCnstFrm').form('load', {
+				selectedCnstId 	: row.cnstId,
+				cnstDt 			: row.cnstDt,
+				picUsrNo		: row.picUsrNo,
+				pic2UsrNo		: row.pic2UsrNo
+			});
+			$('#cnstDesc').textbox('setValue', row.cnstDesc);
+			$('#saveDosgFrm').form('load', {
+				orgWgt 			: row.orgWgt,
+				tgtWgt			: row.tgtWgt,
+				startDosgDt		: row.startDosgDt
+			});
 
         	fnPaperChart();
         	fnDosingChart();
@@ -56,7 +65,26 @@ function fnInit() {
         		title: '상담약사', 
         		align: 'center', 
         		width: '100', 
-        		editor: 'text'
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
+        		},
+        		formatter: function(value, row) {
+        			return row.picUsrNoVal;
+        		}
+        	},
+        	{
+        		field: 'pic2UsrNo', 
+        		title: '상담실장', 
+        		align: 'center', 
+        		width: '100', 
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
+        		},
+        		formatter: function(value, row) {
+        			return row.pic2UsrNoVal;
+        		}
         	}/*,
         	{
         		field: '보기', 
@@ -210,12 +238,13 @@ function fnPaperChart() {
 		cnstId : $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue')
 	};
 	$.post('/reservation/RS1001PU02/findPaperChartByCnstId_2', formData, function(res) {
-		/*if (res.status === 'success') {
-			$.messager.show({ title: 'Success', msg: res.message });
+		if (res.status === 'success') {
+			$('#cnstPaper').html(res.data);
+			$.parser.parse($('#cnstPaper'));
 		} else {
 			$.messager.show({ title: 'Error', msg: res.message });
 			return;
-		}*/
+		}
 	}, 'json')
 	.fail(function(xhr, status, error) {
 		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
@@ -342,9 +371,11 @@ function createDosingChart() {
 function saveCnstChart( evt ) {
 	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	var cnstDesc = $('#cnstDesc').textbox('getValue');
-	var orgWgt = $('#saveCnstFrm input[textboxName=orgWgt]').textbox('getValue');
-	var tgtWgt = $('#saveCnstFrm input[textboxName=tgtWgt]').textbox('getValue');
-	var startDosgDt = $('#saveCnstFrm input[textboxName=startDosgDt]').datebox('getValue');
+	var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
+	var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
+	var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+	var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+	var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
 	if( selectedCnstId == "" ) {
 		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 		return false;
@@ -352,6 +383,8 @@ function saveCnstChart( evt ) {
 	let formData = {
 		"cnstId" 	: selectedCnstId,
 		"cnstDesc" 	: cnstDesc,
+		"picUsrNo"	: picUsrNo,
+		"pic2UsrNo"	: pic2UsrNo,
 		"orgWgt"	: orgWgt,
 		"tgtWgt"	: tgtWgt,
 		"startDosgDt" : startDosgDt

@@ -17,3 +17,17 @@ sms2
 ============================================
 ////지인소개 받더라도 첫번째는 정상요금으로 25만원(처음)
 두번째부터는 마일리지 적용...
+
+
+############ 2021/06/28 ########################
+
+1. TB_PP_CNST_CHART 테이블 pic2_user_no 필드 추가 : 담당실장
+
+2. ResultConsultingVo Vo 필드 추가.
+    private String picUsrNoVal;			// 상담약사 이름
+    private String pic2UsrNo;			// 상담실장 번호
+    private String pic2UsrNoVal;		// 상담실장 이름
+    
+3. TbPpCnstChart table 필드 추가
+    private String orgWgt;			// 시작체중
+    private String pic2UsrNo;		// 상담실장 아이디

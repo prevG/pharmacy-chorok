@@ -26,6 +26,13 @@
        , ORG_WGT
        , TGT_WGT
        , START_DOSG_DT
+       , REG_DT
+       , REG_USR_NO
+       , UPD_DT
+       , UPD_USR_NO
+       , PIC2_USR_NO
+       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_VAL
+       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_VAL
     FROM TB_PP_CNST_CHART
    WHERE CNST_ID = #{cnstId}
    ORDER
@@ -51,6 +58,9 @@
        , REG_USR_NO
        , UPD_DT
        , UPD_USR_NO
+       , PIC2_USR_NO
+       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_VAL
+       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_VAL
     FROM TB_PP_CNST_CHART
        , (SELECT @ROWNUM :=-1) TMP
    WHERE CUST_ID = #{custId}
@@ -84,9 +94,11 @@
 	<update id="updateTbPpCnstChart">
 		UPDATE TB_PP_CNST_CHART
 		SET    CNST_DESC = #{cnstDesc}
-			 , ORG_WGT = #{orgWgt}
-			 , TGT_WGT = #{tgtWgt}
-			 , START_DOSG_DT = #{startDosgDt}
+			 , PIC_USR_NO = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
+			 , PIC2_USR_NO = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
+			 , ORG_WGT = CASE WHEN #{orgWgt} = '' THEN NULL ELSE #{orgWgt} END
+			 , TGT_WGT = CASE WHEN #{tgtWgt} = '' THEN NULL ELSE #{tgtWgt} END
+			 , START_DOSG_DT = CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
 		WHERE CNST_ID = #{cnstId}
 	</update>
 

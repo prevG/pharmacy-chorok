@@ -22,5 +22,6 @@ public class TbPpCnstChart extends TbCommColumn {
     private String tgtWgt;
     private String startDosgDt;
     
-    private String orgWgt;
+    private String orgWgt;			// 시작체중
+    private String pic2UsrNo;		// 상담실장 아이디
 }

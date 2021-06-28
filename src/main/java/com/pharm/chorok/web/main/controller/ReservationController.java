@@ -296,7 +296,16 @@ public class ReservationController {
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> findPaperChartByCnstId_2(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper) throws Exception {
 		
-		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
+//		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
+		
+		String cnstPaper = ""
+				+ "<tr>\n"
+				+ "  <th scope=\"row\" class=\"align-middle\">1</th>\n"
+				+ "    <td class=\"align-middle\">키</td>\n"
+				+ "    <td>\n"
+				+ "      <input name=\"cnstDt11\" class=\"easyui-textbox\" style=\"width: 100%;\">\n"
+				+ "    </td>\n"
+				+ "  </tr>";
 		
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다.", cnstPaper), HttpStatus.OK);
 	}
