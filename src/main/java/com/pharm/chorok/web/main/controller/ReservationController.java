@@ -298,16 +298,49 @@ public class ReservationController {
 		
 		int i = 0;
 		for (ResultSurveyChartVo vo : cnstPaper) {
-			String cnstPaperHtml = ""
-					+ "<tr>\n"
-					+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
-					+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
-					+ "    <td>\n"
-					+ "      <input name=\"srvPaper[]\" class=\"easyui-textbox\" style=\"width: 100%;\">\n"
-					+ "    </td>\n"
-					+ "  </tr>\n";
-			i++;
+			String cnstPaperHtml = "";
+			if (vo.getExamCd().equalsIgnoreCase("TEXT")) {
+				cnstPaperHtml = ""
+						+ "<tr>\n"
+						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
+						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n"
+						+ "      <input name=\""+ vo.getId() +"\" class=\"easyui-textbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\">\n"
+						+ "    </td>\n"
+						+ "  </tr>\n";
+			} else if (vo.getExamCd().equalsIgnoreCase("CHECK")) {
+				String[] examArr = vo.getExam().split(",");
+				cnstPaperHtml = ""
+						+ "<tr>\n"
+						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
+						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
+						for (String exam : examArr) {
+							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-checkbox\" value=\""+ exam +"\""
+									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\""
+									+ ">\n";
+						}
+						cnstPaperHtml += ""
+						+ "    </td>\n"
+						+ "  </tr>\n";
+			} else if (vo.getExamCd().equalsIgnoreCase("RADIO")) {
+				String[] examArr = vo.getExam().split(",");
+				cnstPaperHtml = ""
+						+ "<tr>\n"
+						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
+						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
+						for (String exam : examArr) {
+							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-radiobutton\" value=\""+ exam +"\""
+									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\""
+									+ ">\n";
+						}
+						cnstPaperHtml += ""
+						+ "    </td>\n"
+						+ "  </tr>\n";
+			}
 			vo.setPaperHtml(cnstPaperHtml);
+			i++;
 		}
 		
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다.", cnstPaper), HttpStatus.OK);
