@@ -28,6 +28,7 @@ $(document).ready(function () {
      **************************************************************/
     $(document).off("click", "button[name='rsvtSch']").on("click", "button[name='rsvtSch']", function (e) {
 
+
         //변경된 데이터가 있는지 확인
         if( !checkExistChangedData() ) {
             return false;
@@ -36,9 +37,7 @@ $(document).ready(function () {
             "rsvtId": $(e.target).closest("div").attr("data-id")
         }
 
-        $( document ).removeClass("btn_sel");
-        $( this ).addClass("btn_sel");
-        findReservationDetail(params);
+        findReservationDetail(params, this);
     });
 
     /**************************************************************
@@ -273,7 +272,7 @@ $(document).ready(function () {
 
 
     /**************************************************************
-     * 에약정보 저장하기
+     * 예약정보 저장하기
      **************************************************************/
     $(document).off("click", "button[name='btnSaveRsvtSch']").on("click", "button[name='btnSaveRsvtSch']", function (e) {
 
@@ -351,7 +350,23 @@ $(document).ready(function () {
 
         
     //예약 상세정보조회
-    findReservationDetail = function (params) {
+    findReservationDetail = function (params, obj) {
+
+        //스케쥴표에서 선택된 예약이 있으면 스타일 초기화
+        clearSelectedReservation();
+        
+        //선택된 경우 색상 변경
+        if( !$isEmpty( obj )) {
+            if( $(obj).hasClass("btn-outline-primary") ) {
+                $(obj).addClass("btn_primary_sel");
+
+            } else if( $(obj).hasClass("btn-outline-success") ) {
+                $(obj).addClass("btn_success_sel");
+
+            } else {
+                $(obj).addClass("btn_secondary_sel");
+            }
+        }
 
         var url = "/reservation/RS1001MV/detail";
         $("#reservation-detail").load(url, params, function (response, status, xhr) {
@@ -451,5 +466,14 @@ $(document).ready(function () {
             return false;
         }
         return true;
+    }
+
+    clearSelectedReservation = function() {
+        //기존에 선택되어 있는 것 해제
+        $("#time-table").find(".btn_primary_sel, .btn_success_sel, .btn_secondary_sel").each(function(index, item){
+            $(item).removeClass("btn_primary_sel");
+            $(item).removeClass("btn_success_sel");
+            $(item).removeClass("btn_secondary_sel");
+        });
     }
 });

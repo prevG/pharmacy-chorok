@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(value = "/api/v1/main/reservation")
 @RestController
-public class ReservationScheduleApi {
+public class ReservationApi {
 
 	@Autowired
-	private ReservationService rsvtSchSvc;
+	private ReservationService reservationSvc;
 
 
 	@PostMapping("/saveReservation")
@@ -25,7 +25,7 @@ public class ReservationScheduleApi {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.saveReservationSchedule( rsvt );
+			reservationSvc.saveReservationSchedule( rsvt );
 
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
@@ -42,11 +42,30 @@ public class ReservationScheduleApi {
 
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.deleteReservationSchedule( rsvt );
+			reservationSvc.deleteReservationSchedule( rsvt );
 
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 삭제되었습니다.");
 			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+
+	@PostMapping("/findByRsvtId")
+	public ResponseEntity<ResponseMessage> findByRsvtId(TbPpRsvtSch rsvt) throws Exception {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+
+			//예약상세정보 조회
+			TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+
+			resMsg.setStatus("success");
+			resMsg.setData(rsvtSchInfo);
+
 		} catch(Exception e) {
 			resMsg.setStatus("error");
 			resMsg.setMessage( e.getMessage() );

@@ -9,6 +9,13 @@
 
 	<!--공통 CSS -->
 	<link rel="stylesheet" th:href="@{/css/chorok.css}">
+
+	<!-- easyui -->
+	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.15/themes/bootstrap/easyui.css}">
+	<link rel="stylesheet" th:href="@{/vendor/jquery-easyui-1.9.15/themes/icon.css}">
+	<link rel="stylesheet" hth:ref="@{/vendor/jquery-easyui-1.9.15/themes/color.css}">
+
+	<!-- bootstrap -->
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.4.0/font/bootstrap-icons.css}">
 	<link rel="stylesheet" th:href="@{/webjars/AdminLTE/3.1.0-rc/dist/css/adminlte.min.css}">
@@ -20,30 +27,26 @@
 	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	<link rel="stylesheet" href="/vendor/jquery-easyui-1.9.12/themes/bootstrap/easyui.css">
 
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-	<!-- easyui -->
-	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/bootstrap/easyui.css">
-	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
 
 	<!--공통 js -->
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.js}"></script>
+	<!-- easyui -->
+	<script type="text/javascript" th:src="@{/vendor/jquery-easyui-1.9.15/jquery.easyui.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/AdminLTE/3.1.0-rc/dist/js/adminlte.js}"></script>
-	<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.js}"></script>
 	<script type="text/javascript" th:src="@{/js/common/tabulator.custom.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/tabulator-tables/4.9.3/dist/js/tabulator.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
 	<script type="text/javascript" th:src="@{/js/common/chorok.js}"></script>
-	<script type="text/javascript" th:src="@{/js/common/daum_post.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/custom.daum_post.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/custom.easyui.js}"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<!-- easyui -->
-	<script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
 
 	<!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
 	<th:block layout:fragment="css">

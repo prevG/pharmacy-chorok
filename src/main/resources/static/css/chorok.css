@@ -14,15 +14,14 @@
 .w-readonly{
     background-color: white !important;
 }
-.btn_sel{
-    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
-}
+
+
 .btn_primary_sel{
-    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+    border-color: #4285f4;color: #fff !important;background: #4285f4 !important;
 }
 .btn_success_sel{
-    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+    border-color: #28a745;color: #fff !important;background: #28a745 !important;
 }
 .btn_secondary_sel{
-    border-color: #4285f4;color: #4285f4;background: #e9f1fe; 
+    border-color: #6c757d;color: #fff !important;background: #6c757d !important;
 }

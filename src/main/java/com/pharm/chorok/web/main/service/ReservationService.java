@@ -67,6 +67,10 @@ public class ReservationService {
 		//DATETIMEPICKER 시간대를 조회한다.
         List<TbPpWorkTime> timeList = rsvtSchRepo.selectTimeList();
 
+		//약사목록 을 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        mv.addObject( "chemistList", chemistList  ); //약사목록
+
 
 		mv.addObject( "currDt" , currDt        ); //검색기준일자
         mv.addObject( "rowList" , workTimeList ); //Row

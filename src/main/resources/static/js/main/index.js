@@ -1,9 +1,16 @@
 $( document ).ready( function() {
+	/**
+	 * 예약일시 datetimepicker 적용
+	 */
+     $.datetimepicker.setLocale('ko');
+     $( "#rsvtDtYyyymmdd" ).datetimepicker({
+         format	: 'Y-m-d',
+         weeks   : true,
+         timepicker:false
+     });
 
     $("#table01").datagrid({
 	    url: '/api/v1/main/chart/dashList01',
-        width: "100%",
-        height: "auto",
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -24,8 +31,6 @@ $( document ).ready( function() {
     });  
     $("#table02").datagrid({
 	    url: '/api/v1/main/chart/dashList02',
-        width: "100%",
-        height: "auto",
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -46,8 +51,6 @@ $( document ).ready( function() {
     });  
     $("#table03").datagrid({
 	    url: '/api/v1/main/chart/dashList03',
-        width: "100%",
-        height: "auto",
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -70,8 +73,6 @@ $( document ).ready( function() {
     });
     $("#table04").datagrid({
 	    // url: '/api/v1/main/chart/dashList04',
-        width: "100%",
-        height: "auto",
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -91,20 +92,6 @@ $( document ).ready( function() {
         ]]
     });
 
-    /**************************************************************
-     * 예약고객 상세스케쥴 클릭시 상세스케쥴 확인
-     **************************************************************/
-    $( document ).on("click", "button[name='rsvtSch']", function( e ) {    
-        
-        e.preventDefault(); //remove href function
-        var params = {
-        	"rsvtId" : $(e.target ).closest("div").attr("data-id")
-        };	
-
-		$("#modalRsvtDtl .modal-content").load("/reservation/RS1001PU01", params, function (data, status, xhr) {			
-			$(".modal").modal('show');
-		});
-    });
 
     /**************************************************************
      * 금주 스케쥴보기
@@ -150,4 +137,296 @@ $( document ).ready( function() {
         e.preventDefault();
         location.href = "/customer/CUS2001ML";
     });
+
+   /**************************************************************
+    * 예약고객 휴대전화번호 / 추천인 휴대전화번호 입력시 숫자만 입력되도록
+    **************************************************************/
+    $("#rsvtCellNo").textbox('textbox').bind('keyup', function(e){
+        $onlyNum(this);
+    });
+
+    /**************************************************************
+     * 예약자명  autocomplete 생성
+     **************************************************************/
+    $('#rsvtUsrNm').combobox({
+        mode        : 'remote',
+        valueField  : 'value',
+        textField   : 'value',
+        panelHeight : 'auto',
+        formatter: function(data){
+            return data.label;
+        },
+        onSelect    : function( data ){
+
+            $('#rsvtForm').form('load', {
+                rsvtCellNo  : data.cellNo,
+                custId      : data.id,
+                genTpCd     : data.genTpCd
+            });
+        },
+        onChange : function( newValue, oldValue ) {
+            if ( $isEmpty( newValue )) {
+                $('#rsvtForm').form('load', {
+                    rsvtCellNo : '',
+                    custId     : '',
+                    genTpCd    : ''
+                });
+            }
+        },
+        loader: function(param, succ){
+            if (!param.q){return;}
+            $.ajax({
+                type: 'post',
+                url : "/api/v1/main/customer/findCustomer",
+                data: {
+                    "custUsrNm": $("input[name='rsvtUsrNm']").val(),
+                    "custCellNo": $("input[name='rsvtCellNo']").val()
+                },
+                success: function(result){
+                    
+                    var rows = $.map(result.data, function(item){
+                        return { 
+                            label: item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                            value: item.custUsrNm,
+                            id: item.custId,
+                            usrNm: item.custUsrNm,
+                            cellNo: item.custCellNo,
+                            genTpCd: item.custGenTpCd
+                        };
+                    });
+                    succ(rows)
+                }
+            })
+        }
+    });
+
+
+    /**************************************************************
+     * 추천인  autocomplete 생성
+     **************************************************************/
+    $('#rcmdUsrNm').combobox({
+        mode        : 'remote',
+        valueField  : 'value',
+        textField   : 'value',
+        panelHeight : 'auto',
+        formatter: function(data){
+            return data.label;
+        },
+        onSelect    : function( data ){
+            console.log( data );
+            $('#rsvtForm').form('load', {
+                rcmdCellNo : data.cellNo,
+                rcmdUsrNo  : data.id
+            });
+        },
+        onChange : function( newValue, oldValue ) {
+            if ( $isEmpty( newValue )) {
+                $('#rsvtForm').form('load', {
+                    rcmdCellNo : '',
+                    rcmdUsrNo  : ''
+                });
+            }
+        },
+        loader: function(param, succ){
+            if (!param.q){return;}
+            $.ajax({
+                type: 'post',
+                url : "/api/v1/main/customer/findCustomer",
+                data: {
+                    "custUsrNm": $("input[name='rcmdUsrNm']").val(),
+                    "custCellNo": $("input[name='rcmdCellNo']").val()
+                },
+                success: function(result){
+                    
+                    var rows = $.map(result.data, function(item){
+                        return { 
+                            label: item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                            value: item.custUsrNm,
+                            id: item.custId,
+                            usrNm: item.custUsrNm,
+                            cellNo: item.custCellNo,
+                            genTpCd: item.custGenTpCd
+                        };
+                    });
+                    succ(rows)
+                }
+            })
+        }
+    });
+	
+	
+    /**************************************************************
+     * 예약고객 상세스케쥴 클릭시 상세스케쥴 확인
+      **************************************************************/
+    $( document ).on("click", "button[name='rsvtSch']", function( e ) {    
+       
+        e.preventDefault(); //remove href function
+
+        //스케쥴표에서 선택된 예약이 있으면 스타일 초기화
+        clearSelectedReservation();
+        
+        //선택된 경우 색상 변경
+        if( $(this).hasClass("btn-outline-primary") ) {
+            $(this).addClass("btn_primary_sel");
+
+        } else if( $(this).hasClass("btn-outline-success") ) {
+            $(this).addClass("btn_success_sel");
+
+        } else {
+            $(this).addClass("btn_secondary_sel");
+        }
+
+        var params = {
+            "rsvtId" : $(e.target ).closest("div").attr("data-id")
+        };
+        $.post('/api/v1/main/reservation/findByRsvtId', params, function(result) {
+           if (result.status == 'success') {
+               $('#modalRsvtDtl').dialog('open');
+               $('#rsvtForm').form('clear');
+               
+               var data = result.data;
+               $('#rsvtForm').form('load', {
+                   rsvtDtYyyymmdd : data.rsvtDtYyyymmdd,
+                   rsvtDtHh   : data.rsvtDtHh,
+                   rsvtDtMm   : data.rsvtDtMm,
+                   rsvtTpCd   : data.rsvtTpCd,
+                   rsvtUsrNm  : data.rsvtUsrNm,
+                   genTpCd    : data.genTpCd,
+                   rsvtCellNo : data.rsvtCellNo,
+                   rcmdUsrNm  : data.rcmdUsrNm,
+                   rcmdCellNo : data.rcmdCellNo,
+                   rcmdCellNo : data.rcmdCellNo,
+                   rcmdUsrNo  : data.rcmdUsrNo,
+                   rsvtDesc   : data.rsvtDesc,
+                   picUsrNo   : data.picUsrNo,
+                   rsvtId     : data.rsvtId,
+                   custId     : data.custId
+               });
+           } else {
+               $.messager.show({ title: 'Error', msg: result.Msg });
+               return;
+           }
+       }, 'json')
+       .fail(function(xhr, status, error) {
+           $.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+           return;
+       });
+   });
+
+    /**************************************************************
+     * 주간 스케쥴표에 빈칸을 클릭한 경우 
+     **************************************************************/
+    $(document).off("click", "#table-schedule tbody tr td").on("click", "#table-schedule tbody tr td", function (e) {
+        var rsvtSchBtn = $( this ).children().find("button");
+        if( rsvtSchBtn == null || rsvtSchBtn.length ==0 ) {
+            clearSelectedReservation();
+        }
+    });
+
+   /**************************************************************
+    * 저장하기
+    **************************************************************/
+	 $(document).off("click", "a[name='btnSaveRsvtSch']").on("click", "a[name='btnSaveRsvtSch']", function (e) {
+
+	    var isOk = validateSubmit();
+        if (!isOk) {
+           return false;
+        }
+
+        isOk = confirm("예약정보를 저장하시겠습니까?");
+        if (!isOk) {
+           return false;
+        }
+
+       var params = $("form[name=detailForm]").serialize();
+       $.ajax({
+           type: 'post',
+           url: '/api/v1/main/reservation/saveReservation',
+           data: params,
+           success: function (result) {
+
+               if (result.status == "success") {
+                   alert("예약정보가 저장되었습니다.");
+					$(".modal").modal("hide");
+					refreshTimeTable();
+				} else {
+					alert(result.errorMessage);
+				}
+           }
+       });
+	 });
+
+	//저장후 타임테이블 새로고침
+	refreshTimeTable = function () {
+		var url = "/reservation/dashboard/reload";
+		var params = {
+			"currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
+		};
+
+		$("#time-table").load( url, params, function (response, status, xhr) {
+
+			if (200 == xhr.status) {
+				$("#time-table").html(response);
+			} else {
+				console.log(response, status, xhr);
+			}
+		});
+	}
+
+	//저장하기전 데이터 검증
+	validateSubmit = function () {
+		var rsvtDt         = $("input[name='rsvtDt']").val(); //예약일시
+		var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
+		var rsvtDtHh       = $("input[name='rsvtDtHh']").val(); //예약일시
+		var rsvtDtMm       = $("input[name='rsvtDtMm']").val(); //예약일시
+		var rsvtTpCd       = $("input:checkbox[name=rsvtTpCd]:checked").length //상담구분
+		var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
+		var rsvtCellNo     = $("input[name='rsvtCellNo']").val(); //예약자휴대전화번호
+
+
+		// if ($isEmpty(rsvtDt)) {
+		//     alert("예약일시를 입력해주세요.");
+		//     $("input[name='rsvtDt']").focus();
+		//     return false;
+		// }
+		if ($isEmpty(rsvtDtYyyymmdd)) {
+			alert("예약 [일자]를 입력해주세요.");
+			$("#rsvtDtYyyymmdd").textbox('clear').textbox('textbox').focus();
+			return false;
+		}if ($isEmpty(rsvtDtHh)) {
+			alert("예약 [시]을 입력해주세요.");
+			$("#rsvtDtHh").combobox('textbox').focus();
+			return false;
+		}if ($isEmpty(rsvtDtMm)) {
+			alert("예약 [분]을 입력해주세요.");
+			$("#rsvtDtMm").combobox('textbox').focus();
+			return false;
+		}
+		// if (rsvtTpCd == 0) {
+		// 	alert("[상담구분]을 선택해주세요.");
+		// 	$("input[name='rsvtTpCd']").radiobutton('textbox').focus()
+		// 	return false;
+		// }
+		if ($isEmpty(rsvtUsrNm)) {
+			alert("[예약자명]을 입력해주세요.");
+			$("#rsvtUsrNm").textbox('textbox').focus()
+			return false;
+		}
+		if ($isEmpty(rsvtCellNo)) {
+			alert("예약자 [휴대전화번호]를 입력해주세요.");
+			$("#rsvtCellNo").textbox('clear').textbox('textbox').focus();
+			return false;
+		}
+		return true;
+	}
+
+
+    clearSelectedReservation = function() {
+        //기존에 선택되어 있는 것 해제
+        $("#time-table").find(".btn_primary_sel, .btn_success_sel, .btn_secondary_sel").each(function(index, item){
+            $(item).removeClass("btn_primary_sel");
+            $(item).removeClass("btn_success_sel");
+            $(item).removeClass("btn_secondary_sel");
+        });
+    }
 });
