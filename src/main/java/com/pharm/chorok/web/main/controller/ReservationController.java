@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -305,11 +306,12 @@ public class ReservationController {
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
 						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n"
-						+ "      <input name=\""+ vo.getId() +"\" class=\"easyui-textbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\">\n"
+						+ "      <input name=\""+ vo.getId() +"\" class=\"easyui-textbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\" maxlength=\"10\">\n"
 						+ "    </td>\n"
 						+ "  </tr>\n";
 			} else if (vo.getExamCd().equalsIgnoreCase("CHECK")) {
 				String[] examArr = vo.getExam().split(",");
+				String[] valueArr = vo.getCnstPaperVal() == null ? new String[] {} : vo.getCnstPaperVal().split(",");
 				cnstPaperHtml = ""
 						+ "<tr>\n"
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
@@ -317,8 +319,11 @@ public class ReservationController {
 						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
 						for (String exam : examArr) {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-checkbox\" value=\""+ exam +"\""
-									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\""
-									+ ">\n";
+									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\"";
+									if (Arrays.asList(valueArr).contains(exam)) {
+										cnstPaperHtml += " checked=\"checked\"";
+									}
+									cnstPaperHtml += ">\n";
 						}
 						cnstPaperHtml += ""
 						+ "    </td>\n"
@@ -332,8 +337,11 @@ public class ReservationController {
 						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
 						for (String exam : examArr) {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-radiobutton\" value=\""+ exam +"\""
-									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\""
-									+ ">\n";
+									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\"";
+									if (exam.equals(vo.getCnstPaperVal())) {
+										cnstPaperHtml += " checked=\"checked\"";
+									}
+									cnstPaperHtml += ">\n";
 						}
 						cnstPaperHtml += ""
 						+ "    </td>\n"

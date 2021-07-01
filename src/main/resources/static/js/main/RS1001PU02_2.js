@@ -118,8 +118,31 @@ function fnInit() {
         //pageSize: 50,
         //pageList: [50],
         dragSelection: true,
-        onDblClickRow: function(value) {
-        	//fnCustInfo();
+        //onClickCell: function(index, field, value) {
+        //	$(this).datagrid('endEdit', index);
+        //},
+        onDblClickCell: function(index, field, value) {
+        	var row = $(this).datagrid('getRows')[index];
+        	if (!row) return;
+        	
+        	$('#dosgDlgFrm input[name=dlg_dosgId]').val(row.dosgId);
+        	$('#dosgDlgFrm input[textboxName=dlg_seqStr]').textbox('setValue', row.seqStr);
+        	$('#dosgDlgFrm input[textboxName=dlg_dosgTpCd]').textbox('setValue', row.dosgTpCd);
+        	$('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('setValue', row.dosgDt);
+        	$('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('setValue', row.callYn);
+        	$('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('setValue', row.dosgYn);
+        	//$('#dosgDlgFrm select[textboxName=dlg_dosgYn1]').combobox('setValue', row.dosgYn);
+        	$('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('setValue', row.currWgt);
+        	$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', row.lossWgt);
+        	$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', row.rmiWgt);
+        	$('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('setValue', row.dosgDesc1);
+        	$('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('setValue', row.dosgDesc2);
+        
+        	$('#dosgDlg').dialog('open').dialog('center').dialog('setTitle','복용차트 정보');
+        	
+        	//$(this).datagrid('beginEdit', index);
+        	//var ed = $(this).datagrid('getEditor', { index: index, field: field });
+        	//$(ed.target).focus();
         },
         columns:[[
 			{
@@ -215,7 +238,18 @@ function fnInit() {
         		width: '100', 
         		editor: 'text'
         	}
-        ]]
+        ]]/*,
+        onBeforeEdit: function(index, row) {
+        	alert('1');
+        	row.editing = true;
+        },
+        onAfterEdit: function(index, row) {
+        	alert('2');
+        	row.editing = false;
+        },
+        onEndEdit: function(index, row) {
+        	alert('3');
+        }*/
 	});
 }
 
@@ -429,7 +463,7 @@ function saveSurveyChart( evt ) {
 		return false;
 	}
 	let cnstPaperNum = $('#cnstPaper tr').length;
-	let formData = [];
+	let cnstPaperList = [];
 	for (let i = 0; i < cnstPaperNum; i++) {
 		let cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
 		let cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
@@ -439,9 +473,10 @@ function saveSurveyChart( evt ) {
 		if (cnstPaperKind === "TEXT") {
 			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='text']").val();
 		} else if (cnstPaperKind === "CHECK") {
-			let c = 0; 
-			for (let j = 0; j < $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length; j++) { 
-				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked == true ) { 
+			let len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
+			let c = 0;
+			for (let j = 0; j < len; j++) { 
+				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked) { 
 					if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
 					cnstPaperVal = cnstPaperVal + $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
 					c++; 
@@ -451,7 +486,7 @@ function saveSurveyChart( evt ) {
 			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='radio']:checked").val();
 		}
 		
-		formData.push({
+		cnstPaperList.push({
 			"cnstId" 		: selectedCnstId,
 			"cnstPaperId" 	: cnstPaperId,
 			"cnstPaperVer" 	: cnstPaperVer,
@@ -459,18 +494,24 @@ function saveSurveyChart( evt ) {
 			"cnstPaperVal" 	: cnstPaperVal
 		});
 	}
-
-	$.post('/api/v1/main/survey/saveSrvChart_2', JSON.parse(formData), function(res) {
-		if (res.status === 'success') {
-			$.messager.show({ title: 'Success', msg: res.message });
-		} else {
-			$.messager.show({ title: 'Error', msg: res.message });
-			return;
+	let formData = {
+		criteria: cnstPaperList
+	};
+	
+	$.ajax({
+		url: '/api/v1/main/survey/save111',
+		method: 'post',
+		contentType: 'application/json',
+		dataType: 'json',
+		data: JSON.stringify(formData),
+		success: function(res) {
+			if (res.status === 'success') {
+				$.messager.show({ title: 'Success', msg: res.message });
+			} else {
+				$.messager.show({ title: 'Error', msg: res.message });
+				return;
+			}
 		}
-	}, 'json')
-	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-		return;
 	});
 }
 

@@ -3,7 +3,6 @@
  * customer
  * 
  ******************************************************/
- 
 function fnInit() {
 	$('#dg').datagrid({
 	    url: '/api/v1/main/customer/findAllCustomer',

@@ -316,4 +316,55 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- dosg dialog -->
+	<div id="dosgDlg" class="easyui-dialog" style="width:900px;min-height:300px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="dosgDlgFrm" method="post" novalidate>
+		<input type="hidden" name="dlg_dosgId">
+		<div class="row">
+			<div class="col-md-4 p-2"><input name="dlg_seqStr" class="easyui-textbox" data-options="label:'일수 *',required:true" style="width: 100%"></div>
+			<div class="col-md-4 p-2"><input name="dlg_dosgTpCd" class="easyui-textbox" data-options="label:'복용단계 *',required:true" style="width: 100%"></div>
+			<div class="col-md-4 p-2"><input name="dlg_dosgDt" class="easyui-datebox" data-options="label:'복용일자',required:true" style="width: 100%"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 p-2">
+				<select name="dlg_callYn" class="easyui-combobox" data-options="label:'상담예약'" style="width: 100%">
+					<option value="">선택</option>
+					<option value="CHEMIST">한약사</option>
+					<option value="COUNSELOR">삼당실장</option>
+				</select>
+			</div>
+			<div class="col-md-4 p-2">
+				<select name="dlg_dosgYn" class="easyui-combobox" data-options="label:'복용여부'" style="width: 100%">
+					<option value="">선택</option>
+					<option value="Y">예</option>
+					<option value="N">아니요</option>
+				</select>
+			</div>
+			<div class="col-md-4 p-2">
+				<select name="dlg_dosgYn1" class="easyui-combobox" data-options="label:'보류여부'" style="width: 100%">
+					<option value="">선택</option>
+					<option value="Y">예</option>
+					<option value="N">아니요</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 p-2"><input name="dlg_currWgt" class="easyui-numberbox" data-options="label:'현재체중'" style="width: 100%"></div>
+			<div class="col-md-4 p-2"><input name="dlg_lossWgt" class="easyui-numberbox" data-options="label:'감량체중'" style="width: 100%"></div>
+			<div class="col-md-4 p-2"><input name="dlg_rmiWgt" class="easyui-numberbox" data-options="label:'남은체중'" style="width: 100%"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 p-2"><input name="dlg_dosgDesc1" class="easyui-textbox" data-options="label:'몸상태',multiline:true" style="width: 100%;height:60px"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 p-2"><input name="dlg_dosgDesc2" class="easyui-textbox" data-options="label:'약반응',multiline:true" style="width: 100%;height:60px"></div>
+		</div>
+		</form>
+		<div class="row py-2">
+			<div class="col-md-12 d-flex justify-content-end">
+				<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="addUser();">저장</a>
+			</div>
+		</div>
+	</div>
 </div>

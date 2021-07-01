@@ -3,16 +3,6 @@ package com.pharm.chorok.api.main;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultSurveyChartVo;
-import com.pharm.chorok.domain.table.DosingListVO;
-import com.pharm.chorok.domain.table.TbPpCnstChart;
-import com.pharm.chorok.domain.table.TbPpDosgChart;
-import com.pharm.chorok.domain.table.TbPpSrvChart;
-import com.pharm.chorok.web.main.repository.DosingRepository;
-import com.pharm.chorok.web.main.service.CnstPaperService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pharm.chorok.domain.comm.PageCriteria;
+import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultSurveyChartVo;
+import com.pharm.chorok.domain.table.TbPpCnstChart;
+import com.pharm.chorok.domain.table.TbPpDosgChart;
+import com.pharm.chorok.domain.table.TbPpSrvChart;
+import com.pharm.chorok.web.main.repository.DosingRepository;
+import com.pharm.chorok.web.main.service.CnstPaperService;
 
 
 
@@ -128,6 +128,32 @@ public class SrvChartApi {
 	public ResponseEntity<ResponseMessage> saveSrvChart_2(@RequestBody List<TbPpSrvChart> tbPpSrvChart) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			for (int i = 0; i < tbPpSrvChart.size(); i++){
+				cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
+			}
+		 	
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 저장되었습니다.");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+	
+	/**
+	 * 고객의 설문답변을 저장한다.
+	 * @param jsonData
+	 * @return
+	 */
+	@PostMapping(value = "/save111")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> save111(@RequestBody PageCriteria<List<TbPpSrvChart>> criteria) {
+		
+		ResponseMessage resMsg = new ResponseMessage();
+		List<TbPpSrvChart> tbPpSrvChart = criteria.getCriteria();
 		try {
 			for (int i = 0; i < tbPpSrvChart.size(); i++){
 				cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
