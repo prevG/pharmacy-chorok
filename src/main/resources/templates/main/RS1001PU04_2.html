@@ -55,7 +55,7 @@
 						<div class="col-md-2">
 		 		 			<select name="picUsrNo" class="easyui-combobox" style="width: 100%;text-align: center;"
 								   data-options="
-								   		label:'상담약사',
+								   		label:'상담한약사',
 								   		labelPosition:'left',
 								   		required:true">
 								<option value="">선택</option>
@@ -76,7 +76,7 @@
 								<option value="8">곽경준</option>
 							</select>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-4 d-flex justify-content-end">
 							<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">상담정보 저장</a>
 						</div>
 					</div>
@@ -87,11 +87,11 @@
 				<div class="easyui-tabs" style="width: 100%;min-height: 500px;"
 			 		 data-options="tabWidth:120">
 			 		 <div title="설문차트" class="py-2" style="overflow: hidden;">
-			 		 	<div class="row mb-2">
+			 		 	<!-- <div class="row mb-2">
 			 		 		<div class="col-md-12 d-flex justify-content-end">
 			 		 			<a href="javascript:void(0)" id="btnSaveSurvChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">설문차트 저장</a>
 			 		 		</div>
-			 		 	</div>
+			 		 	</div> -->
 			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
 			 		 	<div style="height: 550px;overflow: auto;">
 				 		 	<table class="table table-sm table-hover">
@@ -103,183 +103,6 @@
 				 		 			</tr>
 				 		 		</thead>
 				 		 		<tbody id="cnstPaper">
-				 		 			<!-- <tr>
-				 		 				<th scope="row" class="align-middle">1</th>
-				 		 				<td class="align-middle">키</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">2</th>
-				 		 				<td class="align-middle">체중</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">3</th>
-				 		 				<td class="align-middle">결혼여부</td>
-				 		 				<td>
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'미혼',labelWidth:50,labelPosition:'after'" 
-												   value="N">
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'기혼',labelWidth:50,labelPosition:'after'" 
-												   value="Y">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">4</th>
-				 		 				<td class="align-middle">출산자녀수</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">5</th>
-				 		 				<td class="align-middle">마지막 출산년도</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">6</th>
-				 		 				<td class="align-middle">지금까지 임신기간 제외하고 최고 몸무게</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">7</th>
-				 		 				<td class="align-middle">희망체중</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">8</th>
-				 		 				<td class="align-middle">다이어트 이력</td>
-				 		 				<td>
-											<input name="cnstDt13" class="easyui-radiobutton"
-												   data-options="label:'양약',labelWidth:50,labelPosition:'after'" 
-												   value="N">
-											<input name="cnstDt13" class="easyui-radiobutton"
-												   data-options="label:'한약',labelWidth:50,labelPosition:'after'" 
-												   value="Y">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">9</th>
-				 		 				<td class="align-middle">아침 기상시간</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">10</th>
-				 		 				<td class="align-middle">취침시간</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">11</th>
-				 		 				<td class="align-middle">아침 식사시간</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">12</th>
-				 		 				<td class="align-middle">점심 식사시간</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">13</th>
-				 		 				<td class="align-middle">저녁 식사시간</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">14</th>
-				 		 				<td class="align-middle">밥 / 반찬</td>
-				 		 				<td>
-											<input name="cnstDt14" class="easyui-radiobutton"
-												   data-options="label:'밥',labelWidth:50,labelPosition:'after'" 
-												   value="N">
-											<input name="cnstDt14" class="easyui-radiobutton"
-												   data-options="label:'반찬',labelWidth:50,labelPosition:'after'" 
-												   value="Y">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">15</th>
-				 		 				<td class="align-middle">식욕</td>
-				 		 				<td>
-											<input name="cnstDt15" class="easyui-radiobutton"
-												   data-options="label:'상',labelWidth:50,labelPosition:'after'" 
-												   value="N">
-											<input name="cnstDt15" class="easyui-radiobutton"
-												   data-options="label:'중',labelWidth:50,labelPosition:'after'" 
-												   value="Y">
-											<input name="cnstDt15" class="easyui-radiobutton"
-												   data-options="label:'하',labelWidth:50,labelPosition:'after'" 
-												   value="R">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">16</th>
-				 		 				<td class="align-middle">간식은 하루에 몇번 드시나요?</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">17</th>
-				 		 				<td class="align-middle">야식은 일주일에 몇 번 드시나요?</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">18</th>
-				 		 				<td class="align-middle">커피 마실떄 불편한점은?</td>
-				 		 				<td>
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'없다',labelWidth:50,labelPosition:'after'" 
-												   value="N">
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'불면',labelWidth:50,labelPosition:'after'" 
-												   value="Y">
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'떨림',labelWidth:50,labelPosition:'after'" 
-												   value="R">
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'심장 두근거림',labelWidth:100,labelPosition:'after'" 
-												   value="S">
-											<input name="cnstDt12" class="easyui-radiobutton"
-												   data-options="label:'기타',labelWidth:50,labelPosition:'after'" 
-												   value="Q">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">19</th>
-				 		 				<td class="align-middle">음주 횟수 (하루 / 일주일 / 한달)를 적어주세요.</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr>
-				 		 			<tr>
-				 		 				<th scope="row" class="align-middle">20</th>
-				 		 				<td class="align-middle">현재하고 있는 운동이 있습니까?</td>
-				 		 				<td>
-						 		 			<input name="cnstDt11" class="easyui-textbox" style="width: 100%;">
-				 		 				</td>
-				 		 			</tr> -->
 				 		 		</tbody>
 				 		 	</table>
 			 		 	</div>
@@ -306,7 +129,6 @@
 								   data-options="iconCls:'icon-edit'">복용차트 생성</a>
 			 		 		</div>
 			 		 		<div class="col-md-2 d-flex justify-content-end">
-			 		 			<a href="javascript:void(0)" id="btnSaveDosgChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">복용차트 저장</a>
 			 		 		</div>
 			 		 	</div>
 	 		 			</form>
@@ -322,9 +144,18 @@
 		<form id="dosgDlgFrm" method="post" novalidate>
 		<input type="hidden" name="dlg_dosgId">
 		<div class="row">
-			<div class="col-md-4 p-2"><input name="dlg_seqStr" class="easyui-textbox" data-options="label:'일수 *',required:true" style="width: 100%"></div>
-			<div class="col-md-4 p-2"><input name="dlg_dosgTpCd" class="easyui-textbox" data-options="label:'복용단계 *',required:true" style="width: 100%"></div>
-			<div class="col-md-4 p-2"><input name="dlg_dosgDt" class="easyui-datebox" data-options="label:'복용일자',required:true" style="width: 100%"></div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_seqStr" class="easyui-textbox" style="width: 100%"
+					   data-options="label:'일수 *',required:true,readonly:true">
+			</div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_dosgTpCd" class="easyui-textbox" style="width: 100%"
+					   data-options="label:'복용단계 *',required:true,readonly:true" >
+			</div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_dosgDt" class="easyui-datebox" style="width: 100%"
+					   data-options="label:'복용일자',required:true,formatter:myformatter,parser:myparser">
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4 p-2">
@@ -342,7 +173,7 @@
 				</select>
 			</div>
 			<div class="col-md-4 p-2">
-				<select name="dlg_dosgYn1" class="easyui-combobox" data-options="label:'보류여부'" style="width: 100%">
+				<select name="dlg_pausYn" class="easyui-combobox" data-options="label:'보류여부'" style="width: 100%">
 					<option value="">선택</option>
 					<option value="Y">예</option>
 					<option value="N">아니요</option>
@@ -350,20 +181,30 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 p-2"><input name="dlg_currWgt" class="easyui-numberbox" data-options="label:'현재체중'" style="width: 100%"></div>
-			<div class="col-md-4 p-2"><input name="dlg_lossWgt" class="easyui-numberbox" data-options="label:'감량체중'" style="width: 100%"></div>
-			<div class="col-md-4 p-2"><input name="dlg_rmiWgt" class="easyui-numberbox" data-options="label:'남은체중'" style="width: 100%"></div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_currWgt" class="easyui-numberbox" data-options="label:'현재체중'" style="width: 100%">
+			</div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_lossWgt" class="easyui-numberbox" data-options="label:'감량체중'" style="width: 100%">
+			</div>
+			<div class="col-md-4 p-2">
+				<input name="dlg_rmiWgt" class="easyui-numberbox" data-options="label:'남은체중'" style="width: 100%">
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 p-2"><input name="dlg_dosgDesc1" class="easyui-textbox" data-options="label:'몸상태',multiline:true" style="width: 100%;height:60px"></div>
+			<div class="col-md-12 p-2">
+				<input name="dlg_dosgDesc1" class="easyui-textbox" data-options="label:'몸상태',multiline:true" style="width: 100%;height:60px">
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 p-2"><input name="dlg_dosgDesc2" class="easyui-textbox" data-options="label:'약반응',multiline:true" style="width: 100%;height:60px"></div>
+			<div class="col-md-12 p-2">
+				<input name="dlg_dosgDesc2" class="easyui-textbox" data-options="label:'약반응',multiline:true" style="width: 100%;height:60px">
+			</div>
 		</div>
 		</form>
 		<div class="row py-2">
 			<div class="col-md-12 d-flex justify-content-end">
-				<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" onClick="addUser();">저장</a>
+				<a href="javascript:void(0)" id="btnSaveDosgChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
 			</div>
 		</div>
 	</div>

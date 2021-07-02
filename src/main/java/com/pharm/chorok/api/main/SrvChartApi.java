@@ -56,7 +56,7 @@ public class SrvChartApi {
 	
 	
 	/**
-	 * 고객의 설문답변을 저장한다.
+	 * 고객의 복용차트 정보을 저장한다.
 	 * @param jsonData
 	 * @return
 	 */
@@ -86,8 +86,33 @@ public class SrvChartApi {
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
+	
+	/**
+	 * 고객의 복용차트 정보을 저장한다.
+	 * @param jsonData
+	 * @return
+	 */
+	@PostMapping("/saveDosingChart_2")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> saveDosingChart_2(@RequestBody PageCriteria<TbPpDosgChart> pageCriteria) {
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			dosingRepo.updateTbPpDosgChart(pageCriteria.getCriteria());
+		 	
+			resMsg.setStatus("success");
+			resMsg.setMessage("정상적으로 저장되었습니다.");
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
 
 	/**
+	 * @deprecated /saveSrvChart_2 함수로 대체함.
+	 * 
 	 * 고객의 설문답변을 저장한다.
 	 * @param jsonData
 	 * @return
@@ -120,40 +145,16 @@ public class SrvChartApi {
 	
 	/**
 	 * 고객의 설문답변을 저장한다.
-	 * @param jsonData
+	 * 
+	 * @param criteria
 	 * @return
 	 */
-	@PostMapping("/saveSrvChart_2")
+	@PostMapping(value = "/saveSrvChart_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> saveSrvChart_2(@RequestBody List<TbPpSrvChart> tbPpSrvChart) {
+	public ResponseEntity<ResponseMessage> saveSrvChart_2(@RequestBody PageCriteria<List<TbPpSrvChart>> pageCriteria) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
-		try {
-			for (int i = 0; i < tbPpSrvChart.size(); i++){
-				cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));
-			}
-		 	
-			resMsg.setStatus("success");
-			resMsg.setMessage("정상적으로 저장되었습니다.");
-			
-		} catch(Exception e) {
-			resMsg.setStatus("error");
-			resMsg.setMessage( e.getMessage() );
-		}
-		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
-	}
-	
-	/**
-	 * 고객의 설문답변을 저장한다.
-	 * @param jsonData
-	 * @return
-	 */
-	@PostMapping(value = "/save111")
-	@ResponseBody
-	public ResponseEntity<ResponseMessage> save111(@RequestBody PageCriteria<List<TbPpSrvChart>> criteria) {
-		
-		ResponseMessage resMsg = new ResponseMessage();
-		List<TbPpSrvChart> tbPpSrvChart = criteria.getCriteria();
+		List<TbPpSrvChart> tbPpSrvChart = pageCriteria.getCriteria();
 		try {
 			for (int i = 0; i < tbPpSrvChart.size(); i++){
 				cnstPaperService.saveSurveyChart(tbPpSrvChart.get(i));

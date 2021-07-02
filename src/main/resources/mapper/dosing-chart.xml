@@ -15,7 +15,8 @@
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
          , DOSG_TP_CD
          , CALL_YN          
-         , DOSG_YN          
+         , DOSG_YN
+         , PAUS_YN          
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT
@@ -43,7 +44,8 @@
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
          , DOSG_TP_CD
          , CALL_YN          
-         , DOSG_YN          
+         , DOSG_YN
+         , PAUS_YN          
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT

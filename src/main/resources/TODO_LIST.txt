@@ -24,7 +24,7 @@ sms2
 1. TB_PP_CNST_CHART 테이블 pic2_user_no 필드 추가 : 담당실장
 
 2. ResultConsultingVo Vo 필드 추가.
-    private String picUsrNoVal;			// 상담약사 이름
+    private String picUsrNoVal;			// 상담한약사 이름
     private String pic2UsrNo;			// 상담실장 번호
     private String pic2UsrNoVal;		// 상담실장 이름
     
