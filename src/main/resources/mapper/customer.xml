@@ -106,6 +106,7 @@
 	</select>
     
     <select id="findAllCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">
+    /** com.pharm.chorok.web.main.repository.CustomerRepository.findAllCustomer */
 	<![CDATA[    
     SELECT CUST_ID
          , CUST_USR_NM
@@ -120,6 +121,7 @@
          , ZIP_CODE
          , ADDR1
          , ADDR2
+         , DEL_YN
          , REG_DT
          , REG_USR_NO
          , UPD_DT

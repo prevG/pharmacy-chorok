@@ -34,7 +34,7 @@ function fnInit() {
         		width: '150', 
         		editor: 'text',
         		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">'+ value +'</span>';
+        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
         		}
         	},
         	{
@@ -94,9 +94,9 @@ function fnInit() {
         		title: '삭제여부', 
         		align: 'center', 
         		width: '100', 
-        		editor: { 
-        			type: 'checkbox',
-        			options: { on: 'Y', off: 'N' }
+        		editor: 'text',
+        		formatter: function(value, row, index) {
+        			return '<span>'+ (value) ? value : 'N' +'</span>';
         		}
         	},
         ]]
@@ -111,10 +111,6 @@ function fnSearch() {
 	$('#dg').datagrid('reload');
 }
 
-function fnNewCust() {
-
-}
-
 function fnCustInfo() {
 	var row = $("#dg").datagrid("getSelected");
 	if (!row) return;
@@ -123,9 +119,9 @@ function fnCustInfo() {
 }
 
 function fnNewCustPop() {
-	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','신규등록');
-    $('#addFrm').form('clear');
-    $('#addFrm').form('load', {
+	$('#addCustDlg').dialog('open').dialog('center').dialog('setTitle','신규등록');
+    $('#addCustFrm').form('clear');
+    $('#addCustFrm').form('load', {
     	/*dlg_custGenTpCd : 'F',
     	dlg_mrgYn : 'Y',
     	dlg_brstFdgYn : 'N',*/
@@ -135,19 +131,19 @@ function fnNewCustPop() {
 
 function addUser() {
 	var param = {
-		custUsrNm : $('#addFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
-		custCellNo : $('#addFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
-		custBirthDt : $('#addFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-		custGenTpCd : $('#addFrm input[name=dlg_custGenTpCd]:checked').val(),
-		mrgYn : $('#addFrm input[name=dlg_mrgYn]:checked').val(),
-		pcrtChdCnt : $('#addFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
-		lstPcrtYear : $('#addFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
-		brstFdgYn : $('#addFrm input[name=dlg_brstFdgYn]:checked').val(),
-		vistTpCd : $('#addFrm input[name=dlg_vistTpCd]:checked').val(),
-		zipCode : $('#addFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
-		addr1 : $('#addFrm input[textboxName=dlg_addr1]').textbox('getValue'),
-		addr2 : $('#addFrm input[textboxName=dlg_addr2]').textbox('getValue'),
-		delYn : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue')
+		custUsrNm : 	$('#addCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
+		custCellNo : 	$('#addCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
+		custBirthDt : 	$('#addCustFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
+		custGenTpCd : 	$('#addCustFrm input[name=dlg_custGenTpCd]:checked').val(),
+		mrgYn : 		$('#addCustFrm input[name=dlg_mrgYn]:checked').val(),
+		pcrtChdCnt : 	$('#addCustFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+		lstPcrtYear : 	$('#addCustFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+		brstFdgYn : 	$('#addCustFrm input[name=dlg_brstFdgYn]:checked').val(),
+		vistTpCd : 		$('#addCustFrm input[name=dlg_vistTpCd]:checked').val(),
+		zipCode : 		$('#addCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+		addr1 : 		$('#addCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+		addr2 : 		$('#addCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
+		delYn : 		$('#addCustFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addCustFrm select[textboxName=dlg_delYn]').combobox('getValue')
 	};
 	
 	$.post('/customer/add', param, function(result) {
@@ -155,17 +151,28 @@ function addUser() {
 			$.messager.show({ title: 'Success', msg: result.message });
 			fnSearch();
 		} else {
-			$.messager.show({ title: 'Error', msg: result.message });
+			$.messager.alert('사용자 등록', result.message);
 			return;
 		}
-		$('#addDlg').dialog('close');
+		$('#addCustDlg').dialog('close');
 	}, 'json')
 	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
+		$.messager.alert('사용자 등록', xhr.responseJSON.message, 'error');
 		return;
 	});
 }
 
 $(document).ready(function() {
 	fnInit();
+	
+	$('#custUsrNm').textbox('textbox').bind('keydown', function(e) {
+		if (e.keyCode === 13) fnSearch();
+	});
+	$('#custCellNo').numberbox('textbox').bind('keydown', function(e) {
+		if (e.keyCode === 13) fnSearch();
+	});
 });
+
+function fnZipCode() {
+	sample2_execDaumPostcode2();
+}

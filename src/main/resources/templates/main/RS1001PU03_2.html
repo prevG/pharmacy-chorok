@@ -155,7 +155,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<input name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
+							<input id="zipCode" name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
 								   data-options="label:'우편번호',labelPosition:'before'"
 								   th:value="${custInfo?.zipCode}">
 							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onclick="fnZipCode();">우편번호 찾기</a>

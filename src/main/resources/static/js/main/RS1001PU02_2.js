@@ -644,7 +644,7 @@ $( document ).ready( function() {
 			if (!r) return;
 			
 			saveCnstChart( e );
-			saveSurveyChart( e );
+			//saveSurveyChart( e );
 			//saveDosingChart( e );
 		});
 	});
