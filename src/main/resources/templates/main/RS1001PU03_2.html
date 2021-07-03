@@ -38,13 +38,13 @@
 						</div>
 						<div class="col">
 							<div class="form-inline">
-								<label class="mr-5">성별</label>
+								<label style="margin-right: 60px;">성별</label>
 								<input name="dlg_custGenTpCd" class="easyui-radiobutton"
-									   data-options="label:'여성',labelWidth:50,labelPosition:'after'"
+									   data-options="label:'여성',labelWidth:60,labelPosition:'after'"
 									   value="F"
 									   th:checked="${#strings.isEmpty(custInfo?.custGenTpCd)} ? ${'F' eq rsvtInfo?.genTpCd} : ${'F' eq custInfo?.custGenTpCd}">
 								<input name="dlg_custGenTpCd" class="easyui-radiobutton"
-									   data-options="label:'남성',labelWidth:50,labelPosition:'after'"
+									   data-options="label:'남성',labelWidth:60,labelPosition:'after'"
 									   value="M"
 									   th:checked="${#strings.isEmpty(custInfo?.custGenTpCd)} ? ${'M' eq rsvtInfo?.genTpCd} : ${'M' eq custInfo?.custGenTpCd}">
 							</div>
@@ -58,13 +58,13 @@
 					<div class="row m-2">
 						<div class="col">
 							<div class="form-inline">
-								<label class="mr-4">결혼유무</label>
+								<label style="margin-right: 30px;">결혼유무</label>
 								<input name="dlg_mrgYn" class="easyui-radiobutton"
-									   data-options="label:'미혼',labelWidth:50,labelPosition:'after'" 
+									   data-options="label:'미혼',labelWidth:60,labelPosition:'after'" 
 									   value="N"
 									   th:checked="${'N' eq custInfo?.mrgYn}">
 								<input name="dlg_mrgYn" class="easyui-radiobutton"
-									   data-options="label:'기혼',labelWidth:50,labelPosition:'after'" 
+									   data-options="label:'기혼',labelWidth:60,labelPosition:'after'" 
 									   value="Y"
 									   th:checked="${'Y' eq custInfo?.mrgYn}">
 							</div>
@@ -87,13 +87,13 @@
 					<div class="row m-2">
 						<div class="col">
 							<div class="form-inline">
-								<label class="mr-4">모유수유</label>
+								<label style="margin-right: 30px;">모유수유</label>
 								<input name="dlg_brstFdgYn" class="easyui-radiobutton"
-									   data-options="label:'예',labelWidth:50,labelPosition:'after'" 
+									   data-options="label:'예',labelWidth:60,labelPosition:'after'" 
 									   value="Y"
 									   th:checked="${'Y' eq custInfo?.brstFdgYn}">
 								<input name="dlg_brstFdgYn" class="easyui-radiobutton"
-									   data-options="label:'아니오',labelWidth:50,labelPosition:'after'" 
+									   data-options="label:'아니오',labelWidth:60,labelPosition:'after'" 
 									   value="N"
 									   th:checked="${'N' eq custInfo?.brstFdgYn}">
 							</div>
@@ -107,41 +107,41 @@
 				<div class="easyui-panel" title="내원경로" style="width: 100%;min-height: 200px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-12 p-1">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
-								   data-options="label:'지인소개',labelWidth:150,labelPosition:'after'"
+								   data-options="label:'지인소개',labelWidth:170,labelPosition:'after'"
 								   value="1"
 								   th:checked="${'1' eq custInfo?.vistTpCd}">
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-12 p-1">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
-								   data-options="label:'홈페이지',labelWidth:150,labelPosition:'after'"
+								   data-options="label:'홈페이지',labelWidth:170,labelPosition:'after'"
 								   value="2"
 								   th:checked="${'2' eq custInfo?.vistTpCd}">
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-12 p-1">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
-								   data-options="label:'카카오톡 검색창',labelWidth:150,labelPosition:'after'"
+								   data-options="label:'카카오톡 검색창',labelWidth:170,labelPosition:'after'"
 								   value="3"
 								   th:checked="${'3' eq custInfo?.vistTpCd}">
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-12 p-1">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
-								   data-options="label:'블로그 및 인터넷',labelWidth:150,labelPosition:'after'"
+								   data-options="label:'블로그 및 인터넷',labelWidth:170,labelPosition:'after'"
 								   value="4"
 								   th:checked="${'4' eq custInfo?.vistTpCd}">
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-12 p-1">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
-								   data-options="label:'기타',labelWidth:150,labelPosition:'after'"
+								   data-options="label:'기타',labelWidth:170,labelPosition:'after'"
 								   value="5"
 								   th:checked="${'5' eq custInfo?.vistTpCd}">
 						</div>

@@ -122,10 +122,7 @@ function fnNewCustPop() {
 	$('#addCustDlg').dialog('open').dialog('center').dialog('setTitle','신규등록');
     $('#addCustFrm').form('clear');
     $('#addCustFrm').form('load', {
-    	/*dlg_custGenTpCd : 'F',
-    	dlg_mrgYn : 'Y',
-    	dlg_brstFdgYn : 'N',*/
-		dlg_delYn : '00000'
+    	dlg_pcrtChdCnt : 1
 	});
 }
 
@@ -143,7 +140,7 @@ function addUser() {
 		zipCode : 		$('#addCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
 		addr1 : 		$('#addCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
 		addr2 : 		$('#addCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
-		delYn : 		$('#addCustFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addCustFrm select[textboxName=dlg_delYn]').combobox('getValue')
+		delYn : 		'N'
 	};
 	
 	$.post('/customer/add', param, function(result) {

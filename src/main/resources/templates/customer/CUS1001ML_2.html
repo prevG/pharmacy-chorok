@@ -57,7 +57,7 @@
 	</section>
 
 	<!-- add customer dialog -->
-	<div id="addCustDlg" class="easyui-dialog" style="width:1200px;padding:10px;display: none;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="addCustDlg" class="easyui-dialog" style="width:1300px;padding:10px;display: none;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="addCustFrm" method="post">
 		<div class="row">
 			<div class="col">
@@ -82,20 +82,10 @@
 								<div class="form-inline" style="padding-top: 5px;">
 									<label style="margin-right: 55px;">성별</label>
 									<input name="dlg_custGenTpCd" class="easyui-radiobutton" value="F"
-										   data-options="label:'여성',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'여성',labelWidth:50,labelPosition:'after',required:true">
 									<input name="dlg_custGenTpCd" class="easyui-radiobutton" value="M"
-										   data-options="label:'남성',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'남성',labelWidth:50,labelPosition:'after',required:true">
 								</div>
-							</div>
-						</div>
-						<div class="row" style="margin-bottom: 10px">
-							<div class="col-6">
-								<select name="dlg_delYn" class="easyui-combobox" style="width: 100%;" data-options="label:'삭제여부'">
-									<option value="N" selected="selected">비삭제</option>
-								    <option value="Y">삭제</option>
-								</select>
-							</div>
-							<div class="col-6">
 							</div>
 						</div>
 					</div>
@@ -109,9 +99,9 @@
 								<div class="form-inline" style="padding-top: 5px;">
 									<label style="margin-right: 30px;">결혼유무</label>
 									<input name="dlg_mrgYn" class="easyui-radiobutton" value="N"
-										   data-options="label:'미혼',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'미혼',labelWidth:60,labelPosition:'after'">
 									<input name="dlg_mrgYn" class="easyui-radiobutton" value="Y"
-										   data-options="label:'기혼',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'기혼',labelWidth:60,labelPosition:'after'">
 								</div>
 							</div>
 							<div class="col">
@@ -132,9 +122,9 @@
 								<div class="form-inline" style="padding-top: 5px;">
 									<label style="margin-right: 30px;">모유수유</label>
 									<input name="dlg_brstFdgYn" class="easyui-radiobutton" value="Y"
-										   data-options="label:'예',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'예',labelWidth:60,labelPosition:'after'">
 									<input name="dlg_brstFdgYn" class="easyui-radiobutton" value="N"
-										   data-options="label:'아니오',labelWidth:50,labelPosition:'after'">
+										   data-options="label:'아니오',labelWidth:60,labelPosition:'after'">
 								</div>
 							</div>
 							<div class="col-6">
@@ -171,25 +161,35 @@
 			<div class="col">
 				<div class="easyui-accordion" style="width:580px;height:250px;">
 					<div title="내원경로" data-options="collapsed:false,collapsible:false" style="padding: 10px;">
-						<div class="row" style="margin-bottom: 10px;padding-left: 7px;">
-							<input name="dlg_vistTpCd" class="easyui-radiobutton" value="1"
-								   data-options="label:'지인소개',labelWidth:100,labelPosition:'after'">
+						<div class="row m-1">
+							<div class="col-md-12 p-1">
+								<input name="dlg_vistTpCd" class="easyui-radiobutton" value="1"
+									   data-options="label:'지인소개',labelWidth:100,labelPosition:'after'">
+							</div>
 						</div>
-						<div class="row" style="margin-bottom: 10px;padding-left: 7px;">
-							<input name="dlg_vistTpCd" class="easyui-radiobutton" value="2"
-								   data-options="label:'홈페이지',labelWidth:100,labelPosition:'after'">
+						<div class="row m-1">
+							<div class="col-md-12 p-1">
+								<input name="dlg_vistTpCd" class="easyui-radiobutton" value="2"
+									   data-options="label:'홈페이지',labelWidth:100,labelPosition:'after'">
+							</div>
 						</div>
-						<div class="row" style="margin-bottom: 10px;padding-left: 7px;">
-							<input name="dlg_vistTpCd" class="easyui-radiobutton" value="3"
-								   data-options="label:'카카오톡 검색창',labelWidth:100,labelPosition:'after'">
+						<div class="row m-1">
+							<div class="col-md-12 p-1">
+								<input name="dlg_vistTpCd" class="easyui-radiobutton" value="3"
+									   data-options="label:'카카오톡 검색창',labelWidth:100,labelPosition:'after'">
+							</div>
 						</div>
-						<div class="row" style="margin-bottom: 10px;padding-left: 7px;">
-							<input name="dlg_vistTpCd" class="easyui-radiobutton" value="4"
-								   data-options="label:'블로그 및 인터넷',labelWidth:100,labelPosition:'after'">
+						<div class="row m-1">
+							<div class="col-md-12 p-1">
+								<input name="dlg_vistTpCd" class="easyui-radiobutton" value="4"
+									   data-options="label:'블로그 및 인터넷',labelWidth:100,labelPosition:'after'">
+							</div>
 						</div>
-						<div class="row" style="margin-bottom: 10px;padding-left: 7px;">
-							<input name="dlg_vistTpCd" class="easyui-radiobutton" value="5"
-								   data-options="label:'기타',labelWidth:100,labelPosition:'after'">
+						<div class="row m-1">
+							<div class="col-md-12 p-1">
+								<input name="dlg_vistTpCd" class="easyui-radiobutton" value="5"
+									   data-options="label:'기타',labelWidth:100,labelPosition:'after'">
+							</div>
 						</div>
 					</div>
 				</div>
