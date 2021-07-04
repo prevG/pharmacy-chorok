@@ -87,7 +87,7 @@ public class ReservationController {
 		ModelAndView mv = new ModelAndView( "main/RS1001PU01" );
 
 		//예약상세정보 조회
-		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationByRsvtId( rsvt );
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -111,7 +111,7 @@ public class ReservationController {
 		ModelAndView mv = new ModelAndView("main/RS1001MV :: reservation-detail");
 
 		//예약상세정보 조회
-		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+		TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationByRsvtId( rsvt );
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -172,7 +172,7 @@ public class ReservationController {
 		}
 		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
 		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
-		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+		outRsvtSch = reservationSvc.findReservationByRsvtId( rsvtSch );
 
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
@@ -205,7 +205,7 @@ public class ReservationController {
 		}
 		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
 		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
-		outRsvtSch = reservationSvc.findReservationInfoByRsvtId( rsvtSch );
+		outRsvtSch = reservationSvc.findReservationByRsvtId( rsvtSch );
 
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);

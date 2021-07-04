@@ -3,16 +3,6 @@ package com.pharm.chorok.api.main;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
@@ -22,6 +12,16 @@ import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.service.CnstPaperService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 
@@ -111,7 +111,7 @@ public class SrvChartApi {
 	}
 
 	/**
-	 * @deprecated /saveSrvChart_2 함수로 대체함.
+	 * deprecated /saveSrvChart_2 함수로 대체함.
 	 * 
 	 * 고객의 설문답변을 저장한다.
 	 * @param jsonData

@@ -59,7 +59,7 @@ public class DosingChartApi {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.saveReservationSchedule( rsvt );
+			rsvtSchSvc.saveReservation( rsvt );
 
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
@@ -77,7 +77,7 @@ public class DosingChartApi {
 
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			rsvtSchSvc.deleteReservationSchedule( rsvt );
+			rsvtSchSvc.deleteReservation( rsvt );
 
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 삭제되었습니다.");

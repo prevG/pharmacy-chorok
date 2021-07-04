@@ -1,13 +1,4 @@
 $( document ).ready( function() {
-	/**
-	 * 예약일시 datetimepicker 적용
-	 */
-     $.datetimepicker.setLocale('ko');
-     $( "#rsvtDtYyyymmdd" ).datetimepicker({
-         format	: 'Y-m-d',
-         weeks   : true,
-         timepicker:false
-     });
 
     $("#table01").datagrid({
 	    url: '/api/v1/main/chart/dashList01',
@@ -26,7 +17,7 @@ $( document ).ready( function() {
         			return '<span style="font-weight:bold;">'+ value +'</span>';
         		}
         	},
-            {field: 'custCellNo', title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},
+            {field: 'custCellNo', title: '핸드폰번호', align: 'center', width: '100', editor: 'numberbox'},
         ]]
     });  
     $("#table02").datagrid({
@@ -138,10 +129,13 @@ $( document ).ready( function() {
         location.href = "/customer/CUS2001ML";
     });
 
-   /**************************************************************
+    /**************************************************************
     * 예약고객 휴대전화번호 / 추천인 휴대전화번호 입력시 숫자만 입력되도록
     **************************************************************/
     $("#rsvtCellNo").textbox('textbox').bind('keyup', function(e){
+        $onlyNum(this);
+    });
+    $("#rcmdCellNo").textbox('textbox').bind('keyup', function(e){
         $onlyNum(this);
     });
 
@@ -323,10 +317,10 @@ $( document ).ready( function() {
         }
     });
 
-   /**************************************************************
-    * 저장하기
-    **************************************************************/
-	 $(document).off("click", "a[name='btnSaveRsvtSch']").on("click", "a[name='btnSaveRsvtSch']", function (e) {
+    /**************************************************************
+     * 예약정보 저장하기
+     **************************************************************/
+	 $("a[name='btnSaveRsvtSch']").off("click").on("click", function(e) {
 
 	    var isOk = validateSubmit();
         if (!isOk) {
@@ -338,22 +332,21 @@ $( document ).ready( function() {
            return false;
         }
 
-       var params = $("form[name=detailForm]").serialize();
-       $.ajax({
-           type: 'post',
-           url: '/api/v1/main/reservation/saveReservation',
-           data: params,
+        var params = $("form[name=rsvtForm]").serialize();
+        $.ajax({
+           type : 'post',
+           url  : '/api/v1/main/reservation/saveReservation',
+           data : params,
            success: function (result) {
-
-               if (result.status == "success") {
-                   alert("예약정보가 저장되었습니다.");
+                if(result.status == "success") {
+                    alert("예약정보가 저장되었습니다.");
 					$(".modal").modal("hide");
 					refreshTimeTable();
 				} else {
 					alert(result.errorMessage);
 				}
            }
-       });
+        });
 	 });
 
 	//저장후 타임테이블 새로고침
@@ -379,8 +372,9 @@ $( document ).ready( function() {
 		var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
 		var rsvtDtHh       = $("input[name='rsvtDtHh']").val(); //예약일시
 		var rsvtDtMm       = $("input[name='rsvtDtMm']").val(); //예약일시
-		var rsvtTpCd       = $("input:checkbox[name=rsvtTpCd]:checked").length //상담구분
+		var rsvtTpCd       = $("input[name='rsvtTpCd']:checked").length; //상담구분
 		var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
+		var genTpCd        = $("input[name='genTpCd']:checked").length; //예약자성별
 		var rsvtCellNo     = $("input[name='rsvtCellNo']").val(); //예약자휴대전화번호
 
 
@@ -402,14 +396,19 @@ $( document ).ready( function() {
 			$("#rsvtDtMm").combobox('textbox').focus();
 			return false;
 		}
-		// if (rsvtTpCd == 0) {
-		// 	alert("[상담구분]을 선택해주세요.");
-		// 	$("input[name='rsvtTpCd']").radiobutton('textbox').focus()
-		// 	return false;
-		// }
+		if (rsvtTpCd == 0) {
+			alert("[상담구분]을 선택해주세요.");
+			$("input[name='rsvtTpCd']").radiobutton('textbox').focus()
+			return false;
+		}
 		if ($isEmpty(rsvtUsrNm)) {
 			alert("[예약자명]을 입력해주세요.");
 			$("#rsvtUsrNm").textbox('textbox').focus()
+			return false;
+		}		
+        if (genTpCd == 0) {
+			alert("[성별]을 선택해주세요.");
+			$("input[name='genTpCd']").radiobutton('textbox').focus()
 			return false;
 		}
 		if ($isEmpty(rsvtCellNo)) {

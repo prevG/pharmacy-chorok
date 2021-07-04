@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
 
@@ -28,7 +27,9 @@ public interface ReservationRepository {
 
     public List<TbPpRsvtSch> selectRsvtSchByWeek( TbCommCalendar cal )  throws Exception;
 
-    public TbPpRsvtSch findReservationInfoByRsvtId(TbPpRsvtSch param) throws Exception;
+    public TbPpRsvtSch findReservationByRsvtId(TbPpRsvtSch param) throws Exception;
+
+    public TbPpRsvtSch findReservationByRsvtInfo(TbPpRsvtSch param) throws Exception;
     
     public int insertTbPpRsvtSch(TbPpRsvtSch param) throws Exception;
     

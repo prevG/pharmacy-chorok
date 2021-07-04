@@ -20,13 +20,27 @@ public class ReservationApi {
 	private ReservationService reservationSvc;
 
 
+	/**
+	 * 예약스케쥴 상세정보 저장
+	 * 
+	 * @param rsvt
+	 * @return
+	 */
 	@PostMapping("/saveReservation")
 	public ResponseEntity<ResponseMessage> saveRsvtSch(TbPpRsvtSch rsvt) {
 		
 		ResponseMessage resMsg = new ResponseMessage();
+		TbPpRsvtSch resultRsvt = null;
 		try {
-			reservationSvc.saveReservationSchedule( rsvt );
+			reservationSvc.saveReservation( rsvt );
+			if( rsvt.getRsvtId() != null && rsvt.getRsvtId() > 0 ) {
+				resultRsvt = reservationSvc.findReservationByRsvtId( rsvt );
+			} else {
+				resultRsvt = reservationSvc.findReservationByRsvtInfo( rsvt );
+			}
+			
 
+			resMsg.setData( resultRsvt );
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 저장되었습니다.");
 			
@@ -37,13 +51,23 @@ public class ReservationApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 		
+
+	/**
+	 * 예약스케쥴 상세정보 삭제
+	 * 
+	 * @param rsvt
+	 * @return
+	 */
 	@PostMapping("/deleteReservation")
 	public ResponseEntity<ResponseMessage> deleteReservation(TbPpRsvtSch rsvt) throws Exception {
 
 		ResponseMessage resMsg = new ResponseMessage();
+		TbPpRsvtSch resultRsvt = null;
 		try {
-			reservationSvc.deleteReservationSchedule( rsvt );
+			reservationSvc.deleteReservation( rsvt );
+			resultRsvt = reservationSvc.findReservationByRsvtId( rsvt );
 
+			resMsg.setData( resultRsvt );
 			resMsg.setStatus("success");
 			resMsg.setMessage("정상적으로 삭제되었습니다.");
 			
@@ -54,6 +78,13 @@ public class ReservationApi {
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
 	}
 
+
+	/**
+	 * 예약스케쥴 상세정보 조회(예약번호) 
+	 * 
+	 * @param rsvt
+	 * @return
+	 */
 	@PostMapping("/findByRsvtId")
 	public ResponseEntity<ResponseMessage> findByRsvtId(TbPpRsvtSch rsvt) throws Exception {
 		
@@ -61,7 +92,7 @@ public class ReservationApi {
 		try {
 
 			//예약상세정보 조회
-			TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationInfoByRsvtId( rsvt );
+			TbPpRsvtSch rsvtSchInfo = reservationSvc.findReservationByRsvtId( rsvt );
 
 			resMsg.setStatus("success");
 			resMsg.setData(rsvtSchInfo);

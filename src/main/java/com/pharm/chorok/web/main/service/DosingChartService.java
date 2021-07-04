@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
-import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ public class DosingChartService {
         return resultList;
     }
 
+    
     /**
      * 오늘 복용상담 목록조회
      * @param chartParam
@@ -61,6 +61,7 @@ public class DosingChartService {
 		int result = dosingRepo.insertTbPpDosgChart( inCnstParam );
         return result;
     }	
+
 
     /**
      * 복용차트 삭제

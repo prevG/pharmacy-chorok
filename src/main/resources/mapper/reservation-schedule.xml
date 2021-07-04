@@ -121,7 +121,7 @@
 	]]>
 	</select>
 	
-	<select id="findReservationInfoByRsvtId" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<select id="findReservationByRsvtId" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
 	<![CDATA[
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationInfoByRsvtId */
 	SELECT RSVT_ID
@@ -141,6 +141,30 @@
 	 WHERE RSVT_ID = #{rsvtId}
 	]]>
 	</select>
+
+
+	<select id="findReservationByRsvtInfo" parameterType="com.pharm.chorok.domain.table.TbPpRsvtSch" resultType="com.pharm.chorok.domain.table.TbPpRsvtSch">
+	<![CDATA[
+	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationByRsvtInfo */
+	SELECT RSVT_ID
+	     , RSVT_USR_NM
+         , RSVT_CELL_NO
+	     , RSVT_PHN_NO
+	     , DATE_FORMAT( RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
+		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d')  AS RSVT_DT_YYYYMMDD
+		 , DATE_FORMAT( SCH.RSVT_DT, '%H')        AS RSVT_DT_HH
+		 , DATE_FORMAT( SCH.RSVT_DT, '%i')        AS RSVT_DT_MM
+	     , RSVT_TP_CD
+	     , GEN_TP_CD
+	     , RSVT_DESC
+		 , PIC_USR_NO
+		 , CUST_ID
+	  FROM TB_PP_RSVT_SCH SCH
+	 WHERE SCH.RSVT_CELL_NO = #{rsvtCellNo}
+	   AND SCH.RSVT_DT = STR_TO_DATE( CONCAT( #{rsvtDtYyyymmdd}, #{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
+	]]>
+	</select>
+	
 	
 	
 	<select id="findReservationTimeList" resultType="com.pharm.chorok.domain.table.TbPpWorkTime">

@@ -14,3 +14,9 @@ function $isEmpty(str) {
 	if ($.trim(str) == '') return true;
 	return false;
 }
+
+function $isEmptyObj( obj ) {
+	
+	if( obj != null && obj != 'undefined') return true;
+	return false;
+}

@@ -9,8 +9,6 @@ import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
-import com.pharm.chorok.web.main.repository.ConsultingRepository;
-import com.pharm.chorok.web.main.repository.CustomerRepository;
 import com.pharm.chorok.web.main.repository.ReservationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +27,6 @@ public class ReservationService {
 
 	@Autowired
 	private CommUserDetailsService commUserDetailsSvc;
-
-    @Autowired
-    private ConsultingRepository consultingRepo;
-
-    @Autowired
-    private CustomerRepository customerRepo;
-
 
 	public ModelAndView getDashBoard( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
@@ -119,6 +110,7 @@ public class ReservationService {
         return mv;
     } 
 
+	
 	public ModelAndView getReservationByMovedWeekNo( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
 		Integer interval = reservationPagination.getInterval();
@@ -155,16 +147,39 @@ public class ReservationService {
         return mv;
     } 
 
-	
-    
 
-    public TbPpRsvtSch findReservationInfoByRsvtId( TbPpRsvtSch rsvtSch  ) throws Exception {
-
-    	return rsvtSchRepo.findReservationInfoByRsvtId( rsvtSch );
+	/**
+	 * 예약번호로 예약상세정보 조회
+	 * 
+	 * @param rsvtSch
+	 * @return
+	 * @throws Exception
+	 */
+    public TbPpRsvtSch findReservationByRsvtId( TbPpRsvtSch rsvtSch  ) throws Exception {
+    	return rsvtSchRepo.findReservationByRsvtId( rsvtSch );
     }
 
+
+	/**
+	 * 예약정보로 예약상세정보 조회(예약일시/예약자성명/예약자휴대번호)
+	 * 
+	 * @param rsvtSch
+	 * @return
+	 * @throws Exception
+	 */
+	public TbPpRsvtSch findReservationByRsvtInfo( TbPpRsvtSch rsvtSch  ) throws Exception {
+    	return rsvtSchRepo.findReservationByRsvtInfo( rsvtSch );
+    }
     
-	public int saveReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
+
+	/**
+	 * 예약상세정보 신규저장 및 수정
+	 * 
+	 * @param rsvt
+	 * @return
+	 * @throws Exception
+	 */
+	public int saveReservation(TbPpRsvtSch rsvt) throws Exception {
 		
 		int result = -1;
 
@@ -177,7 +192,15 @@ public class ReservationService {
 		return result;
 	}
 	
-	public int deleteReservationSchedule(TbPpRsvtSch rsvt) throws Exception {
+
+	/**
+	 * 예약상세정보 삭제
+	 * 
+	 * @param rsvt
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteReservation(TbPpRsvtSch rsvt) throws Exception {
 		return rsvtSchRepo.deleteTbPpRsvtSch( rsvt );
 	}
 }
