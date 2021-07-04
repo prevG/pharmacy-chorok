@@ -1,3 +1,7 @@
+var gC1016 = [];
+var gC1017 = [];
+var gC1018 = [];
+
 var gPicUsers = [
 	{ 'ditcCd' : '1', 'ditcNm' : '박정란' },
 	{ 'ditcCd' : '2', 'ditcNm' : '황진영' },
@@ -5,6 +9,20 @@ var gPicUsers = [
 ];
 
 function fnInit() {
+
+	$('#saveCnstFrm select[textboxName=dosgTpCd]').combobox({
+		url: '/admin/getCodes' + '?GrpCd=C1018&target=combo&targetKind=1',
+		valueField: 'ditcCd',
+		textField: 'ditcNm',
+		onLoadSuccess: function() {
+			$(this).combobox('setValue', '선택하세요');
+		}
+	});
+
+	gC1016 = getCodeData('C1016'); // 한약사/상담실장
+	gC1017 = getCodeData('C1017'); // 예/아니오
+	gC1018 = getCodeData('C1018'); // 복용유형 코드
+	
 	// 상담차트 목록
 	$('#dg').datagrid({
 	    url: '/api/v1/main/chart/findAllChartByCustId',
@@ -33,7 +51,10 @@ function fnInit() {
 				selectedCnstId 	: row.cnstId,
 				cnstDt 			: row.cnstDt,
 				picUsrNo		: row.picUsrNo,
-				pic2UsrNo		: row.pic2UsrNo
+				pic2UsrNo		: row.pic2UsrNo,
+				cnstHhCd		: row.cnstHhCd,
+				cnstHhMemo		: row.cnstHhMemo,
+				dosgTpCd		: row.dosgTpCd
 			});
 			$('#cnstDesc').textbox('setValue', row.cnstDesc);
 			// 설문차트
@@ -90,6 +111,19 @@ function fnInit() {
         		},
         		formatter: function(value, row) {
         			return row.pic2UsrNoVal;
+        		}
+        	},
+        	{
+        		field: 'dosgTpCd', 
+        		title: '복용유형', 
+        		align: 'center', 
+        		width: '100', 
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1018, required: true }
+        		},
+        		formatter: function(value, row) {
+        			return row.dosgTpCdVal;
         		}
         	}/*,
         	{
@@ -187,21 +221,33 @@ function fnInit() {
         		title: '상담예약', 
         		align: 'center', 
         		width: '100', 
-        		editor: 'text'
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1016, required: true }
+        		}, 
+        		formatter: function(value, row) { return row.callYnVal||value; }
         	},
         	{
         		field: 'dosgYn', 
         		title: '복용여부', 
         		align: 'center', 
         		width: '100', 
-        		editor: 'text'
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1017, required: true }
+        		}, 
+        		formatter: function(value, row) { return row.dosgYnVal||value; }
         	},
         	{
-        		field: 'dosgYn', 
+        		field: 'pausYn', 
         		title: '보류여부', 
         		align: 'center', 
         		width: '100', 
-        		editor: 'text'
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1017, required: true }
+        		}, 
+        		formatter: function(value, row) { return row.pausYnVal||value; }
         	},
         	{
         		field: 'currWgt', 
@@ -414,6 +460,7 @@ function createDosingChart() {
  * 상담차트 저장 (상담차트/설문차트)
  **************************************************/
 function saveCnstChart( evt ) {
+	// 상담차트
 	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	var cnstDesc = $('#cnstDesc').textbox('getValue');
 	var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
@@ -423,33 +470,79 @@ function saveCnstChart( evt ) {
 	var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
 	var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
 	var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
+	var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
+	var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
+	var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
 	if( selectedCnstId == "" ) {
 		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 		return false;
 	}
-	let formData = {
-		"cnstId" 		: selectedCnstId,
-		"cnstDesc" 		: cnstDesc,
-		"picUsrNo"		: picUsrNo,
-		"pic2UsrNo"		: pic2UsrNo,
-		"orgWgt"		: orgWgt,
-		"tgtWgt"		: tgtWgt,
-		"startDosgDt" 	: startDosgDt
-	};
-
-	$.post('/api/v1/main/chart/saveCnstChart', formData, function(res) {
-		if (res.status === 'success') {
-			$.messager.show({ title: 'Success', msg: res.message });
-			
-			fnCnstChart(); // 상담차트 조회
-		} else {
-			$.messager.show({ title: 'Error', msg: res.message });
-			return;
+	// 설문차트
+	let cnstPaperNum = $('#cnstPaper tr').length;
+	let cnstPaperList = [];
+	for (let i = 0; i < cnstPaperNum; i++) {
+		let cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
+		let cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
+		let cnstPaperVer = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-ver");
+		let cnstPaperNum = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-num");
+		let cnstPaperVal = "";
+		if (cnstPaperKind === "TEXT") {
+			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='text']").val();
+		} else if (cnstPaperKind === "CHECK") {
+			let len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
+			let c = 0;
+			for (let j = 0; j < len; j++) { 
+				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked) { 
+					if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
+					cnstPaperVal = cnstPaperVal + $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
+					c++; 
+				}
+			}
+		} else if (cnstPaperKind === "RADIO") {
+			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='radio']:checked").val();
 		}
-	}, 'json')
-	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-		return;
+		
+		cnstPaperList.push({
+			"cnstId" 		: selectedCnstId,
+			"cnstPaperId" 	: cnstPaperId,
+			"cnstPaperVer" 	: cnstPaperVer,
+			"cnstPaperNum" 	: cnstPaperNum,
+			"cnstPaperVal" 	: cnstPaperVal
+		});
+	}
+	
+	let formData = {
+		criteria: {
+			"cnstId" 		: selectedCnstId,
+			"cnstDesc" 		: cnstDesc,
+			"picUsrNo"		: picUsrNo,
+			"pic2UsrNo"		: pic2UsrNo,
+			"orgWgt"		: orgWgt,
+			"tgtWgt"		: tgtWgt,
+			"startDosgDt" 	: startDosgDt,
+			"cnstHhCd"		: cnstHhCd,
+			"cnstHhMemo"	: cnstHhMemo,
+			"dosgTpCd"		: dosgTpCd,
+			"srvChartList" 	: cnstPaperList
+		}
+	};
+	
+	$.ajax({
+		url: '/api/v1/main/chart/saveCnstChart_2',
+		method: 'post',
+		contentType: 'application/json',
+		dataType: 'json',
+		data: JSON.stringify(formData),
+		success: function(res) {
+			if (res.status === 'success') {
+				$.messager.show({ title: 'Success', msg: res.message });
+				
+				fnCnstChart(); // 상담차트 조회
+			} else {
+				$.messager.show({ title: 'Error', msg: res.message });
+				return;
+			}
+		}
 	});
 }
 
@@ -651,14 +744,16 @@ $( document ).ready( function() {
 	
 	/**************************************************************
      * "설문차트 저장" 클릭시
+     * 
+     * "상담차트 저장" 에 통합함.
      **************************************************************/
-	$(document).off("click", "#btnSaveSurvChart").on("click", "#btnSaveSurvChart", function (e) {
+	/*$(document).off("click", "#btnSaveSurvChart").on("click", "#btnSaveSurvChart", function (e) {
 		$.messager.confirm('Confirm', '설문차트 정보를 저장하시겠습니까?', function(r) {
 			if (!r) return;
 			
 			saveSurveyChart( e );
 		});
-	});
+	});*/
 	
 	/**************************************************************
      * "복용차트 저장" 클릭시

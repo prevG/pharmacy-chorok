@@ -14,9 +14,12 @@
          , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
          , DOSG_TP_CD
-         , CALL_YN          
+         , CALL_YN
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_VAL          
          , DOSG_YN
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_VAL        
          , PAUS_YN          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_VAL        
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT
@@ -43,9 +46,12 @@
          , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
          , DOSG_TP_CD
-         , CALL_YN          
+         , CALL_YN
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_VAL        
          , DOSG_YN
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_VAL        
          , PAUS_YN          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_VAL        
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT

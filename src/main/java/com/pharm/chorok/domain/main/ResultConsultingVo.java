@@ -22,4 +22,10 @@ public class ResultConsultingVo extends TbCommColumn {
     private String picUsrNoVal;			// 상담약사 이름
     private String pic2UsrNo;			// 상담실장 번호
     private String pic2UsrNoVal;		// 상담실장 이름
+    private String cnstHhCd;			// 상담가능시간 코드
+    private String cnstHhVal;			// 상담가능시간 설명
+    private String cnstHhMemo; 			// 상담가능시간 메모
+    private String dosgTpCd;			// 복용유형 코드
+    private String dosgTpCdVal;			// 복용유형 설명
+    
 }

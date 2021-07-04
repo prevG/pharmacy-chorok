@@ -3,6 +3,17 @@ package com.pharm.chorok.api.main;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.main.ResultDashBoard01VO;
@@ -10,17 +21,11 @@ import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.service.ChartService;
+import com.pharm.chorok.web.main.service.CnstPaperService;
 import com.pharm.chorok.web.main.service.DosingChartService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(value = "/api/v1/main/chart/")
 @RestController
@@ -35,6 +40,9 @@ public class ChartApi {
 	@Autowired
 	private DosingRepository dosingRepo;
 
+	@Autowired
+	private CnstPaperService cnstPaperService;
+	
     /**
      * @deprecated /createCnstChart 함수로 대체함.
      * 
@@ -121,6 +129,27 @@ public class ChartApi {
 		}
     	
     	return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+    }
+    
+    /**
+     * 상담차트 수정 - 설문차트 포함
+     * 
+     * saveCnstChart 함수 대체함.
+     * 
+     * @param pageCriteria
+     * @return
+     */
+    @PostMapping("/saveCnstChart_2")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> saveCnstChart_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
+    	Assert.isTrue(pageCriteria.getCriteria().getCnstId().compareTo(0L) > 0, "상담번호가 존재하지 않습니다.");
+    	
+    	chartSvc.updateTbPpCnstChart(pageCriteria.getCriteria());
+    	for (TbPpSrvChart srvChart : pageCriteria.getCriteria().getSrvChartList()) {
+    		cnstPaperService.saveSurveyChart(srvChart);
+    	}
+    	
+    	return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 상담차트가 수정 되었습니다."), HttpStatus.OK );
     }
     
     /**
