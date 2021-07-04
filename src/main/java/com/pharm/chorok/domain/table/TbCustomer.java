@@ -27,6 +27,11 @@ public class TbCustomer extends TbCommColumn {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updDt;
 	
+	private String custMemo;		// 고객메모
+	private long rcmdCustId;		// 추천인 ID
+	private String rcmdCustNm;		// 추천인 이름
+	private String rcmdCellNo;		// 추천인 연락처
+	
 	//검색용으로 추가
 	private String cbSrch;
 	private String srchTxt;

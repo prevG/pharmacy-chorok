@@ -4,6 +4,7 @@
 	  
 <div id="customer-table" th:fragment="customer-table">
     <form id="saveCustFrm" name="saveCustFrm" method="post">
+    <input type="hidden" name="rcmdCustId" th:value="${custInfo?.rcmdCustId}">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row p-2">
@@ -107,7 +108,7 @@
 				<div class="easyui-panel" title="내원경로" style="width: 100%;min-height: 200px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
-						<div class="col-12 p-1">
+						<div class="col-12">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
 								   data-options="label:'지인소개',labelWidth:170,labelPosition:'after'"
 								   value="1"
@@ -115,7 +116,7 @@
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12 p-1">
+						<div class="col-12">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
 								   data-options="label:'홈페이지',labelWidth:170,labelPosition:'after'"
 								   value="2"
@@ -123,7 +124,7 @@
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12 p-1">
+						<div class="col-12">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
 								   data-options="label:'카카오톡 검색창',labelWidth:170,labelPosition:'after'"
 								   value="3"
@@ -131,7 +132,7 @@
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12 p-1">
+						<div class="col-12">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
 								   data-options="label:'블로그 및 인터넷',labelWidth:170,labelPosition:'after'"
 								   value="4"
@@ -139,7 +140,7 @@
 						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-12 p-1">
+						<div class="col-12">
 							<input name="dlg_vistTpCd" class="easyui-radiobutton"
 								   data-options="label:'기타',labelWidth:170,labelPosition:'after'"
 								   value="5"
@@ -173,6 +174,37 @@
 							<input id="addr2" name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'상세주소'"
 								   th:value="${custInfo?.addr2}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="고객메모" style="width: 100%;min-height: 200px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 150px;"
+								   data-options="multiline:true"
+								   th:value="${custInfo?.custMemo}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 200px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인'"
+								   th:value="${custInfo?.rcmdCustNm}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인 연락처'"
+								   th:value="${custInfo?.rcmdCellNo}">
 						</div>
 					</div>
 				</div>

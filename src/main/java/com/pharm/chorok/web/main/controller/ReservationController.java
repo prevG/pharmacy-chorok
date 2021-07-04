@@ -12,12 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.main.ResultSurveyChartVo;
@@ -242,26 +244,24 @@ public class ReservationController {
 	/**
 	 * TODO 해당 함수를 호출하는 화면 확인 필요함.
 	 * 
+	 * TODO 예약 스케줄 화면에서 넘어오는 경우 확인 필요함.
+	 * 
 	 * @param tbCustomer
 	 * @return
 	 */
 	@PostMapping("/RS1001PU02/saveCustomer_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> saveCustomer_2(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
-		Assert.isTrue(custParam.getCustId() > 0, "고객번호가 존재하지 않습니다.");
-		Assert.hasLength(custParam.getCustUsrNm(), "고객이름을 입력하세요");
-		Assert.hasLength(custParam.getCustCellNo(), "핸드폰번호를 입력하세요");
-		Assert.hasLength(custParam.getCustBirthDt(), "생년월일을 입력하세요");
-		Assert.hasLength(custParam.getCustGenTpCd(), "성별을 입력하세요");
+	public ResponseEntity<ResponseMessage> saveCustomer_2(@RequestBody PageCriteria<TbCustomer> pageCriteria) throws Exception {
+		Assert.isTrue(pageCriteria.getCriteria().getCustId() > 0, "고객번호가 존재하지 않습니다.");
+		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm(), "고객이름을 입력하세요");
+		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo(), "핸드폰번호를 입력하세요");
+		Assert.hasLength(pageCriteria.getCriteria().getCustBirthDt(), "생년월일을 입력하세요");
+		Assert.hasLength(pageCriteria.getCriteria().getCustGenTpCd(), "성별을 입력하세요");
 
-		int cellNoCount = userService.countUserCellNoByExcludeCustId(custParam);
+		int cellNoCount = userService.countUserCellNoByExcludeCustId(pageCriteria.getCriteria());
 		if (cellNoCount > 0)
 			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
-		
-		customerSvc.saveCustomer( custParam, rsvtParam );
-		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam );
-		if (custInfo == null)
-			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "작업 처리중에 문제가 발생했습니다."), HttpStatus.OK);
+		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다."), HttpStatus.OK);
 	}

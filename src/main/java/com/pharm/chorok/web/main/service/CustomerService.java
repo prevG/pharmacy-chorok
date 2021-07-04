@@ -66,6 +66,35 @@ public class CustomerService {
 		}
 		return result;
 	}
+	
+    /**
+     * save customer information.
+     * 
+     * @param custInfo
+     * @return
+     * @throws Exception
+     */
+	@Transactional
+	public int saveCustomer_2(TbCustomer custInfo) throws Exception {
+		
+		int result = -1;
+
+		Long custId = custInfo.getCustId();
+		if( custId != null && custId > 0) {
+			result = customerRepo.updateTbCustomer( custInfo );
+
+		} else {
+
+			//신규 고객번호 생성
+			Long newCustId = customerRepo.selectNewCustId();
+
+			//고객정보저장
+			custInfo.setCustId( newCustId );
+			result = customerRepo.insertTbCustomer( custInfo );
+
+		}
+		return result;
+	}
 
 	public TbCustomer findCustomerByCustIdOrRsvtId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
 		HashMap<String, Object> params = new HashMap<String, Object>();
