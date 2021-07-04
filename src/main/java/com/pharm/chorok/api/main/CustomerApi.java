@@ -62,6 +62,7 @@ public class CustomerApi {
 
 	/**
 	 * 고객정보 마스터 목록(타뷸레이터 그리드)
+	 * 
 	 * @param inCustomer
 	 * @return
 	 * @throws Exception

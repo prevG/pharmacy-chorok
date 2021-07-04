@@ -115,6 +115,7 @@
     
     <select id="findAllCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">
     /** com.pharm.chorok.web.main.repository.CustomerRepository.findAllCustomer */
+    /** 고객목록 조회 */
 	<![CDATA[    
     SELECT CUST_ID
          , CUST_USR_NM
@@ -138,6 +139,8 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_VAL
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = MRG_YN AND USE_YN = 'Y') AS MRG_YN_VAL
       FROM TB_CUSTOMER A
      WHERE 1 = 1
     ]]>

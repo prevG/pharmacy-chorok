@@ -27,7 +27,7 @@
 						</div>
 						<div class="col">
 							<input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'생년월일',required:true"
+								   data-options="label:'휴대폰번호',required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}">
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 								   th:value="${custInfo?.custBirthDt}">
 						</div>
 						<div class="col">
-							<div class="form-inline">
+							<div class="form-inline pt-1">
 								<label style="margin-right: 60px;">성별</label>
 								<input name="dlg_custGenTpCd" class="easyui-radiobutton"
 									   data-options="label:'여성',labelWidth:60,labelPosition:'after'"
@@ -58,7 +58,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<div class="form-inline">
+							<div class="form-inline pt-1">
 								<label style="margin-right: 30px;">결혼유무</label>
 								<input name="dlg_mrgYn" class="easyui-radiobutton"
 									   data-options="label:'미혼',labelWidth:60,labelPosition:'after'" 
@@ -87,7 +87,7 @@
 					</div>
 					<div class="row m-2">
 						<div class="col">
-							<div class="form-inline">
+							<div class="form-inline pt-1">
 								<label style="margin-right: 30px;">모유수유</label>
 								<input name="dlg_brstFdgYn" class="easyui-radiobutton"
 									   data-options="label:'예',labelWidth:60,labelPosition:'after'" 

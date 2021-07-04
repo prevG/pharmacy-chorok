@@ -3,7 +3,13 @@
  * customer
  * 
  ******************************************************/
+var gC1008 = [];
+var gC1020 = [];
+
 function fnInit() {
+	gC1008 = getCodeData('gC1008'); // 남성/여성
+	gC1020 = getCodeData('gC1020'); // 기혼/미혼
+	
 	$('#dg').datagrid({
 	    url: '/api/v1/main/customer/findAllCustomer',
 	    singleSelect: true, 
@@ -56,7 +62,13 @@ function fnInit() {
         		title: '성별', 
         		align: 'center', 
         		width: '100', 
-        		editor: 'text'
+        		editor: {
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1008, required: true }
+        		},
+        		formatter: function(value, row) {
+        			return row.custGenTpCdVal;
+        		}
         	},
         	{
         		field: 'mrgYn', 
@@ -64,8 +76,11 @@ function fnInit() {
         		align: 'center', 
         		width: '100', 
         		editor: {
-        			type: 'checkbox',
-        			options: { on: 'Y', off: 'N' }
+        			type: 'combobox',
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1020, required: true }
+        		},
+        		formatter: function(value, row) {
+        			return row.mrgYnVal;
         		}
         	},
         	{
@@ -112,8 +127,11 @@ function fnSearch() {
 }
 
 function fnCustInfo() {
-	var row = $("#dg").datagrid("getSelected");
-	if (!row) return;
+	var row = $('#dg').datagrid('getSelected');
+	if (!row) {
+		$.messager.confirm('고객목록', '고객목록에서 상담고객을 선택해 주세요');
+		return;	
+	}
 	
 	location.href = '/customer/CUS1002MV_2/'+ row.custId;
 }
@@ -126,7 +144,7 @@ function fnNewCustPop() {
 	});
 }
 
-function addUser() {
+function saveNewCust() {
 	var param = {
 		custUsrNm : 	$('#addCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
 		custCellNo : 	$('#addCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
@@ -167,6 +185,30 @@ $(document).ready(function() {
 	});
 	$('#custCellNo').numberbox('textbox').bind('keydown', function(e) {
 		if (e.keyCode === 13) fnSearch();
+	});
+	
+	/**************************************************************
+     * "고객상담정보" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnCustInfo").on("click", "#btnCustInfo", function (e) {
+
+		fnCustInfo();
+	});
+	
+	/**************************************************************
+     * "신규등록" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnNewCustPop").on("click", "#btnNewCustPop", function (e) {
+
+		fnNewCustPop();
+	});
+
+	/**************************************************************
+     * "저장" 클릭시
+     **************************************************************/
+	$(document).off("click", "#btnSaveCust").on("click", "#btnSaveCust", function (e) {
+
+		saveNewCust();
 	});
 });
 
