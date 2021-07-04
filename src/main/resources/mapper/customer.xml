@@ -51,6 +51,10 @@
          , REG_USR_NO
          , UPD_DT
          , UPD_USR_NO
+         , CUST_MEMO
+         , RCMD_CUST_ID
+         , RCMD_CUST_NM
+         , RCMD_CELL_NO
       FROM TB_CUSTOMER
      WHERE CUST_ID = #{custId}
 	]]>
@@ -76,6 +80,10 @@
          , CUST.REG_USR_NO
          , CUST.UPD_DT
          , CUST.UPD_USR_NO
+         , CUST.CUST_MEMO
+         , CUST.RCMD_CUST_ID
+         , CUST.RCMD_CUST_NM
+         , CUST.RCMD_CELL_NO
       FROM TB_CUSTOMER CUST
       LEFT OUTER JOIN
            TB_PP_RSVT_SCH RSVT
@@ -126,6 +134,10 @@
          , REG_USR_NO
          , UPD_DT
          , UPD_USR_NO
+         , CUST_MEMO
+         , RCMD_CUST_ID
+         , RCMD_CUST_NM
+         , RCMD_CELL_NO
       FROM TB_CUSTOMER A
      WHERE 1 = 1
     ]]>
@@ -159,6 +171,10 @@
          , ADDR2
          , REG_DT
          , REG_USR_NO
+         , CUST_MEMO
+         , RCMD_CUST_ID
+         , RCMD_CUST_NM
+         , RCMD_CELL_NO
     ) VALUES (
            #{custId}
          , #{custUsrNm}
@@ -175,6 +191,10 @@
          , #{addr2}
          , now()
          , #{regUsrNo}
+         , #{custMemo}
+         , #{rcmdCustId}
+         , #{rcmdCustNm}
+         , #{rcmdCellNo}
     )
 	]]>
 	</insert>
@@ -182,9 +202,7 @@
     <update id="updateTbCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
     UPDATE TB_CUSTOMER
-       SET UPD_DT          = now()
-         , UPD_USR_NO      = #{regUsrNo}
-         , CUST_USR_NM     = #{custUsrNm}
+       SET CUST_USR_NM     = #{custUsrNm}
          , CUST_CELL_NO    = #{custCellNo}
          , CUST_BIRTH_DT   = #{custBirthDt}
          , CUST_GEN_TP_CD  = #{custGenTpCd}
@@ -196,6 +214,12 @@
          , ZIP_CODE        = #{zipCode}
          , ADDR1           = #{addr1}
          , ADDR2           = #{addr2}
+         , UPD_DT          = now()
+         , UPD_USR_NO      = #{regUsrNo}
+         , CUST_MEMO 	   = #{custMemo}
+         , RCMD_CUST_ID    = #{rcmdCustId}
+         , RCMD_CUST_NM    = #{rcmdCustNm}
+         , RCMD_CELL_NO    = #{rcmdCellNo}
      WHERE CUST_ID = #{custId}
 	]]>
 	</update>

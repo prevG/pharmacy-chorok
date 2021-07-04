@@ -117,7 +117,7 @@ function fnInit() {
         		field: 'dosgTpCd', 
         		title: '복용유형', 
         		align: 'center', 
-        		width: '100', 
+        		width: '120', 
         		editor: {
         			type: 'combobox',
         			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1018, required: true }
@@ -300,11 +300,52 @@ function fnInit() {
 }
 
 /**************************************************************
- * 상담차트 선택
+ * 고객정보 저장
  **************************************************************/
-/*function selectCnstChart() {
-	alert('abc');
-}*/
+function saveCustInfo() {
+	$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
+		if (!r) return;
+		
+		var formData = {
+			criteria : {
+				custId : 		$('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue'),
+				custUsrNm : 	$('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
+				custCellNo : 	$('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
+				custBirthDt : 	$('#saveCustFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
+				custGenTpCd : 	$('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val(),
+				mrgYn : 		$('#saveCustFrm input[name=dlg_mrgYn]:checked').val(),
+				pcrtChdCnt : 	$('#saveCustFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
+				lstPcrtYear : 	$('#saveCustFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
+				brstFdgYn : 	$('#saveCustFrm input[name=dlg_brstFdgYn]:checked').val(),
+				vistTpCd : 		$('#saveCustFrm input[name=dlg_vistTpCd]:checked').val(),
+				zipCode : 		$('#saveCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
+				addr1 : 		$('#saveCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
+				addr2 : 		$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
+				custMemo :		$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
+				rcmdCustId :	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
+				rcmdCustNm :	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
+				rcmdCellNo :	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').textbox('getValue'),
+				delYn : 		'N'
+			}
+		};
+		
+		$.ajax({
+			url: '/reservation/RS1001PU02/saveCustomer_2',
+			method: 'post',
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify(formData),
+			success: function(res) {
+				if (res.status === 'success') {
+					$.messager.show({ title: 'Success', msg: res.message });
+				} else {
+					$.messager.alert('Error', res.message);
+					return;
+				}
+			}
+		});
+	});
+}
 
 /**************************************************************
  * 상담차트 조회
@@ -539,7 +580,7 @@ function saveCnstChart( evt ) {
 				
 				fnCnstChart(); // 상담차트 조회
 			} else {
-				$.messager.show({ title: 'Error', msg: res.message });
+				$.messager.alert('Error', res.message);
 				return;
 			}
 		}
@@ -670,42 +711,10 @@ $( document ).ready( function() {
     fnCnstChart();
 	
     /**************************************************************
-     * 고객정보 저장
+     * "고객정보 저장" 클릭시
      **************************************************************/
-    $('#btnSaveCustomer').click(function(e) {
-		e.preventDefault();
-		$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
-			if (!r) return;
-			let formData = {
-				custId : $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue'),
-				custUsrNm : $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
-				custCellNo : $('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
-				custBirthDt : $('#saveCustFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-				custGenTpCd : $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val(),
-				mrgYn : $('#saveCustFrm input[name=dlg_mrgYn]:checked').val(),
-				pcrtChdCnt : $('#saveCustFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
-				lstPcrtYear : $('#saveCustFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
-				brstFdgYn : $('#saveCustFrm input[name=dlg_brstFdgYn]:checked').val(),
-				vistTpCd : $('#saveCustFrm input[name=dlg_vistTpCd]:checked').val(),
-				zipCode : $('#saveCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
-				addr1 : $('#saveCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
-				addr2 : $('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
-				delYn : 'N'
-			};
-			
-			$.post('/reservation/RS1001PU02/saveCustomer_2', formData, function(res) {
-				if (res.status === 'success') {
-					$.messager.show({ title: 'Success', msg: res.message });
-				} else {
-					$.messager.show({ title: 'Error', msg: res.message });
-					return;
-				}
-			}, 'json')
-			.fail(function(xhr, status, error) {
-				$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-				return;
-			});
-		});
+	$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {
+		saveCustInfo();
 	});
 
 	/**************************************************************
