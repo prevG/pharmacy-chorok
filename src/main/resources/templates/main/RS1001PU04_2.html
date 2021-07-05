@@ -151,17 +151,19 @@
 	 		 			<form id="saveDosgFrm" name="saveDosgFrm" method="post">
 			 		 	<div class="row mb-2">
 			 		 		<div class="col-md-10 form-inline">
-			 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;"
+			 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;text-align: right;"
 									   data-options="
 									   		label:'시작체중',
 									   		labelWidth:100,
-									   		labelPosition:'left'">
-			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;"
+									   		labelPosition:'left',
+									   		readonly:true">
+			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: right;"
 									   data-options="
 									   		label:'희망체중',
 									   		labelWidth:100,
-									   		labelPosition:'left'">
-			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;"
+									   		labelPosition:'left',
+									   		readonly:true">
+			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;text-align: center;"
 									   data-options="
 									   		label:'복용시작일자',
 									   		labelWidth:100,
@@ -183,39 +185,42 @@
 	
 	<!-- dosg dialog -->
 	<div id="dosgDlg" class="easyui-dialog" style="width:700px;min-height:430px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="dosgDlgFrm" method="post" novalidate>
+		<form id="dosgDlgFrm" name="dosgDlgFrm" method="post" novalidate>
 		<input type="hidden" name="dlg_dosgId">
 		<div class="row">
 			<div class="col-md-4 p-2">
-				<input name="dlg_seqStr" class="easyui-textbox" style="width: 100%"
-					   data-options="label:'일수 *',required:true,readonly:true">
+				<input name="dlg_seqStr" class="easyui-textbox" style="width: 100%;text-align: center;"
+					   data-options="label:'일수 *',labelWidth:80,required:true,readonly:true">
 			</div>
 			<div class="col-md-4 p-2">
-				<input name="dlg_dosgTpCd" class="easyui-textbox" style="width: 100%"
-					   data-options="label:'복용단계 *',required:true,readonly:true" >
+				<input name="dlg_dosgTpCd" class="easyui-textbox" style="width: 100%;text-align: center;"
+					   data-options="label:'복용단계 *',labelWidth:80,required:true,readonly:true" >
 			</div>
 			<div class="col-md-4 p-2">
-				<input name="dlg_dosgDt" class="easyui-datebox" style="width: 100%"
-					   data-options="label:'복용일자',required:true,formatter:myformatter,parser:myparser">
+				<input name="dlg_dosgDt" class="easyui-datebox" style="width: 100%;text-align: center;"
+					   data-options="label:'복용일자',labelWidth:80,required:true,formatter:myformatter,parser:myparser">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4 p-2">
-				<select name="dlg_callYn" class="easyui-combobox" data-options="label:'상담예약'" style="width: 100%;text-align: center;">
+				<select name="dlg_callYn" class="easyui-combobox" style="width: 100%;text-align: center;"
+					    data-options="label:'상담예약',labelWidth:80">
 					<option value="">선택</option>
 					<option value="CHEMIST">한약사</option>
 					<option value="COUNSELOR">삼당실장</option>
 				</select>
 			</div>
 			<div class="col-md-4 p-2">
-				<select name="dlg_dosgYn" class="easyui-combobox" data-options="label:'복용여부'" style="width: 100%;text-align: center;">
+				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
+						data-options="label:'복용여부',labelWidth:80">
 					<option value="">선택</option>
 					<option value="Y">예</option>
 					<option value="N">아니요</option>
 				</select>
 			</div>
 			<div class="col-md-4 p-2">
-				<select name="dlg_pausYn" class="easyui-combobox" data-options="label:'보류여부'" style="width: 100%;text-align: center;">
+				<select name="dlg_pausYn" class="easyui-combobox" style="width: 100%;text-align: center;"
+						data-options="label:'보류여부',labelWidth:80">
 					<option value="">선택</option>
 					<option value="Y">예</option>
 					<option value="N">아니요</option>
@@ -224,23 +229,28 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4 p-2">
-				<input name="dlg_currWgt" class="easyui-numberbox" data-options="label:'현재체중'" style="width: 100%">
+				<input name="dlg_currWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+					   data-options="label:'현재체중',labelWidth:80">
 			</div>
 			<div class="col-md-4 p-2">
-				<input name="dlg_lossWgt" class="easyui-numberbox" data-options="label:'감량체중'" style="width: 100%">
+				<input name="dlg_lossWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+					   data-options="label:'감량체중',labelWidth:80,readonly:true">
 			</div>
 			<div class="col-md-4 p-2">
-				<input name="dlg_rmiWgt" class="easyui-numberbox" data-options="label:'남은체중'" style="width: 100%">
+				<input name="dlg_rmiWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+					   data-options="label:'남은체중',labelWidth:80,readonly:true">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12 p-2">
-				<input name="dlg_dosgDesc1" class="easyui-textbox" data-options="label:'몸상태',multiline:true" style="width: 100%;height:80px">
+				<input name="dlg_dosgDesc1" class="easyui-textbox" style="width: 100%;height:80px"
+					   data-options="label:'몸상태',labelWidth:80,multiline:true">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12 p-2">
-				<input name="dlg_dosgDesc2" class="easyui-textbox" data-options="label:'약반응',multiline:true" style="width: 100%;height:80px">
+				<input name="dlg_dosgDesc2" class="easyui-textbox" style="width: 100%;height:80px"
+					   data-options="label:'약반응',labelWidth:80,multiline:true">
 			</div>
 		</div>
 		</form>

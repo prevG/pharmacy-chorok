@@ -791,6 +791,29 @@ $( document ).ready( function() {
 		//});
 	});
 	
+	/**************************************************************
+     * 복용차트 체중 수정시
+     **************************************************************/
+    $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox({
+    	onChange: function(value) {
+    		var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+    		var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+    		var lossWgt = Number(orgWgt) - Number(value);
+    		var rmiWgt = Number(value) - Number(tgtWgt);
+    		
+    		$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', lossWgt);
+    		$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', rmiWgt);
+    	}
+    });
+	//$(document).off("change", "#dosgDlgFrm input[textboxName=dlg_currWgt]").on("change", "#dosgDlgFrm input[textboxName=dlg_currWgt]", function (e) {
+		//alert('hi');
+		//$.messager.confirm('Confirm', '복용차트 정보를 저장하시겠습니까?', function(r) {
+		//	if (!r) return;
+			
+		//	saveDosingChart( e );
+		//});
+	//});
+	
 });
 
 function myformatter(date) {
