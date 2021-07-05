@@ -38,6 +38,10 @@ function fnInit() {
         //pageList: [50],
         dragSelection: true,
         onLoadSuccess: function(data) {
+        	// linkbutton 활성화
+        	$(this).datagrid('getPanel').find('a.easyui-linkbutton').linkbutton();
+        	
+        	// 상담차트 수정/삭제 후 선택행 처리
         	let selectedIndex = $('#saveCnstFrm input[name=selectedIndex]').val();
         	if (selectedIndex)
         		$(this).datagrid('selectRow', selectedIndex);
@@ -72,7 +76,7 @@ function fnInit() {
 				field: 'cnstId', 
 				title: '상담번호',
 				align: 'center',  
-				width: '80',
+				width: '70',
         		formatter: function(value, row, index) {
         			return '<span style="font-weight:bold;">'+ value +'</span>';
         		}
@@ -81,7 +85,7 @@ function fnInit() {
         		field: 'cnstDt', 
         		title: '상담일시', 
         		align: 'center', 
-        		width: '130', 
+        		width: '120', 
         		editor: 'text',
         		formatter: function(value, row, index) {
         			return '<span style="font-weight:bold;">'+ value +'</span>';
@@ -91,7 +95,7 @@ function fnInit() {
         		field: 'picUsrNo', 
         		title: '상담한약사', 
         		align: 'center', 
-        		width: '100', 
+        		width: '90', 
         		editor: {
         			type: 'combobox',
         			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
@@ -104,7 +108,7 @@ function fnInit() {
         		field: 'pic2UsrNo', 
         		title: '상담실장', 
         		align: 'center', 
-        		width: '100', 
+        		width: '90', 
         		editor: {
         			type: 'combobox',
         			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
@@ -125,16 +129,16 @@ function fnInit() {
         		formatter: function(value, row) {
         			return row.dosgTpCdVal;
         		}
-        	}/*,
+        	},
         	{
-        		field: '보기', 
-        		title: '보기', 
+        		field: '삭제', 
+        		title: '삭제', 
         		align: 'center', 
-        		width: '80', 
+        		width: '70', 
         		formatter: function(value, row, index) {
-        			return '<a href="javascript:void(0)" onclick="selectCnstChart();">차트보기</a>';
+        			return '<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" style="width:40px;height:20px;" onclick="removeCnstChart();">';
         		}
-        	}*/
+        	}
         ]]
 	});
 	
@@ -428,7 +432,7 @@ function createCnstChart() {
 function removeCnstChart() {
 	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	if( selectedCnstId == "" ) {
-		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+		$.messager.alert( "상담차트 삭제", "상담차트 목록에서 '삭제' 버튼을 클릭해 주세요.");
 		return false;
 	}
 	let formData = {
@@ -726,10 +730,12 @@ $( document ).ready( function() {
 	
 	/**************************************************************
      * "상담차트 삭제" 클릭시
+     * 
+     * 데이터그리드 행 삭제 기능으로 대체함.
      **************************************************************/
-	$(document).off("click", "#btnDelCnstChart").on("click", "#btnDelCnstChart", function (e) {
+	/*$(document).off("click", "#btnDelCnstChart").on("click", "#btnDelCnstChart", function (e) {
 		removeCnstChart();
-	});
+	});*/
 	
 	/**************************************************************
      * "복용차트 생성" 클릭시

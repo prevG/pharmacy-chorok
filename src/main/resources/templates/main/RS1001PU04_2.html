@@ -10,11 +10,14 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<input name="selectedCustId" class="easyui-textbox" style="width: 200px;text-align: center;"
-								   data-options="label:'고객번호',required:true,readonly:true"
+							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 250px;text-align: center;"
+								   data-options="label:'고객이름/번호',labelWidth:90,required:true,readonly:true"
+								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
+							<input name="selectedCustId" class="easyui-textbox" style="width: 90px;text-align: center;"
+								   data-options="required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
 							<a href="javascript:void(0);" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
-							<a href="javascript:void(0);" id="btnDelCnstChart" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cut'" style="width: 120px;">상담차트 삭제</a>
+							<!-- <a href="javascript:void(0);" id="btnDelCnstChart" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cut'" style="width: 120px;">상담차트 삭제</a> -->
 						</div>
 					</div>
 					<div class="row m-2">
@@ -151,14 +154,17 @@
 			 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;"
 									   data-options="
 									   		label:'시작체중',
+									   		labelWidth:100,
 									   		labelPosition:'left'">
 			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;"
 									   data-options="
 									   		label:'희망체중',
+									   		labelWidth:100,
 									   		labelPosition:'left'">
 			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;"
 									   data-options="
 									   		label:'복용시작일자',
+									   		labelWidth:100,
 									   		formatter:myformatter,
 									   		parser:myparser">
 								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-2" style="width:120px;"

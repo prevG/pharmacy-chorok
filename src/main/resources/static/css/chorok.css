@@ -25,3 +25,8 @@
 .btn_secondary_sel{
     border-color: #6c757d;color: #fff !important;background: #6c757d !important;
 }
+
+/** jeasyui textbox background color */
+.textbox .validatebox-readonly {
+	background: #fff7e6;
+}
