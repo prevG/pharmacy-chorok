@@ -42,7 +42,7 @@ function fnInit() {
         	$(this).datagrid('getPanel').find('a.easyui-linkbutton').linkbutton();
         	
         	// 상담차트 수정/삭제 후 선택행 처리
-        	let selectedIndex = $('#saveCnstFrm input[name=selectedIndex]').val();
+        	var selectedIndex = $('#saveCnstFrm input[name=selectedIndex]').val();
         	if (selectedIndex)
         		$(this).datagrid('selectRow', selectedIndex);
         	else
@@ -365,7 +365,7 @@ function fnCnstChart() {
  * 설문차트 조회
  **************************************************************/
 function fnPaperChart() {
-	let formData = {
+	var formData = {
 		cnstId : $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue')
 	};
 	$.post('/reservation/RS1001PU02/findPaperChartByCnstId_2', formData, function(res) {
@@ -403,7 +403,7 @@ function fnDosingChart() {
  **************************************************/
 function createCnstChart() {
 	var custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
-	let formData = {
+	var formData = {
 		"custId" 	: custId
 	};
 	
@@ -435,7 +435,7 @@ function removeCnstChart() {
 		$.messager.alert( "상담차트 삭제", "상담차트 목록에서 '삭제' 버튼을 클릭해 주세요.");
 		return false;
 	}
-	let formData = {
+	var formData = {
 		"cnstId" 	  : selectedCnstId
 	};
 
@@ -477,7 +477,7 @@ function createDosingChart() {
 		$.messager.alert( "복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.\n복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
 		return false;
 	}
-	let formData = {
+	var formData = {
 		"cnstId" 	  : selectedCnstId,
 		"startDosgDt" : startDosgDt	
 	};
@@ -523,28 +523,32 @@ function saveCnstChart( evt ) {
 		return false;
 	}
 	// 설문차트
-	let cnstPaperNum = $('#cnstPaper tr').length;
-	let cnstPaperList = [];
-	for (let i = 0; i < cnstPaperNum; i++) {
-		let cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
-		let cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
-		let cnstPaperVer = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-ver");
-		let cnstPaperNum = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-num");
-		let cnstPaperVal = "";
+	var cnstPaperSize = $('#cnstPaper tr').length;
+	var cnstPaperList = [];
+	for (var i = 0; i < cnstPaperSize; i++) {
+		var paperObj = $("#cnstPaper tr").eq(i).find("td").eq(1);
+		var cnstPaperKind = paperObj.attr("data-el");
+		var cnstPaperId = paperObj.attr("data-nm");
+		var cnstPaperVer = paperObj.attr("data-ver");
+		var cnstPaperNum = paperObj.attr("data-num");
+		var cnstPaperAttr = paperObj.attr("data-attr");
+		var cnstPaperVal = "";
 		if (cnstPaperKind === "TEXT") {
-			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='text']").val();
+			cnstPaperVal = paperObj.find("input[type='text']").val();
 		} else if (cnstPaperKind === "CHECK") {
-			let len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
-			let c = 0;
-			for (let j = 0; j < len; j++) { 
-				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked) { 
-					if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
-					cnstPaperVal = cnstPaperVal + $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
+			var len = paperObj.find("input[type='checkbox']").length;
+			var c = 0;
+			for (var j = 0; j < len; j++) { 
+				if (paperObj.find("input[type='checkbox']")[j].checked) {
+					if (c === 0) 
+						cnstPaperVal = paperObj.find("input[type='checkbox']")[j].value;
+					else
+						cnstPaperVal += ','+ cnstPaperVal + paperObj.find("input[type='checkbox']")[j].value;
 					c++; 
 				}
 			}
 		} else if (cnstPaperKind === "RADIO") {
-			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='radio']:checked").val();
+			cnstPaperVal = paperObj.find("input[type='radio']:checked").val();
 		}
 		
 		cnstPaperList.push({
@@ -554,9 +558,13 @@ function saveCnstChart( evt ) {
 			"cnstPaperNum" 	: cnstPaperNum,
 			"cnstPaperVal" 	: cnstPaperVal
 		});
+		
+		// 상담차트 체중 업데이트
+		if (cnstPaperAttr === 'ORG_WGT') orgWgt = Number(cnstPaperVal);
+		if (cnstPaperAttr === 'TGT_WGT') tgtWgt = Number(cnstPaperVal);
 	}
 	
-	let formData = {
+	var formData = {
 		criteria: {
 			"cnstId" 		: selectedCnstId,
 			"cnstDesc" 		: cnstDesc,
@@ -593,27 +601,29 @@ function saveCnstChart( evt ) {
 
 /*************************************************
  * 설문차트 저장
+ * 
+ * TODO 사용안함.
  **************************************************/
 function saveSurveyChart( evt ) {
-	let selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	if( selectedCnstId == "" ) {
 		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 		return false;
 	}
-	let cnstPaperNum = $('#cnstPaper tr').length;
-	let cnstPaperList = [];
-	for (let i = 0; i < cnstPaperNum; i++) {
-		let cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
-		let cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
-		let cnstPaperVer = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-ver");
-		let cnstPaperNum = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-num");
-		let cnstPaperVal = "";
+	var cnstPaperNum = $('#cnstPaper tr').length;
+	var cnstPaperList = [];
+	for (var i = 0; i < cnstPaperNum; i++) {
+		var cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
+		var cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
+		var cnstPaperVer = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-ver");
+		var cnstPaperNum = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-num");
+		var cnstPaperVal = "";
 		if (cnstPaperKind === "TEXT") {
 			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='text']").val();
 		} else if (cnstPaperKind === "CHECK") {
-			let len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
-			let c = 0;
-			for (let j = 0; j < len; j++) { 
+			var len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
+			var c = 0;
+			for (var j = 0; j < len; j++) { 
 				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked) { 
 					if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
 					cnstPaperVal = cnstPaperVal + $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
@@ -632,7 +642,7 @@ function saveSurveyChart( evt ) {
 			"cnstPaperVal" 	: cnstPaperVal
 		});
 	}
-	let formData = {
+	var formData = {
 		criteria: cnstPaperList
 	};
 	
@@ -657,23 +667,23 @@ function saveSurveyChart( evt ) {
  * 복용차트 저장
  **************************************************/
 function saveDosingChart( evt ) {
-	let selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	if( selectedCnstId == "" ) {
 		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 		return false;
 	}
-	let dosgId = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
-	let dosgTpCd = $('#dosgDlgFrm input[textboxName=dlg_dosgTpCd]').textbox('getValue');
-	let dosgDt = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
-	let callYn = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
-	let dosgYn = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
-	let pausYn = $('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('getValue');
-	let currWgt = $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('getValue');
-	let lossWgt = $('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('getValue');
-	let rmiWgt =  $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
-	let dosgDesc1 = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
-	let dosgDesc2 = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
-	let formData = {
+	var dosgId = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
+	var dosgTpCd = $('#dosgDlgFrm input[textboxName=dlg_dosgTpCd]').textbox('getValue');
+	var dosgDt = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
+	var callYn = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
+	var dosgYn = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
+	var pausYn = $('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('getValue');
+	var currWgt = $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('getValue');
+	var lossWgt = $('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('getValue');
+	var rmiWgt =  $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
+	var dosgDesc1 = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
+	var dosgDesc2 = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
+	var formData = {
 		criteria: {
 			"dosgId":		dosgId,
 			"dosgTpCd":		dosgTpCd,

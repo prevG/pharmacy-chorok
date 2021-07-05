@@ -21,6 +21,7 @@
 		 , EXAM7
 		 , CONCAT_WS(',', EXAM1,EXAM2,EXAM3,EXAM4,EXAM5,EXAM6,EXAM7) AS EXAM
 		 , USE_YN
+		 , REF_ATTR_CD
 		 , REG_ID
 		 , REG_DTTM
 		 , UPD_ID
@@ -34,7 +35,8 @@
 																												  
 	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSurveyChartVo">
 	<![CDATA[    
-	
+	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
+	/** 상담번호에 해당하는 설문차트 조회 */
 	SELECT CONCAT_WS('_', B.CNST_VER, B.NUM) AS 'ID'
 		 , B.CNST_VER
 		 , B.NUM
@@ -50,6 +52,7 @@
 		 , B.EXAM7
 		 , CONCAT_WS(',', B.EXAM1,B.EXAM2,B.EXAM3,B.EXAM4,B.EXAM5,B.EXAM6,B.EXAM7) AS EXAM
 		 , B.USE_YN
+		 , B.REF_ATTR_CD
 		 , A.CNST_PAPER_VAL
 	  FROM TB_PP_SRV_CHART A 
 	  LEFT OUTER JOIN 

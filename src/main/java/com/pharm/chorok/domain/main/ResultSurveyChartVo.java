@@ -23,6 +23,7 @@ public class ResultSurveyChartVo extends TbCommColumn {
     private String exam7;
     private String exam;
     private String useYn; 
+    private String refAttrCd;
     private String cnstPaperVal;
 
     private String paperHtml;

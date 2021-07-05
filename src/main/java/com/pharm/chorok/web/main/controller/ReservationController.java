@@ -305,7 +305,7 @@ public class ReservationController {
 						+ "<tr>\n"
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
-						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n"
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\" data-attr=\""+ vo.getRefAttrCd() +"\">\n"
 						+ "      <input name=\""+ vo.getId() +"\" class=\"easyui-textbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\" maxlength=\"10\">\n"
 						+ "    </td>\n"
 						+ "  </tr>\n";
@@ -316,7 +316,7 @@ public class ReservationController {
 						+ "<tr>\n"
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
-						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\" data-attr=\""+ vo.getRefAttrCd() +"\">\n";
 						for (String exam : examArr) {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-checkbox\" value=\""+ exam +"\""
 									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\"";
@@ -334,7 +334,7 @@ public class ReservationController {
 						+ "<tr>\n"
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
-						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\">\n";
+						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\" data-attr=\""+ vo.getRefAttrCd() +"\">\n";
 						for (String exam : examArr) {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-radiobutton\" value=\""+ exam +"\""
 									+ " data-options=\"label:'"+ exam +"',labelWidth:70,labelPosition:'after'\"";
