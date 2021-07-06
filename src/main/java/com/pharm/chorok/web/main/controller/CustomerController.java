@@ -1,5 +1,7 @@
 package com.pharm.chorok.web.main.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
+import com.pharm.chorok.web.main.service.CommUserDetailsService;
 import com.pharm.chorok.web.main.service.CustomerService;
 
 @RequestMapping(value = "/customer")
@@ -30,6 +34,9 @@ public class CustomerController {
 	
 	@Autowired
 	private ADUserService userService;
+	
+	@Autowired
+	private CommUserDetailsService commUserDetailsSvc;
 
     //고객목록화면
 	@GetMapping("/CUS1001ML")
@@ -100,7 +107,16 @@ public class CustomerController {
         customer.setCustId( Long.valueOf(custId) );
 		customer = customerSvc.findCustomerByCustId( customer );
 
+		//약사목록 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        
+        //상담실장목록 조회
+        List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
+        
         model.addAttribute("custInfo", customer);
+        model.addAttribute("chemistList", chemistList);
+        model.addAttribute("counselorList", counselorList);
+		
 		return "customer/CUS1002MV_2";
 	}
 	

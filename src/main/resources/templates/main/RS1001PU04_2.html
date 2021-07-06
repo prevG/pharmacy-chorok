@@ -62,9 +62,9 @@
 								   		labelPosition:'left',
 								   		required:true">
 								<option value="">선택</option>
-								<option value="1">박정란</option>
-								<option value="2">황진영</option>
-								<option value="8">곽경준</option>
+								<option th:each="data, index : ${chemistList}"
+										th:value="${data?.usrNo}" 
+										th:text="${data?.usrNm}"></option>
 							</select>
 						</div>
 						<div class="col-md-2">
@@ -74,9 +74,9 @@
 								   		labelPosition:'left',
 								   		required:true">
 								<option value="">선택</option>
-								<option value="1">박정란</option>
-								<option value="2">황진영</option>
-								<option value="8">곽경준</option>
+								<option th:each="data, index : ${counselorList}"
+										th:value="${data?.usrNo}" 
+										th:text="${data?.usrNm}"></option>
 							</select>
 						</div>
 						<div class="col-md-3 form-inline">

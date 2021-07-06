@@ -2,12 +2,6 @@ var gC1016 = [];
 var gC1017 = [];
 var gC1018 = [];
 
-var gPicUsers = [
-	{ 'ditcCd' : '1', 'ditcNm' : '박정란' },
-	{ 'ditcCd' : '2', 'ditcNm' : '황진영' },
-	{ 'ditcCd' : '8', 'ditcNm' : '곽경준' }
-];
-
 function fnInit() {
 
 	$('#saveCnstFrm select[textboxName=dosgTpCd]').combobox({
@@ -92,30 +86,18 @@ function fnInit() {
         		}
         	},
         	{
-        		field: 'picUsrNo', 
+        		field: 'picUsrNoVal', 
         		title: '상담한약사', 
         		align: 'center', 
         		width: '90', 
-        		editor: {
-        			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
-        		},
-        		formatter: function(value, row) {
-        			return row.picUsrNoVal;
-        		}
+        		editor: 'text'
         	},
         	{
-        		field: 'pic2UsrNo', 
+        		field: 'pic2UsrNoVal', 
         		title: '상담실장', 
         		align: 'center', 
         		width: '90', 
-        		editor: {
-        			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gPicUsers, required: true }
-        		},
-        		formatter: function(value, row) {
-        			return row.pic2UsrNoVal;
-        		}
+        		editor: 'text'
         	},
         	{
         		field: 'dosgTpCd', 

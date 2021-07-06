@@ -208,7 +208,7 @@ public class ReservationController {
 		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
 		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
 		outRsvtSch = reservationSvc.findReservationByRsvtId( rsvtSch );
-
+		
 		mv.addObject("rsvtInfo", outRsvtSch);
 		mv.addObject("custInfo", outCustomer);
 		return mv;
