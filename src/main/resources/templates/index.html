@@ -54,7 +54,6 @@
 												<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
 												<td th:each="col, colIdx : ${colList}"
 													th:data-row="${row.id}" th:data-col="${col.daysNum}">
-												
 													<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 													<div th:data-id="${data.rsvtId}">
 														<button type="button" name="rsvtSch" class="btn btn-sm rsvtSch" 
@@ -81,7 +80,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="table01"바로가기></table>
+								<table id="table01" style="width:100%;height:290px;"></table>
 							</div>
 						</div>
 					</div>
@@ -93,7 +92,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="table03"></table>
+								<table id="table03" style="width:100%;height:290px;"></table>
 							</div>
 						</div>
 					</div>
@@ -107,7 +106,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="table02"></table>
+								<table id="table02" style="width:100%;height:290px;"></table>
 							</div>
 						</div>
 					</div>
@@ -119,7 +118,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<table id="table04"></table>
+								<table id="table04" style="width:100%;height:290px;"></table>
 							</div>
 						</div>
 					</div>
@@ -138,10 +137,12 @@
 								data-options="label:'예약일자',
 											labelPosition:'left',
 											formatter:myformatter,
-											parser:myparser"
+											parser:myparser,
+								            readonly:true"
 								style="width:200px;margin-right:20px;" placeholder="예약일자" tabindex="1">
-						<select class="easyui-combobox" name="rsvtDtHh" id="rsvtDtHh" 
-								data-options="panelHeight:'auto'"
+						<select class="easyui-combobox" name="rsvtDtHh" id="rsvtDtHh" 								
+								data-options="panelHeight:'auto',
+								              readonly:true"
 								style="width:80px;height:auto;margin-right:20px;" tabindex="2">
 							<option value="" selected>시</option>
 							<option value="09">09시</option>
@@ -155,7 +156,8 @@
 							<option value="17">17시</option>
 						</select>
 						<select class="easyui-combobox" name="rsvtDtMm" id="rsvtDtMm" 
-								data-options="panelHeight:'auto'"
+								data-options="panelHeight:'auto',
+								              readonly:true"
 								style="width:80px;margin-right:20px;" tabindex="3">
 							<option value="" selected>분</option>
 							<option value="00">00분</option>
@@ -214,7 +216,7 @@
 				<select class="easyui-combobox" name="picUsrNo" id="picUsrNo" 
 						data-options="panelHeight:'auto',
 									label:'담당한약사'"
-						style="width:280px;height:auto;margin-right:20px;" tabindex="2">\
+						style="width:280px;height:auto;margin-right:20px;" tabindex="2">
 					<option value=""  th:selected="${''  eq schInfo?.picUsrNo}">선택하세요</option>
 					<option th:each="data, index : ${chemistList}" 
 								th:value="${data?.usrNo}" 

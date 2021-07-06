@@ -33,7 +33,7 @@ $( document ).ready( function() {
             {field: 'custId'   , title: '고객번호', align: 'center', halign: 'center', width: '80'},
         	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '80',
         		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">'+ value +'</span>';
+        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
         		}
         	},
             {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},

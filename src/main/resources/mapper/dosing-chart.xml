@@ -70,7 +70,10 @@
     <select id="selectDashDosingList01"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
     SELECT C.CUST_USR_NM
-         , C.CUST_CELL_NO
+         , CASE LENGTH(C.CUST_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+           END AS CUST_CELL_NO
          , C.ADDR1
       FROM bazzarmall.TB_PP_DOSG_CHART A
          , bazzarmall.TB_PP_CNST_CHART B
@@ -85,7 +88,10 @@
     <select id="selectDashDosingList02"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
     SELECT C.CUST_USR_NM
-         , C.CUST_CELL_NO
+         , CASE LENGTH(C.CUST_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+           END AS CUST_CELL_NO
          , C.ADDR1
       FROM bazzarmall.TB_PP_DOSG_CHART A
          , bazzarmall.TB_PP_CNST_CHART B
@@ -101,7 +107,10 @@
 	<![CDATA[    
     SELECT B.CNST_ID
          , C.CUST_USR_NM
-         , C.CUST_CELL_NO
+         , CASE LENGTH(C.CUST_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+           END AS CUST_CELL_NO
          , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
          , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
 	  FROM bazzarmall.TB_PP_DOSG_CHART A

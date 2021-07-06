@@ -28,20 +28,20 @@
 				<form id="searchFrm" method="post">
 				<div class="row">
 					<div class="col-md-2 form-inline">
-						<input class="easyui-datebox" id="dosgDt" name="dosgDt" placeholder="복용일자" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
+						<input class="easyui-datebox" id="dosgDt" name="dosgDt"th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
 							   data-options="
 							   		label:'복용일자',
 							   		labelPosition:'left',
 									formatter:myformatter,
 									parser:myparser"
-							   style="width: 200px;">
+							   style="width: 100%;" >
 					</div>
 					<div class="col-md-2 form-inline">
-						<select class="easyui-combobox" id="picUsrNo"  name="picUsrNo" style="width: 100%;text-align: center;"
+						<select class="easyui-combobox" id="picUsrNo"  name="picUsrNo" style="width:100%;text-align: center;"
 								   data-options="
 							   		label:'상담한약사',
 							   		labelPosition:'left',
-							   		required:true">
+							   		panelHeight:'auto'">
 							<option value="">선택</option>
 							<option th:each="data, index : ${chemistList}"
 									th:value="${data?.usrNo}" 
@@ -53,7 +53,7 @@
 							   data-options="
 							   		label:'상담실장',
 							   		labelPosition:'left',
-							   		required:true">
+							   		panelHeight:'auto'">
 							<option value="">선택</option>
 							<option th:each="data, index : ${counselorList}"
 									th:value="${data?.usrNo}" 
