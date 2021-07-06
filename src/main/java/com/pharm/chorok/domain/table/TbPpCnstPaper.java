@@ -22,4 +22,5 @@ public class TbPpCnstPaper extends TbCommColumn {
 	private String refAttrCd;
 	//임시
 	private long cnstId;
+	private long prevCnstId;
 }

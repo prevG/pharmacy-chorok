@@ -78,8 +78,16 @@
       BY CNST_DT DESC
 	]]>
 	</select>
+	
+	<select id="selectTbPpCnstChartPrevCnstId" resultType="long">
+	<![CDATA[    
+    SELECT MAX(CNST_ID)
+      FROM TB_PP_CNST_CHART
+      WHERE CUST_ID = #{custId}
+	]]>
+	</select>
 
-  <insert id="insertTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+    <insert id="insertTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
     INSERT INTO TB_PP_CNST_CHART (
            CNST_ID

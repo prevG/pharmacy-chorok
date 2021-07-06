@@ -83,6 +83,14 @@ public class ChartService {
     	return cnstPaper;
     }
 
+    /**
+     * @deprecated createNewConsultingChart_2 함수로 대체함.
+     * 
+     * @param custInfo
+     * @param rsvtInfo
+     * @return
+     * @throws Exception
+     */
 	@Transactional
 	public HashMap<String, Object> createNewConsultingChart(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
 
@@ -112,6 +120,37 @@ public class ChartService {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("cnstList",  cnstList);
 		return result;
+	}
+	
+	@Transactional
+	public List<ResultConsultingVo> createNewConsultingChart_2(TbCustomer custInfo) throws Exception {
+
+		String usrNo = SecurityContextUtil.getAuthenticatedUser().getUsrNo();		
+
+		//신규 상담차트번호 생성
+		Long newCnstId = consultingRepo.selectNewCnstId();
+
+		//상담차트 생성
+		TbPpCnstChart cnstInfo = new TbPpCnstChart();
+		cnstInfo.setCnstId( newCnstId );
+		cnstInfo.setCustId( custInfo.getCustId() );
+//		cnstInfo.setPicUsrNo( usrNo );
+		//이전 상담차트 번호를 조회하고,
+		Long prevCnstId = consultingRepo.selectTbPpCnstChartPrevCnstId(cnstInfo);
+		//신규 상담번호를 생성한다.
+		consultingRepo.insertTbPpCnstChart( cnstInfo );
+		
+		//설문조사 차트 생성
+		TbPpCnstPaper tbPpCnstPaper = new TbPpCnstPaper();
+		tbPpCnstPaper.setCnstVer(1);		
+		tbPpCnstPaper.setUpdUsrNo(Long.parseLong(usrNo));
+		tbPpCnstPaper.setCnstId(newCnstId);
+		tbPpCnstPaper.setPrevCnstId( prevCnstId );
+		cnstPaperRepository.insertTbPpSrvChart(tbPpCnstPaper);
+
+		//고객의 전체 상담차트 조회
+		List<ResultConsultingVo> cnstList = consultingRepo.selectConsultingChartByCustId( cnstInfo );
+		return cnstList;
 	}
 
     /**

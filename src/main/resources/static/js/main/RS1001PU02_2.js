@@ -387,24 +387,30 @@ function fnDosingChart() {
 function createCnstChart() {
 	var custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 	var formData = {
-		"custId" 	: custId
+		criteria : {
+			"custId" 	: custId		
+		}
 	};
 	
 	$.messager.confirm('Confirm', '신규 상담차트를 생성하시겠습니까?', function(r) {
 		if (!r) return;
 		
-		$.post('/api/v1/main/chart/createCnstChart', formData, function(res) {
-			if (res.status === 'success') {
-				$.messager.show({ title: 'Success', msg: res.message });
-    			fnCnstChart(); // 상담차트 조회
-			} else {
-				$.messager.show({ title: 'Error', msg: res.message });
-				return;
+		$.ajax({
+			url: '/api/v1/main/chart/createCnstChart',
+			method: 'post',
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify(formData),
+			success: function(res) {
+				if (res.status === 'success') {
+					$.messager.show({ title: 'Success', msg: res.message });
+					
+					fnCnstChart(); // 상담차트 조회
+				} else {
+					$.messager.alert('Error', res.message);
+					return;
+				}
 			}
-		}, 'json')
-		.fail(function(xhr, status, error) {
-			$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-			return;
 		});
 	});
 }

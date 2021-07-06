@@ -14,13 +14,14 @@ import com.pharm.chorok.domain.table.TbPpSrvChart;
 @Repository
 public interface CnstPaperRepository {
         
-    
     public List<TbPpCnstPaper> selectCnstPaper(TbPpCnstPaper tbPpCnstPaper) throws Exception;
-    
     
     public List<ResultSurveyChartVo> selectSurveyChartByCnstId(TbPpCnstChart tbPpCnstChart) throws Exception;
     
     public int insertTbPpSrvChart(TbPpCnstPaper tbPpCnstPaper) throws Exception;
+    
     public int updateTbPpSrvChart(TbPpSrvChart  tbPpSrvChart) throws Exception;
+    
     public int deleteTbPpSrvChart(TbPpCnstChart tbPpCnstChart) throws Exception;
+
 }

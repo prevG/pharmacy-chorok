@@ -31,7 +31,6 @@
 	   AND USE_YN = 'Y'
 	]]>
 	</select>
-	
 																												  
 	<select id="selectSurveyChartByCnstId" parameterType="com.pharm.chorok.domain.table.TbPpSrvChart" resultType="com.pharm.chorok.domain.main.ResultSurveyChartVo">
 	<![CDATA[    
@@ -65,11 +64,10 @@
         BY A.CNST_PAPER_NUM
 	]]>
 	</select>
-	
-	
+
 	<insert id="insertTbPpSrvChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper">
 	<![CDATA[    
-	/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
+		/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
 		INSERT INTO TB_PP_SRV_CHART
 		(
 		 	CNST_ID,
@@ -83,16 +81,21 @@
 		 )
 		 SELECT #{cnstId},
 		 		DATE_FORMAT(NOW(), '%Y%m%d'),
-		 		CONCAT(CNST_VER,'_',NUM),
-		 		CNST_VER,
+		 		CONCAT(A.CNST_VER,'_',NUM),
+		 		A.CNST_VER,
 			    NUM,
-			    '',
+			    CASE WHEN B.CNST_PAPER_VAL IS NULL THEN '' ELSE B.CNST_PAPER_VAL END,
 			    NOW(),
 			    #{regUsrNo}
-			FROM TB_COMM_CNST_PAPER
-			WHERE 1=1
-			AND USE_YN = 'Y'
-			AND CNST_VER = 1
+			FROM TB_COMM_CNST_PAPER A
+			LEFT OUTER JOIN (
+				SELECT *
+				FROM TB_PP_SRV_CHART
+				WHERE CNST_ID = #{prevCnstId}
+			) B ON B.CNST_PAPER_VER = A.CNST_VER AND B.CNST_PAPER_NUM = A.NUM
+			WHERE 1 = 1
+			AND A.USE_YN = 'Y'
+			AND A.CNST_VER = 1
 	]]>
 	</insert>
 	

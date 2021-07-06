@@ -6,6 +6,7 @@ import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -18,4 +19,6 @@ public interface ConsultingRepository {
     public int insertTbPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;
     public int updateTbPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;
     public int deleteTbPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;
+    
+    public long selectTbPpCnstChartPrevCnstId(TbPpCnstChart cnstInfo) throws DataAccessException;
 }
