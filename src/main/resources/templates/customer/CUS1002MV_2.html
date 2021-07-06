@@ -3,12 +3,17 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	  layout:decorate="layouts/chorok_layout2">
 
-<!-- index.html 고유 CSS 추가 -->
+<!-- css -->
 <th:block layout:fragment="css">
 </th:block>
 
-<!-- index.html 고유 스크립트 추가 -->
+<!-- script -->
 <th:block layout:fragment="script">
+	<script type="text/javascript" th:inline="javascript">
+		/* <![CDATA[ */
+		var gCustId = /*[[${custInfo?.custId}]]*/ '';
+		/* ]]> */
+	</script>
 	<script type="text/javascript" th:src="@{/js/main/RS1001PU02_2.js}"></script>
 </th:block>
 
