@@ -78,6 +78,7 @@
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
        AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+       AND A.CALL_YN = 'CHEMIST' -- 한약사
 	]]>
     </select>
 
@@ -92,6 +93,7 @@
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
        AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+       AND A.CALL_YN = 'COUNSELOR' -- 상담실장
 	]]>
     </select>
 
@@ -107,7 +109,7 @@
          , bazzarmall.TB_CUSTOMER C
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
-       -- AND A.PAUS_YN = 'Y'
+       AND A.PAUS_YN = 'Y'
 	 GROUP
         BY B.CNST_ID
          , C.CUST_USR_NM

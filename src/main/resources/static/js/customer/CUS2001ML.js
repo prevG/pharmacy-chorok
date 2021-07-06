@@ -11,7 +11,9 @@ $( document ).ready( function() {
      $('#table01').datagrid({
 	    url: "/api/v1/main/customer/findCustomerByDosgDt",
         queryParams : {
-            "dosgDt" : $("#dosgDt").val()
+            "dosgDt" 	: $("#dosgDt").val(),
+            "picUsrNo" 	: $("#picUsrNo").val(),
+            "pic2UsrNo" : $("#pic2UsrNo").val()
         },
 	    singleSelect: true, 
 	    ctrlSelect: true,
@@ -35,15 +37,17 @@ $( document ).ready( function() {
         		}
         	},
             {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},
-            {field: 'custBirthDt', title: '복용구분'    , align: 'center', width: '80'},
-            {field: 'custGenTpCd', title: '복용단계'    , align: 'center', width: '80'},
-            {field: 'cnstGenTpCd', title: '성별'       , align: 'center', width: '80'},
+            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '100'},
+            {field: 'dosgTpNm'	 , title: '복용구분'    , align: 'center', width: '80'},
+            {field: 'dosgTpNm'   , title: '복용단계'    , align: 'center', width: '80'},
+            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
             {field: 'custAge'    , title: '나이'       , align: 'center', width: '80'},
-            {field: 'picUsrNo'   , title: '담당약사'    , align: 'center', width: '80'},
-            {field: 'cicUsrNo'   , title: '담당상담실장' , align: 'center', width: '80'},
+            {field: 'picUsrNm'   , title: '담당약사'    , align: 'center', width: '80'},
+            {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '80'},
+            {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '80'},
+			{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'center', width: '200'},
             {field: 'zipCode'    , title: '우편번호'    , align: 'center', width: '80'},
-            {field: 'addr1'      , title: '주소'       , align: 'left', halign: 'center', width: '200'},
-            {field: 'addr2'      , title: '상세주소'    , align: 'left', halign: 'center', width: '200'},
+            {field: 'addr1'      , title: '주소'       , align: 'left', halign: 'center', width: '200'}
         ]]
 	});
 });
@@ -57,7 +61,9 @@ function fnSearch() {
         return;
     }
 	var queryParams = $("#table01").datagrid('options').queryParams;
-	queryParams.dosgDt = $("#dosgDt").val();
+	queryParams.dosgDt 		= $("#dosgDt").val();
+	queryParams.picUsrNo 	= $("#picUsrNo").val();
+	queryParams.pic2UsrNo 	= $("#pic2UsrNo").val();
 	
 	$('#table01').datagrid('reload');
 }

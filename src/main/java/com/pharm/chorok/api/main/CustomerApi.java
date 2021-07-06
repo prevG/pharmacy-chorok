@@ -80,11 +80,15 @@ public class CustomerApi {
 	 */
 	@PostMapping("/findCustomerByDosgDt")
     public List<ResultDosingVo> findCustomerByDosgDt(
-		@RequestParam("dosgDt") String dosgDt
+		@RequestParam("dosgDt") String dosgDt,
+		@RequestParam("picUsrNo") String picUsrNo,
+		@RequestParam("pic2UsrNo") String pic2UsrNo
 	) throws Exception {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("dosgDt", dosgDt);
+		params.put("picUsrNo", picUsrNo);
+		params.put("pic2UsrNo", pic2UsrNo);
 		return customerSvc.findCustomerByDosgDt( params );
 	}
 	

@@ -34,6 +34,7 @@
 
 	<select id="findCustomerByCustId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CustomerRepository.findCustomerByCustId */
     SELECT CUST_ID
          , CUST_USR_NM
          , CUST_CELL_NO
@@ -63,6 +64,7 @@
 
     <select id="findCustomerByRsvtId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CustomerRepository.findCustomerByRsvtId */ 
     SELECT CUST.CUST_ID
          , CUST.CUST_USR_NM
          , CUST.CUST_CELL_NO
@@ -93,14 +95,30 @@
 	</select>
 
     <select id="findCustomerByDosgDt" parameterType="map" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
+    /** com.pharm.chorok.web.main.repository.CustomerRepository.findCustomerByDosgDt */
+    /** 고객목록 조회 */
 	<![CDATA[    
-    SELECT CUST.CUST_ID
+	SELECT CUST.CUST_ID
          , CUST.CUST_USR_NM
          , CASE LENGTH(CUST.CUST_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
            END AS CUST_CELL_NO
+         , CUST.ZIP_CODE
+         , CUST.ADDR1
+         , CASE WHEN CUST.CUST_GEN_TP_CD = 'F' THEN '여'
+                WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
+                ELSE ''
+           END AS CUST_GEN_TP_NM
          , CCHART.*
+         , CASE WHEN CCHART.CNST_HH_CD IS NULL THEN ''
+                WHEN CCHART.CNST_HH_CD = ''    THEN ''
+                ELSE CONCAT(CCHART.CNST_HH_CD, '시')
+           END CNST_HH_NM
+         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
+         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
+		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1018') AS DOSG_TP_NM
+		 , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
       FROM TB_CUSTOMER CUST
      INNER JOIN   
            TB_PP_CNST_CHART CCHART  
@@ -111,6 +129,14 @@
      WHERE 1 = 1
        AND DCHART.DOSG_DT = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
 	]]>
+	<if test="picUsrNo != null and  !''.equals(picUsrNo)">
+	   AND CCHART.PIC_USR_NO  = #{picUsrNo}
+	</if>
+	<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
+	   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+	</if>
+     ORDER
+        BY CCHART.CNST_HH_CD ASC
 	</select>
     
     <select id="findAllCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">

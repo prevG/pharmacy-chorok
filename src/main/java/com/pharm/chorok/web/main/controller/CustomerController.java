@@ -54,9 +54,17 @@ public class CustomerController {
 	@GetMapping("/CUS2001ML")
 	public String CUS2001ML(Model model) throws Exception{
 
-		TbCommCalendar cal = calendarSvc.selectCurrentDate();
+		TbCommCalendar cal = calendarSvc.selectCurrentDate();		
+		//약사목록 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        
+        //상담실장목록 조회
+        List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
+        
 
 		model.addAttribute("dosgDt", cal.getBaseDt());
+		model.addAttribute("counselorList", counselorList);
+		model.addAttribute("chemistList", chemistList);
 		return "customer/CUS2001ML";
 	}
 

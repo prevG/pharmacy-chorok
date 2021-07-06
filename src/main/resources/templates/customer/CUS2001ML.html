@@ -27,7 +27,7 @@
 			<div class="easyui-panel mb-2 p-2" title="검색" style="width: 100%;height: 80px;overflow: hidden;">
 				<form id="searchFrm" method="post">
 				<div class="row">
-					<div class="col-md-8 form-inline">
+					<div class="col-md-2 form-inline">
 						<input class="easyui-datebox" id="dosgDt" name="dosgDt" placeholder="복용일자" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
 							   data-options="
 							   		label:'복용일자',
@@ -35,7 +35,32 @@
 									formatter:myformatter,
 									parser:myparser"
 							   style="width: 200px;">
-						<div style="width: 10px;"></div>
+					</div>
+					<div class="col-md-2 form-inline">
+						<select class="easyui-combobox" id="picUsrNo"  name="picUsrNo" style="width: 100%;text-align: center;"
+								   data-options="
+							   		label:'상담한약사',
+							   		labelPosition:'left',
+							   		required:true">
+							<option value="">선택</option>
+							<option th:each="data, index : ${chemistList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-md-2 form-inline">
+	 		 			<select class="easyui-combobox" id="pic2UsrNo"  name="pic2UsrNo" style="width: 100%;text-align: center;"
+							   data-options="
+							   		label:'상담실장',
+							   		labelPosition:'left',
+							   		required:true">
+							<option value="">선택</option>
+							<option th:each="data, index : ${counselorList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-md-2 form-inline">
 						<a href="javascript:void(0)" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
 						   data-options="iconCls:'icon-ok'" 
 						   onClick="fnSearch();">검색</a>
