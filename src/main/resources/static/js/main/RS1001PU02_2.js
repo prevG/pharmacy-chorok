@@ -328,6 +328,9 @@ function saveCustInfo() {
 					$.messager.alert('Error', res.message);
 					return;
 				}
+			},
+			error: function(xhr, status, error) {
+				$.messager.alert('Error', xhr.responseJSON.message, 'error');
 			}
 		});
 	});
