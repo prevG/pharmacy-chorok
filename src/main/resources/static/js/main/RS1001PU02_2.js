@@ -1,3 +1,8 @@
+/******************************************************
+ * 
+ * 고객정보 / 상담차트
+ * 
+ ******************************************************/
 var gC1016 = [];
 var gC1017 = [];
 var gC1018 = [];
@@ -19,7 +24,7 @@ function fnInit() {
 	
 	// 상담차트 목록
 	$('#dg').datagrid({
-	    url: '/api/v1/main/chart/findAllChartByCustId',
+	    //url: '/api/v1/main/chart/findAllChartByCustId',
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'custId',
@@ -126,7 +131,7 @@ function fnInit() {
 	
 	// 복용차트 목록
 	$('#dg2').datagrid({
-	    url: '/api/v1/main/chart/findDosingChartByCnstId',
+	    //url: '/api/v1/main/chart/findDosingChartByCnstId',
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'custId',
@@ -344,7 +349,7 @@ function fnCnstChart() {
 	//queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');	// 로딩이 안될때가 있음.
 	queryParams.custId = gCustId;
 	
-	$('#dg').datagrid('reload');
+	$('#dg').datagrid('load', '/api/v1/main/chart/findAllChartByCustId');
 }
 
 /**************************************************************
@@ -381,7 +386,7 @@ function fnDosingChart() {
 	queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 	queryParams.cnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 	
-	$('#dg2').datagrid('reload');
+	$('#dg2').datagrid('load', '/api/v1/main/chart/findDosingChartByCnstId');
 }
 
 /*************************************************

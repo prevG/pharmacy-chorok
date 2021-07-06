@@ -1,17 +1,17 @@
 /******************************************************
  * 
- * customer
+ * 고객목록
  * 
  ******************************************************/
 var gC1008 = [];
 var gC1020 = [];
 
 function fnInit() {
-	gC1008 = getCodeData('gC1008'); // 남성/여성
-	gC1020 = getCodeData('gC1020'); // 기혼/미혼
+	gC1008 = getCodeData('C1008'); // 남성/여성
+	gC1020 = getCodeData('C1020'); // 기혼/미혼
 	
 	$('#dg').datagrid({
-	    url: '/api/v1/main/customer/findAllCustomer',
+	    //url: '/api/v1/main/customer/findAllCustomer',
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'custId',
@@ -123,7 +123,7 @@ function fnSearch() {
 	queryParams.custUsrNm = $("#custUsrNm").val();
 	queryParams.custCellNo = $('#custCellNo').val();
 	
-	$('#dg').datagrid('reload');
+	$('#dg').datagrid('load', '/api/v1/main/customer/findAllCustomer');
 }
 
 function fnCustInfo() {
@@ -179,6 +179,7 @@ function saveNewCust() {
 
 $(document).ready(function() {
 	fnInit();
+	fnSearch();
 	
 	$('#custUsrNm').textbox('textbox').bind('keydown', function(e) {
 		if (e.keyCode === 13) fnSearch();
