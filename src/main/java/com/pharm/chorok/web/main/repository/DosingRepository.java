@@ -8,6 +8,7 @@ import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpDosgChart;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -19,6 +20,7 @@ public interface DosingRepository {
     public int insertTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int deleteTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int updateTbPpDosgChart(TbPpDosgChart dosingInfo ) throws Exception;
+    public int updateTbPpDosgChartStartDt(TbPpDosgChart criteria) throws DataAccessException;
 
     public List<ResultDashBoard01VO> selectDashDosingList01() throws Exception;
     public List<ResultDashBoard01VO> selectDashDosingList02() throws Exception;

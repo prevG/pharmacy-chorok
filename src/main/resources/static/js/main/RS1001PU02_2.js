@@ -624,6 +624,9 @@ function saveCnstChart( evt ) {
 				$.messager.alert('상당차트 저장', res.message);
 				return;
 			}
+		},
+		error: function(xhr, status, error) {
+			$.messager.alert('상당차트 저장', xhr.responseJSON.message, 'error');
 		}
 	});
 }
@@ -715,6 +718,7 @@ function saveDosingChart( evt ) {
 	var dosgDesc2  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
 	var formData = {
 		criteria: {
+			"cnstId":	    selectedCnstId,
 			"dosgId":		dosgId,
 			"dosgSeq": 		dosgSeq,
 			"dosgLvCd":		dosgLvCd,
@@ -745,6 +749,9 @@ function saveDosingChart( evt ) {
 				$.messager.alert('복용차트 저장', res.message);
 				return;
 			}
+		},
+		error: function(xhr, status, error) {
+			$.messager.alert('복용차트 저장', xhr.responseJSON.message, 'error');
 		}
 	});
 }

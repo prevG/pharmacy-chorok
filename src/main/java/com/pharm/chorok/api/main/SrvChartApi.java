@@ -16,6 +16,7 @@ import com.pharm.chorok.web.main.service.CnstPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,20 +95,15 @@ public class SrvChartApi {
 	 */
 	@PostMapping("/saveDosingChart_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> saveDosingChart_2(@RequestBody PageCriteria<TbPpDosgChart> pageCriteria) {
-		ResponseMessage resMsg = new ResponseMessage();
-		try {
-			dosingRepo.updateTbPpDosgChart(pageCriteria.getCriteria());
-		 	
-			resMsg.setStatus("success");
-			resMsg.setMessage("정상적으로 저장되었습니다.");
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-			resMsg.setStatus("error");
-			resMsg.setMessage( e.getMessage() );
-		}
-		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	public ResponseEntity<ResponseMessage> saveDosingChart_2(@RequestBody PageCriteria<TbPpDosgChart> pageCriteria) throws Exception {
+		Assert.isTrue(pageCriteria.getCriteria().getDosgId() > 0, "복용번호가 존재하지 않습니다.");
+
+		//복용정보 저장
+		dosingRepo.updateTbPpDosgChart(pageCriteria.getCriteria());
+		//복용순번 이후 날짜 변경.
+		dosingRepo.updateTbPpDosgChartStartDt(pageCriteria.getCriteria());
+		
+		return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 저장되었습니다."), HttpStatus.OK );
 	}
 
 	/**

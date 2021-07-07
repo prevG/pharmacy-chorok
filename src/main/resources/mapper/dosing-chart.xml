@@ -193,4 +193,13 @@
      WHERE DOSG_ID     = #{dosgId}
 	]]>
 	</update>
+
+    <update id="updateTbPpDosgChartStartDt" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+	<![CDATA[    
+    UPDATE TB_PP_DOSG_CHART 
+       SET DOSG_DT     = DATE_ADD(DATE_FORMAT(#{dosgDt}, '%Y%m%d'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY)
+     WHERE CNST_ID     = #{cnstId}
+       AND DOSG_ID     > #{dosgId}
+	]]>
+	</update>
 </mapper>
