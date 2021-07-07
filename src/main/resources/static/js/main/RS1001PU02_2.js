@@ -740,6 +740,7 @@ function fnZipCode() {
 }
 
 $( document ).ready( function() {
+	$('#custTabs').tabs('select', gTabNo);
 
 	fnInit();
 	// 상담차트 조회

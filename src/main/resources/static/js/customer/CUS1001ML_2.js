@@ -133,7 +133,7 @@ function fnCustInfo() {
 		return;	
 	}
 	
-	location.href = '/customer/CUS1002MV_2/'+ row.custId +'/1';
+	location.href = '/customer/CUS1002MV_2/'+ row.custId +'/0';
 }
 
 function fnNewCustPop() {

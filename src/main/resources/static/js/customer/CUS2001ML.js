@@ -72,5 +72,5 @@ function fnCustInfo() {
 	var row = $("#table01").datagrid("getSelected");
 	if (!row) return;
 	
-	location.href = '/customer/CUS1002MV_2/'+ row.custId +'/2';
+	location.href = '/customer/CUS1002MV_2/'+ row.custId +'/1';
 }

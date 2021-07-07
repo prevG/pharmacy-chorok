@@ -122,7 +122,7 @@ public class CustomerController {
         //상담실장목록 조회
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
-        model.addAttribute("tabNo", tabNo == 0 ? 1 : tabNo);
+        model.addAttribute("tabNo", tabNo);
         model.addAttribute("custInfo", customer);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
