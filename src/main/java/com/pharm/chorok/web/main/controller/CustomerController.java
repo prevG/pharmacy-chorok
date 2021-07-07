@@ -105,12 +105,13 @@ public class CustomerController {
 	 * @throws Exception
 	 */
     //고객목록화면
-	@GetMapping("/CUS1002MV_2/{custId}")
+	@GetMapping("/CUS1002MV_2/{custId}/{tabNo}")
 	public String CUS1002MV_2(
         Model model,
-        @PathVariable String custId
+        @PathVariable String custId,
+        @PathVariable int tabNo
     ) throws Exception {
-
+		
         TbCustomer customer = new TbCustomer();
         customer.setCustId( Long.valueOf(custId) );
 		customer = customerSvc.findCustomerByCustId( customer );
@@ -121,6 +122,7 @@ public class CustomerController {
         //상담실장목록 조회
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
+        model.addAttribute("tabNo", tabNo == 0 ? 1 : tabNo);
         model.addAttribute("custInfo", customer);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);

@@ -4,12 +4,11 @@ $( document ).ready( function() {
     $('#dosgDt').datebox({
     });
 
-
     /**************************************************************
      * 고객목록 테이블
      **************************************************************/
      $('#table01').datagrid({
-	    url: "/api/v1/main/customer/findCustomerByDosgDt",
+	    //url: "/api/v1/main/customer/findCustomerByDosgDt",
         queryParams : {
             "dosgDt" 	: $("#dosgDt").val(),
             "picUsrNo" 	: $("#picUsrNo").val(),
@@ -50,8 +49,9 @@ $( document ).ready( function() {
             {field: 'addr1'      , title: '주소'       , align: 'left', halign: 'center', width: '200'}
         ]]
 	});
+	
+	fnSearch();
 });
-
 
 function fnSearch() {
     var dosgDtObj = $("#dosgDt");
@@ -65,12 +65,12 @@ function fnSearch() {
 	queryParams.picUsrNo 	= $("#picUsrNo").val();
 	queryParams.pic2UsrNo 	= $("#pic2UsrNo").val();
 	
-	$('#table01').datagrid('reload');
+	$('#table01').datagrid('load', '/api/v1/main/customer/findCustomerByDosgDt');
 }
 
 function fnCustInfo() {
 	var row = $("#table01").datagrid("getSelected");
 	if (!row) return;
 	
-	location.href = '/customer/CUS1002MV_2/'+ row.custId;
+	location.href = '/customer/CUS1002MV_2/'+ row.custId +'/2';
 }
