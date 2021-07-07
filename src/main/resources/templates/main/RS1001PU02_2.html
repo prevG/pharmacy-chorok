@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div class="row" id="customer-main-table" th:fragment="customer-main-table">
+<div class="row" th:fragment="customer-main-table">
 	<div class="col-sm-12">
 		<div id="custTabs" class="easyui-tabs" style="width: 100%;min-height: 730px;"
 			 data-options="labelWidth:120">
@@ -10,7 +10,8 @@
 				<div th:replace="main/RS1001PU03_2 :: customer-table"></div>
 			</div>
 			<div title="차트정보" id="custom-tabs-four-profile" class="p-2"
-				 data-options="labelWidth:120"
+				 data-options="labelWidth:120,
+				 				disabled:true"
 				 th:style="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0} ? 'display:none' : 'display:block'">
 				<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
 			</div>

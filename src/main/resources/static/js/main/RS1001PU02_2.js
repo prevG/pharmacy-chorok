@@ -774,7 +774,16 @@ function fnZipCode() {
 }
 
 $( document ).ready( function() {
-	$('#custTabs').tabs('select', gTabNo);
+
+	
+	//고객정보가 존재할 경우 
+	if( gCustId > 0 ) {
+
+		//차트정보 탭 보이도록 한다.
+		$('#custTabs').tabs('enableTab', 1);
+
+		$('#custTabs').tabs('select', gTabNo);
+	}
 
 	fnInit();
 	// 상담차트 조회
