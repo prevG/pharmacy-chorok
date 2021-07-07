@@ -7,13 +7,13 @@
 	<![CDATA[    
 	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCnstId */
 	/** 차트번호에 대한 차트마스터 정보 조회 */
-    SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
-         , CONCAT(@ROWNUM, '일차') AS SEQ_STR
-         , DOSG_ID
+    SELECT DOSG_ID
          , CNST_ID
+    	 , DOSG_SEQ
+         , CONCAT(DOSG_SEQ, '일차') AS DOSG_SEQ_STR
          , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
-         , DOSG_TP_CD
+         , DOSG_LV_CD
          , CALL_YN
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_VAL          
          , DOSG_YN
@@ -27,8 +27,7 @@
          , DOSG_DESC2       
          , REG_DT           
          , REG_USR_NO
-      FROM TB_PP_DOSG_CHART DOSG
-         , (SELECT @ROWNUM :=-1) TMP
+      FROM TB_PP_DOSG_CHART
      WHERE CNST_ID = #{cnstId}
      ORDER
         BY DOSG_ID
@@ -39,13 +38,13 @@
 	<![CDATA[    
 	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCallYn */
 	/** 차트번호에 대한 차트마스터 정보 조회 */
-    SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
-         , CONCAT(@ROWNUM, '일차') AS SEQ_STR
-         , DOSG_ID
+    SELECT DOSG_ID
          , CNST_ID
+    	 , DOSG_SEQ
+         , CONCAT(DOSG_SEQ, '일차') AS DOSG_SEQ_STR
          , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
          , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
-         , DOSG_TP_CD
+         , DOSG_LV_CD
          , CALL_YN
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_VAL        
          , DOSG_YN
@@ -59,8 +58,7 @@
          , DOSG_DESC2       
          , REG_DT           
          , REG_USR_NO
-      FROM TB_PP_DOSG_CHART DOSG
-         , (SELECT @ROWNUM :=-1) TMP
+      FROM TB_PP_DOSG_CHART
      WHERE CALL_YN = 'Y'
      ORDER
         BY DOSG_ID
@@ -131,16 +129,18 @@
 	<![CDATA[    
     INSERT INTO TB_PP_DOSG_CHART (
           CNST_ID
+        , DOSG_SEQ
         , DOSG_DT
-        , DOSG_TP_CD
+        , DOSG_LV_CD
         , CALL_YN
         , REG_DT
         , REG_USR_NO
     ) 
     SELECT #{cnstId}
+    	 , ROWNUM
          , BASE_DT_STR
-         , DOSG_TP_CD
-         , 'N'
+         , DOSG_LV_CD
+         , ''
          , now()
          , #{regUsrNo}
       FROM (
@@ -151,7 +151,7 @@
                         WHEN ROWNUM  <= 14 THEN '3'
                         WHEN ROWNUM  <= 21 THEN '4'
                         WHEN ROWNUM  <= 28 THEN '5'
-                END AS DOSG_TP_CD
+                END AS DOSG_LV_CD
                 , A.BASE_DT_STR
             FROM (
                 SELECT CAL.*
@@ -179,8 +179,9 @@
     <update id="updateTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
     UPDATE TB_PP_DOSG_CHART 
-       SET DOSG_DT     = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
-         , DOSG_TP_CD  = #{dosgTpCd}
+       SET DOSG_SEQ    = #{dosgSeq}
+       	 , DOSG_DT     = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
+         , DOSG_LV_CD  = #{dosgLvCd}
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
          , PAUS_YN     = #{pausYn}

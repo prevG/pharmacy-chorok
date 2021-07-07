@@ -2,17 +2,16 @@ package com.pharm.chorok.web.main.service;
 
 import java.util.List;
 
-import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.table.TbPpCnstChart;
-import com.pharm.chorok.web.main.repository.DosingRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.table.TbPpCnstChart;
+import com.pharm.chorok.web.main.repository.DosingRepository;
+
 @Service
 public class DosingChartService {
-    
 
     @Autowired
     private DosingRepository dosingRepo;
@@ -57,7 +56,7 @@ public class DosingChartService {
     @Transactional
     public int createDosingChartByCnstId( TbPpCnstChart inCnstParam ) throws Exception {
 
-        //복용차트 생성(오늘날짜로 디폴트 생성)
+    	//복용차트 생성(오늘날짜로 디폴트 생성)
 		int result = dosingRepo.insertTbPpDosgChart( inCnstParam );
         return result;
     }	

@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 public class ResultDosingVo extends TbCommColumn {
     
-    private int seq;
-    private String seqStr;
     private Long dosgId;
     private Long cnstId;
+    private int dosgSeq;
+    private String dosgSeqStr;
     private String dosgDt;
     private String daysStrKor;
-    private String dosgTpCd;
+    private String dosgLvCd;
     private String callYn;
     private String dosgYn;
     private String pausYn;

@@ -78,6 +78,8 @@ public class ChartApi {
 	}
 
     /**
+     * @deprecated createDosingChart_2 함수로 대체함.
+     * 
      * 차트번호에 해당하는 복용차트 생성
      */
     @PostMapping("/createDosingChart")
@@ -95,6 +97,24 @@ public class ChartApi {
 			resMsg.setMessage( e.getMessage() );
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+    
+    /**
+     * 차트번호에 해당하는 복용차트 생성
+     */
+    @PostMapping("/createDosingChart_2")
+    @ResponseBody
+	public ResponseEntity<ResponseMessage> createDosgChart_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
+    	Assert.isTrue(pageCriteria.getCriteria().getCnstId() > 0, "상담번호가 존재하지 않습니다.");
+    	Assert.hasLength(pageCriteria.getCriteria().getDosgTpCd(), "복용유형을 선택하세요.");
+    	Assert.hasLength(pageCriteria.getCriteria().getStartDosgDt(), "복용시작일자를 선택하세요.");
+    	
+    	//상담정보 저장
+    	chartSvc.updateTbPpCnstChart(pageCriteria.getCriteria());
+    	//복용차트 생성
+    	dosingSvc.createDosingChartByCnstId( pageCriteria.getCriteria() );
+    	
+    	return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 복용차트가 생성 되었습니다."), HttpStatus.OK );
 	}
     
     /**

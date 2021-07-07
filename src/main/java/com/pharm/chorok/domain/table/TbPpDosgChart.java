@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 public class TbPpDosgChart extends TbCommColumn {
     
-    private int seq;
     private Long dosgId;
     private Long cnstId;
+    private int dosgSeq;
     private Date dosgDt;
-    private String dosgTpCd;
+    private String dosgLvCd;
     private String callYn;
     private String pausYn;
     private String dosgYn;
