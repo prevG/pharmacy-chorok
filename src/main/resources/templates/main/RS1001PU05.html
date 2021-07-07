@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<script type="text/javascript" th:inline="javascript">
+	/* <![CDATA[ */
+	var gCustId = /*[[${custInfo?.custId}]]*/ '';
+	/* ]]> */
+</script>
+
+<div th:replace="main/RS1001PU02_2 :: customer-main-table"></div>
+<script type="text/javascript" th:src="@{/js/main/RS1001PU02_2.js}"></script>
+</html>

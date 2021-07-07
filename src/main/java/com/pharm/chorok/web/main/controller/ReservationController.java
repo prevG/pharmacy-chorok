@@ -180,6 +180,40 @@ public class ReservationController {
 		mv.addObject("custInfo", outCustomer);
 		return mv;
 	}
+	
+	/**
+	 * 목록화면에서 고객정보카드 팝업호출
+	 * 
+	 * @param custId
+	 * @param rsvtId
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/RS1001PU05")
+	public ModelAndView goRS1001PU05(
+		@RequestParam("custId") String custId,
+		@RequestParam("rsvtId") String rsvtId,
+		Model model) throws Exception {
+
+		ModelAndView mv = new ModelAndView("main/RS1001PU05");
+
+		TbPpRsvtSch outRsvtSch = null;
+		TbCustomer outCustomer = null;
+		if( !StringUtils.isEmpty(custId) && !"0".equals(custId)) {
+			TbCustomer customer = new TbCustomer();
+			customer.setCustId( Long.valueOf(custId) );
+			outCustomer = customerSvc.findCustomerByCustId( customer );
+		}
+		TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
+		rsvtSch.setRsvtId( Long.valueOf( rsvtId ));
+		outRsvtSch = reservationSvc.findReservationByRsvtId( rsvtSch );
+
+		mv.addObject("rsvtInfo", outRsvtSch);
+		mv.addObject("custInfo", outCustomer);
+		return mv;
+	}
+	
 
 	/**
 	 * TODO 예약번호가 파라메터로 넘어오는 화면 확인 필요.
@@ -214,6 +248,7 @@ public class ReservationController {
 		return mv;
 	}
 
+	
 	@PostMapping("/RS1001PU03")
 	public ModelAndView goRS1001P03(TbPpCnstChart cnstChart, Model model) throws Exception {
 

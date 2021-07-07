@@ -64,29 +64,6 @@ $(document).ready(function () {
     });
 
     /**************************************************************
-     * 상담하기
-     **************************************************************/
-     $(document).off("click", "button[name='btnNewChartView']").on("click", "button[name='btnNewChartView']", function (e) {
-        e.preventDefault(); //remove href function
-
-        var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
-        var custId = $("form[name='rsvtForm']").find("input[name='custId']").val();
-
-        if (rsvtId == null || rsvtId == "") {
-            alert("선택된 예약정보가 없습니다.");
-            return;
-        }
-        var params = {
-            "rsvtId": rsvtId,
-            "custId": custId
-        };
-
-        // $("#modalCnstChart .modal-body").load("/reservation/RS1001PU02", params, function (data, status, xhr) {
-        //     $("#modalCnstChart").modal('show');
-        // });
-    });
-
-    /**************************************************************
      * 새 스케쥴 등록하기
      **************************************************************/
     $(document).off("click", "button[name='btnNewSch']").on("click", "button[name='btnNewSch']", function (e) {
@@ -264,6 +241,32 @@ $(document).ready(function () {
     //     }
     // });
 
+
+
+    /**************************************************************
+     * 상담하기
+     **************************************************************/
+	 $("a[name='btnNewChartView']").off("click").on("click", function(e) {
+        e.preventDefault(); //remove href function
+
+        var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
+        var custId = $("form[name='rsvtForm']").find("input[name='custId']").val();
+
+        if (rsvtId == null || rsvtId == "") {
+            alert("선택된 예약정보가 없습니다.");
+            return;
+        }
+        var params = {
+            "rsvtId": rsvtId,
+            "custId": custId
+        };
+
+		
+		$("#cnstDlg").load("/reservation/RS1001PU05", params, function (data, status, xhr) {
+			$('#cnstDlg').dialog('open').dialog('center').dialog('setTitle','고객상세');
+			$.parser.parse($('#cnstDlg') );
+        });
+    });
 
     /**************************************************************
      * [저장]버튼 클릭 시
