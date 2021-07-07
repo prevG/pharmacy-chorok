@@ -3,16 +3,6 @@ package com.pharm.chorok.api.main;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultConsultingVo;
@@ -25,7 +15,19 @@ import com.pharm.chorok.domain.table.TbPpSrvChart;
 import com.pharm.chorok.web.main.repository.DosingRepository;
 import com.pharm.chorok.web.main.service.ChartService;
 import com.pharm.chorok.web.main.service.CnstPaperService;
+import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.DosingChartService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(value = "/api/v1/main/chart/")
 @RestController
@@ -42,6 +44,9 @@ public class ChartApi {
 
 	@Autowired
 	private CnstPaperService cnstPaperService;
+	
+	@Autowired
+	private CustomerService customerSvc;
 	
     /**
      * @deprecated /createCnstChart 함수로 대체함.
@@ -224,14 +229,20 @@ public class ChartApi {
 
 
 	/**
-	 * INDEX 화면 오늘 약사님 상담목록
+	 * INDEX 화면 오늘 한약사님 상담목록
 	 * @return
 	 * @throws Exception
 	 */
 	@PostMapping("/dashList01")
-	public List<ResultDashBoard01VO> selectDashDosingList01() throws Exception {
-		List<ResultDashBoard01VO> chartList =  dosingRepo.selectDashDosingList01();
-		return chartList;
+	public List<ResultDosingVo> selectDashDosingList01(
+		@RequestParam("dosgDt") String dosgDt,
+		@RequestParam("callYn") String callYn
+	) throws Exception {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("dosgDt", dosgDt);
+		params.put("callYn", callYn);
+		return customerSvc.findCustomerByDosgDt( params );
 	}
 
 	/**
@@ -240,9 +251,15 @@ public class ChartApi {
 	 * @throws Exception
 	 */
 	@PostMapping("/dashList02")
-	public List<ResultDashBoard01VO> selectDashDosingList02() throws Exception {
-		List<ResultDashBoard01VO> chartList =  dosingRepo.selectDashDosingList02();
-		return chartList;
+	public List<ResultDosingVo> selectDashDosingList02(
+		@RequestParam("dosgDt") String dosgDt,
+		@RequestParam("callYn") String callYn
+	) throws Exception {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("dosgDt", dosgDt);
+		params.put("callYn", callYn);
+		return customerSvc.findCustomerByDosgDt( params );
 	}
 
 

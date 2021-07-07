@@ -1,7 +1,11 @@
 $( document ).ready( function() {
 
     $("#table01").datagrid({
-	    url: '/api/v1/main/chart/dashList01',
+	    url: '/api/v1/main/chart/dashList01',           
+        queryParams : {
+            "dosgDt" 	: $("#currDt").val(),
+            "callYn" 	: 'CHEMIST',
+        },
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -11,17 +15,29 @@ $( document ).ready( function() {
         emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
         dragSelection: true,
         columns:[[
-            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '80'},
-        	{field: 'custUsrNm', title: '고객이름', align: 'center', width: '80', editor: 'text',
-        		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">'+ value +'</span>';
-        		}
-        	},
-            {field: 'custCellNo', title: '핸드폰번호', align: 'center', width: '100', editor: 'numberbox'},
+            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '70'},
+        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '70'},
+            {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '90', editor: 'numberbox'},
+            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80'},
+            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '70'},
+            {field: 'dosgSeq'   , title: '복용일차'    , align: 'center', width: '70',
+                formatter: function(value, row, index) {
+                    if( value == 0 ) {
+                        return '시작전날';    
+                    } else {
+                        return value +' 일차';
+                    }
+                }
+            },
+            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'}
         ]]
     });  
     $("#table02").datagrid({
-	    url: '/api/v1/main/chart/dashList02',
+	    url: '/api/v1/main/chart/dashList02',    
+        queryParams : {
+            "dosgDt" 	: $("#currDt").val(),
+            "callYn" 	: 'COUNSELOR',
+        },
 	    singleSelect: true, 
 	    ctrlSelect: true,
 	    idField: 'cnstId',
@@ -31,13 +47,21 @@ $( document ).ready( function() {
         emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
         dragSelection: true,
         columns:[[
-            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '80'},
-        	{field: 'custUsrNm', title: '고객이름', align: 'center', width: '80', editor: 'text',
-        		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">'+ value +'</span>';
-        		}
-        	},
-            {field: 'custCellNo', title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},
+            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '70'},
+        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '70'},
+            {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '90', editor: 'numberbox'},
+            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80'},
+            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '70'},
+            {field: 'dosgSeq'   , title: '복용일차'    , align: 'center', width: '70',
+                formatter: function(value, row, index) {
+                    if( value == 0 ) {
+                        return '시작전날';    
+                    } else {
+                        return value +' 일차';
+                    }
+                }
+            },
+            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'}
         ]]
     });  
     $("#table03").datagrid({
@@ -52,11 +76,7 @@ $( document ).ready( function() {
         dragSelection: true,
         columns:[[
             {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '80'},
-        	{field: 'custUsrNm', title: '고객이름', align: 'center', width: '80', editor: 'text',
-        		formatter: function(value, row, index) {
-        			return '<span style="font-weight:bold;">'+ value +'</span>';
-        		}
-        	},
+        	{field: 'custUsrNm', title: '고객이름', align: 'center', width: '80', editor: 'text'},
             {field: 'custCellNo', title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},
             {field: 'lastDosgDt', title: '마지막복용일자', align: 'center', width: '100'},
             {field: 'passDays'  , title: '복용중단일수'  , align: 'center', width: '100'},
@@ -428,4 +448,5 @@ $( document ).ready( function() {
             $(item).removeClass("btn_secondary_sel");
         });
     }
+
 });

@@ -82,7 +82,8 @@ public class CustomerApi {
     public List<ResultDosingVo> findCustomerByDosgDt(
 		@RequestParam("dosgDt") String dosgDt,
 		@RequestParam("picUsrNo") String picUsrNo,
-		@RequestParam("pic2UsrNo") String pic2UsrNo
+		@RequestParam("pic2UsrNo") String pic2UsrNo,
+		@RequestParam("callYn") String callYn
 	) throws Exception {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();

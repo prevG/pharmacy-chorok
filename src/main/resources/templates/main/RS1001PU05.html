@@ -4,9 +4,10 @@
 
 
 <script type="text/javascript" th:inline="javascript">
-	/* <![CDATA[ */
-	var gCustId = /*[[${custInfo?.custId}]]*/ '';
-	/* ]]> */
+		/* <![CDATA[ */
+		var gTabNo = /*[[${tabNo}]]*/ '0';
+		var gCustId = /*[[${custInfo?.custId}]]*/ '';
+		/* ]]> */
 </script>
 
 <div th:replace="main/RS1001PU02_2 :: customer-main-table"></div>

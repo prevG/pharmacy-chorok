@@ -117,8 +117,9 @@
            END CNST_HH_NM
          , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
          , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1018') AS DOSG_TP_NM
-		 , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
+		   , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1018') AS DOSG_TP_NM
+		   , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
+         , DCHART.DOSG_SEQ
       FROM TB_CUSTOMER CUST
      INNER JOIN   
            TB_PP_CNST_CHART CCHART  
@@ -134,6 +135,9 @@
 	</if>
 	<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
 	   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+	</if>
+	<if test="callYn != null and  !''.equals(callYn)">
+	   AND DCHART.CALL_YN = #{callYn}
 	</if>
      ORDER
         BY CCHART.CNST_HH_CD ASC
