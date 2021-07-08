@@ -130,6 +130,27 @@ public class CustomerController {
 		return "customer/CUS1002MV_2";
 	}
 	
+	@GetMapping("/CUS1002MV_3/{custId}/{tabNo}")
+	public String CUS1002MV_3(Model model, 
+			@PathVariable long custId,
+			@PathVariable int tabNo) throws Exception {
+        TbCustomer customer = new TbCustomer();
+        customer.setCustId( Long.valueOf(custId) );
+		customer = customerSvc.findCustomerByCustId( customer );
+
+		//약사목록 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        
+        //상담실장목록 조회
+        List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
+        
+        model.addAttribute("tabNo", tabNo);
+        model.addAttribute("custInfo", customer);
+        model.addAttribute("chemistList", chemistList);
+        model.addAttribute("counselorList", counselorList);
+		return "customer/CUS1002MV_3";
+	}
+	
 	@PostMapping("/add")
 	public ResponseEntity<ResponseMessage> addCustomer(TbCustomer tbCustomer) {
 		Assert.hasLength(tbCustomer.getCustUsrNm(), "고객이름을 입력하세요");

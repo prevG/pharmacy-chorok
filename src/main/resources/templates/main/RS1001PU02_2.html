@@ -9,13 +9,20 @@
 			<div title="고객정보" id="custom-tabs-four-home" class="p-2">
 				<div th:replace="main/RS1001PU03_2 :: customer-table"></div>
 			</div>
-			<div title="차트정보" id="custom-tabs-four-profile" class="p-2"
-				 data-options="labelWidth:120,
-				 				disabled:true"
+			<!-- <div title="차트정보" id="custom-tabs-four-profile" class="p-2"
+				 data-options="labelWidth:120,disabled:true"
 				 th:style="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0} ? 'display:none' : 'display:block'">
 				<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
-			</div>
+			</div> -->
 		</div>
 	</div>
+<!-- script -->
+<script type="text/javascript" th:inline="javascript">
+	/* <![CDATA[ */
+	var gTabNo = /*[[${tabNo}]]*/ '';
+	var gCustId = /*[[${custInfo?.custId}]]*/ '';
+	/* ]]> */
+</script>
+<script type="text/javascript" th:src="@{/js/main/RS1001PU02_2.js}"></script>
 </div>
 </html>

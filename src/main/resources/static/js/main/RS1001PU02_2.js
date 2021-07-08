@@ -800,6 +800,7 @@ $( document ).ready( function() {
      * "고객정보 저장" 클릭시
      **************************************************************/
 	$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {
+	alert('hi');
 		saveCustInfo();
 	});
 

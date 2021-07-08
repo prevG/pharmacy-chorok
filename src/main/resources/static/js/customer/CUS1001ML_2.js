@@ -203,6 +203,17 @@ $(document).ready(function() {
 
 		fnNewCustPop();
 	});
+	
+	/**************************************************************
+     * "신규등록" 클릭시 - 2
+     **************************************************************/
+	$(document).off("click", "#btnNewCustPop2").on("click", "#btnNewCustPop2", function (e) {
+
+		$("#addCustDlg2").load("/customer/CUS1002MV_3/33/0", function (data, status, xhr) {
+			$('#addCustDlg2').dialog('open').dialog('center').dialog('setTitle','고객등록');
+			$.parser.parse($('#addCustDlg2'));
+        });
+	});
 
 	/**************************************************************
      * "저장" 클릭시
@@ -210,6 +221,11 @@ $(document).ready(function() {
 	$(document).off("click", "#btnSaveCust").on("click", "#btnSaveCust", function (e) {
 
 		saveNewCust();
+	});
+	
+		$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {
+	alert('hi');
+		//saveCustInfo();
 	});
 });
 
