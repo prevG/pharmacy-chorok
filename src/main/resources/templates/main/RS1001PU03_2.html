@@ -14,7 +14,12 @@
 						<div class="col">
 							<input name="dlg_custId" class="easyui-textbox" style="width: 100%;text-align: center;"
 								   data-options="label:'고객번호',required:true,readonly:true"
-								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
+								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
+						</div>
+						<div class="col">
+							<input name="dlg_rsvtId" class="easyui-textbox" style="width: 100%;text-align: center;"
+									data-options="label:'예약번호',readonly:true"
+									th:value="${rsvtInfo?.rsvtId}" th:if="${rsvtInfo?.rsvtId > 0}">
 						</div>
 						<div class="col">
 						</div>

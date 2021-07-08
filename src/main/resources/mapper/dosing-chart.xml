@@ -67,6 +67,7 @@
 
     <select id="selectDashDosingList01"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList01 */
     SELECT C.CUST_USR_NM
          , CASE LENGTH(C.CUST_CELL_NO)
                 WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
@@ -85,6 +86,7 @@
 
     <select id="selectDashDosingList02"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList02 */
     SELECT C.CUST_USR_NM
          , CASE LENGTH(C.CUST_CELL_NO)
                 WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
@@ -103,6 +105,7 @@
 
     <select id="selectDashDosingList03"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList03 */
     SELECT B.CNST_ID
          , C.CUST_USR_NM
          , CASE LENGTH(C.CUST_CELL_NO)
@@ -127,6 +130,7 @@
 
     <insert id="insertTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.insertTbPpDosgChart */
     INSERT INTO TB_PP_DOSG_CHART (
           CNST_ID
         , DOSG_SEQ
@@ -171,6 +175,7 @@
 
     <delete id="deleteTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.deleteTbPpDosgChart */
     DELETE FROM TB_PP_DOSG_CHART
      WHERE CNST_ID = #{cnstId}
 	]]>
@@ -178,9 +183,10 @@
 
     <update id="updateTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChart */
     UPDATE TB_PP_DOSG_CHART 
        SET DOSG_SEQ    = #{dosgSeq}
-       	 , DOSG_DT     = DATE_FORMAT(STR_TO_DATE(#{dosgDt}, '%m/%d/%Y'), '%Y%m%d')
+       	 , DOSG_DT     = #{dosgDt}
          , DOSG_LV_CD  = #{dosgLvCd}
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
@@ -196,8 +202,9 @@
 
     <update id="updateTbPpDosgChartStartDt" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartStartDt */
     UPDATE TB_PP_DOSG_CHART 
-       SET DOSG_DT     = DATE_FORMAT(DATE_ADD(STR_TO_DATE(#{dosgDt}, '%m/%d/%Y'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY), '%Y%m%d')
+       SET DOSG_DT     = DATE_FORMAT(DATE_ADD(STR_TO_DATE(#{dosgDt}, '%Y%m%d'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY), '%Y%m%d')
      WHERE CNST_ID     = #{cnstId}
        AND DOSG_ID     > #{dosgId}
 	]]>

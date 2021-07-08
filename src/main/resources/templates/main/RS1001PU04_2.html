@@ -15,7 +15,7 @@
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 							<input name="selectedCustId" class="easyui-textbox" style="width: 60px;text-align: center;"
 								   data-options="required:true,readonly:true"
-								   th:value="${#strings.isEmpty(custInfo?.custId)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custId}">
+								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
 							<a href="javascript:void(0);" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
 						</div>
 					</div>

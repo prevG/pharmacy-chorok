@@ -264,7 +264,7 @@
 	   SET UPD_DT        = now()
 		 , UPD_USR_NO    = #{updUsrNo}
 		 , CUST_ID       = #{custId}
-     WHERE RSVT_ID = #{rsvtId}
+     WHERE RSVT_ID 		 = #{rsvtId}
 	]]>
 	</update>
 

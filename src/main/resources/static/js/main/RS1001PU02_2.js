@@ -394,6 +394,7 @@ $( document ).ready( function() {
 				
 				var formData = {
 					criteria : {
+						"rsvtId" 		: 	$('#saveCustFrm input[textboxName=dlg_rsvtId]').textbox('getValue'),
 						"custId" 		: 	$('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue'),
 						"custUsrNm" 	: 	custUsrNm,
 						"custCellNo" 	: 	custCellNo,
@@ -423,6 +424,19 @@ $( document ).ready( function() {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
+							var custId = res.data;
+							var custNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
+
+							//고객차트탭의 고객번호 업데이트
+							$('#saveCustFrm input[textboxName=dlg_custId]').textbox('setValue', custId);
+
+							//차트정보탭의 고객명/고객번호 업데이트(고객테이블정보사용)
+							$('input[textboxName=selectedCustId]').textbox('setValue', custId);
+							$('input[textboxName=selectedCustNm]').textbox('setValue', custNm);
+
+							//고객번호 있는 경우 차트탭 활성화
+							$('#custTabs').tabs('enableTab', 1);
+							
 							$.messager.show({ title: '고객정보 저장', msg: res.message });
 						} else {
 							$.messager.alert('고객정보 저장', res.message);
@@ -688,13 +702,14 @@ $( document ).ready( function() {
 			var rmiWgt     = $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
 			var dosgDesc1  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
 			var dosgDesc2  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
+
 			var formData = {
 				criteria: {
 					"cnstId":	    selectedCnstId,
 					"dosgId":		dosgId,
 					"dosgSeq": 		dosgSeq,
 					"dosgLvCd":		dosgLvCd,
-					"dosgDt":		dosgDt,
+					"dosgDt":		moment(dosgDt).format("YYYYMMDD"),
 					"callYn":		callYn,
 					"dosgYn": 		dosgYn,
 					"pausYn": 		pausYn,
@@ -716,7 +731,7 @@ $( document ).ready( function() {
 					if (res.status === 'success') {
 						$.messager.show({ title: '복용차트 저장', msg: res.message });
 						
-						fnDosingChart(); // 복용차트 조회
+						RS1001PU02.fnDosingChart(); // 복용차트 조회
 					} else {
 						$.messager.alert('복용차트 저장', res.message);
 						return;

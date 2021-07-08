@@ -40,5 +40,8 @@ public class TbCustomer extends TbCommColumn {
 	private String cbDelYn;
 	private Date startDttm;
 	private Date endDttm;
+
+	//예약정보로 고객정보 생성시
+	private long rsvtId;
 	
 }

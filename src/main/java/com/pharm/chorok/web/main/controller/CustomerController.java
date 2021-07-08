@@ -2,6 +2,17 @@ package com.pharm.chorok.web.main.controller;
 
 import java.util.List;
 
+import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCommUser;
+import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.web.admin.service.ADUserService;
+import com.pharm.chorok.web.main.service.CommUserDetailsService;
+import com.pharm.chorok.web.main.service.CustomerService;
+import com.pharm.chorok.web.main.service.ReservationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.pharm.chorok.common.service.CalendarService;
-import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbCommUser;
-import com.pharm.chorok.domain.table.TbCustomer;
-import com.pharm.chorok.web.admin.service.ADUserService;
-import com.pharm.chorok.web.main.service.CommUserDetailsService;
-import com.pharm.chorok.web.main.service.CustomerService;
 
 @RequestMapping(value = "/customer")
 @Controller
@@ -38,6 +41,9 @@ public class CustomerController {
 	
 	@Autowired
 	private CommUserDetailsService commUserDetailsSvc;
+
+	@Autowired
+	private ReservationService reservationSvc;
 
 	/**
 	 * @deprecated /CUS1001ML_2 함수로 대체함.
@@ -137,13 +143,29 @@ public class CustomerController {
 		return "customer/CUS1002MV_2";
 	}
 	
-	@GetMapping("/CUS1001ML_D/{custId}/{tabNo}")
+
+	/**
+	 * 고객정보 목록     - 신규등록 /수정
+	 * 복용상담차트 목록  - 신규등록 /수정
+	 * 주간예약스케쥴     - 상담하기
+	 */
+	@RequestMapping(value="/CUS1001ML_D/{custId}/{tabNo}", method={RequestMethod.GET, RequestMethod.POST})
 	public String CUS1001ML_D(Model model, 
 			@PathVariable long custId,
 			@PathVariable int tabNo,
 			@RequestParam(required = false, defaultValue = "0") long rsvtId) throws Exception {
 		
         TbCustomer customer = new TbCustomer();
+		TbPpRsvtSch outRsvtSch = new TbPpRsvtSch();
+		
+		//주간예약스케쥴에서 신규고객에 대해서 "상담하기"를 클릭한 경우
+		if( rsvtId > 0 && custId == 0 ) {
+			TbPpRsvtSch rsvtSch = new TbPpRsvtSch();
+			rsvtSch.setRsvtId( rsvtId );
+			outRsvtSch = reservationSvc.findReservationByRsvtId( rsvtSch );
+		}
+
+		//고객ID로 조회
         customer.setCustId( Long.valueOf(custId) );
 		customer = customerSvc.findCustomerByCustId( customer );
 
@@ -154,6 +176,7 @@ public class CustomerController {
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
         model.addAttribute("tabNo", tabNo);
+        model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", customer);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);

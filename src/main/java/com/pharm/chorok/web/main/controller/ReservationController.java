@@ -258,25 +258,6 @@ public class ReservationController {
 	}
 
 	/**
-	 * @deprecated replace /RS1001PU02/saveCustomer_2
-	 * 
-	 * @param custParam
-	 * @param rsvtParam
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/RS1001PU02/saveCustomer", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView saveCustomer(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
-		
-		customerSvc.saveCustomer( custParam, rsvtParam );
-		TbCustomer custInfo = customerSvc.findCustomerByCustIdOrRsvtId( custParam, rsvtParam  );
-
-		ModelAndView mv = new ModelAndView("main/RS1001PU03 :: customer-table");
-		mv.addObject("custInfo", custInfo);
-        return mv;
-	}
-	
-	/**
 	 * TODO 해당 함수를 호출하는 화면 확인 필요함.
 	 * 
 	 * TODO 예약 스케줄 화면에서 넘어오는 경우 확인 필요함.
@@ -286,29 +267,41 @@ public class ReservationController {
 	 */
 	@PostMapping("/RS1001PU02/saveCustomer_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> saveCustomer_2(@RequestBody PageCriteria<TbCustomer> pageCriteria) throws Exception {
+	public ResponseEntity<ResponseMessage> saveCustomer_2(
+			@RequestBody PageCriteria<TbCustomer> pageCriteria
+	
+			) throws Exception {
 		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm(), "고객이름을 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo(), "핸드폰번호를 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustBirthDt(), "생년월일을 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustGenTpCd(), "성별을 입력하세요");
 		
 		// 신규고객 등록
-		if (pageCriteria.getCriteria().getCustId() == 0) {
-			int newCellNoCount = userService.countUserCellNo(pageCriteria.getCriteria());
-			if (newCellNoCount > 0)
-				return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
-			userService.addUser(pageCriteria.getCriteria());
+		long orgCustId = pageCriteria.getCriteria().getCustId();
+		if ( orgCustId == 0) {
 			
-			return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 등록되었습니다."), HttpStatus.OK);
+			// //이미 등록된 핸드폰번호가 존재하는지 확인
+			// int newCellNoCount = userService.countUserCellNo(pageCriteria.getCriteria());
+			// if (newCellNoCount > 0) {
+			// 	return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
+			// }
+
+			//1. 고객정보 신규등록 or 수정
+			//2. 예약정보에 고객ID 수정
+			long newCustId = customerSvc.saveCustomer( pageCriteria.getCriteria() );
+			
+
+			
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 등록되었습니다.", newCustId), HttpStatus.OK);
 		}
 
 		// 기존고객 수정
-		int cellNoCount = userService.countUserCellNoByExcludeCustId(pageCriteria.getCriteria());
-		if (cellNoCount > 0)
-			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
+		// int cellNoCount = userService.countUserCellNoByExcludeCustId(pageCriteria.getCriteria());
+		// if (cellNoCount > 0)
+		// 	return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
 		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
 			
-		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다."), HttpStatus.OK);
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);
 	}
 
 	/**

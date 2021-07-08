@@ -39,32 +39,25 @@ public class CustomerService {
     }
     
 	@Transactional
-	public int saveCustomer(TbCustomer custInfo, TbPpRsvtSch rsvtInfo) throws Exception {
+	public long saveCustomer(TbCustomer custInfo) throws Exception {
 		
-		int result = -1;
+		long rsvtId = custInfo.getRsvtId();
 
-		Long rsvtId = rsvtInfo.getRsvtId();
-		Long custId = custInfo.getCustId();
-		if( custId != null && custId > 0) {
-			result = customerRepo.updateTbCustomer( custInfo );
+		//신규 고객번호 생성
+		Long newCustId = customerRepo.selectNewCustId();
 
-		} else {
+		//고객정보저장
+		custInfo.setCustId( newCustId );
+		customerRepo.insertTbCustomer( custInfo );
 
-			//신규 고객번호 생성
-			Long newCustId = customerRepo.selectNewCustId();
-
-			//고객정보저장
-			custInfo.setCustId( newCustId );
-			result = customerRepo.insertTbCustomer( custInfo );
-
-			//예약테이블 고객번호 update
-			if( rsvtId != null && rsvtId > 0) {
-				rsvtInfo.setCustId( newCustId );
-				result = reservationRepo.updateCustIdByRsvtId( rsvtInfo );
-			}
-
+		//예약테이블 고객번호 update
+		if( rsvtId  > 0) {
+			TbPpRsvtSch rsvtInfo = new TbPpRsvtSch();
+			rsvtInfo.setRsvtId( rsvtId );
+			rsvtInfo.setCustId( newCustId );
+			reservationRepo.updateCustIdByRsvtId( rsvtInfo );
 		}
-		return result;
+		return newCustId;
 	}
 	
     /**
@@ -76,24 +69,7 @@ public class CustomerService {
      */
 	@Transactional
 	public int saveCustomer_2(TbCustomer custInfo) throws Exception {
-		
-		int result = -1;
-
-		Long custId = custInfo.getCustId();
-		if( custId != null && custId > 0) {
-			result = customerRepo.updateTbCustomer( custInfo );
-
-		} else {
-
-			//신규 고객번호 생성
-			Long newCustId = customerRepo.selectNewCustId();
-
-			//고객정보저장
-			custInfo.setCustId( newCustId );
-			result = customerRepo.insertTbCustomer( custInfo );
-
-		}
-		return result;
+		return  customerRepo.updateTbCustomer( custInfo );
 	}
 
 	public TbCustomer findCustomerByCustIdOrRsvtId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {
