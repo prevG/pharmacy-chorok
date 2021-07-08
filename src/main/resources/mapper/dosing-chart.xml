@@ -180,7 +180,7 @@
 	<![CDATA[    
     UPDATE TB_PP_DOSG_CHART 
        SET DOSG_SEQ    = #{dosgSeq}
-       	 , DOSG_DT     = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
+       	 , DOSG_DT     = DATE_FORMAT(STR_TO_DATE(#{dosgDt}, '%m/%d/%Y'), '%Y%m%d')
          , DOSG_LV_CD  = #{dosgLvCd}
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
@@ -197,7 +197,7 @@
     <update id="updateTbPpDosgChartStartDt" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 	<![CDATA[    
     UPDATE TB_PP_DOSG_CHART 
-       SET DOSG_DT     = DATE_ADD(DATE_FORMAT(#{dosgDt}, '%Y%m%d'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY)
+       SET DOSG_DT     = DATE_FORMAT(DATE_ADD(STR_TO_DATE(#{dosgDt}, '%m/%d/%Y'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY), '%Y%m%d')
      WHERE CNST_ID     = #{cnstId}
        AND DOSG_ID     > #{dosgId}
 	]]>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.ResponseMessage;
@@ -139,7 +140,8 @@ public class CustomerController {
 	@GetMapping("/CUS1001ML_D/{custId}/{tabNo}")
 	public String CUS1001ML_D(Model model, 
 			@PathVariable long custId,
-			@PathVariable int tabNo) throws Exception {
+			@PathVariable int tabNo,
+			@RequestParam(required = false, defaultValue = "0") long rsvtId) throws Exception {
 		
         TbCustomer customer = new TbCustomer();
         customer.setCustId( Long.valueOf(custId) );
