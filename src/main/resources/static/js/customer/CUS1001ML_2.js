@@ -6,7 +6,10 @@
 $(document).ready(function() {
 	var CUS1001ML = {
 		init: function() {
-			// grid
+
+		    /**************************************************************
+		     * 고객목록 테이블
+		     **************************************************************/
 			$('#dg01').datagrid({
 			    singleSelect: true, 
 			    ctrlSelect: true,
