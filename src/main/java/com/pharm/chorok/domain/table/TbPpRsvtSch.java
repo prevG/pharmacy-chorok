@@ -26,4 +26,5 @@ public class TbPpRsvtSch extends TbCommColumn {
 
     private TbPpWorkTime wt;
     private TbCommCalendar cal;
+    private String searchKeyword;
 }

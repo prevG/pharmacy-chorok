@@ -33,7 +33,17 @@
 				<div class="col-sm-8">
 					<div class="easyui-panel mb-2 p-2" title="주간 예약스케쥴" style="width: 100%;overflow: hidden;">
 						<div class="row mb-1">
-							<div class="col-sm-12 text-right">
+							<div class="col-sm-6">
+								<input class="easyui-textbox" name="searchKeyword" id="searchKeyword" 
+												data-options="label:'예약자명/전화번호4자리',
+												            labelWidth:'160px',
+												            prompt:'예약자명/전화번호4자리',
+															labelPosition:'left'"
+												style="width:360px;margin-right:20px;" tabindex="1">
+								<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" 
+									id="btnSearchRsvtSch" name="btnSearchRsvtSch">예약조회</a>
+							</div>
+							<div class="col-sm-6 text-right">
 								<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
 								<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">오늘</button>
 								<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button>
@@ -229,6 +239,9 @@
 		</div>
 	</section>	
 	<div id="cnstDlg" class="easyui-dialog" style="width:96%;height:900px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	</div>
+	<div id="searchRsvtDlg" class="easyui-dialog" style="width:600px;height:400px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<table id="searchRsvtTable" style="width:100%;height:290px;"></table>
 	</div>
 </div>
 </html>

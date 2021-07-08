@@ -23,6 +23,80 @@ $(document).ready(function () {
     // })
 
 
+
+
+    $("#searchRsvtTable").datagrid({        
+        queryParams : {
+            "searchKeyword" : $("#searchKeyword").val(),
+        },
+	    singleSelect: true, 
+	    ctrlSelect: true,
+	    idField: 'cnstId',
+	    rownumbers: true,
+		fitColumns: true, 
+        // fit: true,
+        emptyMsg: '예약된 정보가 존재하지 않습니다.',
+        dragSelection: true,
+        columns:[[
+			{field: 'rsvtId'     	 , title: '예약번호'   , align: 'center', width: '80'},
+            {field: 'rsvtDt'     	 , title: '예약일시'   , align: 'center', width: '120'},
+            {field: 'rsvtDtYyyymmdd' , title: '예약일시'   , align: 'center', width: '120', hidden:true},
+            {field: 'rsvtUsrNm'		 , title: '예약자명'   , align: 'center', width: '70'},
+            {field: 'rsvtCellNo' 	 , title: '휴대전화번호', align: 'center', width: '90'},
+			{field: 'rsvtTpCd'     	 , title: '상담구분'   , align: 'center', width: '80',
+                formatter: function(value, row, index) {
+                    if( value == 'C' ) {
+                        return '전화';    
+                    } else if( value == 'R' ) {
+                        return '방문';
+                    }
+                }
+            },
+            {field: 'genTpCd'   	 , title: '성별'    , align: 'center', width: '70',
+                formatter: function(value, row, index) {
+                    if( value == 'F' ) {
+                        return '여성';    
+                    } else if( value == 'M' ) {
+                        return '남성';
+                    }
+                }
+            }
+        ]],
+        onDblClickRow: function(index, row) {
+			var rsvtId = row.rsvtId;
+			var rsvtDtYyyymmdd = row.rsvtDtYyyymmdd;
+			$('#searchRsvtDlg').dialog('close');
+			refreshTimeTable( rsvtId, rsvtDtYyyymmdd );
+        },
+    });
+
+
+    /**************************************************************
+     * 예약자명 또는 전화번호로 예약정보 검색시
+     **************************************************************/
+	$("#searchKeyword").textbox('textbox').bind('keydown', function(e){
+		if (e.keyCode == 13){	// when press ENTER key, accept the inputed value.
+			$("a[name='btnSearchRsvtSch']").click();
+		}
+	});
+
+
+    /**************************************************************
+     * [예약조회]버튼을 클릭할 경우
+     **************************************************************/
+    $(document).off("click", "a[name='btnSearchRsvtSch']").on("click", "a[name='btnSearchRsvtSch']", function (e) {
+        
+        e.preventDefault();
+
+		$('#searchRsvtTable').datagrid('loadData', []);  
+		$('#searchRsvtDlg').dialog('open').dialog('center').dialog('setTitle','예약조회');
+		
+        var queryParams = $("#searchRsvtTable").datagrid('options').queryParams;
+		queryParams.searchKeyword = $("#searchKeyword").val();			
+		$('#searchRsvtTable').datagrid('load', '/api/v1/main/reservation/findBySearchKeyword');
+    });
+
+
     /**************************************************************
      * 주간스케줄표의 예약고객을 클릭할 경우
      **************************************************************/
@@ -442,12 +516,16 @@ $(document).ready(function () {
     }
 
     //저장후 타임테이블 새로고침
-    refreshTimeTable = function ( rsvtId ) {
+    refreshTimeTable = function ( rsvtId, yyyymmdd ) {
+	
+		var params = {};
+		if( $isEmpty( yyyymmdd )) {
+			params['currDt'] = moment($("#rsvtDtYyyymmdd").val()).format("YYYYMMDD");
+		} else {
+			params['currDt'] = moment( yyyymmdd ).format("YYYYMMDD");
+		}
+		
         var url = "/reservation/RS1001MV/reload";
-        var params = {
-            "currDt": moment($("#rsvtDtYyyymmdd").val()).format("YYYYMMDD")
-        };
-
         $("#time-table").load(url, params, function (response, status, xhr) {
 
             if (200 == xhr.status) {
@@ -520,3 +598,5 @@ $(document).ready(function () {
         });
     }
 });
+
+

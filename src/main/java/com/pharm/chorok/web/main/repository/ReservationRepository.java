@@ -3,13 +3,13 @@ package com.pharm.chorok.web.main.repository;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
@@ -28,6 +28,8 @@ public interface ReservationRepository {
     public List<TbPpRsvtSch> selectRsvtSchByWeek( TbCommCalendar cal )  throws Exception;
 
     public TbPpRsvtSch findReservationByRsvtId(TbPpRsvtSch param) throws Exception;
+    
+    public List<TbPpRsvtSch> findBySearchKeyword(TbPpRsvtSch param) throws Exception;
 
     public TbPpRsvtSch findReservationByRsvtInfo(TbPpRsvtSch param) throws Exception;
     

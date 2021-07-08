@@ -295,7 +295,8 @@ $( document ).ready( function() {
         };
         $.post('/api/v1/main/reservation/findByRsvtId', params, function(result) {
            if (result.status == 'success') {
-               $('#modalRsvtDtl').dialog('open');
+               
+			   $('#modalRsvtDtl').dialog('open').dialog('center').dialog('setTitle','예약상세');
                $('#rsvtForm').form('clear');
                
                var data = result.data;

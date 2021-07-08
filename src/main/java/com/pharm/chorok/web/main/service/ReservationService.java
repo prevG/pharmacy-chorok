@@ -159,6 +159,19 @@ public class ReservationService {
     	return rsvtSchRepo.findReservationByRsvtId( rsvtSch );
     }
 
+    
+    
+	/**
+	 * 예약자명 또는 전화번호로 예약상세정보 조회
+	 * 
+	 * @param rsvtSch
+	 * @return
+	 * @throws Exception
+	 */
+    public List<TbPpRsvtSch> findBySearchKeyword( TbPpRsvtSch rsvtSch  ) throws Exception {
+    	return rsvtSchRepo.findBySearchKeyword( rsvtSch );
+    }
+    
 
 	/**
 	 * 예약정보로 예약상세정보 조회(예약일시/예약자성명/예약자휴대번호)
