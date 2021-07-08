@@ -4,43 +4,6 @@
  * 
  ******************************************************/
 
-/**************************************************************
- * 설문차트 조회
- **************************************************************/
-function fnPaperChart() {
-	var formData = {
-		cnstId : $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue')
-	};
-	$.post('/reservation/RS1001PU02/findPaperChartByCnstId_2', formData, function(res) {
-		if (res.status === 'success') {
-			var html = '';
-			$.each(res.data, function(index, item) {
-				html += item.paperHtml;
-			});
-			$('#cnstPaper').html(html);
-			$.parser.parse($('#cnstPaper'));
-		} else {
-			$.messager.show({ title: 'Error', msg: res.message });
-			return;
-		}
-	}, 'json')
-	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-		return;
-	});
-}
-
-/**************************************************************
- * 복용차트 조회
- **************************************************************/
-function fnDosingChart() {
-	var queryParams = $("#dg2").datagrid('options').queryParams;
-	queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
-	queryParams.cnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	
-	$('#dg2').datagrid('load', '/api/v1/main/chart/findDosingChartByCnstId');
-}
-
 /*************************************************
  * 상담차트 삭제 (상담차트/설문차트)
  **************************************************/
@@ -74,302 +37,6 @@ function removeCnstChart() {
 			$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
 			return;
 		});
-	});
-}
-
-/*************************************************
- * 복용차트 생성
- **************************************************/
-function createDosingChart() {
-	// 상담차트
-	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	var cnstDesc = $('#cnstDesc').textbox('getValue');
-	var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
-	var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
-	var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
-	var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
-	var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
-	var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
-	var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
-	var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
-	var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
-	var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
-	if( selectedCnstId == "" ) {
-		$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
-		return false;
-	}
-	if( dosgTpCd == "" ) {
-		$.messager.alert("복용유형 선택", "상담정보에서 '복용유형'를 선택해 주세요.");
-		return false;
-	}
-	if( startDosgDt == "" ) {
-		$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.\n복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
-		return false;
-	}
-	var formData = {
-		criteria: {
-			"cnstId" 		: selectedCnstId,
-			"cnstDesc" 		: cnstDesc,
-			"picUsrNo"		: picUsrNo,
-			"pic2UsrNo"		: pic2UsrNo,
-			"orgWgt"		: orgWgt,
-			"tgtWgt"		: tgtWgt,
-			"startDosgDt" 	: startDosgDt,
-			"cnstHhCd"		: cnstHhCd,
-			"cnstHhMemo"	: cnstHhMemo,
-			"dosgTpCd"		: dosgTpCd
-		}
-	};
-	
-	$.messager.confirm('Confirm', '신규 복용차트를 생성하시겠습니까?', function(r) {
-		if (!r) return;
-		
-		$.ajax({
-			url: '/api/v1/main/chart/createDosingChart_2',
-			method: 'post',
-			contentType: 'application/json',
-			dataType: 'json',
-			data: JSON.stringify(formData),
-			success: function(res) {
-				if (res.status === 'success') {
-					$.messager.show({ title: '복용차트 생성', msg: res.message });
-					
-					fnCnstChart(); // 상담차트 조회
-				} else {
-					$.messager.alert('복용차트 생성', res.message);
-					return;
-				}
-			},
-			error: function(xhr, status, error) {
-				$.messager.alert('복용차트 생성', xhr.responseJSON.message, 'error');
-			}
-		});
-	});
-}
-
-/*************************************************
- * 상담차트 저장 (상담차트/설문차트)
- **************************************************/
-function saveCnstChart( evt ) {
-	// 상담차트
-	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	var cnstDesc = $('#cnstDesc').textbox('getValue');
-	var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
-	var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
-	var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
-	var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
-	var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
-	var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
-	var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
-	var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
-	var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
-	var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
-	if( selectedCnstId == "" ) {
-		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
-		return false;
-	}
-	// 설문차트
-	var cnstPaperSize = $('#cnstPaper tr').length;
-	var cnstPaperList = [];
-	for (var i = 0; i < cnstPaperSize; i++) {
-		var paperObj = $("#cnstPaper tr").eq(i).find("td").eq(1);
-		var cnstPaperKind = paperObj.attr("data-el");
-		var cnstPaperId = paperObj.attr("data-nm");
-		var cnstPaperVer = paperObj.attr("data-ver");
-		var cnstPaperNum = paperObj.attr("data-num");
-		var cnstPaperAttr = paperObj.attr("data-attr");
-		var cnstPaperVal = "";
-		if (cnstPaperKind === "TEXT") {
-			cnstPaperVal = paperObj.find("input[type='text']").val();
-		} else if (cnstPaperKind === "CHECK") {
-			var len = paperObj.find("input[type='checkbox']").length;
-			var c = 0;
-			for (var j = 0; j < len; j++) { 
-				if (paperObj.find("input[type='checkbox']")[j].checked) {
-					if (c === 0) 
-						cnstPaperVal = paperObj.find("input[type='checkbox']")[j].value;
-					else
-						cnstPaperVal += ','+ cnstPaperVal + paperObj.find("input[type='checkbox']")[j].value;
-					c++; 
-				}
-			}
-		} else if (cnstPaperKind === "RADIO") {
-			cnstPaperVal = paperObj.find("input[type='radio']:checked").val();
-		}
-		
-		cnstPaperList.push({
-			"cnstId" 		: selectedCnstId,
-			"cnstPaperId" 	: cnstPaperId,
-			"cnstPaperVer" 	: cnstPaperVer,
-			"cnstPaperNum" 	: cnstPaperNum,
-			"cnstPaperVal" 	: cnstPaperVal
-		});
-		
-		// 상담차트 체중 업데이트
-		if (cnstPaperAttr === 'ORG_WGT') orgWgt = Number(cnstPaperVal);
-		if (cnstPaperAttr === 'TGT_WGT') tgtWgt = Number(cnstPaperVal);
-	}
-	
-	var formData = {
-		criteria: {
-			"cnstId" 		: selectedCnstId,
-			"cnstDesc" 		: cnstDesc,
-			"picUsrNo"		: picUsrNo,
-			"pic2UsrNo"		: pic2UsrNo,
-			"orgWgt"		: orgWgt,
-			"tgtWgt"		: tgtWgt,
-			"startDosgDt" 	: startDosgDt,
-			"cnstHhCd"		: cnstHhCd,
-			"cnstHhMemo"	: cnstHhMemo,
-			"dosgTpCd"		: dosgTpCd,
-			"srvChartList" 	: cnstPaperList
-		}
-	};
-	
-	$.ajax({
-		url: '/api/v1/main/chart/saveCnstChart_2',
-		method: 'post',
-		contentType: 'application/json',
-		dataType: 'json',
-		data: JSON.stringify(formData),
-		success: function(res) {
-			if (res.status === 'success') {
-				$.messager.show({ title: '상당차트 저장', msg: res.message });
-				
-				fnCnstChart(); // 상담차트 조회
-			} else {
-				$.messager.alert('상당차트 저장', res.message);
-				return;
-			}
-		},
-		error: function(xhr, status, error) {
-			$.messager.alert('상당차트 저장', xhr.responseJSON.message, 'error');
-		}
-	});
-}
-
-/*************************************************
- * 설문차트 저장
- * 
- * TODO 사용안함.
- **************************************************/
-function saveSurveyChart( evt ) {
-	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	if( selectedCnstId == "" ) {
-		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
-		return false;
-	}
-	var cnstPaperNum = $('#cnstPaper tr').length;
-	var cnstPaperList = [];
-	for (var i = 0; i < cnstPaperNum; i++) {
-		var cnstPaperKind = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-el");
-		var cnstPaperId = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-nm");
-		var cnstPaperVer = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-ver");
-		var cnstPaperNum = $("#cnstPaper tr").eq(i).find("td").eq(1).attr("data-num");
-		var cnstPaperVal = "";
-		if (cnstPaperKind === "TEXT") {
-			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='text']").val();
-		} else if (cnstPaperKind === "CHECK") {
-			var len = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']").length;
-			var c = 0;
-			for (var j = 0; j < len; j++) { 
-				if ($("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].checked) { 
-					if (c > 0) cnstPaperVal = cnstPaperVal + "," ; 
-					cnstPaperVal = cnstPaperVal + $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='checkbox']")[j].value; 
-					c++; 
-				}
-			}
-		} else if (cnstPaperKind === "RADIO") {
-			cnstPaperVal = $("#cnstPaper tr").eq(i).find("td").eq(1).find("input[type='radio']:checked").val();
-		}
-		
-		cnstPaperList.push({
-			"cnstId" 		: selectedCnstId,
-			"cnstPaperId" 	: cnstPaperId,
-			"cnstPaperVer" 	: cnstPaperVer,
-			"cnstPaperNum" 	: cnstPaperNum,
-			"cnstPaperVal" 	: cnstPaperVal
-		});
-	}
-	var formData = {
-		criteria: cnstPaperList
-	};
-	
-	$.ajax({
-		url: '/api/v1/main/survey/saveSrvChart_2',
-		method: 'post',
-		contentType: 'application/json',
-		dataType: 'json',
-		data: JSON.stringify(formData),
-		success: function(res) {
-			if (res.status === 'success') {
-				$.messager.show({ title: 'Success', msg: res.message });
-			} else {
-				$.messager.show({ title: 'Error', msg: res.message });
-				return;
-			}
-		}
-	});
-}
-
-/*************************************************
- * 복용차트 저장
- **************************************************/
-function saveDosingChart( evt ) {
-	var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-	if( selectedCnstId == "" ) {
-		$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
-		return false;
-	}
-	var dosgId     = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
-	var dosgSeq    = $('#dosgDlgFrm input[name=dlg_dosgSeq]').val();
-	var dosgLvCd   = $('#dosgDlgFrm input[textboxName=dlg_dosgLvCd]').textbox('getValue');
-	var dosgDt     = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
-	var callYn     = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
-	var dosgYn     = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
-	var pausYn     = $('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('getValue');
-	var currWgt    = $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('getValue');
-	var lossWgt    = $('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('getValue');
-	var rmiWgt     = $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
-	var dosgDesc1  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
-	var dosgDesc2  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
-	var formData = {
-		criteria: {
-			"cnstId":	    selectedCnstId,
-			"dosgId":		dosgId,
-			"dosgSeq": 		dosgSeq,
-			"dosgLvCd":		dosgLvCd,
-			"dosgDt":		dosgDt,
-			"callYn":		callYn,
-			"dosgYn": 		dosgYn,
-			"pausYn": 		pausYn,
-			"currWgt": 		currWgt,
-			"lossWgt":		lossWgt,
-			"rmiWgt":		rmiWgt,
-			"dosgDesc1":	dosgDesc1,
-			"dosgDesc2": 	dosgDesc2
-		}
-	};
-	
-	$.ajax({
-		url: '/api/v1/main/survey/saveDosingChart_2',
-		method: 'post',
-		contentType: 'application/json',
-		dataType: 'json',
-		data: JSON.stringify(formData),
-		success: function(res) {
-			if (res.status === 'success') {
-				$.messager.show({ title: '복용차트 저장', msg: res.message });
-				
-				fnDosingChart(); // 복용차트 조회
-			} else {
-				$.messager.alert('복용차트 저장', res.message);
-				return;
-			}
-		},
-		error: function(xhr, status, error) {
-			$.messager.alert('복용차트 저장', xhr.responseJSON.message, 'error');
-		}
 	});
 }
 
@@ -452,8 +119,8 @@ $( document ).ready( function() {
 						startDosgDt		: row.startDosgDt
 					});
 		
-		        	//fnPaperChart();
-		        	//fnDosingChart();
+		        	RS1001PU02.fnPaperChart();
+		        	RS1001PU02.fnDosingChart();
 		        },
 		        columns:[[
 					{
@@ -654,6 +321,50 @@ $( document ).ready( function() {
 			$(document).off("click", "#btnNewCnstChart").on("click", "#btnNewCnstChart", function (e) {
 				RS1001PU02.createCnstChart();
 			});
+			
+			/**************************************************************
+		     * "상담정보 저장" 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnSaveCnstChart").on("click", "#btnSaveCnstChart", function (e) {
+				$.messager.confirm('Confirm', '차트정보를 저장하시겠습니까?', function(r) {
+					if (!r) return;
+					
+					RS1001PU02.saveCnstChart();
+				});
+			});
+			
+			/**************************************************************
+		     * "복용차트 생성" 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnNewDosgChart").on("click", "#btnNewDosgChart", function (e) {
+				RS1001PU02.createDosingChart();
+			});
+			
+			/**************************************************************
+		     * 복용차트 체중 수정시
+		     **************************************************************/
+		    $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox({
+		    	onChange: function(value) {
+		    		var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+		    		var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+		    		var lossWgt = Number(orgWgt) - Number(value);
+		    		var rmiWgt = Number(value) - Number(tgtWgt);
+		    		
+		    		$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', lossWgt);
+		    		$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', rmiWgt);
+		    	}
+		    });
+		    
+			/**************************************************************
+		     * "복용차트 저장" 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnSaveDosgChart").on("click", "#btnSaveDosgChart", function (e) {
+				//$.messager.confirm('Confirm', '복용차트 정보를 저장하시겠습니까?', function(r) {
+				//	if (!r) return;
+					
+					RS1001PU02.saveDosingChart();
+				//});
+			});
 
 		},
 		saveCust: function() {
@@ -760,6 +471,261 @@ $( document ).ready( function() {
 			//queryParams.custId = gCustId;
 			
 			$('#dg').datagrid('load', '/api/v1/main/chart/findAllChartByCustId');
+		},
+		fnPaperChart: function() {
+			var formData = {
+				criteria: {
+					cnstId : $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue')
+				}
+			};
+			
+			$.ajax({
+				url: '/reservation/RS1001PU02/findPaperChartByCnstId_2',
+				method: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(formData),
+				success: function(res) {
+					if (res.status === 'success') {
+						var html = '';
+						$.each(res.data, function(index, item) {
+							html += item.paperHtml;
+						});
+						$('#cnstPaper').html(html);
+						$.parser.parse($('#cnstPaper'));
+					} else {
+						$.messager.alert('Error', res.message);
+						return;
+					}
+				}
+			});
+		},
+		fnDosingChart: function() {
+			var queryParams = $("#dg2").datagrid('options').queryParams;
+			queryParams.custId = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
+			queryParams.cnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			
+			$('#dg2').datagrid('load', '/api/v1/main/chart/findDosingChartByCnstId');
+		},
+		saveCnstChart: function() {
+			// 상담차트
+			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			var cnstDesc = $('#cnstDesc').textbox('getValue');
+			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
+			var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
+			var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
+			var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+			var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+			var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
+			var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
+			var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
+			var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
+			if( selectedCnstId == "" ) {
+				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				return false;
+			}
+			// 설문차트
+			var cnstPaperSize = $('#cnstPaper tr').length;
+			var cnstPaperList = [];
+			for (var i = 0; i < cnstPaperSize; i++) {
+				var paperObj = $("#cnstPaper tr").eq(i).find("td").eq(1);
+				var cnstPaperKind = paperObj.attr("data-el");
+				var cnstPaperId = paperObj.attr("data-nm");
+				var cnstPaperVer = paperObj.attr("data-ver");
+				var cnstPaperNum = paperObj.attr("data-num");
+				var cnstPaperAttr = paperObj.attr("data-attr");
+				var cnstPaperVal = "";
+				if (cnstPaperKind === "TEXT") {
+					cnstPaperVal = paperObj.find("input[type='text']").val();
+				} else if (cnstPaperKind === "CHECK") {
+					var len = paperObj.find("input[type='checkbox']").length;
+					var c = 0;
+					for (var j = 0; j < len; j++) { 
+						if (paperObj.find("input[type='checkbox']")[j].checked) {
+							if (c === 0) 
+								cnstPaperVal = paperObj.find("input[type='checkbox']")[j].value;
+							else
+								cnstPaperVal += ','+ cnstPaperVal + paperObj.find("input[type='checkbox']")[j].value;
+							c++; 
+						}
+					}
+				} else if (cnstPaperKind === "RADIO") {
+					cnstPaperVal = paperObj.find("input[type='radio']:checked").val();
+				}
+				
+				cnstPaperList.push({
+					"cnstId" 		: selectedCnstId,
+					"cnstPaperId" 	: cnstPaperId,
+					"cnstPaperVer" 	: cnstPaperVer,
+					"cnstPaperNum" 	: cnstPaperNum,
+					"cnstPaperVal" 	: cnstPaperVal
+				});
+				
+				// 상담차트 체중 업데이트
+				if (cnstPaperAttr === 'ORG_WGT') orgWgt = Number(cnstPaperVal);
+				if (cnstPaperAttr === 'TGT_WGT') tgtWgt = Number(cnstPaperVal);
+			}
+			
+			var formData = {
+				criteria: {
+					"cnstId" 		: selectedCnstId,
+					"cnstDesc" 		: cnstDesc,
+					"picUsrNo"		: picUsrNo,
+					"pic2UsrNo"		: pic2UsrNo,
+					"orgWgt"		: orgWgt,
+					"tgtWgt"		: tgtWgt,
+					"startDosgDt" 	: startDosgDt,
+					"cnstHhCd"		: cnstHhCd,
+					"cnstHhMemo"	: cnstHhMemo,
+					"dosgTpCd"		: dosgTpCd,
+					"srvChartList" 	: cnstPaperList
+				}
+			};
+			
+			$.ajax({
+				url: '/api/v1/main/chart/saveCnstChart_2',
+				method: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(formData),
+				success: function(res) {
+					if (res.status === 'success') {
+						$.messager.show({ title: '상당차트 저장', msg: res.message });
+						
+						RS1001PU02.fnCnstChart(); // 상담차트 조회
+					} else {
+						$.messager.alert('상당차트 저장', res.message);
+						return;
+					}
+				},
+				error: function(xhr, status, error) {
+					$.messager.alert('상당차트 저장', xhr.responseJSON.message, 'error');
+				}
+			});
+		},
+		createDosingChart: function() {
+			// 상담차트
+			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			var cnstDesc = $('#cnstDesc').textbox('getValue');
+			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
+			var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
+			var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
+			var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+			var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+			var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
+			var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
+			var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
+			var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
+			if( selectedCnstId == "" ) {
+				$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				return false;
+			}
+			if( dosgTpCd == "" ) {
+				$.messager.alert("복용유형 선택", "상담정보에서 '복용유형'를 선택해 주세요.");
+				return false;
+			}
+			if( startDosgDt == "" ) {
+				$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.\n복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
+				return false;
+			}
+			var formData = {
+				criteria: {
+					"cnstId" 		: selectedCnstId,
+					"cnstDesc" 		: cnstDesc,
+					"picUsrNo"		: picUsrNo,
+					"pic2UsrNo"		: pic2UsrNo,
+					"orgWgt"		: orgWgt,
+					"tgtWgt"		: tgtWgt,
+					"startDosgDt" 	: startDosgDt,
+					"cnstHhCd"		: cnstHhCd,
+					"cnstHhMemo"	: cnstHhMemo,
+					"dosgTpCd"		: dosgTpCd
+				}
+			};
+			
+			$.messager.confirm('Confirm', '신규 복용차트를 생성하시겠습니까?', function(r) {
+				if (!r) return;
+				
+				$.ajax({
+					url: '/api/v1/main/chart/createDosingChart_2',
+					method: 'post',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(formData),
+					success: function(res) {
+						if (res.status === 'success') {
+							$.messager.show({ title: '복용차트 생성', msg: res.message });
+							
+							RS1001PU02.fnCnstChart(); // 상담차트 조회
+						} else {
+							$.messager.alert('복용차트 생성', res.message);
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						$.messager.alert('복용차트 생성', xhr.responseJSON.message, 'error');
+					}
+				});
+			});
+		},
+		saveDosingChart: function() {
+			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			if( selectedCnstId == "" ) {
+				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				return false;
+			}
+			var dosgId     = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
+			var dosgSeq    = $('#dosgDlgFrm input[name=dlg_dosgSeq]').val();
+			var dosgLvCd   = $('#dosgDlgFrm input[textboxName=dlg_dosgLvCd]').textbox('getValue');
+			var dosgDt     = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
+			var callYn     = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
+			var dosgYn     = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
+			var pausYn     = $('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('getValue');
+			var currWgt    = $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('getValue');
+			var lossWgt    = $('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('getValue');
+			var rmiWgt     = $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
+			var dosgDesc1  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
+			var dosgDesc2  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
+			var formData = {
+				criteria: {
+					"cnstId":	    selectedCnstId,
+					"dosgId":		dosgId,
+					"dosgSeq": 		dosgSeq,
+					"dosgLvCd":		dosgLvCd,
+					"dosgDt":		dosgDt,
+					"callYn":		callYn,
+					"dosgYn": 		dosgYn,
+					"pausYn": 		pausYn,
+					"currWgt": 		currWgt,
+					"lossWgt":		lossWgt,
+					"rmiWgt":		rmiWgt,
+					"dosgDesc1":	dosgDesc1,
+					"dosgDesc2": 	dosgDesc2
+				}
+			};
+			
+			$.ajax({
+				url: '/api/v1/main/survey/saveDosingChart_2',
+				method: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(formData),
+				success: function(res) {
+					if (res.status === 'success') {
+						$.messager.show({ title: '복용차트 저장', msg: res.message });
+						
+						fnDosingChart(); // 복용차트 조회
+					} else {
+						$.messager.alert('복용차트 저장', res.message);
+						return;
+					}
+				},
+				error: function(xhr, status, error) {
+					$.messager.alert('복용차트 저장', xhr.responseJSON.message, 'error');
+				}
+			});
 		}
 	};
 	
@@ -775,81 +741,5 @@ $( document ).ready( function() {
 
 		$('#custTabs').tabs('select', gTabNo);
 	}
-	
-	/**************************************************************
-     * "상담차트 삭제" 클릭시
-     * 
-     * 데이터그리드 행 삭제 기능으로 대체함.
-     **************************************************************/
-	/*$(document).off("click", "#btnDelCnstChart").on("click", "#btnDelCnstChart", function (e) {
-		removeCnstChart();
-	});*/
-	
-	/**************************************************************
-     * "복용차트 생성" 클릭시
-     **************************************************************/
-	$(document).off("click", "#btnNewDosgChart").on("click", "#btnNewDosgChart", function (e) {
-		createDosingChart();
-	});
-
-	/**************************************************************
-     * "상담정보 저장" 클릭시
-     **************************************************************/
-	$(document).off("click", "#btnSaveCnstChart").on("click", "#btnSaveCnstChart", function (e) {
-		$.messager.confirm('Confirm', '차트정보를 저장하시겠습니까?', function(r) {
-			if (!r) return;
-			
-			saveCnstChart( e );
-			//saveSurveyChart( e );
-			//saveDosingChart( e );
-		});
-	});
-	
-	/**************************************************************
-     * "설문차트 저장" 클릭시
-     * 
-     * "상담차트 저장" 에 통합함.
-     **************************************************************/
-	/*$(document).off("click", "#btnSaveSurvChart").on("click", "#btnSaveSurvChart", function (e) {
-		$.messager.confirm('Confirm', '설문차트 정보를 저장하시겠습니까?', function(r) {
-			if (!r) return;
-			
-			saveSurveyChart( e );
-		});
-	});*/
-	
-	/**************************************************************
-     * "복용차트 저장" 클릭시
-     **************************************************************/
-	$(document).off("click", "#btnSaveDosgChart").on("click", "#btnSaveDosgChart", function (e) {
-		//$.messager.confirm('Confirm', '복용차트 정보를 저장하시겠습니까?', function(r) {
-		//	if (!r) return;
-			
-			saveDosingChart( e );
-		//});
-	});
-	
-	/**************************************************************
-     * 복용차트 체중 수정시
-     **************************************************************/
-    $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox({
-    	onChange: function(value) {
-    		var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
-    		var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
-    		var lossWgt = Number(orgWgt) - Number(value);
-    		var rmiWgt = Number(value) - Number(tgtWgt);
-    		
-    		$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', lossWgt);
-    		$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', rmiWgt);
-    	}
-    });
-	//$(document).off("change", "#dosgDlgFrm input[textboxName=dlg_currWgt]").on("change", "#dosgDlgFrm input[textboxName=dlg_currWgt]", function (e) {
-		//alert('hi');
-		//$.messager.confirm('Confirm', '복용차트 정보를 저장하시겠습니까?', function(r) {
-		//	if (!r) return;
-			
-		//	saveDosingChart( e );
-		//});
-	//});
 	
 });

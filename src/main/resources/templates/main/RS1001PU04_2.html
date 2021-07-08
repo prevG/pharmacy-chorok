@@ -41,14 +41,14 @@
 					<form id="saveCnstFrm" name="saveCnstFrm" method="post">
 					<input type="hidden" name="selectedIndex">
 					<div class="row m-2">
-						<div class="col-md-2 form-inline">
+						<div class="col-md-3 form-inline">
 							<input name="selectedCnstId" class="easyui-textbox" style="width: 100%;text-align: center;"
 								   data-options="
 								   		label:'상담번호 *',
 								   		required:true,
 								   		readonly:true">
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 form-inline">
 		 		 			<input name="cnstDt" class="easyui-textbox" style="width: 100%;text-align: center;"
 								   data-options="
 								   		label:'상담일시 *',
@@ -56,7 +56,7 @@
 								   		required:true,
 								   		readonly:true">
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 form-inline">
 		 		 			<select name="picUsrNo" class="easyui-combobox" style="width: 100%;text-align: center;"
 								   data-options="
 								   		label:'상담한약사',
@@ -68,7 +68,7 @@
 										th:text="${data?.usrNm}"></option>
 							</select>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 form-inline">
 		 		 			<select name="pic2UsrNo" class="easyui-combobox" style="width: 100%;text-align: center;"
 								   data-options="
 								   		label:'상담실장',
@@ -80,18 +80,9 @@
 										th:text="${data?.usrNm}"></option>
 							</select>
 						</div>
-						<div class="col-md-3 form-inline">
-		 		 			<select name="dosgTpCd" class="easyui-combobox" style="width: 100%;text-align: center;"
-								   data-options="
-								   		label:'복용유형',
-								   		labelPosition:'left'">
-							</select>
-						</div>
-						<div class="col-md-1">
-						</div>
 					</div>
 					<div class="row m-2">
-						<div class="col-md-2 form-inline">
+						<div class="col-md-3 form-inline">
 		 		 			<select name="cnstHhCd" class="easyui-combobox" style="width: 100%;text-align: center;"
 								   data-options="
 								   		label:'상담가능시간',
@@ -110,13 +101,20 @@
 								<option value="18">18시</option>
 							</select>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-3 form-inline">
 		 		 			<input name="cnstHhMemo" class="easyui-textbox" style="width: 100%;"
 								   data-options="
 								   		label:'상담시간메모',
 								   		labelPosition:'left'">
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 form-inline">
+		 		 			<select name="dosgTpCd" class="easyui-combobox" style="width: 100%;text-align: center;"
+								   data-options="
+								   		label:'복용유형',
+								   		labelPosition:'left'">
+							</select>
+						</div>
+						<div class="col-md-3 d-flex justify-content-end">
 							<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">상담차트 저장</a>
 						</div>
 					</div>
@@ -128,7 +126,7 @@
 			 		 data-options="tabWidth:120">
 			 		 <div title="설문차트" class="py-2" style="overflow: hidden;">
 			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
-			 		 	<div style="height: 300px;overflow: auto;">
+			 		 	<div style="height: 510px;overflow: auto;">
 				 		 	<table class="table table-sm table-hover">
 				 		 		<thead>
 				 		 			<tr>

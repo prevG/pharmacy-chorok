@@ -338,9 +338,11 @@ public class ReservationController {
 	 */
 	@PostMapping("/RS1001PU02/findPaperChartByCnstId_2")
 	@ResponseBody
-	public ResponseEntity<ResponseMessage> findPaperChartByCnstId_2(TbPpCnstChart chartParam, TbPpCnstPaper tbPpCnstPaper) throws Exception {
+	public ResponseEntity<ResponseMessage> findPaperChartByCnstId_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
 		
-		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( chartParam, tbPpCnstPaper );
+		// TODO tbPpCnstPaper 필요한지 확인 필요.
+		TbPpCnstPaper tbPpCnstPaper = new TbPpCnstPaper();
+		List<ResultSurveyChartVo> cnstPaper = chartSvc.findPaperChartByCnstId( pageCriteria.getCriteria(), tbPpCnstPaper );
 		
 		int i = 0;
 		for (ResultSurveyChartVo vo : cnstPaper) {
