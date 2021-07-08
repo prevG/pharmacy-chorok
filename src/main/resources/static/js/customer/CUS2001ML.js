@@ -41,7 +41,7 @@ $( document ).ready( function() {
             {field: 'dosgTpNm'   , title: '복용단계'    , align: 'center', width: '80'},
             {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
             {field: 'custAge'    , title: '나이'       , align: 'center', width: '80'},
-            {field: 'picUsrNm'   , title: '담당약사'    , align: 'center', width: '80'},
+            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80'},
             {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '80'},
             {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '80'},
 			{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'center', width: '200'},
