@@ -15,4 +15,5 @@ public class TbCommCalendar {
     private String wkNum;
     private Date monLastDt;
     private String holidayYn;
+    private String todayYn;
 }

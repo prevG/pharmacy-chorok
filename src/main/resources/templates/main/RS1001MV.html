@@ -70,8 +70,8 @@
 								<tbody>
 									<tr th:each="row, idx : ${rowList}" style="height:34px;">
 										<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
-										<td th:each="col, colIdx : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}">
-										
+										<td th:each="col, colIdx : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}"
+											th:style="${col.todayYn == 'Y'} ? 'background-color:#eaf0fb;':'background-color:;'">
 											<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 											<div th:data-id="${data.rsvtId}">
 												<button type="button" name="rsvtSch" class="btn btn-sm" 
@@ -178,7 +178,7 @@
 											   style="width:280px;margin-right:30px;">
 										<input class="easyui-textbox"  id="rcmdCellNo" name="rcmdCellNo" maxlength="13" tabindex="11"
 										       data-options="prompt:'추천인 연락처'"
-											   style="width:200px;margin-right:30px;">
+											   style="width:280px;margin-right:30px;">
 										<input type="hidden" id="rcmdUsrNo"  name="rcmdUsrNo" tabindex="12" > 
 									</div>
 								</div>

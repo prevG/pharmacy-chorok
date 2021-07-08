@@ -10,6 +10,9 @@
 		 , DAYS_STR_KOR
 		 , DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
 		 , DAYS_NUM
+		 , CASE WHEN DATE_FORMAT(BASE_DT, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d') THEN 'Y'
+                ELSE 'N'
+		    END AS TODAY_YN
 	  FROM TB_COMM_CALENDAR CAL
   	 WHERE CAL.WK_NUM = (SELECT WK_NUM 
 	                       FROM TB_COMM_CALENDAR 
@@ -28,6 +31,9 @@
 		, DAYS_STR_KOR
 		, DATE_FORMAT( BASE_DT, '%m-%d') AS BASE_DT_STR 
 		, DAYS_NUM
+		, CASE WHEN DATE_FORMAT(BASE_DT, '%Y%m%d') = DATE_FORMAT(NOW(), '%Y%m%d') THEN 'Y'
+                ELSE 'N'
+		    END AS TODAY_YN
 	 FROM TB_COMM_CALENDAR CAL
 	WHERE BASE_DT >= DATE_FORMAT( NOW(), '%Y-%m-%d')
 	  AND BASE_DT <= DATE_FORMAT( DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')
