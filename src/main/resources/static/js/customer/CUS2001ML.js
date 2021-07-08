@@ -35,7 +35,8 @@ $( document ).ready( function() {
         			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
         		}
         	},
-            {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '100', editor: 'numberbox'},
+            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox'},
+            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '100'},
             {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '100'},
             {field: 'dosgTpNm'	 , title: '복용구분'    , align: 'center', width: '80'},
             {field: 'dosgTpNm'   , title: '복용단계'    , align: 'center', width: '80'},
