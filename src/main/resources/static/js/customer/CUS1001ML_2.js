@@ -10,7 +10,7 @@ function fnInit() {
 	gC1008 = getCodeData('C1008'); // 남성/여성
 	gC1020 = getCodeData('C1020'); // 기혼/미혼
 	
-	$('#dg').datagrid({
+	$('#dg01').datagrid({
 	    //url: '/api/v1/main/customer/findAllCustomer',
 	    singleSelect: true, 
 	    ctrlSelect: true,
@@ -119,15 +119,15 @@ function fnInit() {
 }
 
 function fnSearch() {
-	var queryParams = $("#dg").datagrid('options').queryParams;
+	var queryParams = $("#dg01").datagrid('options').queryParams;
 	queryParams.custUsrNm = $("#custUsrNm").val();
 	queryParams.custCellNo = $('#custCellNo').val();
 	
-	$('#dg').datagrid('load', '/api/v1/main/customer/findAllCustomer');
+	$('#dg01').datagrid('load', '/api/v1/main/customer/findAllCustomer');
 }
 
 function fnCustInfo() {
-	var row = $('#dg').datagrid('getSelected');
+	var row = $('#dg01').datagrid('getSelected');
 	if (!row) {
 		$.messager.confirm('고객목록', '고객목록에서 상담고객을 선택해 주세요');
 		return;	
@@ -222,11 +222,7 @@ $(document).ready(function() {
 
 		saveNewCust();
 	});
-	
-		$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {
-	alert('hi');
-		//saveCustInfo();
-	});
+
 });
 
 function fnZipCode() {
