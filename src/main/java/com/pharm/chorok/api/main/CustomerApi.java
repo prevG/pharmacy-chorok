@@ -30,7 +30,7 @@ public class CustomerApi {
 		
 		ResponseMessage resMsg = new ResponseMessage();
 		try {
-			customerSvc.saveCustomer( custInfo, rsvtInfo );
+			//customerSvc.saveCustomer( custInfo, rsvtInfo );
 
 
 			resMsg.setStatus("success");
