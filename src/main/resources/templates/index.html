@@ -138,10 +138,12 @@
 											labelPosition:'left',
 											formatter:myformatter,
 											parser:myparser,
+											required:true,
 								            readonly:true"
 								style="width:200px;margin-right:20px;" placeholder="예약일자" tabindex="1">
 						<select class="easyui-combobox" name="rsvtDtHh" id="rsvtDtHh" 								
 								data-options="panelHeight:'auto',
+										      required:true,
 								              readonly:true"
 								style="width:80px;height:auto;margin-right:20px;" tabindex="2">
 							<option value="" selected>시</option>
@@ -157,6 +159,7 @@
 						</select>
 						<select class="easyui-combobox" name="rsvtDtMm" id="rsvtDtMm" 
 								data-options="panelHeight:'auto',
+										      required:true,
 								              readonly:true"
 								style="width:80px;margin-right:20px;" tabindex="3">
 							<option value="" selected>분</option>
@@ -188,18 +191,21 @@
 				</div>
 				<div class="row" style="margin-bottom: 10px">
 					<div class="col">
-						<input class="easyui-textbox" data-options="label:'예약자 연락처'"
-						       id="rsvtCellNo" name="rsvtCellNo" maxlength="13" placeholder="예약자 휴대전화번호" tabindex="5"
+						<input class="easyui-textbox" id="rsvtCellNo" name="rsvtCellNo" maxlength="13" placeholder="예약자 휴대전화번호" tabindex="5" 
+						       data-options="label:'예약자 연락처',
+								             required:true"
 							   style="width:280px;margin-right:30px;">
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 10px">
 					<div class="col">
-						<input class="easyui-textbox" data-options="label:'추천인 정보',prompt:'추천인명'"
-						       id="rcmdUsrNm" name="rcmdUsrNm" maxlength="20" tabindex="9"
+						<input class="easyui-textbox" id="rcmdUsrNm" name="rcmdUsrNm" maxlength="20" tabindex="9"
+									data-options="label:'추천인 정보',
+									  			  prompt:'추천인명'"
 							   style="width:280px;margin-right:30px;">
-						<input class="easyui-textbox"  ata-options="prompt:'추천인 연락처'" 
-							   id="rcmdCellNo" name="rcmdCellNo" maxlength="13" tabindex="9"
+						<input class="easyui-textbox" id="rcmdCellNo" name="rcmdCellNo" maxlength="13" tabindex="9"
+							   data-options="label:'추천인 연락처',
+								 			 prompt:'추천인명'"
 							   style="width:200px;margin-right:30px;">
 						<input type="hidden" id="rcmdUsrNo"  name="rcmdUsrNo" tabindex="9" placeholder="추천인 고객번호"> 
 					</div>
