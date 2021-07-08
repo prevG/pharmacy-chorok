@@ -81,7 +81,7 @@
 	
 	<select id="selectTbPpCnstChartPrevCnstId" resultType="long">
 	<![CDATA[    
-    SELECT MAX(CNST_ID ) AS CNST_ID
+    SELECT CASE WHEN MAX(CNST_ID) IS NULL THEN 0 ELSE MAX(CNST_ID) END AS CNST_ID
       FROM TB_PP_CNST_CHART
       WHERE CUST_ID = #{custId}
 	]]>

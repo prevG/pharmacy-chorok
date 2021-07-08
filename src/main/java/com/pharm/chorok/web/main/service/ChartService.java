@@ -136,7 +136,7 @@ public class ChartService {
 		cnstInfo.setCustId( custInfo.getCustId() );
 //		cnstInfo.setPicUsrNo( usrNo );
 		//이전 상담차트 번호를 조회하고,
-		Long prevCnstId = consultingRepo.selectTbPpCnstChartPrevCnstId(cnstInfo);
+		long prevCnstId = consultingRepo.selectTbPpCnstChartPrevCnstId(cnstInfo);
 		//신규 상담번호를 생성한다.
 		consultingRepo.insertTbPpCnstChart( cnstInfo );
 		

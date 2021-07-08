@@ -287,18 +287,28 @@ public class ReservationController {
 	@PostMapping("/RS1001PU02/saveCustomer_2")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> saveCustomer_2(@RequestBody PageCriteria<TbCustomer> pageCriteria) throws Exception {
-		Assert.isTrue(pageCriteria.getCriteria().getCustId() > 0, "고객번호가 존재하지 않습니다.");
 		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm(), "고객이름을 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo(), "핸드폰번호를 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustBirthDt(), "생년월일을 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustGenTpCd(), "성별을 입력하세요");
+		
+		// 신규고객 등록
+		if (pageCriteria.getCriteria().getCustId() == 0) {
+			int newCellNoCount = userService.countUserCellNo(pageCriteria.getCriteria());
+			if (newCellNoCount > 0)
+				return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
+			userService.addUser(pageCriteria.getCriteria());
+			
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 등록되었습니다."), HttpStatus.OK);
+		}
 
+		// 기존고객 수정
 		int cellNoCount = userService.countUserCellNoByExcludeCustId(pageCriteria.getCriteria());
 		if (cellNoCount > 0)
 			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
 		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
 			
-		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 처리되었습니다."), HttpStatus.OK);
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다."), HttpStatus.OK);
 	}
 
 	/**

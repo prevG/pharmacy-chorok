@@ -38,6 +38,12 @@ public class CustomerController {
 	@Autowired
 	private CommUserDetailsService commUserDetailsSvc;
 
+	/**
+	 * @deprecated /CUS1001ML_2 함수로 대체함.
+	 * 
+	 * @param model
+	 * @return
+	 */
     //고객목록화면
 	@GetMapping("/CUS1001ML")
 	public String CUS1001ML(Model model) {
@@ -130,10 +136,11 @@ public class CustomerController {
 		return "customer/CUS1002MV_2";
 	}
 	
-	@GetMapping("/CUS1002MV_3/{custId}/{tabNo}")
-	public String CUS1002MV_3(Model model, 
+	@GetMapping("/CUS1001ML_D/{custId}/{tabNo}")
+	public String CUS1001ML_D(Model model, 
 			@PathVariable long custId,
 			@PathVariable int tabNo) throws Exception {
+		
         TbCustomer customer = new TbCustomer();
         customer.setCustId( Long.valueOf(custId) );
 		customer = customerSvc.findCustomerByCustId( customer );
@@ -148,9 +155,15 @@ public class CustomerController {
         model.addAttribute("custInfo", customer);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
-		return "customer/CUS1002MV_3";
+		return "main/RS1001PU02_2 :: customer-main-table";
 	}
 	
+	/**
+	 * @deprecated ReservationController.saveCustomer_2 함수로 대체함.
+	 * 
+	 * @param tbCustomer
+	 * @return
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<ResponseMessage> addCustomer(TbCustomer tbCustomer) {
 		Assert.hasLength(tbCustomer.getCustUsrNm(), "고객이름을 입력하세요");
