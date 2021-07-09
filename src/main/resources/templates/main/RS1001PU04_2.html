@@ -150,12 +150,16 @@
 									   		label:'시작체중',
 									   		labelWidth:100,
 									   		labelPosition:'left',
+											precision:1,
+											groupSeparator:',',
 									   		readonly:true">
 			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: right;"
 									   data-options="
 									   		label:'희망체중',
 									   		labelWidth:100,
 									   		labelPosition:'left',
+											precision:1,
+											groupSeparator:',',
 									   		readonly:true">
 			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;text-align: center;"
 									   data-options="
@@ -225,15 +229,26 @@
 		<div class="row">
 			<div class="col-md-4 p-2">
 				<input name="dlg_currWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
-					   data-options="label:'현재체중',labelWidth:80">
+					   data-options="label:'현재체중',
+					   				labelWidth:80,
+									precision:1,
+									groupSeparator:',',">
 			</div>
 			<div class="col-md-4 p-2">
 				<input name="dlg_lossWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
-					   data-options="label:'감량체중',labelWidth:80,readonly:true">
+					   data-options="label:'감량체중',
+					   				labelWidth:80,
+					   				readonly:true,
+									precision:1,
+									groupSeparator:',',">
 			</div>
 			<div class="col-md-4 p-2">
 				<input name="dlg_rmiWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
-					   data-options="label:'남은체중',labelWidth:80,readonly:true">
+					   data-options="label:'남은체중',
+					   				labelWidth:80,
+					   				readonly:true,
+					   				precision:1,
+					   				groupSeparator:',',">
 			</div>
 		</div>
 		<div class="row">

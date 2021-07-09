@@ -653,7 +653,7 @@ $( document ).ready( function() {
 			var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
 			var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
 			if( selectedCnstId == "" ) {
-				$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나<br>신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
 			}
 			if( dosgTpCd == "" ) {
@@ -661,7 +661,7 @@ $( document ).ready( function() {
 				return false;
 			}
 			if( startDosgDt == "" ) {
-				$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.\n복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
+				$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.<br>복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
 				return false;
 			}
 			var formData = {
@@ -678,6 +678,13 @@ $( document ).ready( function() {
 					"dosgTpCd"		: dosgTpCd
 				}
 			};
+			//이미 복용차트가 생성되어 있는 경우 삭제후 다시 생성될 것인지를 확인한다.
+			var gridList = $('#dg2').datagrid('getRows');
+			if( gridList != null && gridList.length > 0) {
+				$.messager.alert("Warning","이미 복용차트가 생성되어 있습니다.<br>복용스케쥴의 일자를 변경하시기 바랍니다.");
+				return false;
+			}
+
 			
 			$.messager.confirm('Confirm', '신규 복용차트를 생성하시겠습니까?', function(r) {
 				if (!r) return;
@@ -707,7 +714,7 @@ $( document ).ready( function() {
 		saveDosingChart: function() {
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 			if( selectedCnstId == "" ) {
-				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나<br>신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
 			}
 			var dosgId     = $('#dosgDlgFrm input[name=dlg_dosgId]').val();

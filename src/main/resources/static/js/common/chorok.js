@@ -17,6 +17,6 @@ function $isEmpty(str) {
 
 function $isEmptyObj( obj ) {
 	
-	if( obj != null && obj != 'undefined') return true;
-	return false;
+	if( obj != null && obj != 'undefined') return false;
+	return true;
 }
