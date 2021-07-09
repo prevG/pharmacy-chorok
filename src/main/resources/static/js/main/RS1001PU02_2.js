@@ -361,12 +361,12 @@ $( document ).ready( function() {
 				$.messager.alert('고객정보 저장', '고객이름을 입력하세요.');
 				return;
 			}
-			var custCellNo = $('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue');
+			var custCellNo = $('#saveCustFrm input[textboxName=dlg_custCellNo]').numberbox('getValue');
 			if (custCellNo === '') {
 				$.messager.alert('고객정보 저장', '휴대폰번호를 입력하세요.');
 				return;
 			}
-			var custBirthDt = $('#saveCustFrm input[textboxName=dlg_custBirthDt]').textbox('getValue');
+			var custBirthDt = $('#saveCustFrm input[textboxName=dlg_custBirthDt]').numberbox('getValue');
 			if (custBirthDt === '') {
 				$.messager.alert('고객정보 저장', '생년월일을 입력하세요.');
 				return;
@@ -400,7 +400,7 @@ $( document ).ready( function() {
 						"custMemo" 		:	$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
-						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').textbox('getValue'),
+						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
 						"delYn" 		: 	'N'
 					}
 				};
