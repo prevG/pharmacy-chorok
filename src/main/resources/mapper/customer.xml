@@ -18,6 +18,7 @@
     SELECT *
       FROM TB_CUSTOMER
      WHERE 1 = 1
+       AND DEL_YN = 'N'
     ]]>
     <if test="custUsrNm != null and custUsrNm != ''">
        AND CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
