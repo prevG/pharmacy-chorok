@@ -162,8 +162,9 @@ $(document).ready(function() {
 		},
 		search: function() {
 			var queryParams = $("#dg01").datagrid('options').queryParams;
-			queryParams.custUsrNm = $("#custUsrNm").val();
-			queryParams.custCellNo = $('#custCellNo').val();
+			queryParams.delYn 		= "N";
+			queryParams.custUsrNm 	= $("#custUsrNm").val();
+			queryParams.custCellNo 	= $('#custCellNo').val();
 			
 			$('#dg01').datagrid('load', '/api/v1/main/customer/findAllCustomer');
 		}
