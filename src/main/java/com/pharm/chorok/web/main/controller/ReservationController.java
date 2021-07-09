@@ -346,8 +346,10 @@ public class ReservationController {
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
 						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\" data-attr=\""+ vo.getRefAttrCd() +"\" data-type=\""+ vo.getDataType() +"\">\n";
-						if (vo.getDataType() != null && vo.getDataType().equalsIgnoreCase("NUMBER")) {
+						if (vo.getDataType() != null && vo.getDataType().equalsIgnoreCase("INT")) {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-numberbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\" maxlength=\"10\">\n";
+						} else if (vo.getDataType() != null && vo.getDataType().equalsIgnoreCase("FLOAT")) {
+								cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-numberbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\" maxlength=\"10\" data-options=\"precision:1,groupSeparator:','\">\n";
 						} else {
 							cnstPaperHtml += "      <input name=\""+ vo.getId() +"\" class=\"easyui-textbox\" style=\"width: 100%;\" value=\""+ vo.getCnstPaperVal() +"\" maxlength=\"10\">\n";
 						}

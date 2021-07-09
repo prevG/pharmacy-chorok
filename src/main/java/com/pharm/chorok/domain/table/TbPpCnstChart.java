@@ -19,11 +19,11 @@ public class TbPpCnstChart extends TbCommColumn {
     /**
      * @deprecated orgWgt 으로 데체함.
      */
-    private String curWgt;
-    private String tgtWgt;
+    private float curWgt;
+    private float tgtWgt;
     private String startDosgDt;
     
-    private String orgWgt;			// 시작체중
+    private float orgWgt;			// 시작체중
     private String pic2UsrNo;		// 상담실장 아이디
     private String cnstHhCd;		// 상담가능시간 코드
     private String cnstHhMemo; 		// 상담가능시간 메모

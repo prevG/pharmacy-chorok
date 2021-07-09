@@ -110,17 +110,18 @@
 	</insert>
 
 	<update id="updateTbPpCnstChart">
+  /**com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
 		UPDATE TB_PP_CNST_CHART
-		SET    CNST_DESC = #{cnstDesc}
-			 , PIC_USR_NO = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
-			 , PIC2_USR_NO = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
-			 , ORG_WGT = CASE WHEN #{orgWgt} = '' THEN NULL ELSE #{orgWgt} END
-			 , TGT_WGT = CASE WHEN #{tgtWgt} = '' THEN NULL ELSE #{tgtWgt} END
-			 , START_DOSG_DT = CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
-			 , CNST_HH_CD = #{cnstHhCd}
-			 , CNST_HH_MEMO = #{cnstHhMemo}
-			 , DOSG_TP_CD = #{dosgTpCd}
-		WHERE CNST_ID = #{cnstId}
+		   SET CNST_DESC    = #{cnstDesc}
+			   , PIC_USR_NO   = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
+			   , PIC2_USR_NO  = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
+			   , ORG_WGT      = #{orgWgt}
+			   , TGT_WGT      = #{tgtWgt}
+			   , START_DOSG_DT = CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
+			   , CNST_HH_CD   = #{cnstHhCd}
+			   , CNST_HH_MEMO = #{cnstHhMemo}
+			   , DOSG_TP_CD   = #{dosgTpCd}
+		 WHERE CNST_ID = #{cnstId}
 	</update>
 
   <delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
