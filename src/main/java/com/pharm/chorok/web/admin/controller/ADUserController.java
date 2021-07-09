@@ -31,14 +31,14 @@ public class ADUserController {
 	@GetMapping("/AD1003MV")
 	public ModelAndView admin() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/AD1003MV");
+		mv.setViewName("admin/AD1003MV");
 		return mv;
 	}
 	
 	@GetMapping("/AD1003MV_2")
 	public ModelAndView admin2() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/AD1003MV_2");
+		mv.setViewName("admin/AD1003MV_2");
 		return mv;
 	}
 	
