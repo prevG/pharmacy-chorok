@@ -382,7 +382,8 @@ $( document ).ready( function() {
 				
 				var formData = {
 					criteria : {
-						"rsvtId" 		: 	$('#saveCustFrm input[textboxName=dlg_rsvtId]').textbox('getValue'),
+						//"rsvtId" 		: 	$('#saveCustFrm input[textboxName=dlg_rsvtId]').textbox('getValue'),
+						"rsvtId" 		: 	$('#saveCustFrm input[name=dlg_rsvtId]').val(),
 						"custId" 		: 	$('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue'),
 						"custUsrNm" 	: 	custUsrNm,
 						"custCellNo" 	: 	custCellNo,
@@ -412,15 +413,15 @@ $( document ).ready( function() {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							var custId = res.data;
-							var custNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
+							var custId 	  = res.data;
+							var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
 
 							//고객차트탭의 고객번호 업데이트
 							$('#saveCustFrm input[textboxName=dlg_custId]').textbox('setValue', custId);
 
 							//차트정보탭의 고객명/고객번호 업데이트(고객테이블정보사용)
 							$('input[textboxName=selectedCustId]').textbox('setValue', custId);
-							$('input[textboxName=selectedCustNm]').textbox('setValue', custNm);
+							$('input[textboxName=selectedCustUsrNm]').textbox('setValue', custUsrNm);
 
 							//고객번호 있는 경우 차트탭 활성화
 							$('#custTabs').tabs('enableTab', 1);

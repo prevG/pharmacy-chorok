@@ -17,8 +17,10 @@
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
 						</div>
 						<div class="col">
-							<input name="dlg_rsvtId" class="easyui-textbox" style="width: 100%;text-align: center;"
+							<input class="easyui-textbox" style="width: 100%;text-align: center;"
 									data-options="label:'예약번호',readonly:true"
+									th:value="${rsvtInfo?.rsvtId}" th:if="${rsvtInfo?.rsvtId > 0}">
+							<input type="hidden" name="dlg_rsvtId" style="width: 100%;text-align: center;"
 									th:value="${rsvtInfo?.rsvtId}">
 						</div>
 					</div>
