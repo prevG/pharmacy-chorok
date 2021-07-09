@@ -26,14 +26,14 @@ public class ADAdminController {
 	@GetMapping("/AD1001MV")
 	public ModelAndView admin() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/AD1001MV");
+		mv.setViewName("admin/AD1001MV");
 		return mv;
 	}
 	
 	@GetMapping("/AD1001MV_2")
 	public ModelAndView admin2() throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/admin/AD1001MV_2");
+		mv.setViewName("admin/AD1001MV_2");
 		return mv;
 	}
 	
