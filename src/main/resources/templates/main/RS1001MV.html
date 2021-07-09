@@ -71,7 +71,8 @@
 									<tr th:each="row, idx : ${rowList}" style="height:34px;">
 										<th th:text="${#dates.format(row.startHm, 'HH : mm')}" style="text-align:center; vertical-align: middle;"></th>
 										<td th:each="col, colIdx : ${colList}" th:data-row="${row.id}" th:data-col="${col.daysNum}"
-											th:style="${col.todayYn == 'Y'} ? 'background-color:#eaf0fb;':'background-color:;'">
+											th:style="${col.todayYn == 'Y'} ? 'background-color:#eaf0fb;':'background-color:;'"
+											th:data-rsvt-date="|${#dates.format(col.baseDt, 'yyyy-MM-dd')} ${#dates.format(row.startHm, 'HH:mm')}|">
 											<th:block th:each="data, dataIdx : ${dataList}" th:if="${row.id == data?.wt?.id and col.daysNum == data?.cal?.daysNum}">
 											<div th:data-id="${data.rsvtId}">
 												<button type="button" name="rsvtSch" class="btn btn-sm" 
@@ -91,7 +92,7 @@
 						<div class="row" style="margin-bottom: 10px">
 							<div class="col">
 								<div style="text-align:right;">
-									<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
+									<a href="javascript:void(0)" class="easyui-linkbutton c1"
 									id="btnNewChartView" name="btnNewChartView">상담하기</a>
 								</div>
 							</div>

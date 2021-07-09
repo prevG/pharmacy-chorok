@@ -19,7 +19,7 @@ $( document ).ready( function() {
         	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '70'},
             {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '90', editor: 'numberbox'},
             {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80'},
-            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '70'},
+            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '100'},
             {field: 'dosgSeq'   , title: '복용일차'    , align: 'center', width: '70',
                 formatter: function(value, row, index) {
                     if( value == 0 ) {
@@ -47,12 +47,12 @@ $( document ).ready( function() {
         emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
         dragSelection: true,
         columns:[[
-            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '70'},
-        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '70'},
-            {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '90', editor: 'numberbox'},
-            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80'},
-            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '70'},
-            {field: 'dosgSeq'   , title: '복용일차'    , align: 'center', width: '70',
+            {field: 'cnstId'     , title: '차트번호'   , align: 'center', width: '70'},
+        	{field: 'custUsrNm'  , title: '고객이름'   , align: 'center', halign: 'center', width: '70'},
+            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '90', editor: 'numberbox'},
+            {field: 'dosgDt'     , title: '복용일자'   , align: 'center', width: '80'},
+            {field: 'dosgTpNm'	 , title: '복용유형'   , align: 'center', width: '100'},
+            {field: 'dosgSeq'    , title: '복용일차'   , align: 'center', width: '70',
                 formatter: function(value, row, index) {
                     if( value == 0 ) {
                         return '시작전날';    

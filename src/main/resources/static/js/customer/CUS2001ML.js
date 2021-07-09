@@ -35,8 +35,16 @@ $( document ).ready( function() {
 		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox'},
 		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '100'},
 		            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '100'},
-		            {field: 'dosgTpNm'	 , title: '복용구분'    , align: 'center', width: '80'},
-		            {field: 'dosgTpNm'   , title: '복용단계'    , align: 'center', width: '80'},
+		            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '100'},
+		            {field: 'dosgSeq'    , title: '복용일차'    , align: 'center', width: '70',
+		                formatter: function(value, row, index) {
+		                    if( value == 0 ) {
+		                        return '시작전날';    
+		                    } else {
+		                        return value +' 일차';
+		                    }
+		                }
+		            },
 		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
 		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '80'},
 		            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80'},
