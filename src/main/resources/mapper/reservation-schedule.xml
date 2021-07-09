@@ -154,8 +154,12 @@
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findBySearchKeyword */
 	SELECT RSVT_ID
 	     , RSVT_USR_NM
-         , RSVT_CELL_NO
 	     , RSVT_PHN_NO
+	     , CASE LENGTH(SCH.RSVT_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
+                ELSE ''
+           END AS RSVT_CELL_NO
 	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
 		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d') AS RSVT_DT_YYYYMMDD
 		 , DATE_FORMAT( SCH.RSVT_DT, '%H') AS RSVT_DT_HH
@@ -171,6 +175,8 @@
 	        OR RSVT_CELL_NO LIKE CONCAT('%', #{searchKeyword}, '%')
 	        OR RSVT_PHN_NO  LIKE CONCAT('%', #{searchKeyword}, '%')
 	       ) 
+     ORDER
+        BY RSVT_DT DESC
 	]]>
 	</select>
 

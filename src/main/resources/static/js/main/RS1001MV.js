@@ -220,7 +220,7 @@ $(document).ready(function () {
                 },
                 onSelect    : function( data ){
 
-                    $('#rsvtForm').form('load', {
+					$('#rsvtForm').form('load', {
                         rsvtCellNo  : data.cellNo,
                         custId      : data.id,
                         genTpCd     : data.genTpCd
@@ -235,11 +235,14 @@ $(document).ready(function () {
                         });
                     }
                 },
+				onUnselect : function( record) {
+					console.log( "onUnselect", record );
+				},
                 loader: function(param, succ){
                     if (!param.q){return;}
                     $.ajax({
                         type: 'post',
-                        url : "/api/v1/main/customer/findCustomer",
+                        url : "/api/v1/main/customer/findCustomerWithAutocomplate",
                         data: {
                             "custUsrNm": $("input[name='rsvtUsrNm']").val(),
                             "custCellNo": $("input[name='rsvtCellNo']").val()
@@ -247,13 +250,16 @@ $(document).ready(function () {
                         success: function(result){
                             
                             var rows = $.map(result.data, function(item){
+								var tmpCustId = (item.custId > 0) ? (item.custId) : '';
+								var tmpLabel  = (item.custId > 0) ? (item.custUsrNm + " / " + item.custCellNo) : (item.custUsrNm);
+	
                                 return { 
-                                    label: item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-                                    value: item.custUsrNm,
-                                    id: item.custId,
-                                    usrNm: item.custUsrNm,
-                                    cellNo: item.custCellNo,
-                                    genTpCd: item.custGenTpCd
+                                    label   : tmpLabel,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                                    value   : item.custUsrNm,
+                                    id      : tmpCustId,
+                                    usrNm   : item.custUsrNm,
+                                    cellNo  : item.custCellNo,
+                                    genTpCd : item.custGenTpCd
                                 };
                             });
                             succ(rows)

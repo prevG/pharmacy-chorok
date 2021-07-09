@@ -103,6 +103,7 @@
          , CASE LENGTH(CUST.CUST_CELL_NO)
                 WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
                 WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+                ELSE ''
            END AS CUST_CELL_NO
          , CUST.ZIP_CODE
          , CUST.ADDR1

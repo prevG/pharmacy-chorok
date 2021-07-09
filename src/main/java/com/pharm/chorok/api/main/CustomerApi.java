@@ -1,13 +1,8 @@
 package com.pharm.chorok.api.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.table.TbCustomer;
-import com.pharm.chorok.domain.table.TbPpRsvtSch;
-import com.pharm.chorok.web.main.service.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.table.TbCustomer;
+import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.web.main.service.CustomerService;
 
 
 @RequestMapping(value = "/api/v1/main/customer")
@@ -49,6 +50,29 @@ public class CustomerApi {
 		try {
 			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( customerParam );
 			
+			
+			resMsg.setData( result );
+			resMsg.setStatus("success");
+			
+		} catch(Exception e) {
+			resMsg.setStatus("error");
+			resMsg.setMessage( e.getMessage() );
+		}
+		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+	
+	@PostMapping("/findCustomerWithAutocomplate")
+    public ResponseEntity<ResponseMessage> selectCustomerByUsrNmOrCellNoWithAutoComplate(TbCustomer inCustomer) {
+		ResponseMessage resMsg = new ResponseMessage();
+		try {
+			List<TbCustomer> result = customerSvc.selectCustomerByUsrNmOrCellNo( inCustomer );
+			if( result == null || result.size() == 0) {
+				 result = new ArrayList<TbCustomer>();
+				 
+				 TbCustomer newCustomer = new TbCustomer();
+				 newCustomer.setCustUsrNm( inCustomer.getCustUsrNm());
+				 result.add( newCustomer );
+			}
 			
 			resMsg.setData( result );
 			resMsg.setStatus("success");
