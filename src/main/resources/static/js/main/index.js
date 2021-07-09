@@ -15,12 +15,12 @@ $( document ).ready( function() {
         emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
         dragSelection: true,
         columns:[[
-            {field: 'cnstId'   , title: '차트번호', align: 'center'   , width: '70'},
-        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '70'},
+            {field: 'cnstId'     , title: '차트번호'    , align: 'center', width: '70'},
+        	{field: 'custUsrNm'  , title: '고객이름'    , align: 'center', halign: 'center', width: '70'},
             {field: 'custCellNo' , title: '핸드폰번호'   , align: 'center', width: '90', editor: 'numberbox'},
             {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80'},
             {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '100'},
-            {field: 'dosgSeq'   , title: '복용일차'    , align: 'center', width: '70',
+            {field: 'dosgSeq'    , title: '복용일차'    , align: 'center', width: '70',
                 formatter: function(value, row, index) {
                     if( value == 0 ) {
                         return '시작전날';    
@@ -29,7 +29,7 @@ $( document ).ready( function() {
                     }
                 }
             },
-            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'}
+            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '100'}
         ]]
     });  
     $("#table02").datagrid({
@@ -61,7 +61,7 @@ $( document ).ready( function() {
                     }
                 }
             },
-            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'}
+            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '100'}
         ]]
     });  
     $("#table03").datagrid({
@@ -348,30 +348,31 @@ $( document ).ready( function() {
            return false;
         }
 
-        isOk = confirm("예약정보를 저장하시겠습니까?");
-        if (!isOk) {
-           return false;
-        }
+        $.messager.confirm("확인", "예약정보를 저장하시겠습니까?", function(r) {
 
-        var params = $("form[name=rsvtForm]").serialize();
-        $.ajax({
-           type : 'post',
-           url  : '/api/v1/main/reservation/saveReservation',
-           data : params,
-           success: function (result) {
-                if(result.status == "success") {
-                    alert("예약정보가 저장되었습니다.");
-					$(".modal").modal("hide");
-					refreshTimeTable();
-				} else {
-					alert(result.errorMessage);
-				}
-           }
+            if(!r) return; 
+            var rsvtId = $("form[name=rsvtForm]").find("input[name='rsvtId']").val();
+            var params = $("form[name=rsvtForm]").serialize();
+
+            $.ajax({
+                type : 'post',
+                url  : '/api/v1/main/reservation/saveReservation',
+                data : params,
+                success: function (result) {
+                    if(result.status == "success") {
+                        $.messager.show({ title: "알림", msg: "예약정보가 저장되었습니다."});
+                        $('#modalRsvtDtl').dialog('close');
+                        refreshTimeTable( rsvtId );
+                    } else {
+                        $.messager.alert("경고",result.errorMessage);
+                    }
+                }
+            });
         });
 	 });
 
 	//저장후 타임테이블 새로고침
-	refreshTimeTable = function () {
+	refreshTimeTable = function ( rsvtId ) {
 		var url = "/reservation/dashboard/reload";
 		var params = {
 			"currDt": moment($("#rsvtDt").val()).format("YYYYMMDD")
@@ -381,6 +382,19 @@ $( document ).ready( function() {
 
 			if (200 == xhr.status) {
 				$("#time-table").html(response);
+                var obj = $("div[data-id='"+ rsvtId +"']").find("button");
+                if( !$isEmptyObj( obj )) {
+                    //선택된 경우 색상 변경
+                    if( $(obj).hasClass("btn-outline-primary") ) {
+                        $(obj).addClass("btn_primary_sel");
+
+                    } else if( $(obj).hasClass("btn-outline-success") ) {
+                        $(obj).addClass("btn_success_sel");
+
+                    } else {
+                        $(obj).addClass("btn_secondary_sel");
+                    }
+                }
 			} else {
 				console.log(response, status, xhr);
 			}
@@ -405,36 +419,36 @@ $( document ).ready( function() {
 		//     return false;
 		// }
 		if ($isEmpty(rsvtDtYyyymmdd)) {
-			alert("예약 [일자]를 입력해주세요.");
-			$("#rsvtDtYyyymmdd").textbox('clear').textbox('textbox').focus();
+			$.messager.alert("경고","예약 [일자]를 입력해주세요.");
+			$("#rsvtDtYyyymmdd").textbox('textbox').focus();
 			return false;
 		}if ($isEmpty(rsvtDtHh)) {
-			alert("예약 [시]을 입력해주세요.");
+			$.messager.alert("경고","예약 [시]을 입력해주세요.");
 			$("#rsvtDtHh").combobox('textbox').focus();
 			return false;
 		}if ($isEmpty(rsvtDtMm)) {
-			alert("예약 [분]을 입력해주세요.");
+			$.messager.alert("경고","예약 [분]을 입력해주세요.");
 			$("#rsvtDtMm").combobox('textbox').focus();
 			return false;
 		}
 		if (rsvtTpCd == 0) {
-			alert("[상담구분]을 선택해주세요.");
+			$.messager.alert("경고","[상담구분]을 선택해주세요.");
 			$("input[name='rsvtTpCd']").radiobutton('textbox').focus()
 			return false;
 		}
 		if ($isEmpty(rsvtUsrNm)) {
-			alert("[예약자명]을 입력해주세요.");
+			$.messager.alert("경고","[예약자명]을 입력해주세요.");
 			$("#rsvtUsrNm").textbox('textbox').focus()
 			return false;
 		}		
         if (genTpCd == 0) {
-			alert("[성별]을 선택해주세요.");
+			$.messager.alert("경고","[성별]을 선택해주세요.");
 			$("input[name='genTpCd']").radiobutton('textbox').focus()
 			return false;
 		}
 		if ($isEmpty(rsvtCellNo)) {
-			alert("예약자 [휴대전화번호]를 입력해주세요.");
-			$("#rsvtCellNo").textbox('clear').textbox('textbox').focus();
+			$.messager.alert("경고","예약자 [휴대전화번호]를 입력해주세요.");
+			$("#rsvtCellNo").textbox('textbox').focus();
 			return false;
 		}
 		return true;

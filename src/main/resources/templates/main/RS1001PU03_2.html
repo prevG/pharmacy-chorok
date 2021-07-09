@@ -31,7 +31,7 @@
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 						</div>
 						<div class="col">
-							<input name="dlg_custCellNo" class="easyui-numberbox" style="width: 100%;"
+							<input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'휴대폰번호 *',required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}">
 						</div>
@@ -39,7 +39,10 @@
 					<div class="row m-2">
 						<div class="col">
 							<input name="dlg_custBirthDt" class="easyui-numberbox" style="width: 100%"
-								   data-options="label:'생년월일 *',required:true"
+								   data-options="label:'생년월일 *',
+								                 prompt:'예시)20210101',
+												 validType:'length[0,8]',
+												 required:true"
 								   th:value="${custInfo?.custBirthDt}">
 						</div>
 						<div class="col">
@@ -207,7 +210,7 @@
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_rcmdCellNo" class="easyui-numberbox" style="width: 100%;"
+							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'추천인 연락처'"
 								   th:value="${custInfo?.rcmdCellNo}">
 						</div>
