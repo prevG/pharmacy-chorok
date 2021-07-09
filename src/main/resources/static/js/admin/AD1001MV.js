@@ -4,7 +4,7 @@
  * 
  ******************************************************/
 var gC1003; //직윈 
-var gC1002; //권한
+var gC1016; //권한
 var gC1010; //승인
 
 function fnSearch() {
@@ -25,22 +25,22 @@ function formatDate(value, row) {
 */
 function fnInit() {
 	// init combo
-	initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '0' });
+	initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '0' });
 	initComboBox($('#cb_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '0' });
 	
     initComboBox($('#addFrm select[textboxName=dlg_usrGrade]'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
-    initComboBox($('#addFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '1' });
+    initComboBox($('#addFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '1' });
     initComboBox($('#addFrm select[textboxName=dlg_usrAprv]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
     initComboBox($('#addFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
 
     initComboBox($('#modFrm select[textboxName=dlg_usrGrade]'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
-    initComboBox($('#modFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1002', target: 'combo', targetKind: '1' });
+    initComboBox($('#modFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '1' });
     initComboBox($('#modFrm select[textboxName=dlg_usrAprv]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
     initComboBox($('#modFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
 
 	// get grid combo	
 	gC1003 = getCodeData('C1003');
-	gC1002 = getCodeData('C1002');
+	gC1016 = getCodeData('C1016');
 	gC1010 = getCodeData('C1010');
 	
 	$('#dg').datagrid({
@@ -110,7 +110,7 @@ function fnInit() {
         		width: '100', 
         		editor: {
         			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1002, required: true }
+        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1016, required: true }
         		}, 
         		formatter: function(value, row) { return row.usrAuthVal||value; }
         	},
