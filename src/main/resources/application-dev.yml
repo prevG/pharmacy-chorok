@@ -1,10 +1,8 @@
 server:
-  port: 80
-  session:
-    timeout: 32400
-  error:
-    include-stacktrace: always
-    include-exception: true
+    port: 80
+    error:
+      include-stacktrace: always
+      include-exception: true
 logging:
   config: classpath:logback-${spring.profiles.active}.xml
   level:
@@ -33,9 +31,19 @@ spring:
       enabled: true
   thymeleaf:
     cache: false
+    enable : false
   banner:
     location: banner_account.txt
+    mvc:
+      contentnegotiation: 
+        favor-parameter: true 
+        favor-path-extension: true 
+        media-types: 
+          xls: application/vnd.ms-excel
+      
 
+
+       
 ### MyBatis ############################################################
 mybatis:
   mapper-locations: mapper/**/*.xml # mapper.xml 위치 지정
