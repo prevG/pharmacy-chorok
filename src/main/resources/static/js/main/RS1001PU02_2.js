@@ -120,7 +120,7 @@ $( document ).ready( function() {
 		        		field: 'cnstDt', 
 		        		title: '상담일시', 
 		        		align: 'center', 
-		        		width: '120', 
+		        		width: '110', 
 		        		editor: 'text',
 		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
 		        	},
@@ -128,14 +128,14 @@ $( document ).ready( function() {
 		        		field: 'picUsrNoVal', 
 		        		title: '상담한약사', 
 		        		align: 'center', 
-		        		width: '90', 
+		        		width: '70', 
 		        		editor: 'text'
 		        	},
 		        	{
 		        		field: 'pic2UsrNoVal', 
 		        		title: '상담실장', 
 		        		align: 'center', 
-		        		width: '90', 
+		        		width: '70', 
 		        		editor: 'text'
 		        	},
 		        	{
