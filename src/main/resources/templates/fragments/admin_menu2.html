@@ -20,7 +20,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-header">SYSTEM MANAGEMENT</li>
           <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 사용자 관리
@@ -29,13 +29,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a th:href="@{/admin/AD1001MV_2}" class="nav-link active">
+                <a th:href="@{/admin/AD1001MV_2}" class="nav-link" data-menu="/admin/AD1001MV_2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>관리자 관리</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/AD1003MV_2}" class="nav-link">
+                <a th:href="@{/admin/AD1003MV_2}" class="nav-link" data-menu="/admin/AD1003MV_2">
                   <i class="far fa-circle nav-icon"></i>
                   <p>회원 관리</p>
                 </a>

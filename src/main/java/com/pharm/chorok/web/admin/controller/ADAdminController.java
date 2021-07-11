@@ -1,11 +1,12 @@
 package com.pharm.chorok.web.admin.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADAdminService;
+import com.pharm.chorok.web.admin.service.ADCodeService;
 
 @RequestMapping(value = "/admin")
 @Controller
@@ -22,6 +25,9 @@ public class ADAdminController {
 
 	@Autowired
 	private ADAdminService adminService;
+	
+	@Autowired
+	private ADCodeService codeService;
 	
 	@GetMapping("/AD1001MV")
 	public ModelAndView admin() throws Exception {
@@ -31,48 +37,23 @@ public class ADAdminController {
 	}
 	
 	@GetMapping("/AD1001MV_2")
-	public ModelAndView admin2() throws Exception {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("admin/AD1001MV_2");
-		return mv;
+	public String admin2(Model model) {
+		
+		List<TbCommCode> usrAuthList = codeService.selectAbbrCodes(new TbCommCode("C1016", "Y"));
+		List<TbCommCode> usrAprvList = codeService.selectAbbrCodes(new TbCommCode("C1010", "Y"));
+		
+		model.addAttribute("usrAuthList", usrAuthList); // 권한코드
+		model.addAttribute("usrAprvList", usrAprvList); // 승인코드
+		
+		return "admin/AD1001MV_2";
 	}
 	
 	@PostMapping("/getAdmin")
 	@ResponseBody
-	public String getAdmin(TbCommUser tbCommUser) {
-		ArrayList<TbCommUser> tbCommUsers = adminService.selectAdmin(tbCommUser);
-		
-		JSONObject result = new JSONObject();
-		JSONArray arr = new JSONArray();
-		for (int i = 0; i < tbCommUsers.size(); i++) {
-			JSONObject data = new JSONObject();
-			data.put("usrNo",tbCommUsers.get(i).getUsrNo());
-			data.put("usrEml",tbCommUsers.get(i).getUsrEml());
-			data.put("authorities", tbCommUsers.get(i).getAuthorities());
-			data.put("regUsrNo", tbCommUsers.get(i).getRegUsrNo());
-			data.put("updUsrNo", tbCommUsers.get(i).getUpdUsrNo());
-			data.put("dataOwnrId", tbCommUsers.get(i).getDataOwnrId());
-			data.put("password", tbCommUsers.get(i).getPassword());
-			data.put("usrName", tbCommUsers.get(i).getUsername());
-			data.put("usrAuth", tbCommUsers.get(i).getUsrAuth());
-			data.put("usrGrade", tbCommUsers.get(i).getUsrGrade());
-			data.put("usrNm", tbCommUsers.get(i).getUsrNm());
-			data.put("usrPhnNo", tbCommUsers.get(i).getUsrPhnNo());
-			data.put("usrPwd", tbCommUsers.get(i).getUsrPwd());
-			data.put("usrAprv",tbCommUsers.get(i).getUsrAprv());
-			
-			data.put("usrGradeVal",tbCommUsers.get(i).getUsrGradeVal());
-			data.put("usrAuthVal",tbCommUsers.get(i).getUsrAuthVal());
-			data.put("usrAprvVal",tbCommUsers.get(i).getUsrAprvVal());
-			
-			data.put("delYn",tbCommUsers.get(i).getDelYn());
-			data.put("regDt",tbCommUsers.get(i).getRegDt());
-			arr.put(data);
-		}
-		result.put("total", tbCommUsers.size());
-		result.put("rows", arr);
+	public List<TbCommUser> getAdmin(TbCommUser tbCommUser) {
+		List<TbCommUser> tbCommUsers = adminService.selectAdmin(tbCommUser);
 	
-		return result.toString();
+		return tbCommUsers;
 	}
 	
 	@PostMapping("/addAdmin")

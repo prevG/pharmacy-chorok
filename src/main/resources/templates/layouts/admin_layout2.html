@@ -42,7 +42,7 @@
                 <button class="btn btn-navbar" type="button" data-widget="navbar-search">
                   <i class="fas fa-times"></i>
                 </button>
-              </div>
+              </div><!--  -->
             </div>
           </form>
         </div>
@@ -170,7 +170,10 @@ var _url_ = /*[[ ${#httpServletRequest.requestURI} ]]*/ "";
 /*]]*/
 
 $(document).ready(function() {
-	console.log(_url_);
+	var t = $('[data-menu="'+ _url_ +'"]');
+	t.addClass('active');
+	t.parent().parent().siblings('a').addClass('active');
+	t.parent().parent().show();
 });
 </script>
 </body>

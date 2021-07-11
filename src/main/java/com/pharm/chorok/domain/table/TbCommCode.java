@@ -3,8 +3,10 @@ package com.pharm.chorok.domain.table;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class TbCommCode {
 	private String grpCd;
 	private String ditcCd;
@@ -30,5 +32,10 @@ public class TbCommCode {
 	private String srchKind;
 	//검색값
 	private String srchTxt;
+	
+	public TbCommCode(String grpCd, String useYn) {
+		this.grpCd = grpCd;
+		this.useYn = useYn;
+	}
 	
 }

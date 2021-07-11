@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<!-- easyui -->
+<link rel="stylesheet" th:href="@{/easyui/themes/bootstrap/easyui.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/icon.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/color.css}">
+
+<!-- easyui -->
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>  
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript">
+$(function() {
+	$('#frm').form('submit', {
+		onSubmit: function() {
+			return $(this).form('enableValidation').form('validate');
+		}
+	});
+	
+	$('#submitFrm').click(function(e) {
+		$('#frm').form('submit');
+		alert('h');
+	});
+});
+</script>
+</head>
+<body>
+	<div class="easyui-panel" title="Form Validate" style="width:100%;max-width:400px;padding:30px 60px;">
+		<form id="frm" method="post" data-options="novaliate:true">
+			<div style="margin-bottom: 20px;">
+				<input name="uid" class="easyui-textbox" style="width:200px;"
+					   data-options="label:'ID:',required:true"></input>
+			</div>
+			<div>
+				<input name="uname" class="easyui-textbox" style="width:200px;"
+					   data-options="label:'Name:',required:true"></input>
+			</div>
+		</form>
+		<div>
+			<a href="javascript:void(0)" id="submitFrm" class="easyui-linkbutton">전송</a>
+		</div>
+	</div>
+</body>
+</html>

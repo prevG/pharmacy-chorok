@@ -1,32 +1,16 @@
 /******************************************************
  * 
- * administrator
+ * 사용자 관리 - 관리자 (AD1001MV_2)
  * 
  ******************************************************/
 var gC1003; //직윈 
 var gC1016; //권한
 var gC1010; //승인
 
-function fnSearch() {
-	var queryParams = $("#dg").datagrid('options').queryParams;
-	queryParams.cbSrch = $('#cb_srch').combobox('getValue');
-	queryParams.cbAuth = $('#cb_usrAuth').combobox('getValue');
-	queryParams.cbAppv = $('#cb_usrAprv').combobox('getValue');
-	queryParams.target = "grid";
-	queryParams.srchTxt = $("#srchTxt").val();
-	
-	$('#dg').datagrid('reload');
-}
-/*
-function formatDate(value, row) {
-  var d = new Date(value);
-  return $.fn.datebox.defaults.formatter(d);
-}
-*/
 function fnInit() {
 	// init combo
-	initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '0' });
-	initComboBox($('#cb_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '0' });
+	//initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '0' });
+	//initComboBox($('#cb_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '0' });
 	
     initComboBox($('#addFrm select[textboxName=dlg_usrGrade]'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
     initComboBox($('#addFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '1' });
@@ -43,142 +27,6 @@ function fnInit() {
 	gC1016 = getCodeData('C1016');
 	gC1010 = getCodeData('C1010');
 	
-	$('#dg').datagrid({
-	    url: '/admin/getAdmin',
-	    /*
-	    saveUrl: '/admin/saveAdmin',
-	    updateUrl: '/admin/modifyAdmin',
-	    destroyUrl: '/admin/removeAdmin',
-	    */
-	    singleSelect: true, 
-	    ctrlSelect: true,
-	    idField: 'usrNo',
-	    rownumbers: true,
-		fitColumns: true, 
-        fit: true,
-        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
-        pagination: true,
-        pageSize: 50,
-        pageList: [50],
-        dragSelection: true,
-        columns:[[
-        	{
-        		field: 'usrNo', 
-        		title: '사용자번호', 
-        		hidden: true, 
-        		width: '0'
-        	},
-        	{
-        		field: 'usrNm', 
-        		title: '사용자이름', 
-        		align: 'center', 
-        		width: '150', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'usrEml', 
-        		title: '이메일', 
-        		align: 'center', 
-        		width: '250', 
-        		editor:{
-        			type: 'validatebox', 
-        			options: { required:true, validType:'email' }
-        		}
-        	},
-        	{
-        		field: 'usrPhnNo', 
-        		title: '핸드폰번호', 
-        		align: 'center', 
-        		width: '200', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'usrGrade', 
-        		title: '직위', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: {
-        			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1003, required: true }
-        		}, 
-        		formatter: function(value, row) { return row.usrGradeVal||value; }
-        	},
-        	{
-        		field: 'usrAuth', 
-        		title: '권한', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: {
-        			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1016, required: true }
-        		}, 
-        		formatter: function(value, row) { return row.usrAuthVal||value; }
-        	},
-        	{
-        		field: 'usrAprv', 
-        		title: '승인여부', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: {
-        			type: 'combobox',
-        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1010, required: true }
-        		}, 
-        		formatter: function(value, row) { return row.usrAprvVal||value; }
-        	},
-        	{
-        		field: 'delYn', 
-        		title: '삭제여부', 
-        		align: 'center', 
-        		width: '150', 
-        		editor: { type: 'checkbox', options: { on: 'Y', off: 'N' }}
-        	}
-        	/*{field:'regDt', title:'등록날짜', align:'center', width:'200', editor:'text', formatter:function(value){
-				console.log(value);
-			  	var d = new Date(value);
-			  	return $.fn.datebox.defaults.formatter(d);
-			}}*/
-        ]]
-	});
-}
-
-function addAdminPop() {
-	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
-    $('#addFrm').form('clear');
-    $('#addFrm').form('load', {
-		dlg_usrGrade : '00000',
-		dlg_usrAuth : '00000',
-		dlg_usrAprv : '00000',
-		dlg_delYn : '00000'
-	});
-}
-
-function modifyAdminPop() {
-	var row = $('#dg').datagrid('getSelected');
-	if (!row) return;
-	
-	$('#modDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
-	$('#modFrm').form('clear');
-	$('#modFrm').form('load', {
-		dlg_usrNo : row.usrNo,
-		dlg_usrEml : row.usrEml,
-		dlg_usrNm : row.usrNm,
-		dlg_usrPhnNo : row.usrPhnNo,
-		dlg_usrGrade : row.usrGrade,
-		dlg_usrAuth : row.usrAuth,
-		dlg_usrAprv : row.usrAprv,
-		dlg_delYn : row.delYn
-	});
-}
-
-function modifyAdminPwdPop() {
-	var row = $('#dg').datagrid('getSelected');
-	if (!row) return;
-	
-	$('#pwdDlg').dialog('open').dialog('center').dialog('setTitle','비밀번호 변경');
-	$('#pwdFrm').form('clear');
-	$('#pwdFrm').form('load', {
-		dlg_usrNo : row.usrNo
-	});
 }
 
 function addAdmin() {
@@ -288,5 +136,140 @@ function removeAdmin() {
 }
 
 $(document).ready(function() {
-	fnInit();
+	var AD1001MV = {
+		init: function() {
+			$('#dg').datagrid({
+			    singleSelect: true, 
+			    ctrlSelect: true,
+			    idField: 'usrNo',
+			    rownumbers: true,
+				fitColumns: true, 
+		        fit: true,
+		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
+		        pagination: true,
+		        pageSize: 50,
+		        pageList: [50],
+		        dragSelection: true,
+		        columns:[[
+		        	{
+		        		field: 'usrNo', 
+		        		title: '사용자번호', 
+		        		hidden: true, 
+		        		width: '0'
+		        	},
+		        	{
+		        		field: 'usrNm', 
+		        		title: '사용자이름', 
+		        		align: 'center', 
+		        		width: '150', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'usrEml', 
+		        		title: '이메일', 
+		        		align: 'center', 
+		        		width: '250', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'usrPhnNo', 
+		        		title: '핸드폰번호', 
+		        		align: 'center', 
+		        		width: '200', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'usrGrade', 
+		        		title: '직위', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text', 
+		        		formatter: function(value, row) { return row.usrGradeVal; }
+		        	},
+		        	{
+		        		field: 'usrAuth', 
+		        		title: '권한', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text', 
+		        		formatter: function(value, row) { return row.usrAuthVal; }
+		        	},
+		        	{
+		        		field: 'usrAprv', 
+		        		title: '승인여부', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text', 
+		        		formatter: function(value, row) { return row.usrAprvVal; }
+		        	},
+		        	{
+		        		field: 'delYn', 
+		        		title: '삭제여부', 
+		        		align: 'center', 
+		        		width: '150', 
+		        		editor: 'text'
+		        	}
+		        ]]
+			});		
+		
+			$('#btnUsrSearch').click(function(e) {
+				AD1001MV.search();
+			});
+			$('#btnAddUserPop').click(function(e) {
+				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
+			    $('#userFrm').form('clear');
+			    /*$('#userFrm').form('load', {
+					dlg_usrGrade : '00000',
+					dlg_usrAuth : '00000',
+					dlg_usrAprv : '00000',
+					dlg_delYn : '00000'
+				});*/
+			});
+			$('#btnRemoveUserPop').click(function(e) {
+				AD1001MV.removeUser();
+			});
+			$('#btnModifyUserPop').click(function(e) {
+				var row = $('#dg').datagrid('getSelected');
+				if (!row) return;
+				
+				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
+				$('#userFrm').form('clear');
+				$('#userFrm').form('load', {
+					dlg_usrNo : row.usrNo,
+					dlg_usrEml : row.usrEml,
+					dlg_usrNm : row.usrNm,
+					dlg_usrPhnNo : row.usrPhnNo,
+					dlg_usrGrade : row.usrGrade,
+					dlg_usrAuth : row.usrAuth,
+					dlg_usrAprv : row.usrAprv,
+					dlg_delYn : row.delYn
+				});
+			});
+			$('#btnSaveUser').click(function(e) {});
+			$('#btnModifyPassPop').click(function(e) {
+				var row = $('#dg').datagrid('getSelected');
+				if (!row) return;
+				
+				$('#passDlg').dialog('open').dialog('center').dialog('setTitle','비밀번호 변경');
+				$('#passFrm').form('clear');
+				$('#passFrm').form('load', {
+					dlg_usrNo : row.usrNo
+				});
+			});
+			$('#btnModifyPass').click(function(e) {});
+		},
+		search: function() {
+			var queryParams = $("#dg").datagrid('options').queryParams;
+			queryParams.cbSrch = $('#cb_srch').combobox('getValue');
+			queryParams.cbAuth = $('#cb_usrAuth').combobox('getValue');
+			queryParams.cbAppv = $('#cb_usrAprv').combobox('getValue');
+			queryParams.target = "grid";
+			queryParams.srchTxt = $("#srchTxt").val();
+			
+			$('#dg').datagrid('load', '/admin/getAdmin');			
+		}
+	};
+	
+	AD1001MV.init();
+	AD1001MV.search();
 });

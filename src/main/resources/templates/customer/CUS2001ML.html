@@ -55,7 +55,7 @@
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
 							<option value="">선택</option>
-							<option th:each="data, index : ${counselorList}"
+							<option th:each="data, index : ${usrAprvList}"
 									th:value="${data?.usrNo}" 
 									th:text="${data?.usrNm}"></option>
 						</select>
