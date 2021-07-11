@@ -3,32 +3,6 @@
  * 사용자 관리 - 관리자 (AD1001MV_2)
  * 
  ******************************************************/
-var gC1003; //직윈 
-var gC1016; //권한
-var gC1010; //승인
-
-function fnInit() {
-	// init combo
-	//initComboBox($('#cb_usrAuth'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '0' });
-	//initComboBox($('#cb_usrAprv'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '0' });
-	
-    initComboBox($('#addFrm select[textboxName=dlg_usrGrade]'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
-    initComboBox($('#addFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '1' });
-    initComboBox($('#addFrm select[textboxName=dlg_usrAprv]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
-    initComboBox($('#addFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
-
-    initComboBox($('#modFrm select[textboxName=dlg_usrGrade]'), '/admin/getGrpCdWithCombo', { GrpCd: 'C1003', target: 'combo', targetKind: '1' });
-    initComboBox($('#modFrm select[textboxName=dlg_usrAuth]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1016', target: 'combo', targetKind: '1' });
-    initComboBox($('#modFrm select[textboxName=dlg_usrAprv]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1010', target: 'combo', targetKind: '1' });
-    initComboBox($('#modFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
-
-	// get grid combo	
-	gC1003 = getCodeData('C1003');
-	gC1016 = getCodeData('C1016');
-	gC1010 = getCodeData('C1010');
-	
-}
-
 function addAdmin() {
 	var param = {
 		usrEml : $('#addFrm input[textboxName=dlg_usrEml]').textbox('getValue'),
@@ -212,26 +186,42 @@ $(document).ready(function() {
 		        ]]
 			});		
 		
+			/**************************************************************
+		     * "조회 버튼" 클릭시
+		     **************************************************************/
 			$('#btnUsrSearch').click(function(e) {
 				AD1001MV.search();
 			});
+			
+			/**************************************************************
+		     * "추가 버튼" 클릭시
+		     **************************************************************/
 			$('#btnAddUserPop').click(function(e) {
 				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
 			    $('#userFrm').form('clear');
-			    /*$('#userFrm').form('load', {
-					dlg_usrGrade : '00000',
-					dlg_usrAuth : '00000',
-					dlg_usrAprv : '00000',
-					dlg_delYn : '00000'
-				});*/
+			    $('#userFrm').form('load', {
+			    	dlg_usrNo : ''
+				});
 			});
-			$('#btnRemoveUserPop').click(function(e) {
+
+			/**************************************************************
+		     * "삭제 버튼" 클릭시
+		     **************************************************************/
+			$('#btnRemoveUser').click(function(e) {
 				AD1001MV.removeUser();
 			});
+
+			/**************************************************************
+		     * "편집 버튼" 클릭시
+		     **************************************************************/
 			$('#btnModifyUserPop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
-				if (!row) return;
+				if (!row) {
+					$.messager.alert('관리자 삭제', '관리자 목록에서 삭제할 항목을 선택하세요.');
+					return false;
+				}
 				
+				$('#userFrm [textboxName=dlg_usrPwd]').parent().hide(); // 비밀번호 숨김 처리.
 				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
 				$('#userFrm').form('clear');
 				$('#userFrm').form('load', {
@@ -245,7 +235,15 @@ $(document).ready(function() {
 					dlg_delYn : row.delYn
 				});
 			});
+
+			/**************************************************************
+		     * "관리자 저장" 클릭시
+		     **************************************************************/
 			$('#btnSaveUser').click(function(e) {});
+
+			/**************************************************************
+		     * "비밀번호 변경" 클릭시
+		     **************************************************************/
 			$('#btnModifyPassPop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) return;
@@ -256,6 +254,10 @@ $(document).ready(function() {
 					dlg_usrNo : row.usrNo
 				});
 			});
+
+			/**************************************************************
+		     * "비밀번호 저장" 클릭시
+		     **************************************************************/
 			$('#btnModifyPass').click(function(e) {});
 		},
 		search: function() {
@@ -267,6 +269,42 @@ $(document).ready(function() {
 			queryParams.srchTxt = $("#srchTxt").val();
 			
 			$('#dg').datagrid('load', '/admin/getAdmin');			
+		},
+		removeUser: function() {
+			var row = $('#dg').datagrid('getSelected');
+			if (!row) {
+				$.messager.alert('관리자 삭제', '관리자 목록에서 삭제할 항목을 선택하세요.');
+				return false;
+			}
+			
+			var formData = {
+				criteria: {
+					"usrNo": 	row.usrNo
+				}
+			} 
+			$.messager.confirm('Confirm', '사용자를 삭제하겠습니까?', function(r) {
+				if (!r) return;
+				
+				$.ajax({
+					url: '/admin/removeAdmin',
+					method: 'post',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(formData),
+					success: function(res) {
+						if (res.status === 'success') {
+							$.messager.show({ title: '관리자 삭제', msg: res.message });
+							AD1001MV.search();
+						} else {
+							$.messager.alert('관리자 삭제', res.message);
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						$.messager.alert('관리자 삭제', xhr.responseJSON.message, 'error');
+					}
+				});
+		   });
 		}
 	};
 	

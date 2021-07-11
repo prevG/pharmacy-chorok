@@ -5,15 +5,20 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pharm.chorok.domain.comm.PageCriteria;
+import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADAdminService;
@@ -41,9 +46,13 @@ public class ADAdminController {
 		
 		List<TbCommCode> usrAuthList = codeService.selectAbbrCodes(new TbCommCode("C1016", "Y"));
 		List<TbCommCode> usrAprvList = codeService.selectAbbrCodes(new TbCommCode("C1010", "Y"));
+		List<TbCommCode> usrGradeList = codeService.selectAbbrCodes(new TbCommCode("C1003", "Y"));
+		List<TbCommCode> delYnList = codeService.selectAbbrCodes(new TbCommCode("C1012", "Y"));
 		
 		model.addAttribute("usrAuthList", usrAuthList); // 권한코드
 		model.addAttribute("usrAprvList", usrAprvList); // 승인코드
+		model.addAttribute("usrGradeList", usrGradeList); // 직위코드
+		model.addAttribute("delYnList", delYnList); // 사용유무
 		
 		return "admin/AD1001MV_2";
 	}
@@ -154,20 +163,12 @@ public class ADAdminController {
 	
 	@PostMapping("/removeAdmin")
 	@ResponseBody
-	public String removeAdmin(TbCommUser tbCommUser) {
-		Assert.hasLength(tbCommUser.getUsrNo(), "User id must not be empty");
+	public ResponseEntity<ResponseMessage> removeAdmin(@RequestBody PageCriteria<TbCommUser> pageCriteria) {
+		Assert.hasLength(pageCriteria.getCriteria().getUsrNo(), "User id must not be empty");
 		
-		JSONObject result = new JSONObject();
-		int ret = adminService.removeAdmin(tbCommUser);
-		if (ret > 0) {
-			result.put("success", true);
-			result.put("Msg", "작업성공하였습니다.");
-		} else {
-			result.put("success", false);
-			result.put("Msg", "작업실패했습니다.");
-		}
+		adminService.removeAdmin(pageCriteria.getCriteria());
 		
-		return result.toString();
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "요청작업이 정상적으로 처리되었습니다."), HttpStatus.OK);
 	}
 	
 }

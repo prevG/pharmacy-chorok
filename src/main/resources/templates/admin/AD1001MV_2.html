@@ -64,7 +64,7 @@
 					<select class="easyui-combobox" id="cb_usrAuth" name="cb_usrAuth"
 						style="width: 250px;"
 						data-options="label:'권한 :',labelPosition:'left'">
-						<option value="">전체</option>
+						<option value="" selected="selected">전체</option>
 						<option th:each="data, index : ${usrAuthList}"
 								th:value="${data?.ditcCd}" 
 								th:text="${data?.ditcNm}"></option>
@@ -74,7 +74,7 @@
 					<select class="easyui-combobox" id="cb_usrAprv" name="cb_usrAprv"
 						style="width: 250px;"
 						data-options="label:'승인여부 :',labelPosition:'left'">
-						<option value="">전체</option>
+						<option value="" selected="selected">전체</option>
 						<option th:each="data, index : ${usrAprvList}"
 								th:value="${data?.ditcCd}" 
 								th:text="${data?.ditcNm}"></option>
@@ -88,7 +88,7 @@
 					<div>
 						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddUserPop"
 							data-options="iconCls:'icon-add'">추가</a>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnRemoveUserPop"
+						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnRemoveUser"
 							data-options="iconCls:'icon-remove'">삭제</a>
 					</div>
 					<div>
@@ -110,50 +110,60 @@
 		<form id="userFrm" method="post">
 		<input type="hidden" name="dlg_usrNo">
 		<div class="row p-2">
-			<div class="col">
-				<input name="dlg_usrEml" class="easyui-textbox"
-					data-options="label:'이메일:',required:true,validType:'email'"
-					style="width: 100%">
+			<div class="col-6">
+				<input name="dlg_usrEml" class="easyui-textbox" style="width: 100%"
+					data-options="label:'이메일:',labelWidth:90,required:true,validType:'email'">
 			</div>
-			<div class="col">
-				<input name="dlg_usrPwd" class="easyui-passwordbox"
-					placeholder="Password" data-options="label:'패스워드:',required:true"
-					style="width: 100%;">
+			<div class="col-6">
+				<input name="dlg_usrPwd" class="easyui-passwordbox" style="width: 100%"
+					data-options="label:'비밀번호:',labelWidth:90,required:true">
 			</div>
 		</div>
 		<div class="row p-2">
-			<div class="col">
-				<input name="dlg_usrNm" class="easyui-textbox"
-					data-options="label:'사용자이름:',required:true" style="width: 100%">
+			<div class="col-6">
+				<input name="dlg_usrNm" class="easyui-textbox" style="width: 100%"
+					data-options="label:'사용자이름:',labelWidth:90,required:true">
 			</div>
-			<div class="col">
-				<input name="dlg_usrPhnNo" class="easyui-textbox"
-					data-options="label:'핸드폰번호:',required:true" style="width: 100%">
+			<div class="col-6">
+				<input name="dlg_usrPhnNo" class="easyui-textbox" style="width: 100%"
+					data-options="label:'핸드폰번호:',labelWidth:90,required:true">
 			</div>
 		</div>
 		<div class="row p-2">
-			<div class="col">
-				<select name="dlg_usrGrade" class="easyui-combobox"
-					data-options="label:'직위:'" style="width: 100%;">
+			<div class="col-6">
+				<select name="dlg_usrGrade" class="easyui-combobox" style="width: 100%"
+					data-options="label:'직위:',labelWidth:90">
+					<option value="" selected="selected">선택</option>
+					<option th:each="data, index : ${usrGradeList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
-			<div class="col">
-				<select name="dlg_usrAuth" class="easyui-combobox"
-					data-options="label:'권한:'" style="width: 100%;">
+			<div class="col-6">
+				<select name="dlg_usrAuth" class="easyui-combobox" style="width: 100%"
+					data-options="label:'권한:',labelWidth:90">
+					<option value="" selected="selected">선택</option>
+					<option th:each="data, index : ${usrAuthList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
 		</div>
 		<div class="row p-2">
 			<div class="col-6">
-				<select name="dlg_usrAprv" class="easyui-combobox"
-					data-options="label:'승인여부:'" style="width: 100%;">
+				<select name="dlg_usrAprv" class="easyui-combobox" style="width: 100%"
+					data-options="label:'승인여부:',labelWidth:90">
+					<option value="" selected="selected">선택</option>
+					<option th:each="data, index : ${usrAprvList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
 			<div class="col-6">
-				<select name="dlg_delYn" class="easyui-combobox"
-					data-options="label:'사용유무:'" style="width: 100%;">
-					<option value="N" selected="selected">미사용</option>
-					<option value="Y">사용</option>
+				<select name="dlg_delYn" class="easyui-combobox" style="width: 100%"
+					data-options="label:'삭제여부:',labelWidth:90">
+					<option value="N" selected="selected">사용</option>
+					<option value="Y">삭제</option>
 				</select>
 			</div>
 		</div>
@@ -171,27 +181,27 @@
 
 	<div id="passDlg" class="easyui-dialog" style="width: 700px; padding: 10px;"
 		data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="passFrm" method="post" style="margin: 0; padding: 20px 50px">
+		<form id="passFrm" method="post">
 		<input type="hidden" name="dlg_usrNo">
-		<div style="margin-bottom: 10px" class="row">
-			<div class="col">
-				<input name="dlg_usrPwd" class="easyui-passwordbox"
-					placeholder="Password" data-options="label:'패스워드:',required:true"
-					style="width: 100%;">
+		<div class="row p-2">
+			<div class="col-6">
+				<input name="dlg_usrPwd" class="easyui-passwordbox" style="width: 100%;"
+					data-options="label:'비밀번호:',labelWidth:100,required:true">
 			</div>
-			<div class="col">
-				<input name="dlg_usrPwdCfm" class="easyui-passwordbox"
-					placeholder="Password"
-					data-options="label:'패스워드 확인:',required:true" style="width: 100%;">
+			<div class="col-6">
+				<input name="dlg_usrPwdCfm" class="easyui-passwordbox" style="width: 100%;"
+					data-options="label:'비밀번호 확인:',labelWidth:100,required:true">
 			</div>
 		</div>
 		</form>
-		<div style="text-align: center; padding: 5px 0">
-			<a href="javascript:void(0)" class="easyui-linkbutton c6" id="btnModifyPass"
-				data-options="iconCls:'icon-ok'">저장</a>
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-cancel'"
-				onClick="javascript:$('#passDlg').dialog('close');">취소</a>
+		<div class="row p-2">
+			<div class="col-12 d-flex justify-content-end">
+				<a href="javascript:void(0)" class="easyui-linkbutton c6" id="btnModifyPass"
+					data-options="iconCls:'icon-ok'">저장</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton ml-2"
+					data-options="iconCls:'icon-cancel'"
+					onClick="javascript:$('#passDlg').dialog('close');">취소</a>
+			</div>
 		</div>
 	</div>
 
