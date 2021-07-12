@@ -49,6 +49,7 @@
 		INSERT INTO TB_COMM_USER
 		(	
 			USR_EML,
+			USR_PWD,
 			USR_NM,
 			USR_PHN_NO,
 			DATA_OWNR_ID,
@@ -62,6 +63,7 @@
 		VALUES
 		(
 			#{usrEml},
+			#{usrPwd},
 			#{usrNm},
 			#{usrPhnNo},
 			#{dataOwnrId},
@@ -77,7 +79,6 @@
 	<update id="modifyAdmin">
 		UPDATE TB_COMM_USER
 		SET USR_EML = #{usrEml}
-		  , USR_PWD = #{usrPwd}
 		  , USR_NM = #{usrNm}
 		  , USR_PHN_NO = #{usrPhnNo}
 		  , DATA_OWNR_ID = #{dataOwnrId}

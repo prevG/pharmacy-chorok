@@ -2,8 +2,6 @@ package com.pharm.chorok.web.admin.controller;
 
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +39,12 @@ public class ADAdminController {
 		return mv;
 	}
 	
+	/**
+	 * 관리자 관리 화면
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/AD1001MV_2")
 	public String admin2(Model model) {
 		
@@ -57,6 +61,12 @@ public class ADAdminController {
 		return "admin/AD1001MV_2";
 	}
 	
+	/**
+	 * 관리자 목록 조회
+	 * 
+	 * @param tbCommUser
+	 * @return
+	 */
 	@PostMapping("/getAdmin")
 	@ResponseBody
 	public List<TbCommUser> getAdmin(TbCommUser tbCommUser) {
@@ -65,102 +75,89 @@ public class ADAdminController {
 		return tbCommUsers;
 	}
 	
+	/**
+	 * 관리자 신규 추가
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 */
 	@PostMapping("/addAdmin")
 	@ResponseBody
-	public String addAdmin(TbCommUser tbCommUser) {
-		Assert.hasLength(tbCommUser.getUsrEml(), "Email must not be empty");
-		Assert.hasLength(tbCommUser.getUsrPwd(), "Password must not be empty");
-		Assert.hasLength(tbCommUser.getUsrNm(), "User name must not be empty");
-		Assert.hasLength(tbCommUser.getUsrPhnNo(), "Phone number must not be empty");
+	public ResponseEntity<ResponseMessage> addAdmin(@RequestBody PageCriteria<TbCommUser> pageCriteria) {
+		Assert.hasLength(pageCriteria.getCriteria().getUsrEml(), "Email must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrPwd(), "Password must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrNm(), "User name must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrPhnNo(), "Phone number must not be empty");
 
-		JSONObject result = new JSONObject();
-		int emailCount = adminService.countAdminEmail(tbCommUser);
+		int emailCount = adminService.countAdminEmail(pageCriteria.getCriteria());
 		if (emailCount > 0) {
-			result.put("success", false);
-			result.put("Msg", "이메일이 이미 존재합니다.");
-			
-			return result.toString();
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "이메일이 이미 존재합니다."), HttpStatus.OK);
 		}
-		int phoneCount = adminService.countAdminPhone(tbCommUser);
+		int phoneCount = adminService.countAdminPhone(pageCriteria.getCriteria());
 		if (phoneCount > 0) {
-			result.put("success", false);
-			result.put("Msg", "핸드폰번호가 이미 존재합니다.");
-			
-			return result.toString();
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
 		}
 		
-		int ret = adminService.addAdmin(tbCommUser);
-		if (ret > 0) {
-			result.put("success", true);
-			result.put("Msg", "작업성공하였습니다.");
-		} else {
-			result.put("success", false);
-			result.put("Msg", "작업실패했습니다.");
-		}
+		adminService.addAdmin(pageCriteria.getCriteria());
 		
-		return result.toString();
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 요청 작업이 처리되었습니다."), HttpStatus.OK);
 	}
 	
+	/**
+	 * 관리자 정보 수정
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 */
 	@PostMapping("/modifyAdmin")
 	@ResponseBody
-	public String modifyAdmin(TbCommUser tbCommUser) {
-		Assert.hasLength(tbCommUser.getUsrNo(), "User id must not be empty");
-		Assert.hasLength(tbCommUser.getUsrEml(), "Email must not be empty");
-		Assert.hasLength(tbCommUser.getUsrNm(), "User name must not be empty");
-		Assert.hasLength(tbCommUser.getUsrPhnNo(), "Phone number must not be empty");
+	public ResponseEntity<ResponseMessage> modifyAdmin(@RequestBody PageCriteria<TbCommUser> pageCriteria) {
+		Assert.hasLength(pageCriteria.getCriteria().getUsrNo(), "User id must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrEml(), "Email must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrNm(), "User name must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrPhnNo(), "Phone number must not be empty");
 
-		JSONObject result = new JSONObject();
-		int emailCount = adminService.countAdminEmailByExcludeUsrNo(tbCommUser);
+		int emailCount = adminService.countAdminEmailByExcludeUsrNo(pageCriteria.getCriteria());
 		if (emailCount > 0) {
-			result.put("success", false);
-			result.put("Msg", "이메일이 이미 존재합니다.");
-			
-			return result.toString();
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "이메일이 이미 존재합니다."), HttpStatus.OK);
 		}
-		int phoneCount = adminService.countAdminPhoneByExcludeUsrNo(tbCommUser);
+		int phoneCount = adminService.countAdminPhoneByExcludeUsrNo(pageCriteria.getCriteria());
 		if (phoneCount > 0) {
-			result.put("success", false);
-			result.put("Msg", "핸드폰번호가 이미 존재합니다.");
-			
-			return result.toString();
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
 		}
 		
-		int ret = adminService.modifyAdmin(tbCommUser);
-		if (ret > 0) {
-			result.put("success", true);
-			result.put("Msg", "작업성공하였습니다.");
-		} else {
-			result.put("success", false);
-			result.put("Msg", "작업실패했습니다.");
-		}
+		adminService.modifyAdmin(pageCriteria.getCriteria());
 		
-		return result.toString();
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 요청 작업이 처리되었습니다."), HttpStatus.OK);
 	}
 	
+	/**
+	 * 관리자 비밀번호 변경
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 */
 	@PostMapping("/modifyAdminPwd")
 	@ResponseBody
-	public String modifyAdminPwd(TbCommUser tbCommUser) {
-		Assert.hasLength(tbCommUser.getUsrPwd(), "Passworrd must not be empty");
-		Assert.hasLength(tbCommUser.getUsrPwdCfm(), "Confirm passworrd must not be empty");
+	public ResponseEntity<ResponseMessage> modifyAdminPwd(@RequestBody PageCriteria<TbCommUser> pageCriteria) {
+		Assert.hasLength(pageCriteria.getCriteria().getUsrPwd(), "Passworrd must not be empty");
+		Assert.hasLength(pageCriteria.getCriteria().getUsrPwdCfm(), "Confirm passworrd must not be empty");
 		
-		JSONObject result = new JSONObject();
-		if (!tbCommUser.getUsrPwd().equals(tbCommUser.getUsrPwdCfm())) {
-			result.put("success", false);
-			result.put("Msg", "패스워드가 일치하지 않습니다.");
+		if (!pageCriteria.getCriteria().getUsrPwd().equals(pageCriteria.getCriteria().getUsrPwdCfm())) {
+			return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "비밀번호가 일치하지 않습니다."), HttpStatus.OK);
 		}
 		
-		int ret = adminService.modifyAdminPwd(tbCommUser);
-		if (ret > 0) {
-			result.put("success", true);
-			result.put("Msg", "작업성공하였습니다.");
-		} else {
-			result.put("success", false);
-			result.put("Msg", "작업실패했습니다.");
-		}
+		adminService.modifyAdminPwd(pageCriteria.getCriteria());
 		
-		return result.toString();
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 요청 작업이 처리되었습니다."), HttpStatus.OK);
 	}
 	
+	/**
+	 * 관리자 삭제 플래그 처리
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 */
 	@PostMapping("/removeAdmin")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> removeAdmin(@RequestBody PageCriteria<TbCommUser> pageCriteria) {
@@ -168,7 +165,7 @@ public class ADAdminController {
 		
 		adminService.removeAdmin(pageCriteria.getCriteria());
 		
-		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "요청작업이 정상적으로 처리되었습니다."), HttpStatus.OK);
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 요청 작업이 처리되었습니다."), HttpStatus.OK);
 	}
 	
 }
