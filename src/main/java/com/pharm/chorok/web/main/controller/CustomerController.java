@@ -142,7 +142,6 @@ public class CustomerController {
 		
 		return "customer/CUS1002MV_2";
 	}
-	
 
 	/**
 	 * 고객정보 목록     - 신규등록 /수정

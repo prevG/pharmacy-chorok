@@ -42,4 +42,8 @@ public class ADUserService {
 		return userRepository.countUserCellNoByExcludeCustId(tbCustomer);
 	}
 
+	public TbCustomer findCustomerByCustId(long custId) {
+		return userRepository.findCustomerByCustId(custId);
+	}
+
 }

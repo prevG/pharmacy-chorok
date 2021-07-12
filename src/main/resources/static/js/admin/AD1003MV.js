@@ -1,122 +1,8 @@
 /******************************************************
  * 
- * customer
+ * 사용자 관리 - 사용자 (AD1003MV)
  * 
  ******************************************************/
-function fnSearch() {
-	var queryParams = $("#dg").datagrid('options').queryParams;
-	queryParams.cbSrch = $('#cbSrch').combobox('getValue');
-	queryParams.srchTxt = $("#srchTxt").val();
-	queryParams.cbDelYn = $('#cbDelYn').combobox('getValue');
-	queryParams.startDttm = $('#startDttm').datebox('getValue');
-	queryParams.endDttm = $('#endDttm').datebox('getValue');
-	
-	$('#dg').datagrid('reload');
-}
-
-function fnInit() {
-	// init combo
-    initComboBox($('#addFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
-
-    initComboBox($('#modFrm select[textboxName=dlg_delYn]'), 	'/admin/getGrpCdWithCombo', { GrpCd: 'C1012', target: 'combo', targetKind: '1' });
-
-	$('#dg').datagrid({
-	    url: '/admin/getUser',
-	    /*
-	    saveUrl: '/admin/saveUser',
-	    updateUrl: '/admin/modifyUser',
-	    destroyUrl: '/admin/removeUser',
-	    */
-	    singleSelect: true, 
-	    ctrlSelect: true,
-	    idField: 'custId',
-	    rownumbers: true,
-		fitColumns: true, 
-        fit: true,
-        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
-        pagination: true,
-        pageSize: 50,
-        pageList: [50],
-        dragSelection: true,
-        columns:[[
-			{
-				field: 'custId', 
-				title: '고객ID', 
-				hidden: true, 
-				width: '0'
-			},
-        	{
-        		field: 'custUsrNm', 
-        		title: '고객이름', 
-        		align: 'center', 
-        		width: '150', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'custCellNo', 
-        		title: '핸드폰번호', 
-        		align: 'center', 
-        		width: '150', 
-        		editor: 'numberbox'
-        	},
-        	{
-        		field: 'custBirthDt', 
-        		title: '생년월일', 
-        		align: 'center', 
-        		width: '200', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'custGenTpCd', 
-        		title: '성별', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'mrgYn', 
-        		title: '결혼유무', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: {
-        			type: 'checkbox',
-        			options: { on: 'Y', off: 'N' }
-        		}
-        	},
-        	{
-        		field: 'zipCode', 
-        		title: '우편번호', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'addr1', 
-        		title: '주소', 
-        		align: 'center', 
-        		width: '200', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'addr2', 
-        		title: '상세주소', 
-        		align: 'center', 
-        		width: '150', 
-        		editor: 'text'
-        	},
-        	{
-        		field: 'delYn', 
-        		title: '삭제여부', 
-        		align: 'center', 
-        		width: '100', 
-        		editor: { 
-        			type: 'checkbox',
-        			options: { on: 'Y', off: 'N' }
-        		}
-        	},
-        ]]
-	});
-}
 
 function addUserPop() {
 	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','회원 추가');
@@ -241,7 +127,203 @@ function removeUser() {
 }
 
 $(document).ready(function() {
-	fnInit();
+	var AD1003MV = {
+		init: function() {
+		    /**************************************************************
+		     * 고객목록 테이블
+		     **************************************************************/
+			$('#dg').datagrid({
+			    singleSelect: true, 
+			    ctrlSelect: true,
+			    idField: 'custId',
+			    rownumbers: true,
+				fitColumns: true, 
+		        fit: true,
+		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
+		        pagination: true,
+		        pageSize: 50,
+		        pageList: [50],
+		        dragSelection: true,
+		        onDblClickRow: function(value) {
+		        	$("#btnCustInfo").trigger('click');
+		        },
+		        columns:[[
+					{
+						field: 'custId', 
+						title: '고객번호',
+						align: 'center',  
+						width: '100'
+					},
+		        	{
+		        		field: 'custUsrNm', 
+		        		title: '고객이름', 
+		        		align: 'center', 
+		        		width: '150', 
+		        		editor: 'text',
+		        		formatter: function(value, row, index) {
+		        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
+		        		}
+		        	},
+		        	{
+		        		field: 'custCellNo', 
+		        		title: '핸드폰번호', 
+		        		align: 'center', 
+		        		width: '150', 
+		        		editor: 'numberbox'
+		        	},
+		        	{
+		        		field: 'custBirthDt', 
+		        		title: '생년월일', 
+		        		align: 'center', 
+		        		width: '200', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'custGenTpCd', 
+		        		title: '성별', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return row.custGenTpCdVal;
+		        		}
+		        	},
+		        	{
+		        		field: 'mrgYn', 
+		        		title: '결혼유무', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return row.mrgYnVal;
+		        		}
+		        	},
+		        	{
+		        		field: 'zipCode', 
+		        		title: '우편번호', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'addr1', 
+		        		title: '주소', 
+		        		align: 'center', 
+		        		width: '200', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'addr2', 
+		        		title: '상세주소', 
+		        		align: 'center', 
+		        		width: '150', 
+		        		editor: 'text'
+		        	},
+		        	{
+		        		field: 'delYn', 
+		        		title: '삭제여부', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row, index) {
+		        			return '<span>'+ (value) ? value : 'N' +'</span>';
+		        		}
+		        	},
+		        ]]
+			});
+		
+			/**************************************************************
+		     * "조회 버튼" 클릭시
+		     **************************************************************/
+			$('#btnUsrSearch').click(function(e) {
+				AD1003MV.search();
+			});
+			
+			/**************************************************************
+		     * "추가 버튼" 클릭시
+		     **************************************************************/
+			$('#btnAddUserPop').click(function(e) {
+				$("#custDlg").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
+					$('#saveCustFrm').form('clear');
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
+					$.parser.parse($('#custDlg'));
+		        });
+			});
+
+			/**************************************************************
+		     * "삭제 버튼" 클릭시
+		     **************************************************************/
+			$('#btnRemoveUser').click(function(e) {
+				AD1003MV.removeUser();
+			});
+
+			/**************************************************************
+		     * "편집 버튼" 클릭시
+		     **************************************************************/
+			$('#btnModifyUserPop').click(function(e) {
+				var row = $('#dg').datagrid('getSelected');
+				if (!row) {
+					$.messager.confirm('사용자 관리', '사용자 목록에서 항목을 선택해 주세요');
+					return;	
+				}
+	
+				$("#custDlg").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
+					$.parser.parse($('#custDlg'));
+		        });
+			});
+		},
+		search: function() {
+			var queryParams = $("#dg").datagrid('options').queryParams;
+			queryParams.cbSrch = $('#cbSrch').combobox('getValue');
+			queryParams.srchTxt = $("#srchTxt").val();
+			queryParams.cbDelYn = $('#cbDelYn').combobox('getValue');
+			queryParams.startDttm = $('#startDttm').datebox('getValue');
+			queryParams.endDttm = $('#endDttm').datebox('getValue');
+			
+			$('#dg').datagrid('load', '/admin/getUser');
+		},
+		removeUser: function() {
+			var row = $("#dg").datagrid("getSelected");
+			if (!row) {
+				$.messager.alert('사용자 관리', '사용자 목록에서 삭제할 항목을 선택하세요.');
+				return false;
+			}
+			
+			var formData = {
+				criteria: {
+					"custId": 	row.custId
+				}
+			}
+			$.messager.confirm('Confirm', '사용자를 삭제하겠습니까?', function(r) {
+				if (!r) return;
+				
+				$.ajax({
+					url: '/admin/removeUser',
+					method: 'post',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(formData),
+					success: function(res) {
+						if (res.status === 'success') {
+							$.messager.show({ title: '사용자 관리', msg: res.message });
+							AD1001MV.search();
+						} else {
+							$.messager.alert('사용자 관리', res.message);
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						$.messager.alert('사용자 관리', xhr.responseJSON.message, 'error');
+					}
+				});
+		   	});
+		}
+	};
+
+	// init
+	AD1003MV.init();
+	AD1003MV.search();	
 });
 
 function myformatter(date) {

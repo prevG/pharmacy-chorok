@@ -43,26 +43,22 @@
 			<!-- Search -->
 			<div class="easyui-panel p-3 mb-2" title="검색">
 				<div class="form-inline mb-2">
-					<select class="easyui-combobox" id="cb_srch" name="cb_srch"
-						style="width: 250px;"
+					<select class="easyui-combobox" id="cb_srch" name="cb_srch" style="width: 250px;"
 						data-options="label:'검색어 :',labelPosition:'left',required:true">
 						<option value="all" selected="selected">전체</option>
 						<option value="nm">사용자이름</option>
 						<option value="em">이메일</option>
 					</select>
 					<div class="ml-2">
-						<input class="easyui-searchbox" id="srchTxt" name="srchTxt"
-							style="width: 300px;">
+						<input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width: 300px;">
 					</div>
 					<div class="ml-2">
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUsrSearch"
-							style="width: 100px; height: 32px"
+						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUsrSearch" style="width: 100px; height: 32px"
 							data-options="iconCls:'icon-ok'">검색</a>
 					</div>
 				</div>
 				<div class="form-inline mb-2">
-					<select class="easyui-combobox" id="cb_usrAuth" name="cb_usrAuth"
-						style="width: 250px;"
+					<select class="easyui-combobox" id="cb_usrAuth" name="cb_usrAuth" style="width: 250px;"
 						data-options="label:'권한 :',labelPosition:'left'">
 						<option value="" selected="selected">전체</option>
 						<option th:each="data, index : ${usrAuthList}"
@@ -71,8 +67,7 @@
 					</select>
 				</div>
 				<div class="form-inline">
-					<select class="easyui-combobox" id="cb_usrAprv" name="cb_usrAprv"
-						style="width: 250px;"
+					<select class="easyui-combobox" id="cb_usrAprv" name="cb_usrAprv" style="width: 250px;"
 						data-options="label:'승인여부 :',labelPosition:'left'">
 						<option value="" selected="selected">전체</option>
 						<option th:each="data, index : ${usrAprvList}"

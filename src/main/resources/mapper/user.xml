@@ -53,6 +53,35 @@
 		</where>
 	</select>
 	
+	<select id="findCustomerByCustId" parameterType="map" resultType="com.pharm.chorok.domain.table.TbCustomer">
+	<![CDATA[    
+	/** com.pharm.chorok.web.admin.repository.ADUserRepository.findUserByCustId */
+    SELECT CUST_ID
+         , CUST_USR_NM
+         , CUST_CELL_NO
+         , CUST_BIRTH_DT
+         , CUST_GEN_TP_CD
+         , MRG_YN
+         , PCRT_CHD_CNT
+         , LST_PCRT_YEAR
+         , BRST_FDG_YN
+         , VIST_TP_CD
+         , ZIP_CODE
+         , ADDR1
+         , ADDR2
+         , REG_DT
+         , REG_USR_NO
+         , UPD_DT
+         , UPD_USR_NO
+         , CUST_MEMO
+         , RCMD_CUST_ID
+         , RCMD_CUST_NM
+         , RCMD_CELL_NO
+      FROM TB_CUSTOMER
+     WHERE CUST_ID = #{custId}
+	]]>
+	</select>
+	
 	<insert id="addUser">
 		INSERT INTO TB_CUSTOMER
 		(	

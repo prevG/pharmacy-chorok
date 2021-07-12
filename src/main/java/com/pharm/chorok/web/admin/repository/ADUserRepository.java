@@ -23,5 +23,7 @@ public interface ADUserRepository {
 
 	public int countUserCellNoByExcludeCustId(TbCustomer tbCustomer);
 
+	public TbCustomer findCustomerByCustId(long custId);
+
 }
 
