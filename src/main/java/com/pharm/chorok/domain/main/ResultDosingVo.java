@@ -23,6 +23,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String dosgDesc1;
     private String dosgDesc2;
 
+    private String dosgLvCdVal;
     private String callYnVal;
     private String dosgYnVal;
     private String pausYnVal;

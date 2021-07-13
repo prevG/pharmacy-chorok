@@ -170,6 +170,28 @@ $( document ).ready( function() {
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        dragSelection: true,
+		        onLoadSuccess: function(data) {
+		        	var merges = [];
+		        	var rows = data.rows;
+		        	var k = 0;
+		        	while (k < rows.length) {
+		        		var c = 0;
+		        		for (var l = k; l < rows.length; l++) {
+		        			if (rows[k].dosgLvCd === rows[l].dosgLvCd)
+		        				c++;
+		        		}
+		        		merges.push({ index: k, rowspan: c });
+		        		k += c;
+		        	}
+		        	
+		        	for (var i = 0; i < merges.length; i++) {
+		        		$(this).datagrid('mergeCells', {
+		        			index: merges[i].index,
+		        			field: 'dosgLvCd',
+		        			rowspan: merges[i].rowspan
+		        		});
+		        	}
+		        },
 		        //onClickCell: function(index, field, value) {
 		        //	$(this).datagrid('endEdit', index);
 		        //},
@@ -180,7 +202,8 @@ $( document ).ready( function() {
 		        	$('#dosgDlgFrm input[name=dlg_dosgId]').val(row.dosgId);
 		        	$('#dosgDlgFrm input[name=dlg_dosgSeq]').val(row.dosgSeq);
 		        	$('#dosgDlgFrm input[textboxName=dlg_dosgSeqStr]').textbox('setValue', row.dosgSeqStr);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgLvCd]').textbox('setValue', row.dosgLvCd);
+		        	$('#dosgDlgFrm input[name=dlg_dosgLvCd]').val(row.dosgLvCd);
+		        	$('#dosgDlgFrm input[textboxName=dlg_dosgLvCdVal]').textbox('setValue', row.dosgLvCdVal);
 		        	$('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('setValue', row.dosgDt);
 		        	$('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('setValue', row.callYn);
 		        	$('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('setValue', row.dosgYn);
@@ -199,38 +222,32 @@ $( document ).ready( function() {
 		        },
 		        columns:[[
 					{
-						field: 'dosgId', 
-						title: '번호',
-						align: 'center',  
-						width: '80'
-					},
+		        		field: 'dosgLvCd', 
+		        		title: '복용단계', 
+		        		align: 'center', 
+		        		width: '110', 
+		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdVal +'</span>'; }
+		        	},
 		        	{
 		        		field: 'dosgSeq', 
 		        		title: '일수', 
 		        		align: 'center', 
-		        		width: '150', 
+		        		width: '80', 
 		        		editor: 'text',
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgSeqStr +'</span>'; }
-		        	},
-		        	{
-		        		field: 'dosgLvCd', 
-		        		title: '복용단계', 
-		        		align: 'center', 
-		        		width: '100', 
-		        		editor: 'text'
+		        		formatter: function(value, row) { return row.dosgSeqStr; }
 		        	},
 		        	{
 		        		field: 'dosgDt', 
 		        		title: '복용일자', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		editor: 'text'
 		        	},
 		        	{
 		        		field: 'daysStrKor', 
 		        		title: '요일', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '70', 
 		        		editor: 'text'
 		        	},
 		        	{
@@ -245,13 +262,13 @@ $( document ).ready( function() {
 		        		field: 'dosgYn', 
 		        		title: '복용여부', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		editor: 'text', 
 		        		formatter: function(value, row) { return row.dosgYnVal; }
 		        	},
 		        	{
 		        		field: 'pausYn', 
-		        		title: '보류여부', 
+		        		title: '통화여부', 
 		        		align: 'center', 
 		        		width: '100', 
 		        		editor: 'text', 
@@ -261,21 +278,21 @@ $( document ).ready( function() {
 		        		field: 'currWgt', 
 		        		title: '현재체중', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		editor: 'text'
 		        	},
 		        	{
 		        		field: 'lossWgt', 
 		        		title: '감량체중', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		editor: 'text'
 		        	},
 		        	{
 		        		field: 'rmiWgt', 
 		        		title: '남은체중', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		editor: 'text'
 		        	},
 		        	{
@@ -719,7 +736,7 @@ $( document ).ready( function() {
 			}
 			var dosgId     = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
 			var dosgSeq    = $('#dosgDlgFrm input[name=dlg_dosgSeq]').val();
-			var dosgLvCd   = $('#dosgDlgFrm input[textboxName=dlg_dosgLvCd]').textbox('getValue');
+			var dosgLvCd   = $('#dosgDlgFrm input[name=dlg_dosgLvCd]').val();
 			var dosgDt     = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
 			var callYn     = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
 			var dosgYn     = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');

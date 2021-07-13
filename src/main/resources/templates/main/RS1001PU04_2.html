@@ -184,15 +184,16 @@
 	<!-- dosg dialog -->
 	<div id="dosgDlg" class="easyui-dialog" style="width:700px;min-height:430px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="dosgDlgFrm" name="dosgDlgFrm" method="post" novalidate>
-		<input type="hidden" name="dlg_dosgId">
-		<input type="hidden" name="dlg_dosgSeq">
+		<input type="hidden" class="textbox-value" name="dlg_dosgId">
+		<input type="hidden" class="textbox-value" name="dlg_dosgSeq">
+		<input type="hidden" class="textbox-value" name="dlg_dosgLvCd">
 		<div class="row">
 			<div class="col-md-4 p-2">
 				<input name="dlg_dosgSeqStr" class="easyui-textbox" style="width: 100%;text-align: center;"
 					   data-options="label:'일수 *',labelWidth:80,required:true,readonly:true">
 			</div>
 			<div class="col-md-4 p-2">
-				<input name="dlg_dosgLvCd" class="easyui-textbox" style="width: 100%;text-align: center;"
+				<input name="dlg_dosgLvCdVal" class="easyui-textbox" style="width: 100%;text-align: center;"
 					   data-options="label:'복용단계 *',labelWidth:80,required:true,readonly:true" >
 			</div>
 			<div class="col-md-4 p-2">
@@ -219,10 +220,13 @@
 			</div>
 			<div class="col-md-4 p-2">
 				<select name="dlg_pausYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-						data-options="label:'보류여부',labelWidth:80">
+						data-options="label:'통화여부',labelWidth:80">
 					<option value="">선택</option>
-					<option value="Y">예</option>
-					<option value="N">아니요</option>
+					<option value="1">통화완료</option>
+					<option value="2">원장님 상담요망</option>
+					<option value="3">거절</option>
+					<option value="4">부재중</option>
+					<option value="5">카톡상담</option>
 				</select>
 			</div>
 		</div>
