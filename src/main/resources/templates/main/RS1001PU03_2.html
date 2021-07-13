@@ -4,6 +4,7 @@
 	  
 <div id="customer-table" th:fragment="customer-table">
     <form id="saveCustFrm" name="saveCustFrm" method="post">
+    <input type="hidden" name="dlg_delYn" th:value="${#strings.isEmpty(custInfo?.delYn)} ? 'N' : ${custInfo?.delYn}">
     <input type="hidden" name="rcmdCustId" th:value="${custInfo?.rcmdCustId}">
 	<div class="row">
 		<div class="col-md-6">

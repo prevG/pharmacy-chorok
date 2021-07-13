@@ -117,7 +117,7 @@ $(document).ready(function() {
 			$('#btnModifyUserPop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
-					$.messager.alert('관리자 삭제', '관리자 목록에서 삭제할 항목을 선택하세요.');
+					$.messager.alert('관리자 삭제', '관리자 목록에서 편집할 항목을 선택하세요.');
 					return false;
 				}
 				

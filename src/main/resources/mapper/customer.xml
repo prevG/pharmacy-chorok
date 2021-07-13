@@ -49,6 +49,7 @@
          , ZIP_CODE
          , ADDR1
          , ADDR2
+         , DEL_YN
          , REG_DT
          , REG_USR_NO
          , UPD_DT
@@ -79,6 +80,7 @@
          , CUST.ZIP_CODE
          , CUST.ADDR1
          , CUST.ADDR2
+         , CUST_DEL_YN
          , CUST.REG_DT
          , CUST.REG_USR_NO
          , CUST.UPD_DT
@@ -213,6 +215,7 @@
          , ZIP_CODE
          , ADDR1
          , ADDR2
+         , DEL_YN
          , REG_DT
          , REG_USR_NO
          , CUST_MEMO
@@ -233,6 +236,7 @@
          , #{zipCode}
          , #{addr1}
          , #{addr2}
+         , #{delYn}
          , now()
          , #{regUsrNo}
          , #{custMemo}
@@ -258,6 +262,7 @@
          , ZIP_CODE        = #{zipCode}
          , ADDR1           = #{addr1}
          , ADDR2           = #{addr2}
+         , DEL_YN		   = #{delYn}
          , UPD_DT          = now()
          , UPD_USR_NO      = #{regUsrNo}
          , CUST_MEMO 	   = #{custMemo}

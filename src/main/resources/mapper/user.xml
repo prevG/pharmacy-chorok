@@ -69,6 +69,7 @@
          , ZIP_CODE
          , ADDR1
          , ADDR2
+         , DEL_YN
          , REG_DT
          , REG_USR_NO
          , UPD_DT

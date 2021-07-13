@@ -58,7 +58,6 @@ $( document ).ready( function() {
 				return;
 			}
 			var custGenTpCd = $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val();
-			alert(custGenTpCd);
 			if (custGenTpCd === undefined || custGenTpCd === '') {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
 				return;
@@ -88,7 +87,7 @@ $( document ).ready( function() {
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
-						"delYn" 		: 	'N'
+						"delYn" 		: 	$('#saveCustFrm select[textboxName=dlg_delYn]').combobox('getValue')
 					}
 				};
 				

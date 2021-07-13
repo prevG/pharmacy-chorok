@@ -235,32 +235,32 @@ $(document).ready(function() {
 			/**************************************************************
 		     * "조회 버튼" 클릭시
 		     **************************************************************/
-			$('#btnUsrSearch').click(function(e) {
+		    $(document).off("click", "#btnUsrSearch").on("click", "#btnUsrSearch", function (e) {
 				AD1003MV.search();
 			});
 			
 			/**************************************************************
 		     * "추가 버튼" 클릭시
 		     **************************************************************/
-			$('#btnAddUserPop').click(function(e) {
+		    $(document).off("click", "#btnAddUserPop").on("click", "#btnAddUserPop", function (e) {
 				$("#custDlg").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
-					$('#saveCustFrm').form('clear');
 					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
 					$.parser.parse($('#custDlg'));
+					$('#saveCustFrm').form('clear'); // 위치 중요함 (dialog 앞에 위치하면 안됨)
 		        });
 			});
 
 			/**************************************************************
 		     * "삭제 버튼" 클릭시
 		     **************************************************************/
-			$('#btnRemoveUser').click(function(e) {
+		    $(document).off("click", "#btnRemoveUser").on("click", "#btnRemoveUser", function (e) {
 				AD1003MV.removeUser();
 			});
 
 			/**************************************************************
 		     * "편집 버튼" 클릭시
 		     **************************************************************/
-			$('#btnModifyUserPop').click(function(e) {
+		    $(document).off("click", "#btnModifyUserPop").on("click", "#btnModifyUserPop", function (e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
 					$.messager.confirm('사용자 관리', '사용자 목록에서 항목을 선택해 주세요');
