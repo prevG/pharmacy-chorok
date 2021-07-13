@@ -101,7 +101,7 @@ $(document).ready(function () {
             /**************************************************************
              * [상담하기] 팝업이 close 될경우 
              **************************************************************/
-			$("#cnstDlg").dialog({
+			$("#custDlg").dialog({
 				onClose: function() {
                     var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
 					refreshTimeTable( rsvtId );
@@ -352,9 +352,9 @@ $(document).ready(function () {
                 var params = {
                     "rsvtId": rsvtId
                 };
-                $("#cnstDlg").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
-                    $('#cnstDlg').dialog('open').dialog('center').dialog('setTitle','고객상세');
-                    $.parser.parse($('#cnstDlg') );
+                $("#custDlg").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
+                    $('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상세');
+                    $.parser.parse($('#custDlg') );
                 });
             });
 

@@ -312,6 +312,56 @@ $( document ).ready( function() {
 		        ]]
 			});
 			
+            /**************************************************************
+             * 추천인명  autocomplete 생성
+             **************************************************************/
+            $('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').combobox({
+                mode        : 'remote',
+                valueField  : 'value',
+                textField   : 'value',
+                panelHeight : 'auto',
+                formatter 	: function( data) { return data.label; },
+                onSelect    : function( data ) {
+                    $('#saveCustFrm').form('load', {
+                        dlg_rcmdCellNo  : data.cellNo,
+                        dlg_rcmdCustId 	: data.id
+                    });
+                },
+                onChange : function( newValue, oldValue ) {
+                    if ( $isEmpty( newValue )) {
+                        $('#saveCustFrm').form('load', {
+                            dlg_rcmdCellNo  : '',
+                            dlg_rcmdCustId 	: ''
+                        });
+                    }
+                },
+                loader: function(param, succ) {
+                    if (!param.q) { return; }
+                    $.ajax({
+                        type: 'post',
+                        url : "/api/v1/main/customer/findCustomer",
+                        data: {
+                            "custUsrNm" : $('#saveCustFrm input[name=dlg_rcmdCustNm]').val(),
+                            "custCellNo": $('#saveCustFrm input[name=dlg_rcmdCellNo]').val()
+                        },
+                        success: function(result){
+                            
+                            var rows = $.map(result.data, function(item){
+                                return { 
+                                    label: item.custUsrNm + " / " + item.custCellNo,    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                                    value: item.custUsrNm,
+                                    id: item.custId,
+                                    usrNm: item.custUsrNm,
+                                    cellNo: item.custCellNo,
+                                    genTpCd: item.custGenTpCd
+                                };
+                            });
+                            succ(rows)
+                        }
+                    })
+                }
+            });			
+			
 		    /**************************************************************
 		     * "고객정보 저장" 클릭시
 		     **************************************************************/
@@ -416,6 +466,7 @@ $( document ).ready( function() {
 						"addr2" 		: 	$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 						"delYn" 		: 	$('#saveCustFrm input[name=dlg_delYn]').val(),
 						"custMemo" 		:	$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
+						"custMemo2" 	:	$('#saveCustFrm input[name=dlg_custMemo2]').val(),
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')

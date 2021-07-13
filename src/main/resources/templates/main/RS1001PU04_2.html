@@ -10,10 +10,10 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 200px;text-align: center;"
+							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 180px;text-align: center;"
 								   data-options="label:'고객이름/번호',labelWidth:90,required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
-							<input name="selectedCustId" class="easyui-textbox" style="width: 60px;text-align: center;"
+							<input name="selectedCustId" class="easyui-textbox" style="width:50px;text-align: center;"
 								   data-options="required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
 							<a href="javascript:void(0);" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 120px;">상담차트 생성</a>
@@ -89,16 +89,9 @@
 								   		labelPosition:'left',
 								   		required:true">
 								<option value="">시</option>
-								<option value="09">09시</option>
-								<option value="10">10시</option>
-								<option value="11">11시</option>
-								<option value="12">12시</option>
-								<option value="13">13시</option>
-								<option value="14">14시</option>
-								<option value="15">15시</option>
-								<option value="16">16시</option>
-								<option value="17">17시</option>
-								<option value="18">18시</option>
+								<option th:each="data, index : ${cnstHhList}"
+										th:value="${data?.ditcCd}" 
+										th:text="${data?.ditcNm}"></option>
 							</select>
 						</div>
 						<div class="col-md-3 form-inline">
@@ -206,27 +199,27 @@
 				<select name="dlg_callYn" class="easyui-combobox" style="width: 100%;text-align: center;"
 					    data-options="label:'상담예약',labelWidth:80">
 					<option value="">선택</option>
-					<option value="CHEMIST">한약사</option>
-					<option value="COUNSELOR">삼당실장</option>
+					<option th:each="data, index : ${callYnList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
 			<div class="col-md-4 p-2">
 				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
 						data-options="label:'복용여부',labelWidth:80">
 					<option value="">선택</option>
-					<option value="Y">예</option>
-					<option value="N">아니요</option>
+					<option th:each="data, index : ${dosgYnList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
 			<div class="col-md-4 p-2">
 				<select name="dlg_pausYn" class="easyui-combobox" style="width: 100%;text-align: center;"
 						data-options="label:'통화여부',labelWidth:80">
 					<option value="">선택</option>
-					<option value="1">통화완료</option>
-					<option value="2">원장님 상담요망</option>
-					<option value="3">거절</option>
-					<option value="4">부재중</option>
-					<option value="5">카톡상담</option>
+					<option th:each="data, index : ${pausYnList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
 		</div>

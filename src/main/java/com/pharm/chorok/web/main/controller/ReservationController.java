@@ -269,7 +269,6 @@ public class ReservationController {
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> saveCustomer_2(
 			@RequestBody PageCriteria<TbCustomer> pageCriteria
-	
 			) throws Exception {
 		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm(), "고객이름을 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo(), "핸드폰번호를 입력하세요");
@@ -289,8 +288,6 @@ public class ReservationController {
 			//1. 고객정보 신규등록 or 수정
 			//2. 예약정보에 고객ID 수정
 			long newCustId = customerSvc.saveCustomer( pageCriteria.getCriteria() );
-			
-
 			
 			return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 등록되었습니다.", newCustId), HttpStatus.OK);
 		}

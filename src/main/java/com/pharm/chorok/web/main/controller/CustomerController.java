@@ -2,29 +2,26 @@ package com.pharm.chorok.web.main.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.pharm.chorok.common.service.CalendarService;
-import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.table.TbCommCalendar;
+import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
+import com.pharm.chorok.web.admin.service.ADCodeService;
 import com.pharm.chorok.web.admin.service.ADUserService;
 import com.pharm.chorok.web.main.service.CommUserDetailsService;
 import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.ReservationService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping(value = "/customer")
 @Controller
@@ -44,6 +41,9 @@ public class CustomerController {
 
 	@Autowired
 	private ReservationService reservationSvc;
+	
+	@Autowired
+	private ADCodeService codeService;
 
 	/**
 	 * @deprecated /CUS1001ML_2 함수로 대체함.
@@ -165,7 +165,7 @@ public class CustomerController {
 		}
 
 		//고객ID로 조회
-        customer.setCustId( Long.valueOf(custId) );
+        customer.setCustId( custId );
 		customer = customerSvc.findCustomerByCustId( customer );
 
 		//약사목록 조회
@@ -174,45 +174,29 @@ public class CustomerController {
         //상담실장목록 조회
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
+        //상담가능시간 코드
+        List<TbCommCode> cnstHhList = codeService.selectAbbrCodes(new TbCommCode("C1019", "Y"));
+        
+        //복용여부 코드
+        List<TbCommCode> dosgYnList = codeService.selectAbbrCodes(new TbCommCode("C1017", "Y"));
+        
+        //상담예약 코드
+        List<TbCommCode> callYnList = codeService.selectAbbrCodes(new TbCommCode("C1016", "Y"));
+
+        //통화여부 코드
+        List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", customer);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
-		return "main/RS1001PU02_2 :: customer-main-table";
+        model.addAttribute("cnstHhList", cnstHhList);
+        model.addAttribute("dosgYnList", dosgYnList);
+        model.addAttribute("callYnList", callYnList);
+        model.addAttribute("pausYnList", pausYnList);
+
+        return "main/RS1001PU02_2 :: customer-main-table";
 	}
 	
-	/**
-	 * @deprecated ReservationController.saveCustomer_2 함수로 대체함.
-	 * 
-	 * @param tbCustomer
-	 * @return
-	 */
-	@PostMapping("/add")
-	public ResponseEntity<ResponseMessage> addCustomer(TbCustomer tbCustomer) {
-		Assert.hasLength(tbCustomer.getCustUsrNm(), "고객이름을 입력하세요");
-		Assert.hasLength(tbCustomer.getCustCellNo(), "핸드폰번호를 입력하세요");
-		Assert.hasLength(tbCustomer.getCustBirthDt(), "생년월일을 입력하세요");
-		Assert.hasLength(tbCustomer.getCustGenTpCd(), "성별을 입력하세요");
-
-		ResponseMessage resMsg = new ResponseMessage();
-		int cellNoCount = userService.countUserCellNo(tbCustomer);
-		if (cellNoCount > 0) {
-			resMsg.setStatus("fail");
-			resMsg.setMessage("핸드폰번호가 이미 존재합니다.");
-			
-			return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
-		}
-		
-		int ret = userService.addUser(tbCustomer);
-		if (ret > 0) {
-			resMsg.setStatus("success");
-			resMsg.setMessage("작업성공하였습니다.");
-		} else {
-			resMsg.setStatus("fail");
-			resMsg.setMessage("작업실패했습니다.");
-		}
-		
-		return new ResponseEntity<ResponseMessage>(resMsg, HttpStatus.OK);
-	}
 }

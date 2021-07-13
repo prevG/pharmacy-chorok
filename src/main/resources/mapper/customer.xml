@@ -55,6 +55,7 @@
          , UPD_DT
          , UPD_USR_NO
          , CUST_MEMO
+         , CUST_MEMO2
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
@@ -86,6 +87,7 @@
          , CUST.UPD_DT
          , CUST.UPD_USR_NO
          , CUST.CUST_MEMO
+         , CUST.CUST_MEMO2
          , CUST.RCMD_CUST_ID
          , CUST.RCMD_CUST_NM
          , CUST.RCMD_CELL_NO
@@ -176,6 +178,7 @@
          , UPD_DT
          , UPD_USR_NO
          , CUST_MEMO
+         , CUST_MEMO2
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
@@ -219,6 +222,7 @@
          , REG_DT
          , REG_USR_NO
          , CUST_MEMO
+         , CUST_MEMO2
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
@@ -240,6 +244,7 @@
          , now()
          , #{regUsrNo}
          , #{custMemo}
+         , #{custMemo2}
          , #{rcmdCustId}
          , #{rcmdCustNm}
          , #{rcmdCellNo}
@@ -266,6 +271,7 @@
          , UPD_DT          = now()
          , UPD_USR_NO      = #{regUsrNo}
          , CUST_MEMO 	   = #{custMemo}
+         , CUST_MEMO2 	   = #{custMemo2}
          , RCMD_CUST_ID    = #{rcmdCustId}
          , RCMD_CUST_NM    = #{rcmdCustNm}
          , RCMD_CELL_NO    = #{rcmdCellNo}
