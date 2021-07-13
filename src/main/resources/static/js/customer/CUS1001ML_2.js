@@ -77,6 +77,36 @@ $(document).ready(function() {
 		        		}
 		        	},
 		        	{
+		        		field: 'custMemo2', 
+		        		title: '특이사항', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return $isEmpty(row.custMemo2) ? '' : '<span style="color:blue;">***</span>';
+		        		}
+		        	},
+		        	{
+		        		field: 'rcmdCnt', 
+		        		title: '추천인수', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return row.rcmdCnt > 0 ? row.rcmdCnt : '';
+		        		}
+		        	},
+		        	{
+		        		field: 'mileage', 
+		        		title: '마일리지', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return Number(row.mileage) === 0 ? '' : Number(row.mileage);
+		        		}
+		        	},
+		        	{
 		        		field: 'zipCode', 
 		        		title: '우편번호', 
 		        		align: 'center', 

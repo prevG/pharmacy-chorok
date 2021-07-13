@@ -34,6 +34,8 @@ public class TbCustomer extends TbCommColumn {
 	private String rcmdCellNo;		// 추천인 연락처
 	private String custGenTpCdVal;	// 남성/여성 
 	private String mrgYnVal;		// 기혼/미혼
+	private int rcmdCnt;			// 추천인수
+	private int mileage;			// 마일리지
 	
 	//검색용으로 추가
 	private String cbSrch;
