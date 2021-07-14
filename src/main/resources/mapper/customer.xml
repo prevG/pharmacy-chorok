@@ -146,6 +146,9 @@
 	<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
 	   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
 	</if>
+	<if test="pausYn != null and  !''.equals(pausYn)">
+	   AND DCHART.PAUS_YN = #{pausYn}
+	</if>
 	<choose>
 		<when test="callYn != null and  !''.equals(callYn)">
 	   AND DCHART.CALL_YN = #{callYn}

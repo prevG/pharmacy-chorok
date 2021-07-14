@@ -42,7 +42,7 @@
 							   		label:'담당한약사',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
-							<option value="">선택</option>
+							<option value="">전체</option>
 							<option th:each="data, index : ${chemistList}"
 									th:value="${data?.usrNo}" 
 									th:text="${data?.usrNm}"></option>
@@ -54,10 +54,22 @@
 							   		label:'담당실장',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
-							<option value="">선택</option>
+							<option value="">전체</option>
 							<option th:each="data, index : ${counselorList}"
 									th:value="${data?.usrNo}" 
 									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-md-2 form-inline">
+	 		 			<select class="easyui-combobox" id="pausYn"  name="pausYn" style="width: 100%;text-align: center;"
+							   data-options="
+							   		label:'통화여부',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${pausYnList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
 						</select>
 					</div>
 					<div class="col-md-2 form-inline">

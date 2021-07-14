@@ -84,6 +84,9 @@ $( document ).ready( function() {
 			queryParams.dosgDt 		= $("#dosgDt").val();
 			queryParams.picUsrNo 	= $("#picUsrNo").val();
 			queryParams.pic2UsrNo 	= $("#pic2UsrNo").val();
+			queryParams.pausYn 		= $("#pausYn").val();
+			
+			
 			
 			$('#table01').datagrid('load', '/api/v1/main/customer/findCustomerByDosgDt');
 		}

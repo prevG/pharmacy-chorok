@@ -74,10 +74,14 @@ public class CustomerController {
         //상담실장목록 조회
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
+        //통화여부 코드목록
+        List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        
 
 		model.addAttribute("dosgDt", cal.getBaseDt());
 		model.addAttribute("counselorList", counselorList);
 		model.addAttribute("chemistList", chemistList);
+		model.addAttribute("pausYnList", pausYnList);
 		return "customer/CUS2001ML";
 	}
 

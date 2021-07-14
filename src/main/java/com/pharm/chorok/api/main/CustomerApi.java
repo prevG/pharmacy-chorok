@@ -106,13 +106,15 @@ public class CustomerApi {
     public List<ResultDosingVo> findCustomerByDosgDt(
 		@RequestParam("dosgDt") String dosgDt,
 		@RequestParam("picUsrNo") String picUsrNo,
-		@RequestParam("pic2UsrNo") String pic2UsrNo
+		@RequestParam("pic2UsrNo") String pic2UsrNo,
+		@RequestParam("pausYn") String pausYn
 	) throws Exception {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("dosgDt", dosgDt);
 		params.put("picUsrNo", picUsrNo);
 		params.put("pic2UsrNo", pic2UsrNo);
+		params.put("pausYn", pausYn);
 		return customerSvc.findCustomerByDosgDt( params );
 	}
 	
