@@ -33,9 +33,11 @@ $( document ).ready( function() {
 		        		}
 		        	},
 		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox'},
-		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '100'},
-		            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '100'},
-		            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '100'},
+		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
+		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '60'},
+		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '80' },
+		            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80' },
+		            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '110'},
 		            {field: 'dosgSeq'    , title: '복용일차'    , align: 'center', width: '70',
 		                formatter: function(value, row, index) {
 		                    if( value == 0 ) {
@@ -45,12 +47,11 @@ $( document ).ready( function() {
 		                    }
 		                }
 		            },
-		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
-		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '80'},
+		            {field: 'pausYn'     , title: '통화여부'    , align: 'center', width: '90'},
 		            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80'},
 		            {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '80'},
 		            {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '80'},
-					{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'center', width: '200'},
+					{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'left' , halign: 'center', width: '200'},
 		            {field: 'zipCode'    , title: '우편번호'    , align: 'center', width: '80'},
 		            {field: 'addr1'      , title: '주소'       , align: 'left', halign: 'center', width: '200'}
 		        ]]
@@ -91,4 +92,11 @@ $( document ).ready( function() {
 	// init
 	CUS2001ML.init();
 	CUS2001ML.search();
+	
+	 /**************************************************************
+     * 검색버튼 클릭시
+     **************************************************************/
+    $( document ).on("click", "a[name='btnSearchCust']", function( e ) {    
+        CUS2001ML.search();
+    });
 });

@@ -39,7 +39,7 @@
 					<div class="col-md-2 form-inline">
 						<select class="easyui-combobox" id="picUsrNo"  name="picUsrNo" style="width:100%;text-align: center;"
 								   data-options="
-							   		label:'상담한약사',
+							   		label:'담당한약사',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
 							<option value="">선택</option>
@@ -51,17 +51,17 @@
 					<div class="col-md-2 form-inline">
 	 		 			<select class="easyui-combobox" id="pic2UsrNo"  name="pic2UsrNo" style="width: 100%;text-align: center;"
 							   data-options="
-							   		label:'상담실장',
+							   		label:'담당실장',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
 							<option value="">선택</option>
-							<option th:each="data, index : ${usrAprvList}"
+							<option th:each="data, index : ${counselorList}"
 									th:value="${data?.usrNo}" 
 									th:text="${data?.usrNm}"></option>
 						</select>
 					</div>
 					<div class="col-md-2 form-inline">
-						<a href="javascript:void(0)" id="btnSearchCust" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
+						<a href="javascript:void(0)" id="btnSearchCust" name="btnSearchCust" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
 						   data-options="iconCls:'icon-ok'">검색</a>
 					</div>
 					<div class="col-md-4 d-flex justify-content-end">
