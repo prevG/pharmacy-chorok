@@ -14,12 +14,12 @@
 					<div class="row m-2">
 						<div class="col-6">
 							<input name="dlg_custId" class="easyui-textbox" style="width: 100%;text-align: center;"
-								   data-options="label:'고객번호',labelWidth:120,required:true,readonly:true"
+								   data-options="label:'고객번호',labelWidth:110,required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
 						</div>
 						<div class="col-6">
 							<input class="easyui-textbox" style="width: 100%;text-align: center;"
-									data-options="label:'예약번호',labelWidth:120,readonly:true"
+									data-options="label:'예약번호',labelWidth:110,readonly:true"
 									th:value="${rsvtInfo?.rsvtId}" th:if="${rsvtInfo?.rsvtId > 0}">
 							<input type="hidden" name="dlg_rsvtId" style="width: 100%;text-align: center;"
 									th:value="${rsvtInfo?.rsvtId}">
@@ -28,20 +28,20 @@
 					<div class="row m-2">
 						<div class="col-6">
 							<input name="dlg_custUsrNm" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'고객이름 *',labelWidth:120,required:true"
+								   data-options="label:'고객이름 *',labelWidth:110,required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 						</div>
 						<div class="col-6">
 							<input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'휴대폰번호 *',labelWidth:120,required:true"
+								   data-options="label:'휴대폰번호 *',labelWidth:110,required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-6">
 							<div class="input-group">
-								<select name="dlg_custBirthYy" class="easyui-combobox" style="width: 210px;text-align: center;"
-										data-options="label:'생년월일 *',labelWidth:120,required:true">
+								<select name="dlg_custBirthYy" class="easyui-combobox" style="width: 180px;text-align: center;"
+										data-options="label:'생년월일 *',labelWidth:110,required:true">
 									<option value="" selected="selected">년</option>
 									<option th:each="data, index : ${birthYyList}"
 											th:value="${data?.ditcCd}" 
@@ -49,7 +49,7 @@
 											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,0,4)}"></option>
 								</select>
 								<div class="ml-2"></div>
-								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 70px;text-align: center;"
+								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 60px;text-align: center;"
 										data-options="required:true">
 									<option value="" selected="selected">월</option>
 									<option th:each="data, index : ${birthMmList}"
@@ -58,7 +58,7 @@
 											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,4,6)}"></option>
 								</select>
 								<div class="ml-2"></div>
-								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 70px;text-align: center;"
+								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 60px;text-align: center;"
 										data-options="required:true">
 									<option value="" selected="selected">일</option>
 									<option th:each="data, index : ${birthDdList}"
@@ -107,7 +107,7 @@
 					<div class="row m-2">
 						<div class="col-6">
 							<select name="dlg_pcrtChdCnt" class="easyui-combobox" style="width: 100%;text-align: center;"
-									data-options="label:'출산자녀수',labelWidth:120">
+									data-options="label:'출산자녀수',labelWidth:110">
 								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${childCntList}"
 										th:value="${data?.ditcCd}" 
@@ -117,7 +117,7 @@
 						</div>
 						<div class="col-6">
 							<select name="dlg_lstPcrtYear" class="easyui-combobox" style="width: 100%;text-align: center;"
-									data-options="label:'마지막 출산년도',labelWidth:120">
+									data-options="label:'마지막 출산년도',labelWidth:110">
 								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${pcrtYearList}"
 										th:value="${data?.ditcCd}" 
@@ -151,14 +151,14 @@
 					<div class="row m-2">
 						<div class="col-12">
 							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인 이름',labelWidth:120"
+								   data-options="label:'추천인 이름',labelWidth:110"
 								   th:value="${custInfo?.rcmdCustNm}">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
 							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인 연락처',labelWidth:120"
+								   data-options="label:'추천인 연락처',labelWidth:110"
 								   th:value="${custInfo?.rcmdCellNo}">
 						</div>
 					</div>
@@ -181,7 +181,7 @@
 					<div class="row m-2">
 						<div class="col-12">
 							<input id="zipCode" name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
-								   data-options="label:'우편번호',labelWidth:120,labelPosition:'before'"
+								   data-options="label:'우편번호',labelWidth:110,labelPosition:'before'"
 								   th:value="${custInfo?.zipCode}">
 							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onclick="fnZipCode();">우편번호 찾기</a>
 						</div>
@@ -189,14 +189,14 @@
 					<div class="row m-2">
 						<div class="col-12">
 							<input id="addr1" name="dlg_addr1" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'주소',labelWidth:120"
+								   data-options="label:'주소',labelWidth:110"
 								   th:value="${custInfo?.addr1}">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
 							<input id="addr2" name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'상세주소',labelWidth:120"
+								   data-options="label:'상세주소',labelWidth:110"
 								   th:value="${custInfo?.addr2}">
 						</div>
 					</div>
