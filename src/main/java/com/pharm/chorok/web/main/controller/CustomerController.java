@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
@@ -170,7 +171,7 @@ public class CustomerController {
 
 		//고객ID로 조회
         customer.setCustId( custId );
-		customer = customerSvc.findCustomerByCustId( customer );
+        TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -190,15 +191,31 @@ public class CustomerController {
         //통화여부 코드
         List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
         
+        //생년월일
+        List<TbCommCode> birthYyList = CommCodeEx.birthYyList();
+        List<TbCommCode> birthMmList = CommCodeEx.birthMmList();
+        List<TbCommCode> birthDdList = CommCodeEx.birthDdList();
+        
+        // 출산자녀수
+        List<TbCommCode> childCntList = CommCodeEx.childCntList();
+        
+        // 마지막 출산년도
+        List<TbCommCode> pcrtYearList = CommCodeEx.pcrtYearList();
+
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);
-        model.addAttribute("custInfo", customer);
+        model.addAttribute("custInfo", custInfo);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);
         model.addAttribute("dosgYnList", dosgYnList);
         model.addAttribute("callYnList", callYnList);
         model.addAttribute("pausYnList", pausYnList);
+        model.addAttribute("birthYyList", birthYyList);
+        model.addAttribute("birthMmList", birthMmList);
+        model.addAttribute("birthDdList", birthDdList);
+        model.addAttribute("childCntList", childCntList);
+        model.addAttribute("pcrtYearList", pcrtYearList);
 
         return "main/RS1001PU02_2 :: customer-main-table";
 	}

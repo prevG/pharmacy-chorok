@@ -39,7 +39,7 @@ $(document).ready(function() {
 		        		width: '150', 
 		        		editor: 'text',
 		        		formatter: function(value, row, index) {
-		        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
+		        			return '<span style="font-weight:bold;">'+ value +'</span>';
 		        		}
 		        	},
 		        	{
@@ -83,7 +83,7 @@ $(document).ready(function() {
 		        		width: '100', 
 		        		editor: 'text',
 		        		formatter: function(value, row) {
-		        			return $isEmpty(row.custMemo2) ? '' : '<span style="color:blue;">***</span>';
+		        			return $isEmpty(row.custMemo2) ? '' : '***';
 		        		}
 		        	},
 		        	{
