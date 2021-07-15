@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
+
 <div id="customer-table" th:fragment="customer-table">
     <form id="saveCustFrm" name="saveCustFrm" method="post">
     <input type="hidden" name="dlg_delYn" th:value="${#strings.isEmpty(custInfo?.delYn)} ? 'N' : ${custInfo?.delYn}">

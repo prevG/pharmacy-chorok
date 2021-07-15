@@ -41,38 +41,50 @@
 	<section class="content">
 		<div class="container-fluid">
 			<!-- Search -->
-			<div class="easyui-panel p-3 mb-2" title="검색">
-				<div class="form-inline mb-2">
-					<select class="easyui-combobox" id="cbSrch" name="cbSrch" style="width: 250px;"
-						data-options="label:'검색어 :',labelPosition:'left',required:true">
-						<option value="A" selected="selected">전체</option>
-						<option value="N">고객이름</option>
-						<option value="P">핸드폰번호</option>
-					</select>
-					<div class="ml-2">
-						<input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width: 300px;">
-					</div>
-					<div class="ml-2">
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUsrSearch" style="width: 100px; height: 32px"
-							data-options="iconCls:'icon-ok'">검색</a>
-					</div>
-				</div>
-				<div class="form-inline mb-2">
-					<input class="easyui-datebox" id="startDttm" name="startDttm" style="width: 250px;"
-						data-options="label:'등록기간 :',labelPosition:'left',formatter:myformatter,parser:myparser">
-					<div class="ml-1">~</div>
-					<div class="ml-1">
-						<input id="endDttm" name="endDttm" class="easyui-datebox" style="width: 190px;"
-							data-options="formatter:myformatter,parser:myparser">
+			<div class="easyui-panel p-2 mb-2" title="검색">
+				<div class="row p-1">
+					<div class="col-12">
+						<div class="input-group ml-2">
+							<select class="easyui-combobox" id="cbSrch" name="cbSrch" style="width: 250px;"
+								data-options="label:'검색어',labelWidth:110,required:true">
+								<option value="A" selected="selected">전체</option>
+								<option value="N">고객이름</option>
+								<option value="P">핸드폰번호</option>
+							</select>
+							<div style="margin-left: 13px;">
+								<input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width: 300px;">
+							</div>
+							<div class="ml-2">
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUsrSearch" style="width: 100px;"
+									data-options="iconCls:'icon-ok'">검색</a>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="form-inline">
-					<select class="easyui-combobox" id="cbDelYn" name="cbDelYn" style="width: 250px;"
-						data-options="label:'삭제여부 :',labelPosition:'left'">
-						<option value="A" selected="selected">전체</option>
-						<option value="N">사용</option>
-						<option value="Y">삭제</option>
-					</select>
+				<div class="row p-1">
+					<div class="col-12">
+						<div class="input-group ml-2">
+							<input class="easyui-datebox" id="startDttm" name="startDttm" style="width: 250px;"
+								data-options="label:'등록기간',labelWidth:110,formatter:myformatter,parser:myparser">
+							<span class="ml-1 mt-1">~</span>
+							<div class="ml-1">
+								<input id="endDttm" name="endDttm" class="easyui-datebox" style="width: 140px;"
+									data-options="formatter:myformatter,parser:myparser">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row p-1">
+					<div class="col-12">
+						<div class="input-group ml-2">
+							<select class="easyui-combobox" id="cbDelYn" name="cbDelYn" style="width: 250px;"
+								data-options="label:'삭제여부',labelWidth:110">
+								<option value="A" selected="selected">전체</option>
+								<option value="N">사용</option>
+								<option value="Y">삭제</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -97,7 +109,7 @@
 	</section>
 
 	<!-- customer dialog -->
-	<div id="custDlg" class="easyui-dialog" style="width:1500px;height:800px;padding:10px;display: none;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="custDlg" class="easyui-window" data-options="closed:true,modal:true" style="width:95%;height:95%;padding:10px;">
 	</div>
 </div>
 <!-- /.content-wrapper -->

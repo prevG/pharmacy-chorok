@@ -5,25 +5,33 @@
 	
 	<select id="selectUsers" resultType="com.pharm.chorok.domain.table.TbCustomer">
 		/** com.pharm.chorok.web.admin.repository.ADUserRepository */
-		SELECT  CUST_ID,
-			    CUST_USR_NM,
-			    CUST_CELL_NO,
-			    CUST_BIRTH_DT,
-			    CUST_GEN_TP_CD,
-			    MRG_YN,
-			    PCRT_CHD_CNT,
-			    LST_PCRT_YEAR,
-			    BRST_FDG_YN,
-			    VIST_TP_CD,
-			    ZIP_CODE,
-			    ADDR1,
-			    ADDR2,
-			    DEL_YN,
-			    REG_DT,
-			    REG_USR_NO,
-			    UPD_DT,
-			    UPD_USR_NO
-		FROM TB_CUSTOMER
+	    SELECT CUST_ID
+	         , CUST_USR_NM
+	         , CUST_CELL_NO
+	         , CUST_BIRTH_DT
+	         , CUST_GEN_TP_CD
+	         , MRG_YN
+	         , PCRT_CHD_CNT
+	         , LST_PCRT_YEAR
+	         , BRST_FDG_YN
+	         , VIST_TP_CD
+	         , ZIP_CODE
+	         , ADDR1
+	         , ADDR2
+	         , DEL_YN
+	         , REG_DT
+	         , REG_USR_NO
+	         , UPD_DT
+	         , UPD_USR_NO
+	         , CUST_MEMO
+	         , CUST_MEMO2
+	         , RCMD_CUST_ID
+	         , RCMD_CUST_NM
+	         , RCMD_CELL_NO
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_VAL
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = MRG_YN AND USE_YN = 'Y') AS MRG_YN_VAL
+	         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = A.CUST_ID) AS RCMD_CNT
+	      FROM TB_CUSTOMER A
 		<where>
 			<choose>
 				<when test='cbSrch != null and cbSrch.equals("A")'>

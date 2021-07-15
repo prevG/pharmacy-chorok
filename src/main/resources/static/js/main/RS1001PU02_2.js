@@ -424,12 +424,12 @@ $( document ).ready( function() {
 		},
 		saveCust: function() {
 			var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
-			if (custUsrNm === '') {
+			if ($isEmpty(custUsrNm)) {
 				$.messager.alert('고객정보 저장', '고객이름을 입력하세요.');
 				return;
 			}
 			var custCellNo = $('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue');
-			if (custCellNo === '') {
+			if ($isEmpty(custCellNo)) {
 				$.messager.alert('고객정보 저장', '휴대폰번호를 입력하세요.');
 				return;
 			}
@@ -454,7 +454,7 @@ $( document ).ready( function() {
 				return;
 			}
 			var custGenTpCd = $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val();
-			if (custGenTpCd === '') {
+			if ($isEmpty(custGenTpCd)) {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
 				return;
 			}

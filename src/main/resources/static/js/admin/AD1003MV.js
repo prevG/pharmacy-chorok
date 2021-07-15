@@ -1,134 +1,13 @@
 /******************************************************
  * 
- * 사용자 관리 - 사용자 (AD1003MV)
+ * 사용자 관리 - 고객 관리 (AD1003MV)
  * 
  ******************************************************/
-
-function addUserPop() {
-	$('#addDlg').dialog('open').dialog('center').dialog('setTitle','회원 추가');
-    $('#addFrm').form('clear');
-    $('#addFrm').form('load', {
-    	/*dlg_custGenTpCd : 'F',
-    	dlg_mrgYn : 'Y',
-    	dlg_brstFdgYn : 'N',*/
-		dlg_delYn : '00000'
-	});
-}
-
-function modifyUserPop() {
-	var row = $('#dg').datagrid('getSelected');
-	if (!row) return;
-	
-	$('#modDlg').dialog('open').dialog('center').dialog('setTitle','회원 수정');
-	$('#modFrm').form('clear');
-	$('#modFrm').form('load', {
-		dlg_custId : row.custId,
-		dlg_custUsrNm : row.custUsrNm,
-		dlg_custCellNo : row.custCellNo,
-		dlg_custBirthDt : row.custBirthDt,
-		dlg_custGenTpCd : row.custGenTpCd,
-    	dlg_mrgYn : row.mrgYn,
-    	dlg_pcrtChdCnt : row.pcrtChdCnt,
-    	dlg_lstPcrtYear : row.lstPcrtYear,
-    	dlg_brstFdgYn : row.brstFdgYn,
-		dlg_zipCode : row.zipCode,
-		dlg_addr1 : row.addr1,
-		dlg_addr2 : row.addr2,
-		dlg_vistTpCd : row.vistTpCd,
-		dlg_delYn : row.delYn
-	});
-}
-
-function addUser() {
-	var param = {
-		custUsrNm : $('#addFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
-		custCellNo : $('#addFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
-		custBirthDt : $('#addFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-		custGenTpCd : $('#addFrm input[name=dlg_custGenTpCd]:checked').val(),
-		mrgYn : $('#addFrm input[name=dlg_mrgYn]:checked').val(),
-		pcrtChdCnt : $('#addFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
-		lstPcrtYear : $('#addFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
-		brstFdgYn : $('#addFrm input[name=dlg_brstFdgYn]:checked').val(),
-		vistTpCd : $('#addFrm input[name=dlg_vistTpCd]:checked').val(),
-		zipCode : $('#addFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
-		addr1 : $('#addFrm input[textboxName=dlg_addr1]').textbox('getValue'),
-		addr2 : $('#addFrm input[textboxName=dlg_addr2]').textbox('getValue'),
-		delYn : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#addFrm select[textboxName=dlg_delYn]').combobox('getValue')
-	};
-	
-	$.post('/admin/addUser', param, function(result) {
-		if (result.success) {
-			$.messager.show({ title: 'Success', msg: result.Msg });
-			fnSearch();
-		} else {
-			$.messager.show({ title: 'Error', msg: result.Msg });
-			return;
-		}
-		$('#addDlg').dialog('close');
-	}, 'json')
-	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-		return;
-	});
-}
-
-function modifyUser() {
-	var param = {
-		custId : $('#modFrm input[name=dlg_custId]').val(),
-		custUsrNm : $('#modFrm input[textboxName=dlg_custUsrNm]').textbox('getValue'),
-		custCellNo : $('#modFrm input[textboxName=dlg_custCellNo]').textbox('getValue'),
-		custBirthDt : $('#modFrm input[textboxName=dlg_custBirthDt]').textbox('getValue'),
-		custGenTpCd : $('#modFrm input[name=dlg_custGenTpCd]:checked').val(),
-		mrgYn : $('#modFrm input[name=dlg_mrgYn]:checked').val(),
-		pcrtChdCnt : $('#modFrm input[textboxName=dlg_pcrtChdCnt]').textbox('getValue'),
-		lstPcrtYear : $('#modFrm input[textboxName=dlg_lstPcrtYear]').textbox('getValue'),
-		brstFdgYn : $('#modFrm input[name=dlg_brstFdgYn]:checked').val(),
-		vistTpCd : $('#modFrm input[name=dlg_vistTpCd]:checked').val(),
-		zipCode : $('#modFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
-		addr1 : $('#modFrm input[textboxName=dlg_addr1]').textbox('getValue'),
-		addr2 : $('#modFrm input[textboxName=dlg_addr2]').textbox('getValue'),
-		delYn : $('#modFrm select[textboxName=dlg_delYn]').combobox('getValue') === '00000' ? 'N' : $('#modFrm select[textboxName=dlg_delYn]').combobox('getValue')
-	};
-	$.post('/admin/modifyUser', param, function(result) {
-		if (result.success) {
-			$.messager.show({ title: 'Success', msg: result.Msg });
-			fnSearch();
-		} else {
-			$.messager.show({ title: 'Error', msg: result.Msg });
-			return;
-		}
-		$('#modDlg').dialog('close');
-	}, 'json')
-	.fail(function(xhr, status, error) {
-		$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-		return;
-	});
-}
-
-function removeUser() {
-	var row = $("#dg").datagrid("getSelected");
-	if (!row) return;
-	
-	$.messager.confirm('Confirm', '사용자를 삭제하겠습니까?', function(r) {
-		if (!r) return;
-		$.post('/admin/removeUser', { custId: row.custId }, function(result) {
-			if (result.success) {
-				$.messager.show({ title: 'Success', msg: result.Msg });
-				fnSearch();
-			} else {
-				$.messager.show({ title: 'Error', msg: result.Msg });
-			}
-		}, 'json')
-		.fail(function(xhr, status, error) {
-			$.messager.show({ title: 'Error', msg: xhr.responseJSON.message });
-			return;
-		});
-   });
-}
 
 $(document).ready(function() {
 	var AD1003MV = {
 		init: function() {
+		
 		    /**************************************************************
 		     * 고객목록 테이블
 		     **************************************************************/
@@ -161,21 +40,21 @@ $(document).ready(function() {
 		        		width: '150', 
 		        		editor: 'text',
 		        		formatter: function(value, row, index) {
-		        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
+		        			return '<span style="font-weight:bold;">'+ value +'</span>';
 		        		}
 		        	},
 		        	{
 		        		field: 'custCellNo', 
 		        		title: '핸드폰번호', 
 		        		align: 'center', 
-		        		width: '150', 
+		        		width: '120', 
 		        		editor: 'numberbox'
 		        	},
 		        	{
 		        		field: 'custBirthDt', 
 		        		title: '생년월일', 
 		        		align: 'center', 
-		        		width: '200', 
+		        		width: '120', 
 		        		editor: 'text'
 		        	},
 		        	{
@@ -196,6 +75,36 @@ $(document).ready(function() {
 		        		editor: 'text',
 		        		formatter: function(value, row) {
 		        			return row.mrgYnVal;
+		        		}
+		        	},
+		        	{
+		        		field: 'custMemo2', 
+		        		title: '특이사항', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return $isEmpty(row.custMemo2) ? '' : '***';
+		        		}
+		        	},
+		        	{
+		        		field: 'rcmdCnt', 
+		        		title: '추천인수', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return row.rcmdCnt > 0 ? row.rcmdCnt : '';
+		        		}
+		        	},
+		        	{
+		        		field: 'mileage', 
+		        		title: '마일리지', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		editor: 'text',
+		        		formatter: function(value, row) {
+		        			return Number(row.mileage) === 0 ? '' : Number(row.mileage);
 		        		}
 		        	},
 		        	{

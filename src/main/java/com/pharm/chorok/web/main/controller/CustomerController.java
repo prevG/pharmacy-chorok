@@ -19,7 +19,6 @@ import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.web.admin.service.ADCodeService;
-import com.pharm.chorok.web.admin.service.ADUserService;
 import com.pharm.chorok.web.main.service.CommUserDetailsService;
 import com.pharm.chorok.web.main.service.CustomerService;
 import com.pharm.chorok.web.main.service.ReservationService;
@@ -33,9 +32,6 @@ public class CustomerController {
 
 	@Autowired
 	private CalendarService calendarSvc;
-	
-	@Autowired
-	private ADUserService userService;
 	
 	@Autowired
 	private CommUserDetailsService commUserDetailsSvc;
@@ -58,13 +54,25 @@ public class CustomerController {
 		return "customer/CUS1001ML";
 	}
 
-    //고객목록화면
+	/**
+	 * 고객목록화면
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/CUS1001ML_2")
 	public String CUS1001ML_2(Model model) {
+		
 		return "customer/CUS1001ML_2";
 	}
 
-    //금일상담스케쥴
+	/**
+	 * 금일상담스케쥴
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/CUS2001ML")
 	public String CUS2001ML(Model model) throws Exception{
 
@@ -106,6 +114,7 @@ public class CustomerController {
 		customer = customerSvc.findCustomerByCustId( customer );
 
         model.addAttribute("custInfo", customer);
+        
 		return "customer/CUS1002MV";
 	}
 	

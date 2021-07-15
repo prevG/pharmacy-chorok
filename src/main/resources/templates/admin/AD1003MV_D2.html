@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
+
 <div id="customer-table" th:fragment="customer-table">
     <form id="saveCustFrm" name="saveCustFrm" method="post">
-    <input type="hidden" name="rcmdCustId" th:value="${custInfo?.rcmdCustId}">
+    <input type="hidden" name="dlg_delYn" th:value="${#strings.isEmpty(custInfo?.delYn)} ? 'N' : ${custInfo?.delYn}">
+    <input type="hidden" name="dlg_rcmdCustId" th:value="${custInfo?.rcmdCustId}">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row p-2">
-				<div class="easyui-panel" title="기본정보" style="width: 100%;min-height: 200px;"
+				<div class="easyui-panel" title="기본정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-6">
 							<input name="dlg_custId" class="easyui-textbox" style="width: 100%;text-align: center;"
-								   data-options="label:'고객번호',required:true,readonly:true"
+								   data-options="label:'고객번호',labelWidth:110,required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
 						</div>
 						<div class="col-6">
 							<input class="easyui-textbox" style="width: 100%;text-align: center;"
-									data-options="label:'예약번호',readonly:true"
+									data-options="label:'예약번호',labelWidth:110,readonly:true"
 									th:value="${rsvtInfo?.rsvtId}" th:if="${rsvtInfo?.rsvtId > 0}">
 							<input type="hidden" name="dlg_rsvtId" style="width: 100%;text-align: center;"
 									th:value="${rsvtInfo?.rsvtId}">
@@ -27,27 +28,49 @@
 					<div class="row m-2">
 						<div class="col-6">
 							<input name="dlg_custUsrNm" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'고객이름 *',required:true"
+								   data-options="label:'고객이름 *',labelWidth:110,required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 						</div>
 						<div class="col-6">
 							<input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'휴대폰번호 *',required:true,validType:'length[0,11]'"
+								   data-options="label:'휴대폰번호 *',labelWidth:110,required:true"
 								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-6">
-							<input name="dlg_custBirthDt" class="easyui-numberbox" style="width: 100%"
-								   data-options="label:'생년월일 *',
-								                 prompt:'예시)20210101',
-												 validType:'length[0,8]',
-												 required:true"
-								   th:value="${custInfo?.custBirthDt}">
+							<div class="input-group">
+								<select name="dlg_custBirthYy" class="easyui-combobox" style="width: 180px;text-align: center;"
+										data-options="label:'생년월일 *',labelWidth:110,required:true">
+									<option value="" selected="selected">년</option>
+									<option th:each="data, index : ${birthYyList}"
+											th:value="${data?.ditcCd}" 
+											th:text="${data?.ditcNm}"
+											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,0,4)}"></option>
+								</select>
+								<div class="ml-2"></div>
+								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 60px;text-align: center;"
+										data-options="required:true">
+									<option value="" selected="selected">월</option>
+									<option th:each="data, index : ${birthMmList}"
+											th:value="${data?.ditcCd}" 
+											th:text="${data?.ditcNm}"
+											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,4,6)}"></option>
+								</select>
+								<div class="ml-2"></div>
+								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 60px;text-align: center;"
+										data-options="required:true">
+									<option value="" selected="selected">일</option>
+									<option th:each="data, index : ${birthDdList}"
+											th:value="${data?.ditcCd}" 
+											th:text="${data?.ditcNm}"
+											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,6,8)}"></option>
+								</select>
+							</div>
 						</div>
 						<div class="col-6">
-							<div class="form-inline pt-1">
-								<label style="margin-right: 60px;">성별 *</label>
+							<div class="input-group pt-1">
+								<label style="width: 120px;">성별 *</label>
 								<input name="dlg_custGenTpCd" class="easyui-radiobutton"
 									   data-options="label:'여성',labelWidth:60,labelPosition:'after',required:true"
 									   value="F"
@@ -59,26 +82,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="row m-2">
-						<div class="col-6">
-							<select class="easyui-combobox" name="dlg_delYn" style="width: 100%;"
-								data-options="label:'삭제여부 :',labelPosition:'left'">
-								<option value="N" th:selected="${'N' eq custInfo?.delYn}">사용</option>
-								<option value="Y" th:selected="${'Y' eq custInfo?.delYn}">삭제</option>
-							</select>
-						</div>
-						<div class="col-6">
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="row p-2">
-				<div class="easyui-panel" title="결혼정보" style="width: 100%;min-height: 200px;"
+				<div class="easyui-panel" title="결혼정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-6">
-							<div class="form-inline pt-1">
-								<label style="margin-right: 30px;">결혼유무</label>
+							<div class="input-group pt-1">
+								<label style="width: 120px;">결혼유무</label>
 								<input name="dlg_mrgYn" class="easyui-radiobutton"
 									   data-options="label:'미혼',labelWidth:60,labelPosition:'after'" 
 									   value="N"
@@ -94,20 +106,30 @@
 					</div>
 					<div class="row m-2">
 						<div class="col-6">
-							<input name="dlg_pcrtChdCnt" class="easyui-numberspinner" style="width: 100%"
-								   th:value="${custInfo?.pcrtChdCnt}"
-								   data-options="label:'출산자녀수',min:1,max:20">
+							<select name="dlg_pcrtChdCnt" class="easyui-combobox" style="width: 100%;text-align: center;"
+									data-options="label:'출산자녀수',labelWidth:110">
+								<option value="" selected="selected">선택</option>
+								<option th:each="data, index : ${childCntList}"
+										th:value="${data?.ditcCd}" 
+										th:text="${data?.ditcNm}"
+										th:selected="${#strings.equals(data?.ditcCd, custInfo?.pcrtChdCnt)}"></option>
+							</select>
 						</div>
 						<div class="col-6">
-							<input name="dlg_lstPcrtYear" class="easyui-numberspinner" style="width: 100%"
-								   th:value="${custInfo?.lstPcrtYear}"
-								   data-options="label:'마지막 출산년도',min:1950,max:2050">
+							<select name="dlg_lstPcrtYear" class="easyui-combobox" style="width: 100%;text-align: center;"
+									data-options="label:'마지막 출산년도',labelWidth:110">
+								<option value="" selected="selected">선택</option>
+								<option th:each="data, index : ${pcrtYearList}"
+										th:value="${data?.ditcCd}" 
+										th:text="${data?.ditcNm}"
+										th:selected="${data?.ditcCd eq custInfo?.lstPcrtYear}"></option>
+							</select>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-6">
-							<div class="form-inline pt-1">
-								<label style="margin-right: 30px;">모유수유</label>
+							<div class="input-group pt-1">
+								<label style="width: 120px;">모유수유</label>
 								<input name="dlg_brstFdgYn" class="easyui-radiobutton"
 									   data-options="label:'예',labelWidth:60,labelPosition:'after'" 
 									   value="Y"
@@ -124,7 +146,88 @@
 				</div>
 			</div>
 			<div class="row p-2">
-				<div class="easyui-panel" title="내원경로" style="width: 100%;min-height: 200px;"
+				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인 이름',labelWidth:110"
+								   th:value="${custInfo?.rcmdCustNm}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인 연락처',labelWidth:110"
+								   th:value="${custInfo?.rcmdCellNo}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="마일리지" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="row p-2">
+				<div class="easyui-panel" title="주소정보" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input id="zipCode" name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
+								   data-options="label:'우편번호',labelWidth:110,labelPosition:'before'"
+								   th:value="${custInfo?.zipCode}">
+							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onclick="fnZipCode();">우편번호 찾기</a>
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input id="addr1" name="dlg_addr1" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'주소',labelWidth:110"
+								   th:value="${custInfo?.addr1}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input id="addr2" name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'상세주소',labelWidth:110"
+								   th:value="${custInfo?.addr2}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="고객메모" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 100px;"
+								   data-options="multiline:true"
+								   th:value="${custInfo?.custMemo}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 100px;"
+								   data-options="multiline:true"
+								   th:value="${custInfo?.custMemo2}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-2">
+				<div class="easyui-panel" title="내원경로" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
@@ -164,66 +267,6 @@
 								   data-options="label:'기타',labelWidth:170,labelPosition:'after'"
 								   value="5"
 								   th:checked="${'5' eq custInfo?.vistTpCd}">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="row p-2">
-				<div class="easyui-panel" title="주소정보" style="width: 100%;min-height: 200px;"
-					 data-options="collapsible:true">
-					<div class="row m-2">
-						<div class="col">
-							<input id="zipCode" name="dlg_zipCode" class="easyui-textbox" style="width: 200px;"
-								   data-options="label:'우편번호',labelPosition:'before'"
-								   th:value="${custInfo?.zipCode}">
-							<a href="#" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-search'" style="width: 130px;" onclick="fnZipCode();">우편번호 찾기</a>
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-12">
-							<input id="addr1" name="dlg_addr1" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'주소'"
-								   th:value="${custInfo?.addr1}">
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-12">
-							<input id="addr2" name="dlg_addr2" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'상세주소'"
-								   th:value="${custInfo?.addr2}">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row p-2">
-				<div class="easyui-panel" title="고객메모" style="width: 100%;min-height: 200px;"
-					 data-options="collapsible:true">
-					<div class="row m-2">
-						<div class="col-12">
-							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 150px;"
-								   data-options="multiline:true"
-								   th:value="${custInfo?.custMemo}">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row p-2">
-				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 200px;"
-					 data-options="collapsible:true">
-					<div class="row m-2">
-						<div class="col-12">
-							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인'"
-								   th:value="${custInfo?.rcmdCustNm}">
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-12">
-							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인 연락처'"
-								   th:value="${custInfo?.rcmdCellNo}">
 						</div>
 					</div>
 				</div>

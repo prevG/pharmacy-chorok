@@ -46,14 +46,14 @@ $(document).ready(function() {
 		        		field: 'custCellNo', 
 		        		title: '핸드폰번호', 
 		        		align: 'center', 
-		        		width: '150', 
+		        		width: '120', 
 		        		editor: 'numberbox'
 		        	},
 		        	{
 		        		field: 'custBirthDt', 
 		        		title: '생년월일', 
 		        		align: 'center', 
-		        		width: '200', 
+		        		width: '120', 
 		        		editor: 'text'
 		        	},
 		        	{
