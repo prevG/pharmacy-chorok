@@ -107,7 +107,7 @@ $( document ).ready( function() {
     /**************************************************************
      * 금주 스케쥴보기
      **************************************************************/
-    $( document ).on("click", "button[name='btnThisWeek']", function( e ) {    
+    $( document ).on("click", "#btnThisWeek", function( e ) {    
         
         e.preventDefault(); //remove href function
         location.href = "/reservation/RS1001MV";
@@ -116,7 +116,7 @@ $( document ).ready( function() {
     /**************************************************************
      * 복용상담스케쥴보기(약사님)
      **************************************************************/
-    $( document ).on("click", "button[name='btnDosingListByChemist']", function( e ) {    
+    $( document ).on("click", "#btnDosingListByChemist", function( e ) {    
         
         e.preventDefault(); //remove href function
         location.href = "/customer/CUS2001ML";
@@ -125,7 +125,7 @@ $( document ).ready( function() {
     /**************************************************************
      * 복용상담스케쥴보기(실장님님)
      **************************************************************/
-    $( document ).on("click", "button[name='btnDosingListByCounselor']", function( e ) {    
+    $( document ).on("click", "#btnDosingListByCounselor", function( e ) {    
         
         e.preventDefault();
         location.href = "/customer/CUS2001ML";
@@ -134,7 +134,7 @@ $( document ).ready( function() {
     /**************************************************************
      * 복용상담스케쥴보기(약사님)
      **************************************************************/
-    $( document ).on("click", "button[name='btnCustListByStopDosing']", function( e ) {    
+    $( document ).on("click", "#btnCustListByStopDosing", function( e ) {    
     
         e.preventDefault(); //remove href function
         location.href = "/customer/CUS2001ML";
@@ -143,7 +143,7 @@ $( document ).ready( function() {
     /**************************************************************
      * 복용상담스케쥴보기(실장님님)
      **************************************************************/
-    $( document ).on("click", "button[name='btnTransitList']", function( e ) {    
+    $( document ).on("click", "#btnTransitList", function( e ) {    
         
         e.preventDefault();
         location.href = "/customer/CUS2001ML";
