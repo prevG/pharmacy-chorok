@@ -34,18 +34,6 @@ $( document ).ready( function() {
 		init: function() {
 			
             /**************************************************************
-             * 복용유형 선택박스 생성.
-             **************************************************************/
-			$('#saveCnstFrm select[textboxName=dosgTpCd]').combobox({
-				url: '/admin/getCodes' + '?GrpCd=C1018&target=combo&targetKind=1',
-				valueField: 'ditcCd',
-				textField: 'ditcNm',
-				onLoadSuccess: function() {
-					$(this).combobox('setValue', '선택하세요');
-				}
-			});
-			
-            /**************************************************************
              * 상담차트 목록
              **************************************************************/
 			$('#dg').datagrid({
@@ -61,7 +49,6 @@ $( document ).ready( function() {
 		        	if (data.rows.length === 0) {
 						$('#saveCnstFrm')[0].reset();
 						$('#saveSurvFrm')[0].reset();
-						$('#cnstDesc').textbox('setValue', '')
 						$('#saveCnstFrm input[name=selectedIndex]').val('');
 						$('#cnstPaper').empty();
 						
@@ -89,9 +76,11 @@ $( document ).ready( function() {
 						pic2UsrNo		: row.pic2UsrNo,
 						cnstHhCd		: row.cnstHhCd,
 						cnstHhMemo		: row.cnstHhMemo,
-						dosgTpCd		: row.dosgTpCd
+						dosgTpCd		: row.dosgTpCd,
+						payTpCd 		: row.payTpCd,
+						dlvDt 			: row.dlvDt,
+						cnstDesc 		: row.cnstDesc
 					});
-					$('#cnstDesc').textbox('setValue', row.cnstDesc);
 					// 설문차트
 					$('#saveDosgFrm').form('load', {
 						orgWgt 			: row.orgWgt,
@@ -199,20 +188,22 @@ $( document ).ready( function() {
 		        	var row = $(this).datagrid('getRows')[index];
 		        	if (!row) return;
 		        	
-		        	$('#dosgDlgFrm input[name=dlg_dosgId]').val(row.dosgId);
-		        	$('#dosgDlgFrm input[name=dlg_dosgSeq]').val(row.dosgSeq);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgSeqStr]').textbox('setValue', row.dosgSeqStr);
-		        	$('#dosgDlgFrm input[name=dlg_dosgLvCd]').val(row.dosgLvCd);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgLvCdVal]').textbox('setValue', row.dosgLvCdVal);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('setValue', row.dosgDt);
-		        	$('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('setValue', row.callYn);
-		        	$('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('setValue', row.dosgYn);
-		        	$('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('setValue', row.pausYn);
-		        	$('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('setValue', row.currWgt);
-		        	$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', row.lossWgt);
-		        	$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', row.rmiWgt);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('setValue', row.dosgDesc1);
-		        	$('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('setValue', row.dosgDesc2);
+		        	$('#dosgDlgFrm').form('load', {
+		        		dlg_dosgId 		: row.dosgId,
+		        		dlg_dosgSeq		: row.dosgSeq,
+		        		dlg_dosgSeqStr 	: row.dosgSeqStr,
+		        		dlg_dosgLvCd 	: row.dosgLvCd,
+		        		dlg_dosgLvCdVal : row.dosgLvCdVal,
+		        		dlg_dosgDt 		: row.dosgDt,
+		        		dlg_callYn 		: row.callYn,
+		        		dlg_dosgYn 		: row.dosgYn,
+		        		dlg_pausYn 		: row.pausYn,
+		        		dlg_currWgt 	: row.currWgt,
+		        		dlg_lossWgt 	: row.lossWgt,
+		        		dlg_rmiWgt 		: row.rmiWgt,
+		        		dlg_dosgDesc1 	: row.dosgDesc1,
+		        		dlg_dosgDesc2 	: row.dosgDesc2
+		        	});
 		        
 		        	$('#dosgDlg').dialog('open').dialog('center').dialog('setTitle','복용차트 정보');
 		        	
@@ -481,7 +472,7 @@ $( document ).ready( function() {
 						"addr2" 		: 	$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 						"delYn" 		: 	$('#saveCustFrm input[name=dlg_delYn]').val(),
 						"custMemo" 		:	$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
-						"custMemo2" 	:	$('#saveCustFrm input[name=dlg_custMemo2]').val(),
+						"custMemo2" 	:	$('#saveCustFrm input[textboxName=dlg_custMemo2]').textbox('getValue'),
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')
@@ -596,17 +587,19 @@ $( document ).ready( function() {
 		saveCnstChart: function() {
 			// 상담차트
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-			var cnstDesc = $('#cnstDesc').textbox('getValue');
-			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
-			var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
-			var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
-			var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
-			var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
-			var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
-			var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
-			var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
-			var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
-			var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
+			var cnstDesc 	   = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
+			var picUsrNo 	   = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
+			var picUsrNoVal    = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
+			var pic2UsrNo 	   = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
+			var pic2UsrNoVal   = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			var orgWgt 		   = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
+			var tgtWgt 		   = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
+			var startDosgDt    = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
+			var cnstHhCd 	   = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
+			var cnstHhMemo 	   = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
+			var dosgTpCd 	   = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
+			var payTpCd 	   = $('#saveCnstFrm select[textboxName=payTpCd]').combobox('getValue');
+			var dlvDt 		   = $('#saveCnstFrm input[textboxName=dlvDt]').datebox('getValue');
 			if( selectedCnstId == "" ) {
 				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
@@ -665,6 +658,8 @@ $( document ).ready( function() {
 					"cnstHhCd"		: cnstHhCd,
 					"cnstHhMemo"	: cnstHhMemo,
 					"dosgTpCd"		: dosgTpCd,
+					"payTpCd" 		: payTpCd,
+					"dlvDt" 		: moment(dlvDt).format("YYYYMMDD"),
 					"srvChartList" 	: cnstPaperList
 				}
 			};

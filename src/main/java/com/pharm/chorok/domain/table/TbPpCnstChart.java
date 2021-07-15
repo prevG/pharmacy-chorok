@@ -28,6 +28,8 @@ public class TbPpCnstChart extends TbCommColumn {
     private String cnstHhCd;		// 상담가능시간 코드
     private String cnstHhMemo; 		// 상담가능시간 메모
     private String dosgTpCd;		// 복용유형 코드
+    private String payTpCd;			// 결재유형 코드
+    private String dlvDt;			// 택배발송일
     
     private List<TbPpSrvChart> srvChartList; // 설문차트
 }

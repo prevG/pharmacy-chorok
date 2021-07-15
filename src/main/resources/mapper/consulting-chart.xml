@@ -34,10 +34,13 @@
        , CNST_HH_CD
        , CNST_HH_MEMO
        , DOSG_TP_CD
+       , PAY_TP_CD
+       , DATE_FORMAT(DLV_DT, '%Y-%m-%d') AS DLV_DT
        , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_VAL
        , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_VAL
        , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1019' AND DITC_CD = CNST_HH_CD AND USE_YN = 'Y') AS CNST_HH_CD_VAL  
        , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_VAL  
+       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_VAL
     FROM TB_PP_CNST_CHART
    WHERE CNST_ID = #{cnstId}
    ORDER
@@ -67,10 +70,13 @@
        , CNST_HH_CD
        , CNST_HH_MEMO
        , DOSG_TP_CD
+       , PAY_TP_CD
+       , DATE_FORMAT(DLV_DT, '%Y-%m-%d') AS DLV_DT
        , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_VAL
        , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_VAL
        , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1019' AND DITC_CD = CNST_HH_CD AND USE_YN = 'Y') AS CNST_HH_CD_VAL  
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_VAL  
+       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_VAL
+       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_VAL
     FROM TB_PP_CNST_CHART
        , (SELECT @ROWNUM :=-1) TMP
    WHERE CUST_ID = #{custId}
@@ -110,24 +116,26 @@
 	</insert>
 
 	<update id="updateTbPpCnstChart">
-  /**com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
-		UPDATE TB_PP_CNST_CHART
-		   SET CNST_DESC    = #{cnstDesc}
-			   , PIC_USR_NO   = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
-			   , PIC2_USR_NO  = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
-			   , ORG_WGT      = #{orgWgt}
-			   , TGT_WGT      = #{tgtWgt}
-			   , START_DOSG_DT = CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
-			   , CNST_HH_CD   = #{cnstHhCd}
-			   , CNST_HH_MEMO = #{cnstHhMemo}
-			   , DOSG_TP_CD   = #{dosgTpCd}
-		 WHERE CNST_ID = #{cnstId}
+	/** com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
+	UPDATE TB_PP_CNST_CHART
+	   SET CNST_DESC      = #{cnstDesc}
+		   , PIC_USR_NO    = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
+		   , PIC2_USR_NO   = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
+		   , ORG_WGT       = #{orgWgt}
+		   , TGT_WGT       = #{tgtWgt}
+		   , START_DOSG_DT = CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
+		   , CNST_HH_CD    = #{cnstHhCd}
+		   , CNST_HH_MEMO  = #{cnstHhMemo}
+		   , DOSG_TP_CD    = #{dosgTpCd}
+		   , PAY_TP_CD     = #{payTpCd}
+		   , DLV_DT   	   = #{dlvDt}
+	 WHERE CNST_ID = #{cnstId}
 	</update>
 
-  <delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
-  DELETE FROM TB_PP_CNST_CHART
-   WHERE CNST_ID = #{cnstId}
+  	DELETE FROM TB_PP_CNST_CHART
+   	 WHERE CNST_ID = #{cnstId}
 	]]>
 	</delete>
 	

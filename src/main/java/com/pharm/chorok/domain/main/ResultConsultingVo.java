@@ -27,5 +27,8 @@ public class ResultConsultingVo extends TbCommColumn {
     private String cnstHhMemo; 			// 상담가능시간 메모
     private String dosgTpCd;			// 복용유형 코드
     private String dosgTpCdVal;			// 복용유형 설명
+    private String payTpCd;				// 결재유형 코드
+    private String payTpCdVal;			// 결재유형 설명
+    private String dlvDt;				// 택배발송일
     
 }

@@ -191,6 +191,9 @@ public class CustomerController {
         //상담가능시간 코드
         List<TbCommCode> cnstHhList = codeService.selectAbbrCodes(new TbCommCode("C1019", "Y"));
         
+        //복용유형 코드
+        List<TbCommCode> dosgTpCdList = codeService.selectAbbrCodes(new TbCommCode("C1018", "Y"));
+        
         //복용여부 코드
         List<TbCommCode> dosgYnList = codeService.selectAbbrCodes(new TbCommCode("C1017", "Y"));
         
@@ -199,6 +202,9 @@ public class CustomerController {
 
         //통화여부 코드
         List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        
+        //결재유형 코드
+        List<TbCommCode> payTpCdList = codeService.selectAbbrCodes(new TbCommCode("C1022", "Y"));
         
         //생년월일
         List<TbCommCode> birthYyList = CommCodeEx.birthYyList();
@@ -217,9 +223,11 @@ public class CustomerController {
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);
+        model.addAttribute("dosgTpCdList", dosgTpCdList);
         model.addAttribute("dosgYnList", dosgYnList);
         model.addAttribute("callYnList", callYnList);
         model.addAttribute("pausYnList", pausYnList);
+        model.addAttribute("payTpCdList", payTpCdList);
         model.addAttribute("birthYyList", birthYyList);
         model.addAttribute("birthMmList", birthMmList);
         model.addAttribute("birthDdList", birthDdList);
