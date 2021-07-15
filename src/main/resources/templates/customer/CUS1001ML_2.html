@@ -24,7 +24,8 @@
 	</section>
 	<section class="content">
 		<div class="container-fluid">
-			<div class="easyui-panel mb-2 p-2" title="검색" style="width: 100%;height: 80px;overflow: hidden;">
+			<div class="easyui-panel p-2" title="검색" style="width: 100%;height: 80px;overflow: hidden;"
+				data-options="cls:'c2'">
 				<form id="searchFrm" method="post">
 				<div class="row">
 					<div class="col-md-8 form-inline">
@@ -49,7 +50,11 @@
 				</div>
 				</form>
 			</div>
-			<table id="dg01" style="width: 100%;min-height: 730px;"></table>
+			<div class="row mt-2">
+				<div class="col-12">
+					<table id="dg01" style="width: 100%;min-height: 730px;"></table>				
+				</div>
+			</div>
 		</div>
 	</section>
 

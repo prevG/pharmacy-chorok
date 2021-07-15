@@ -32,7 +32,8 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-8">
-					<div class="easyui-panel mb-2 p-2" title="주간 예약스케쥴" style="width: 100%;overflow: hidden;">
+					<div class="easyui-panel p-2 mb-2" title="주간 예약스케쥴" style="width: 100%;overflow: hidden;"
+						data-options="cls:'c8'">
 						<div class="row mb-1">
 							<div class="col-sm-6">
 								<input class="easyui-textbox" name="searchKeyword" id="searchKeyword" 
@@ -41,13 +42,16 @@
 												            prompt:'예약자명/전화번호4자리',
 															labelPosition:'left'"
 												style="width:360px;margin-right:20px;" tabindex="1">
-								<a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'" 
+								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" 
 									id="btnSearchRsvtSch" name="btnSearchRsvtSch">예약조회</a>
 							</div>
 							<div class="col-sm-6 text-right">
-								<button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
+								<!-- <button type="button" id="prevWeek" name="prevWeek" class="btn btn-secondary btn-sm">지난주</button>
 								<button type="button" id="thisWeek" name="thisWeek" class="btn btn-secondary btn-sm">오늘</button>
-								<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button>
+								<button type="button" id="nextWeek" name="nextWeek" class="btn btn-secondary btn-sm">다음주</button> -->
+								<a href="javascript:void(0)" id="prevWeek" class="easyui-linkbutton c2" style="width: 70px;">지난주</a>
+								<a href="javascript:void(0)" id="thisWeek" class="easyui-linkbutton c2" style="width: 70px;">오늘</a>
+								<a href="javascript:void(0)" id="nextWeek" class="easyui-linkbutton c2" style="width: 70px;">다음주</a>
 							</div>
 						</div>
 						<div id="time-table" th:fragment="time-table">
@@ -89,7 +93,8 @@
 					</div>
 				</div>
 				<div class="col-sm-4">
-					<div class="easyui-panel mb-2 p-2" title="주간 예약스케쥴" style="width: 100%;overflow: hidden;">
+					<div class="easyui-panel p-2" title="주간 예약스케쥴" style="width: 100%;overflow: hidden;"
+						data-options="cls:'c2'">
 						<div class="row" style="margin-bottom: 10px">
 							<div class="col">
 								<div style="text-align:right;">

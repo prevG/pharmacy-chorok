@@ -99,7 +99,7 @@ $( document ).ready( function() {
 	 /**************************************************************
      * 검색버튼 클릭시
      **************************************************************/
-    $( document ).on("click", "a[name='btnSearchCust']", function( e ) {    
+    $( document ).on("click", "#btnSearchCust", function( e ) {    
         CUS2001ML.search();
     });
 });

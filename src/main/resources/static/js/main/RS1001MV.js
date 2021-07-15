@@ -167,7 +167,7 @@ $(document).ready(function () {
             /**************************************************************
              * 지난주 스케쥴 보기
              **************************************************************/
-            $(document).on("click", "button[name='prevWeek']", function (e) {
+            $(document).on("click", "#prevWeek", function (e) {
 
                 e.preventDefault();
                 var params = {
@@ -181,7 +181,7 @@ $(document).ready(function () {
             /**************************************************************
              * 금주 스케쥴 보기
              **************************************************************/
-            $(document).on("click", "button[name='thisWeek']", function (e) {
+            $(document).on("click", "#thisWeek", function (e) {
 
                 e.preventDefault();
                 var params = {
@@ -195,7 +195,7 @@ $(document).ready(function () {
             /**************************************************************
              * 다음주 스케쥴 보기
              **************************************************************/
-            $(document).off("click", "button[name='nextWeek']").on("click", "button[name='nextWeek']", function (e) {
+            $(document).off("click", "#nextWeek").on("click", "#nextWeek", function (e) {
 
                 e.preventDefault();
                 var params = {
