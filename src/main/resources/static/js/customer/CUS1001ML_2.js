@@ -174,7 +174,7 @@ $(document).ready(function() {
 				}
 	
 				$("#custDlg").load("/customer/CUS1001ML_D/"+ row.custId +"/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
 					$.parser.parse($('#custDlg'));
 		        });
 			});
@@ -185,7 +185,7 @@ $(document).ready(function() {
 			$(document).off("click", "#btnNewCustPop").on("click", "#btnNewCustPop", function (e) {
 				
 				$("#custDlg").load("/customer/CUS1001ML_D/0/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
 					$.parser.parse($('#custDlg'));
 		        });
 			});

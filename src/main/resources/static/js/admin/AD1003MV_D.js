@@ -76,7 +76,7 @@ $( document ).ready( function() {
 						"addr2" 		: 	$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 						"delYn" 		: 	$('#saveCustFrm input[name=dlg_delYn]').val(),
 						"custMemo" 		:	$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
-						"custMemo2" 	:	$('#saveCustFrm input[name=dlg_custMemo2]').val(),
+						"custMemo2" 	:	$('#saveCustFrm input[textboxName=dlg_custMemo2]').textbox('getValue'),
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')

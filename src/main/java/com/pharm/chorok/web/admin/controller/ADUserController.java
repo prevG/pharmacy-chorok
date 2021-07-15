@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
+import com.pharm.chorok.domain.main.ResultRcmdVo;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
@@ -151,8 +152,14 @@ public class ADUserController {
 	public String CUS1001ML_D(Model model, 
 			@PathVariable long custId) throws Exception {
 		
+		TbCustomer customer = new TbCustomer();
+		
 		//고객ID로 조회
-        TbCustomer custInfo = userService.findCustomerByCustId(custId);
+		customer.setCustId( custId );
+        TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
+        
+        //고객 추천인 목록
+        List<ResultRcmdVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
         
         //생년월일
         List<TbCommCode> birthYyList = CommCodeEx.birthYyList();
@@ -166,6 +173,7 @@ public class ADUserController {
         List<TbCommCode> pcrtYearList = CommCodeEx.pcrtYearList();
         
         model.addAttribute("custInfo", custInfo);
+        model.addAttribute("rcmdList", rcmdList);
         model.addAttribute("birthYyList", birthYyList);
         model.addAttribute("birthMmList", birthMmList);
         model.addAttribute("birthDdList", birthDdList);
@@ -175,6 +183,13 @@ public class ADUserController {
 		return "admin/AD1003MV_D :: customer-main-table";
 	}
 	
+	/**
+	 * @deprecated CustomerService 함수로 대체함.
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/saveUser")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> saveUser(

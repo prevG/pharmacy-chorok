@@ -43,7 +43,7 @@
 			<!-- Search -->
 			<div class="easyui-panel p-2 mb-2" title="검색">
 				<div class="row p-1">
-					<div class="col-12">
+					<div class="col-8">
 						<div class="input-group ml-2">
 							<select class="easyui-combobox" id="cbSrch" name="cbSrch" style="width: 250px;"
 								data-options="label:'검색어',labelWidth:110,required:true">
@@ -59,6 +59,9 @@
 									data-options="iconCls:'icon-ok'">검색</a>
 							</div>
 						</div>
+					</div>
+					<div class="col-4 d-flex justify-content-end">
+						<a href="javascript:void(0)" id="btnCustInfo" class="easyui-linkbutton c1" style="width:100px;height:32px">고객상보</a>
 					</div>
 				</div>
 				<div class="row p-1">
@@ -109,7 +112,7 @@
 	</section>
 
 	<!-- customer dialog -->
-	<div id="custDlg" class="easyui-window" data-options="closed:true,modal:true" style="width:95%;height:95%;padding:10px;">
+	<div id="custDlg" class="easyui-window" title="고객상담정보" data-options="closed:true,modal:true" style="width:95%;height:95%;padding:10px;">
 	</div>
 </div>
 <!-- /.content-wrapper -->

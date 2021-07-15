@@ -8,7 +8,7 @@
     <input type="hidden" name="dlg_rcmdCustId" th:value="${custInfo?.rcmdCustId}">
 	<div class="row">
 		<div class="col-md-6">
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="기본정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -84,7 +84,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="결혼정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -145,7 +145,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -164,18 +164,29 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="마일리지" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
-						<div class="col-12">
+						<div class="col-8">
+							<ul class="easyui-datalist" title="추천인 목록" style="width: 100%;height: 120px;"
+								data-options="lines:true">
+								<li th:each="data, index : ${rcmdList}"
+									th:value="${data?.custId}" 
+									th:text="${data?.custUsrNm +' / '+ data?.custCellNo}"></li>
+							</ul>
+						</div>
+						<div class="col-4">
+							<input name="dlg_rcmdCellNo11" class="easyui-textbox" style="width: 100%;text-align: center;"
+								   data-options="label:'점수',labelWidth:110,readonly:true"
+								   th:value="${custInfo?.mileage}">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="주소정보" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -202,7 +213,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="고객메모" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -214,7 +225,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
@@ -226,7 +237,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row p-2">
+			<div class="row p-1">
 				<div class="easyui-panel" title="내원경로" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">

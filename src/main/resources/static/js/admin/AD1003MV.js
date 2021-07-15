@@ -142,6 +142,18 @@ $(document).ready(function() {
 			});
 		
 			/**************************************************************
+		     * 엔터키 바인딩
+		     **************************************************************/
+			$('#srchTxt').textbox('textbox').bind('keydown', function(e) {
+				if (e.keyCode === 13) AD1003MV.search();
+			});
+			$("#custDlg").dialog({
+				onClose: function() {
+					AD1003MV.search();
+				}
+			});
+			
+			/**************************************************************
 		     * "조회 버튼" 클릭시
 		     **************************************************************/
 		    $(document).off("click", "#btnUsrSearch").on("click", "#btnUsrSearch", function (e) {
@@ -149,11 +161,27 @@ $(document).ready(function() {
 			});
 			
 			/**************************************************************
+		     * "고객정보" 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnCustInfo").on("click", "#btnCustInfo", function (e) {
+				var row = $('#dg').datagrid('getSelected');
+				if (!row) {
+					$.messager.confirm('고객목록', '고객목록에서 고객을 선택해 주세요');
+					return;	
+				}
+	
+				$("#custDlg").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
+					$.parser.parse($('#custDlg'));
+		        });
+			});
+			
+			/**************************************************************
 		     * "추가 버튼" 클릭시
 		     **************************************************************/
 		    $(document).off("click", "#btnAddUserPop").on("click", "#btnAddUserPop", function (e) {
 				$("#custDlg").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
+					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
 					$.parser.parse($('#custDlg'));
 					$('#saveCustFrm').form('clear'); // 위치 중요함 (dialog 앞에 위치하면 안됨)
 		        });
