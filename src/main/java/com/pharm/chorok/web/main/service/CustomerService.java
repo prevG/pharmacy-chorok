@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.ResultRcmdVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
@@ -137,6 +138,10 @@ public class CustomerService {
 
 	public int addCust(TbCustomer tbCustomer) {
 		return 0;
+	}
+
+	public List<ResultRcmdVo> findRcmdListByCustId(long custId) {
+		return customerRepo.findRcmdListByCustId( custId );
 	}
 }
 

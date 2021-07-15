@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.ResultRcmdVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -26,6 +27,7 @@ public interface CustomerRepository {
     public int insertTbCustomer(TbCustomer custInfo) throws Exception;
     public int updateTbCustomer(TbCustomer custInfo) throws Exception;
     public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
-
+	
+    public List<ResultRcmdVo> findRcmdListByCustId(long custId);
 
 }

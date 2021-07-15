@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.CommCodeEx;
+import com.pharm.chorok.domain.main.ResultRcmdVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
@@ -181,6 +182,9 @@ public class CustomerController {
 		//고객ID로 조회
         customer.setCustId( custId );
         TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
+        
+        //고객 추천인 목록
+        List<ResultRcmdVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -220,6 +224,7 @@ public class CustomerController {
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", custInfo);
+        model.addAttribute("rcmdList", rcmdList);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);
