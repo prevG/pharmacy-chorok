@@ -28,7 +28,7 @@ $(function() {
 			$('#dg').datagrid({
 				singleSelect: true,
 				onClickCell: function(index, field) {
-					if (myDg.editIndex != index) {
+					if (myDg.editIndex !== index) {
 						if (myDg.endEditing()) {
 							$(this).datagrid('selectRow', index).datagrid('beginEdit', index);
 							myDg.editIndex = index;
@@ -36,7 +36,8 @@ $(function() {
 					}
 				},
 				onEndEdit: function(index, row) {
-					alert('index = '+ index +', '+ row.name);
+					//alert('index = '+ index +', '+ row.name);
+					console.log(index, row);
 					$(this).datagrid('reload');
 				},
 				columns:[

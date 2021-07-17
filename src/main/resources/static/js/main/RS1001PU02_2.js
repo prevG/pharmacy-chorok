@@ -5,9 +5,10 @@
  ******************************************************/
 
 function myformatter(date) {
-	var y = date.getFullYear();
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
+	var dt = new Date(date || Date.now());
+	var y = dt.getFullYear();
+	var m = dt.getMonth() + 1;
+	var d = dt.getDate();
 	return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
 }
 
@@ -29,9 +30,22 @@ function fnZipCode() {
 }
 
 $( document ).ready( function() {
+	var gC1016 = [];
+	var gC1017 = [];
+	var gC1021 = [];
 
 	var RS1001PU02 = {
+		dg2EditIndex: -1,
+		dg2EndEditing: function() {
+			if (RS1001PU02.dg2EditIndex === -1) return true;
+			$('#dg2').datagrid('endEdit', RS1001PU02.dg2EditIndex);
+			RS1001PU02.dg2EditIndex = -1;
+			return true;
+		},
 		init: function() {
+			gC1016 = getCodeData('C1016'); // 한약사/상담실장
+			gC1017 = getCodeData('C1017'); // 예/아니오
+			gC1021 = getCodeData('C1021'); // 통화여부 코드
 			
             /**************************************************************
              * 상담차트 목록
@@ -181,10 +195,27 @@ $( document ).ready( function() {
 		        		});
 		        	}
 		        },
-		        //onClickCell: function(index, field, value) {
-		        //	$(this).datagrid('endEdit', index);
-		        //},
+				onEndEdit: function(index, row) {
+					console.log(index, row);
+					
+					//$(this).datagrid('reload');
+				},
+		        onClickCell: function(index, field, value) {
+		        	if (RS1001PU02.dg2EditIndex !== index) {
+		        		if (RS1001PU02.dg2EndEditing()) {
+							$(this).datagrid('selectRow', index).datagrid('beginEdit', index);
+							RS1001PU02.dg2EditIndex = index;
+						} else {
+							setTimeout(function() {
+                        		$(this).datagrid('selectRow', RS1001PU02.dg2EditIndex);
+                    		},0);
+						}
+		        	} else {
+		        		RS1001PU02.dg2EditIndex = -1;
+		        	}
+		        },
 		        onDblClickCell: function(index, field, value) {
+		        	/*
 		        	var row = $(this).datagrid('getRows')[index];
 		        	if (!row) return;
 		        	
@@ -206,10 +237,7 @@ $( document ).ready( function() {
 		        	});
 		        
 		        	$('#dosgDlg').dialog('open').dialog('center').dialog('setTitle','복용차트 정보');
-		        	
-		        	//$(this).datagrid('beginEdit', index);
-		        	//var ed = $(this).datagrid('getEditor', { index: index, field: field });
-		        	//$(ed.target).focus();
+		        	*/
 		        },
 		        columns:[[
 					{
@@ -224,29 +252,36 @@ $( document ).ready( function() {
 		        		title: '일수', 
 		        		align: 'center', 
 		        		width: '80', 
-		        		editor: 'text',
 		        		formatter: function(value, row) { return row.dosgSeqStr; }
 		        	},
 		        	{
 		        		field: 'dosgDt', 
 		        		title: '복용일자', 
 		        		align: 'center', 
-		        		width: '90', 
-		        		editor: 'text'
+		        		width: '100', 
+		        		editor: 'datebox',
+		        		formatter: function(value, row) {
+		        			return myformatter(value);
+		        		},
+		        		parser: function(value) {
+		        			return myparser(value);
+		        		}
 		        	},
 		        	{
 		        		field: 'daysStrKor', 
 		        		title: '요일', 
 		        		align: 'center', 
-		        		width: '70', 
-		        		editor: 'text'
+		        		width: '70'
 		        	},
 		        	{
 		        		field: 'callYn', 
 		        		title: '상담예약', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text', 
+		        		editor: {
+		        			type: 'combobox',
+		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1016, required: true }
+		        		}, 
 		        		formatter: function(value, row) { return row.callYnVal; }
 		        	},
 		        	{
@@ -254,7 +289,10 @@ $( document ).ready( function() {
 		        		title: '복용여부', 
 		        		align: 'center', 
 		        		width: '90', 
-		        		editor: 'text', 
+		        		editor: {
+		        			type: 'combobox',
+		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1017, required: true }
+		        		}, 
 		        		formatter: function(value, row) { return row.dosgYnVal; }
 		        	},
 		        	{
@@ -262,7 +300,10 @@ $( document ).ready( function() {
 		        		title: '통화여부', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text', 
+		        		editor: {
+		        			type: 'combobox',
+		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1021, required: true }
+		        		}, 
 		        		formatter: function(value, row) { return row.pausYnVal; }
 		        	},
 		        	{
@@ -270,34 +311,32 @@ $( document ).ready( function() {
 		        		title: '현재체중', 
 		        		align: 'center', 
 		        		width: '90', 
-		        		editor: 'text'
+		        		editor: 'numberbox'
 		        	},
 		        	{
 		        		field: 'lossWgt', 
 		        		title: '감량체중', 
 		        		align: 'center', 
-		        		width: '90', 
-		        		editor: 'text'
+		        		width: '90'
 		        	},
 		        	{
 		        		field: 'rmiWgt', 
 		        		title: '남은체중', 
 		        		align: 'center', 
-		        		width: '90', 
-		        		editor: 'text'
+		        		width: '90'
 		        	},
 		        	{
 		        		field: 'dosgDesc1', 
 		        		title: '몸상태', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '120', 
 		        		editor: 'text'
 		        	},
 		        	{
 		        		field: 'dosgDesc1', 
 		        		title: '약반응', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '120', 
 		        		editor: 'text'
 		        	}
 		        ]]
