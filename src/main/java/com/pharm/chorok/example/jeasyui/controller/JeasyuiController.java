@@ -11,4 +11,10 @@ public class JeasyuiController {
 		
 		return "example/jeasyui/validate-form";
 	}
+	
+	@RequestMapping("/example/jeasyui/md-table")
+	public String mdtable() {
+		
+		return "example/jeasyui/md-table";
+	}
 }

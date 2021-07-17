@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<!-- easyui -->
+<link rel="stylesheet" th:href="@{/easyui/themes/bootstrap/easyui.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/icon.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/color.css}">
+
+<!-- easyui -->
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>  
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+$(function() {
+	var myDg = {
+		editIndex: -1,
+		endEditing: function() {
+			if (myDg.editIndex === -1) return true;
+			$('#dg').datagrid('endEdit', myDg.editIndex);
+			myDg.editIndex = -1;
+			return true;
+		},
+		init: function() {
+			$('#dg').datagrid({
+				singleSelect: true,
+				onClickCell: function(index, field) {
+					if (myDg.editIndex != index) {
+						if (myDg.endEditing()) {
+							$(this).datagrid('selectRow', index).datagrid('beginEdit', index);
+							myDg.editIndex = index;
+						}
+					}
+				},
+				onEndEdit: function(index, row) {
+					alert('index = '+ index +', '+ row.name);
+					$(this).datagrid('reload');
+				},
+				columns:[
+					[
+					{
+						field: 'code', title: 'Code', width: '100'
+					},
+					{
+						field: 'name', title: 'Name', width: '100', editor: 'text'
+					},
+					{
+						field: 'category', title: 'Category', width: '100', editor: {
+							type: 'combobox',
+							options: {
+								valueField: 'ditcCd',
+								textField: 'dticNm',
+								data: [
+									{ ditcCd: '', dticNm: '선택' },
+									{ ditcCd: 'EA', dticNm: 'EA' },
+									{ ditcCd: 'BX', dticNm: 'BOX' }
+								]
+							}
+						},
+						formatter: function(value, row) {
+							return row.categoryDescr;
+						}
+					},
+					{
+						field: 'price', title: 'Price', width: '100', align: 'right', editor: 'text'
+					}
+					]
+				],
+				data: [
+					{ code: 'C1', name: 'Name-1', category: '', categoryDescr: '선택', price: 100 },
+					{ code: 'C2', name: 'Name-2', category: 'BX', categoryDescr: 'BOX', price: 200 },
+					{ code: 'C3', name: 'Name-3', category: 'EA', categoryDescr: 'EA', price: 300 },
+					{ code: 'C4', name: 'Name-4', category: 'BX', categoryDescr: 'BOX', price: 400 },
+					{ code: 'C4', name: 'Name-4', category: 'EA', categoryDescr: 'EA', price: 500 }
+				]
+			});
+		}	
+	};
+	
+	myDg.init();
+});
+/*]]>*/
+</script>
+</head>
+<body>
+	<table id="dg" style="width: 500px;"></table>
+</body>
+</html>
