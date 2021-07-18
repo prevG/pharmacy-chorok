@@ -39,7 +39,7 @@ $(document).ready(function() {
 		        		width: '150', 
 		        		editor: 'text',
 		        		formatter: function(value, row, index) {
-		        			return '<span style="font-weight:bold;">'+ value +'</span>';
+		        			return '<a href="javascript:void(0)" style="font-weight:bold;">'+ value +'</a>';
 		        		}
 		        	},
 		        	{

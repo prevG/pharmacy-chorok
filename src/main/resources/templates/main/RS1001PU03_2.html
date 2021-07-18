@@ -3,6 +3,12 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <div id="customer-table" th:fragment="customer-table">
+	<div class="row">
+		<div class="col-12 d-flex justify-content-end">
+			<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">고객정보 저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#custDlg').dialog('close');">닫기</a>
+		</div>
+	</div>
     <form id="saveCustFrm" name="saveCustFrm" method="post">
     <input type="hidden" name="dlg_delYn" th:value="${#strings.isEmpty(custInfo?.delYn)} ? 'N' : ${custInfo?.delYn}">
     <input type="hidden" name="dlg_rcmdCustId" th:value="${custInfo?.rcmdCustId}">
@@ -146,7 +152,7 @@
 				</div>
 			</div>
 			<div class="row p-1">
-				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 150px;"
+				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 120px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
@@ -218,7 +224,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 100px;"
+							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 105px;"
 								   data-options="multiline:true"
 								   th:value="${custInfo?.custMemo}">
 						</div>
@@ -226,11 +232,11 @@
 				</div>
 			</div>
 			<div class="row p-1">
-				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 150px;"
+				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 120px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 100px;"
+							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 70px;"
 								   data-options="multiline:true"
 								   th:value="${custInfo?.custMemo2}">
 						</div>
@@ -285,10 +291,6 @@
 		</div>
 	</div>
     </form>
-	<div class="row d-flex justify-content-end p-2">
-		<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#custDlg').dialog('close');">닫기</a>
-	</div>
 
     <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">

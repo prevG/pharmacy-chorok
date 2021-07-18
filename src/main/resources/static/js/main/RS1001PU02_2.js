@@ -194,7 +194,10 @@ $( document ).ready( function() {
 		        			rowspan: merges[i].rowspan
 		        		});
 		        	}
+		        	
+		        	//$(this).datagrid('enableCellEditing');
 		        },
+		        /*
 				onEndEdit: function(index, row) {
 					console.log(index, row);
 					
@@ -213,9 +216,8 @@ $( document ).ready( function() {
 		        	} else {
 		        		RS1001PU02.dg2EditIndex = -1;
 		        	}
-		        },
+		        },*/
 		        onDblClickCell: function(index, field, value) {
-		        	/*
 		        	var row = $(this).datagrid('getRows')[index];
 		        	if (!row) return;
 		        	
@@ -237,7 +239,6 @@ $( document ).ready( function() {
 		        	});
 		        
 		        	$('#dosgDlg').dialog('open').dialog('center').dialog('setTitle','복용차트 정보');
-		        	*/
 		        },
 		        columns:[[
 					{
@@ -252,7 +253,7 @@ $( document ).ready( function() {
 		        		title: '일수', 
 		        		align: 'center', 
 		        		width: '80', 
-		        		formatter: function(value, row) { return row.dosgSeqStr; }
+		        		formatter: function(value, row) { return '<span style="font-weight:bold;text-decoration:underline;">'+ row.dosgSeqStr +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgDt', 
