@@ -30,3 +30,6 @@
 .textbox .validatebox-readonly {
 	background: #fff7e6;
 }
+.textbox .textbox-text {
+	font-size: 14px !important;
+}
