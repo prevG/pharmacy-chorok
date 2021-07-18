@@ -45,9 +45,9 @@ public class ADCodeController {
 	public String code_2(Model model) {
 		
 		//그룹코드
-		List<TbCommCode> grpCdList = new ArrayList<TbCommCode>();
+		List<TbCommCode> grpCdList = codeService.selectAbbrGrpCodes(new TbCommCode());
 		//사용여부
-		List<TbCommCode> useYnList = new ArrayList<TbCommCode>();
+		List<TbCommCode> useYnList = codeService.selectAbbrCodes(new TbCommCode("C1017", "Y"));
 		
 		model.addAttribute("grpCdList", grpCdList);
 		model.addAttribute("useYnList", useYnList);

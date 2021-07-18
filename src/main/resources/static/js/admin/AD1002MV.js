@@ -12,7 +12,7 @@ $(document).ready(function() {
 			    ctrlSelect: true,
 			    idField: 'usrNo',
 			    rownumbers: true,
-				fitColumns: true, 
+				fitColumns: false, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        pagination: true,
@@ -65,20 +65,20 @@ $(document).ready(function() {
 		        	{
 		        		field: 'vOrder', 
 		        		title: '순번', 
-		        		align: 'right', 
-		        		width: '60'
+		        		align: 'center', 
+		        		width: '70'
 		        	},
 		        	{
 		        		field: 'useYn', 
-		        		title: '잠금여부', 
+		        		title: '사용유무', 
 		        		align: 'center', 
-		        		width: '60'
+		        		width: '70'
 		        	},
 		        	{
 		        		field: 'lockYn', 
-		        		title: '삭제여부', 
+		        		title: '잠금여부', 
 		        		align: 'center', 
-		        		width: '60'
+		        		width: '70'
 		        	}
 		        ]]
 			});		

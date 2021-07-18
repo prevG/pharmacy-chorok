@@ -90,7 +90,22 @@
 			 , UPD_ID
 			 , UPD_DTTM
 		  FROM TB_COMM_CODE
-		 WHERE 1=1
+		 <where>
+			<choose>
+				<when test='srchKind != null and srchKind.equals("gr")'>
+				GRP_CD LIKE CONCAT('%',#{srchTxt},'%')
+				</when>
+				<when test='srchKind != null and srchKind.equals("cd")'>
+				(DITC_CD LIKE CONCAT('%',#{srchTxt},'%') OR DITC_NM LIKE CONCAT('%',#{srchTxt},'%'))
+				</when>
+			</choose>
+			<if test='grpCd != null and !grpCd.equals("")'>
+				AND GRP_CD = #{grpCd}
+			</if>
+			<if test='useYn != null and !useYn.equals("")'>
+				AND USE_YN = #{useYn}
+			</if>
+		 </where>
 		 ORDER BY GRP_CD, V_ORDER
 	</select>
 	
@@ -120,6 +135,13 @@
 		 ORDER BY V_ORDER
 	</select>
 	
+	<select id="selectAbbrGrpCodes" resultType="com.pharm.chorok.domain.table.TbCommCode">
+		SELECT GRP_CD AS DITC_CD
+			 , GRP_CD AS DITC_NM
+		  FROM TB_COMM_CODE
+		 GROUP BY GRP_CD
+		 ORDER BY GRP_CD
+	</select>
 	
 	<select id="selectAbbrCodes" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
 		SELECT DITC_CD,

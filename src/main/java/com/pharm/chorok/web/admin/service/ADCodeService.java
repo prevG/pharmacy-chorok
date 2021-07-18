@@ -37,17 +37,17 @@ public class ADCodeService{
     	return codeRepository.selectCodes(tbCommCode);
     }
     
+    public List<TbCommCode> selectAbbrGrpCodes(TbCommCode tbCommCode){
+    	return codeRepository.selectAbbrGrpCodes(tbCommCode);
+    }
     
     public ArrayList<TbCommCode> selectAbbrCodes(TbCommCode tbCommCode){
     	return codeRepository.selectAbbrCodes(tbCommCode);
     }
     
-    
-    
     public int saveCode(TbCommCode tbCommCode) {
     	return codeRepository.saveCode(tbCommCode);
     }
-    
     
     public int removeCode(TbCommCode tbCommCode) {
     	return codeRepository.removeCode(tbCommCode);
