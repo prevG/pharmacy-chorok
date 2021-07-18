@@ -72,6 +72,27 @@
 		 ORDER BY V_ORDER
 	</select>
 	
+	<select id="selectCodesByGroupCd_2" resultType="com.pharm.chorok.domain.table.TbCommCode">
+		SELECT GRP_CD
+			 , DITC_CD
+			 , DITC_NM
+			 , CONCAT('[',DITC_CD,']',DITC_NM) AS DITC_CD_NM
+			 , DITC_NM_ENG
+			 , VALUE_CD
+			 , VALUE_CD2
+			 , CD_EXP
+			 , CD_EXP_ENG
+			 , V_ORDER
+			 , LOCK_YN
+			 , USE_YN
+			 , REG_ID
+			 , REG_DTTM
+			 , UPD_ID
+			 , UPD_DTTM
+		  FROM TB_COMM_CODE
+		 WHERE 1=1
+		 ORDER BY GRP_CD, V_ORDER
+	</select>
 	
 	<select id="selectCodes" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
 		SELECT GRP_CD,

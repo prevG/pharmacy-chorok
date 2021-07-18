@@ -1,20 +1,13 @@
 package com.pharm.chorok.web.admin.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.pharm.chorok.domain.table.TbCommCode;
-import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.repository.ADCodeRepository;
-import com.pharm.chorok.web.main.repository.TbCommUserRepository;
 
 @Service
 public class ADCodeService{
@@ -26,8 +19,18 @@ public class ADCodeService{
     	//codeRepository.insertCommCode()
     }
     
+    /**
+     * @deprecated selectCodesByGroupCd_2 함수로 대체함.
+     * 
+     * @param tbCommCode
+     * @return
+     */
     public ArrayList<TbCommCode> selectCodesByGroupCd(TbCommCode tbCommCode){
     	return codeRepository.selectCodesByGroupCd(tbCommCode);
+    }
+    
+    public List<TbCommCode> selectCodesByGroupCd_2(TbCommCode tbCommCode) {
+    	return codeRepository.selectCodesByGroupCd_2(tbCommCode);
     }
     
     public ArrayList<TbCommCode> selectCodes(TbCommCode tbCommCode){

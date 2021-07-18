@@ -1,6 +1,7 @@
 package com.pharm.chorok.web.admin.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.web.admin.service.ADCodeService;
 
@@ -24,7 +27,13 @@ public class ADCodeController {
 	@Autowired
 	private ADCodeService codeService;
 	
-	
+	/**
+	 * @deprecated /AD1002MV_2 함수로 대체함.
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/AD1002MV")
 	public ModelAndView code( Model model ) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -32,7 +41,27 @@ public class ADCodeController {
 		return mv;
 	}
 	
+	@GetMapping("/AD1002MV_2")
+	public String code_2(Model model) {
+		
+		//그룹코드
+		List<TbCommCode> grpCdList = new ArrayList<TbCommCode>();
+		//사용여부
+		List<TbCommCode> useYnList = new ArrayList<TbCommCode>();
+		
+		model.addAttribute("grpCdList", grpCdList);
+		model.addAttribute("useYnList", useYnList);
+		
+		return "admin/AD1002MV_2";
+	}
 	
+	/**
+	 * @deprecated /getCodesByGrpCd_2 함수로 대체함.
+	 * 
+	 * @param tbCommCode
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/getCodesByGrpCd")
 	@ResponseBody
 	public String getCodesByGrpCd(TbCommCode tbCommCode ) throws Exception {
@@ -60,6 +89,13 @@ public class ADCodeController {
 		return result.toString();
 	}
 	
+	@PostMapping("/getCodesByGrpCd_2")
+	@ResponseBody
+	public List<TbCommCode> getCodesByGrpCd_2(TbCommCode tbCommCode) {
+		List<TbCommCode> tbCommCodes = codeService.selectCodesByGroupCd_2(tbCommCode);
+		
+		return tbCommCodes;
+	}
 	
 	@PostMapping("/getGrpCdWithCombo")
 	@ResponseBody

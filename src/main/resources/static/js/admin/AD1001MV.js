@@ -167,10 +167,10 @@ $(document).ready(function() {
 		search: function() {
 			var queryParams = $("#dg").datagrid('options').queryParams;
 			queryParams.cbSrch = $('#cb_srch').combobox('getValue');
+			queryParams.srchTxt = $("#srchTxt").val();
 			queryParams.cbAuth = $('#cb_usrAuth').combobox('getValue');
 			queryParams.cbAppv = $('#cb_usrAprv').combobox('getValue');
 			queryParams.target = "grid";
-			queryParams.srchTxt = $("#srchTxt").val();
 			
 			$('#dg').datagrid('load', '/admin/getAdmin');			
 		},
