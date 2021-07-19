@@ -52,7 +52,7 @@
 									<option th:each="data, index : ${birthYyList}"
 											th:value="${data?.ditcCd}" 
 											th:text="${data?.ditcNm}"
-											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,0,4)}"></option>
+											th:selected="${#strings.length(custInfo?.custBirthDt) eq 8 and data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,0,4)}"></option>
 								</select>
 								<div class="ml-2"></div>
 								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 60px;text-align: center;"
@@ -61,7 +61,7 @@
 									<option th:each="data, index : ${birthMmList}"
 											th:value="${data?.ditcCd}" 
 											th:text="${data?.ditcNm}"
-											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,4,6)}"></option>
+											th:selected="${#strings.length(custInfo?.custBirthDt) eq 8 and data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,4,6)}"></option>
 								</select>
 								<div class="ml-2"></div>
 								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 60px;text-align: center;"
@@ -70,7 +70,7 @@
 									<option th:each="data, index : ${birthDdList}"
 											th:value="${data?.ditcCd}" 
 											th:text="${data?.ditcNm}"
-											th:selected="${data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,6,8)}"></option>
+											th:selected="${#strings.length(custInfo?.custBirthDt) eq 8 and data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,6,8)}"></option>
 								</select>
 							</div>
 						</div>
