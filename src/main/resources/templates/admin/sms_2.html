@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/admin_layout2">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+	<script type="text/javascript" th:src="@{/js/admin/sms_2.js}"></script>
+</th:block>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" layout:fragment="content">
+	<!-- Content Header (Page header) -->
+	<div class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1 class="m-0">SMS 관리</h1>
+				</div>
+				<!-- /.col -->
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item active">SMS 관리</li>
+					</ol>
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- /.content-header -->
+
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<!-- Search -->
+			<div class="easyui-panel p-2" title="검색" style="width: 100%;"
+				data-options="cls:'c2'">
+				<form id="searchFrm" method="post">
+				<div class="row">
+					<div class="col-2">
+						<input class="easyui-datebox" id="dosgDt" name="dosgDt" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
+							   data-options="
+							   		label:'복용일자',
+							   		labelPosition:'left',
+									formatter:myformatter,
+									parser:myparser"
+							   style="width: 100%;text-align: center;">
+					</div>
+					<div class="col-2">
+						<select class="easyui-combobox" id="picUsrNo" name="picUsrNo" style="width:100%;text-align: center;"
+								data-options="
+							   		label:'담당한약사',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${chemistList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-2">
+	 		 			<select class="easyui-combobox" id="pic2UsrNo" name="pic2UsrNo" style="width: 100%;text-align: center;"
+							    data-options="
+							   		label:'담당실장',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${counselorList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-2">
+	 		 			<select class="easyui-combobox" id="pausYn" name="pausYn" style="width: 100%;text-align: center;"
+							   data-options="
+							   		label:'통화여부',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${pausYnList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
+						</select>
+					</div>
+					<div class="col-2">
+						<a href="javascript:void(0)" id="btnSearch" class="easyui-linkbutton ml-3" style="width: 100px;"
+						   data-options="iconCls:'icon-ok'">검색</a>
+					</div>
+					<div class="col-2 d-flex justify-content-end">
+					</div>
+				</div>
+				</form>
+			</div>
+
+			<!-- Datagrid -->
+			<div class="row mt-2">
+				<div class="col-9">
+					<div class="easyui-panel p-2 mb-2" title="조회결과">
+						<table id="dg" style="width: 100%;min-height: 650px;"></table>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="easyui-panel p-2 mb-2" title="문자발송">
+						<form id="dosgSmsFrm" method="post">
+						<input type="hidden" name="cnstId">
+						<input type="hidden" name="dosgSeq">
+						<div style="width: 100%;min-height: 650px;">
+							<div class="row">
+								<div class="col-12">
+									<input class="easyui-textbox" name="custUsrNm" style="width: 100%;text-align: center;"
+										   data-options="
+										   		label:'고객이름',
+										   		labelWidth:120,
+										   		labelPosition:'left'">
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12">
+									<input class="easyui-textbox" name="custCellNo" style="width: 100%;text-align: center;"
+										   data-options="
+										   		label:'핸드폰번호',
+										   		labelWidth:120,
+										   		labelPosition:'left'">
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12">
+									<input class="easyui-textbox" name="dosgTpNm" style="width: 100%;text-align: center;"
+										   data-options="
+										   		label:'복용유형',
+										   		labelWidth:120,
+										   		labelPosition:'left'">
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12">
+									<input class="easyui-datebox" name="dosgDt" style="width: 100%;text-align: center;"
+										   data-options="
+										   		label:'복용일자',
+										   		labelWidth:120,
+										   		labelPosition:'left',
+												formatter:myformatter,
+												parser:myparser">
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12">
+									<input class="easyui-textbox" name="dosgSeqNm" style="width: 100%;text-align: center;"
+										   data-options="
+										   		label:'복용일차',
+										   		labelWidth:120,
+										   		labelPosition:'left'">
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-12">
+									<input class="easyui-textbox" name="smsMsg" style="width: 100%;height: 200px;"
+										   data-options="
+										   		label:'문자내용',
+										   		labelWidth:120,
+										   		labelPosition:'top',
+										   		multiline:true">
+								</div>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+</div>
+<!-- /.content-wrapper -->
+
+</html>

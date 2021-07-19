@@ -1,10 +1,10 @@
 package com.pharm.chorok.common.service;
 
-import com.pharm.chorok.common.repository.TbCommCalendarRepository;
-import com.pharm.chorok.domain.table.TbCommCalendar;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pharm.chorok.common.repository.TbCommCalendarRepository;
+import com.pharm.chorok.domain.table.TbCommCalendar;
 
 @Service
 public class CalendarService {
@@ -18,7 +18,7 @@ public class CalendarService {
      * @return
      * @throws Exception
      */
-    public TbCommCalendar selectCurrentDate() throws Exception {
+    public TbCommCalendar selectCurrentDate() {
         return calRepo.selectCurrentDate();
     }
 

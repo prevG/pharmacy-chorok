@@ -28,17 +28,17 @@
 				data-options="cls:'c2'">
 				<form id="searchFrm" method="post">
 				<div class="row">
-					<div class="col-md-2 form-inline">
-						<input class="easyui-datebox" id="dosgDt" name="dosgDt"th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
+					<div class="col-2">
+						<input class="easyui-datebox" id="dosgDt" name="dosgDt" th:value="${#dates.format(dosgDt, 'yyyy-MM-dd')}"
 							   data-options="
 							   		label:'복용일자',
 							   		labelPosition:'left',
 									formatter:myformatter,
 									parser:myparser"
-							   style="width: 100%;" >
+							   style="width: 100%;text-align: center;" >
 					</div>
-					<div class="col-md-2 form-inline">
-						<select class="easyui-combobox" id="picUsrNo"  name="picUsrNo" style="width:100%;text-align: center;"
+					<div class="col-2">
+						<select class="easyui-combobox" id="picUsrNo" name="picUsrNo" style="width:100%;text-align: center;"
 								   data-options="
 							   		label:'담당한약사',
 							   		labelPosition:'left',
@@ -49,8 +49,8 @@
 									th:text="${data?.usrNm}"></option>
 						</select>
 					</div>
-					<div class="col-md-2 form-inline">
-	 		 			<select class="easyui-combobox" id="pic2UsrNo"  name="pic2UsrNo" style="width: 100%;text-align: center;"
+					<div class="col-2">
+	 		 			<select class="easyui-combobox" id="pic2UsrNo" name="pic2UsrNo" style="width: 100%;text-align: center;"
 							   data-options="
 							   		label:'담당실장',
 							   		labelPosition:'left',
@@ -61,8 +61,8 @@
 									th:text="${data?.usrNm}"></option>
 						</select>
 					</div>
-					<div class="col-md-2 form-inline">
-	 		 			<select class="easyui-combobox" id="pausYn"  name="pausYn" style="width: 100%;text-align: center;"
+					<div class="col-2">
+	 		 			<select class="easyui-combobox" id="pausYn" name="pausYn" style="width: 100%;text-align: center;"
 							   data-options="
 							   		label:'통화여부',
 							   		labelPosition:'left',
@@ -73,12 +73,12 @@
 									th:text="${data?.ditcNm}"></option>
 						</select>
 					</div>
-					<div class="col-md-2 form-inline">
-						<a href="javascript:void(0)" id="btnSearchCust" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
+					<div class="col-2">
+						<a href="javascript:void(0)" id="btnSearchCust" class="easyui-linkbutton ml-3" style="width:100px;"
 						   data-options="iconCls:'icon-ok'">검색</a>
 					</div>
-					<div class="col-md-2 d-flex justify-content-end">
-						<a href="javascript:void(0)" id="btnCustInfo" class="easyui-linkbutton c1" style="width:100px;height:32px">고객상담정보</a>
+					<div class="col-2 d-flex justify-content-end">
+						<a href="javascript:void(0)" id="btnCustInfo" class="easyui-linkbutton c1" style="width:100px;">고객상담정보</a>
 					</div>
 				</div>
 				</form>
