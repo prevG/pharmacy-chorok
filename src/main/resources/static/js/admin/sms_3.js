@@ -25,6 +25,30 @@ function myparser(s) {
 	}
 }
 
+function doMergeCells(dg, rows, col) {
+	var merges = [];
+	var k = 0;
+	while (k < rows.length) {
+		var c = 0;
+		for (var l = k; l < rows.length; l++) {
+			var obj = rows[k];
+			var obj2 = rows[l];
+			if (obj[col] === obj2[col])
+				c++;
+		}
+		merges.push({ index: k, rowspan: c });
+		k += c;
+	}
+	
+	for (var i = 0; i < merges.length; i++) {
+		dg.datagrid('mergeCells', {
+			index: merges[i].index,
+			field: col,
+			rowspan: merges[i].rowspan
+		});
+	}
+}
+
 $(document).ready(function() {
 	var SMS3 = {
 		selectedIndex: -1,
@@ -47,10 +71,14 @@ $(document).ready(function() {
 		        pageList: [50],
 		        dragSelection: true,
 		        onLoadSuccess: function(data) {
+		        	doMergeCells($(this), data.rows, 'dosgTpCd');
+		        	doMergeCells($(this), data.rows, 'dosgLvCd');
+		        	doMergeCells($(this), data.rows, 'dosgSeq');
+		        	
+		        	// 선택행 처리
 		        	if (data.rows.length === 0) {
 		        		$('#dosgSmsFrm').form('reset');
 		        	} else {
-		        		// 선택행 처리
 			        	if (SMS3.selectedIndex > 0)
 			        		$(this).datagrid('selectRow', SMS3.selectedIndex);
 			        	else
@@ -81,7 +109,7 @@ $(document).ready(function() {
 		            },
 		        	{field: 'dosgLvCd' 	 , title: '복용단계', align: 'center', halign: 'center', width: '100',
 		        		formatter: function(value, row, index) {
-		        			return row.dosgLvCdNm;
+		        			return '<span style="font-weight:bold;">'+ row.dosgLvCdNm +'</span>';
 		        		}
 		        	},
 		            {field: 'dosgSeq'    , title: '복용일차'    , align: 'center', width: '70',
