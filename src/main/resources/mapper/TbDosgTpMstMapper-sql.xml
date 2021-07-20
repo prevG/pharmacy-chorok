@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pharm.chorok.web.main.mapper.TbDosgTpMstMapper">
+
+	<select id="selectTbDosgTpMstList" resultType="com.pharm.chorok.domain.main.DosgTpSmsVo">
+		SELECT 
+			 A.DOSG_TP_CD
+			 , A.DOSG_SEQ
+			 , A.DOSG_LV_CD
+			 , B.SMS_ID
+			 , B.SEND_HHMI
+			 , B.SMS_TITLE
+			 , B.SMS_CONTENT
+			 , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1018' AND DITC_CD = A.DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM
+			 , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = A.DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM
+		FROM TB_DOSG_TP_MST A
+		LEFT OUTER JOIN TB_DOSG_TP_SMS B ON B.DOSG_TP_CD = A.DOSG_TP_CD AND B.DOSG_SEQ = A.DOSG_SEQ
+		<where>
+			<if test='dosgTpCd != null and !dosgTpCd.equals("")'>
+			A.DOSG_TP_CD = #{dosgTpCd}
+			</if>
+		</where>
+		ORDER BY A.DOSG_TP_CD, A.DOSG_SEQ
+	</select>
+	
+	<select id="getNextSmsId" resultType="long">
+		SELECT CASE WHEN MAX(SMS_ID) IS NULL THEN 1 ELSE MAX(SMS_ID) + 1 END
+		FROM TB_DOSG_TP_SMS
+	</select>
+	
+	<insert id="insertDosgTpSms">
+		INSERT INTO TB_DOSG_TP_SMS (
+			SMS_ID
+			, DOSG_TP_CD
+			, DOSG_SEQ
+			, SEND_HHMI
+			, SMS_TITLE
+			, SMS_CONTENT
+		)
+		VALUES (
+			#{smsId}
+			, #{dosgTpCd}
+			, #{dosgSeq}
+			, #{sendHhmi}
+			, #{smsTitle}
+			, #{smsContent}
+		)
+	</insert>
+	
+	<update id="modifyDosgTpSms">
+		UPDATE TB_DOSG_TP_SMS
+		SET SMS_ID = #{smsId}
+		  , DOSG_TP_CD = #{dosgTpCd}
+		  , DOSG_SEQ = #{dosgSeq}
+		  , SEND_HHMI = #{sendHhmi}
+		  , SMS_TITLE = #{smsTitle}
+		  , SMS_CONTENT = #{smsContent}
+		WHERE SMS_ID = #{smsId}
+	</update>
+
+</mapper>

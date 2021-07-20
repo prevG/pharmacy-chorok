@@ -118,11 +118,28 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a th:href="@{/admin/sms_2}" class="nav-link" data-menu="/admin/sms_2">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>SMS 관리</p>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                SMS 관리
+                <i class="fas fa-angle-left right"></i>
+              </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/admin/sms_3}" class="nav-link" data-menu="/admin/sms_3">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>SMS 등록</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/admin/sms_2}" class="nav-link" data-menu="/admin/sms_2">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>SMS 발송이력</p>
+                </a>
+              </li>
+            </ul>
+          </li>          
           <li class="nav-header">기술지원</li>
           <li class="nav-item">
             <a href="#" class="nav-link">

@@ -74,4 +74,15 @@ public class ADSMSController {
 		return "admin/sms_2";
 	}
 	
+	@GetMapping("/sms_3")
+	public String sms_3(Model model) {
+		
+        //복용유형 코드목록
+        List<TbCommCode> dosgTpList = codeService.selectAbbrCodes(new TbCommCode("C1018", "Y"));
+        
+		model.addAttribute("dosgTpList", dosgTpList);
+
+		return "admin/sms_3";
+	}
+	
 }
