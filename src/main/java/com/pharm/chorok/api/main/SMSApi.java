@@ -67,7 +67,7 @@ public class SMSApi {
     	
     	dosgTpMstService.addDosgTpSms(pageCriteria.getCriteria());
     	
-    	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 저장 되었습니다."), HttpStatus.OK);
+    	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 생성 되었습니다."), HttpStatus.OK);
     }
     
     /**
@@ -83,6 +83,21 @@ public class SMSApi {
     	dosgTpMstService.modifyDosgTpSms(pageCriteria.getCriteria());
     	
     	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 수정 되었습니다."), HttpStatus.OK);
+    }
+    
+    /**
+     * 복용유형 발송문자 삭제
+     * 
+     * @param pageCriteria
+     * @return
+     */
+    @PostMapping("/removeDosgTpSms")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> removeDosgTpSms(@RequestBody PageCriteria<DosgTpSmsVo> pageCriteria) {
+    	
+    	dosgTpMstService.removeDosgTpSms(pageCriteria.getCriteria());
+    	
+    	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 삭제 되었습니다."), HttpStatus.OK);
     }
     
 }

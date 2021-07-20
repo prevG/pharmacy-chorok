@@ -21,6 +21,8 @@ public interface TbDosgTpMstMapper {
 
 	public void insertDosgTpSms(DosgTpSmsVo criteria);
 
-	public void modifyDosgTpSms(DosgTpSmsVo criteria);
+	public void updateDosgTpSms(DosgTpSmsVo criteria);
+	
+	public void deleteDosgTpSms(DosgTpSmsVo criteria);
 	
 }

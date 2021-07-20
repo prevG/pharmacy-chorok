@@ -48,7 +48,7 @@
 		)
 	</insert>
 	
-	<update id="modifyDosgTpSms">
+	<update id="updateDosgTpSms">
 		UPDATE TB_DOSG_TP_SMS
 		SET SMS_ID = #{smsId}
 		  , DOSG_TP_CD = #{dosgTpCd}
@@ -58,5 +58,10 @@
 		  , SMS_CONTENT = #{smsContent}
 		WHERE SMS_ID = #{smsId}
 	</update>
+	
+	<delete id="deleteDosgTpSms">
+		DELETE FROM TB_DOSG_TP_SMS
+		WHERE SMS_ID = #{smsId}
+	</delete>
 
 </mapper>

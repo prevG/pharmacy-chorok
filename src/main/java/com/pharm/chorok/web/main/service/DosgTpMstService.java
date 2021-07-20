@@ -40,7 +40,11 @@ public class DosgTpMstService {
 	}
 
 	public void modifyDosgTpSms(DosgTpSmsVo criteria) {
-		tbDosgTpMstMapper.modifyDosgTpSms(criteria);
+		tbDosgTpMstMapper.updateDosgTpSms(criteria);
+	}
+
+	public void removeDosgTpSms(DosgTpSmsVo criteria) {
+		tbDosgTpMstMapper.deleteDosgTpSms(criteria);
 	}
 	
 }

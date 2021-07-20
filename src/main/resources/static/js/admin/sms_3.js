@@ -27,6 +27,8 @@ function myparser(s) {
 
 $(document).ready(function() {
 	var SMS3 = {
+		selectedIndex: -1,
+		
 		init: function() {
 			
 		    /**************************************************************
@@ -44,6 +46,17 @@ $(document).ready(function() {
 		        pageSize: 50,
 		        pageList: [50],
 		        dragSelection: true,
+		        onLoadSuccess: function(data) {
+		        	if (data.rows.length === 0) {
+		        		$('#dosgSmsFrm').form('reset');
+		        	} else {
+		        		// 선택행 처리
+			        	if (SMS3.selectedIndex > 0)
+			        		$(this).datagrid('selectRow', SMS3.selectedIndex);
+			        	else
+			        		$(this).datagrid('selectRow', 0);
+		        	}
+		        },
 		        onSelect: function(index, row) {
 		        	$('#dosgSmsFrm').form('load', {
 		        		dosgTpCd 	: row.dosgTpCd,
@@ -56,6 +69,8 @@ $(document).ready(function() {
 		        		smsTitle 	: row.smsTitle,
 		        		smsContent 	: row.smsContent
 		        	});
+		        	
+		        	SMS3.selectedIndex = index;
 		        },
 		        columns:[[
 		        	{field: 'smsId'    	 , title: '복용문자번호' , align: 'center', width: '70', hidden: true},
@@ -75,92 +90,55 @@ $(document).ready(function() {
 		                }
 		            },
 		            {field: 'sendHhmi'    	, title: '발송시간' 	, align: 'center', width: '70'},
-		            {field: 'smsTitle'    	, title: '제목' 		, align: 'center', width: '150'},
-		            {field: 'smsContent'    , title: '내용'    	, align: 'center', width: '250'}
+		            {field: 'smsTitle'    	, title: '제목' 		, align: 'center', width: '200'},
+		            {field: 'smsContent'    , title: '내용'    	, align: 'center', width: '500'}
 		        ]]
 			});
 		
 			/**************************************************************
-		     * "조회 버튼" 클릭시
+		     * "검색" 버튼 클릭시
 		     **************************************************************/
 			$('#btnSearch').click(function(e) {
 				SMS3.search();
-			});
-			
-			/**************************************************************
-		     * "추가 버튼" 클릭시
-		     **************************************************************/
-			$('#btnAddUserPop').click(function(e) {
-				$('#userFrm [textboxName=dlg_usrPwd]').parent().show(); // 비밀번호 숨김 처리 해제.
-				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
-			    $('#userFrm').form('clear');
-			    $('#userFrm').form('load', {
-			    	dlg_usrNo 	 : '',
-					dlg_usrGrade : '',
-					dlg_usrAuth  : '',
-					dlg_usrAprv  : '',
-			    	dlg_delYn 	 : 'N'
-				});
 			});
 
 			/**************************************************************
 		     * "삭제 버튼" 클릭시
 		     **************************************************************/
-			$('#btnRemoveUser').click(function(e) {
-				SMS3.removeUser();
+			$('#btnRemove').click(function(e) {
+				var row = $('#dg').datagrid('getSelected');
+				if (!row) {
+					$.messager.alert('발송문자 삭제', '복용유형 목록에서 삭제할 항목을 선택하세요.');
+					return false;
+				}
+			
+				SMS3.removeDosgTpSms();
 			});
 
 			/**************************************************************
-		     * "저장" 버튼 클릭시
+		     * "신규등록" 버튼 클릭시
 		     **************************************************************/
-			$('#btnSave111').click(function(e) {
+			$('#btnAdd').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
-					$.messager.alert('관리자 삭제', '관리자 목록에서 편집할 항목을 선택하세요.');
+					$.messager.alert('발송문자 등록', '복용유형 목록에서 등록할 항목을 선택하세요.');
 					return false;
 				}
 				
-				$('#userFrm [textboxName=dlg_usrPwd]').parent().hide(); // 비밀번호 숨김 처리.
-				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
-				$('#userFrm').form('clear');
-				$('#userFrm').form('load', {
-					dlg_usrNo 	 : row.usrNo,
-					dlg_usrEml 	 : row.usrEml,
-					dlg_usrNm 	 : row.usrNm,
-					dlg_usrPhnNo : row.usrPhnNo,
-					dlg_usrGrade : row.usrGrade,
-					dlg_usrAuth  : row.usrAuth,
-					dlg_usrAprv  : row.usrAprv,
-					dlg_delYn 	 : row.delYn
-				});
+				SMS3.addDosgTpSms();
 			});
 
 			/**************************************************************
-		     * "저장" 버튼 클릭시
+		     * "정보저장" 버튼 클릭시
 		     **************************************************************/
-			$('#btnSave').click(function(e) {
-				SMS3.saveDosgTpSms();
-			});
-
-			/**************************************************************
-		     * "비밀번호 변경" 클릭시
-		     **************************************************************/
-			$('#btnModifyPassPop').click(function(e) {
+			$('#btnModify').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
-				if (!row) return;
-				
-				$('#passDlg').dialog('open').dialog('center').dialog('setTitle','비밀번호 변경');
-				$('#passFrm').form('clear');
-				$('#passFrm').form('load', {
-					dlg_usrNo : row.usrNo
-				});
-			});
+				if (!row) {
+					$.messager.alert('발송문자 수정', '복용유형 목록에서 편집할 항목을 선택하세요.');
+					return false;
+				}
 
-			/**************************************************************
-		     * "비밀번호 저장" 클릭시
-		     **************************************************************/
-			$('#btnModifyPass').click(function(e) {
-				SMS3.changePass();
+				SMS3.modifyDosgTpSms();
 			});
 		},
 		search: function() {
@@ -169,14 +147,51 @@ $(document).ready(function() {
 			
 			$('#dg').datagrid('load', '/api/v1/sms/dosgTpList');		
 		},
-		saveDosgTpSms: function() {
+		addDosgTpSms: function() {
 			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
 			var formData = {
 				criteria: {
 					"smsId" 		: smsId,
 					"dosgTpCd" 		: $('#dosgSmsFrm input[name=dosgTpCd]').val(),
 					"dosgSeq" 		: $('#dosgSmsFrm input[name=dosgSeq]').val(),
-					"sendHhmi" 		: $('#dosgSmsFrm input[textboxName=sendHhmi]').textbox('getValue'),
+					"sendHhmi" 		: $('#dosgSmsFrm input[textboxName=sendHhmi]').timespinner('getValue'),
+					"smsTitle" 		: $('#dosgSmsFrm input[textboxName=smsTitle]').textbox('getValue'),
+					"smsContent" 	: $('#dosgSmsFrm input[textboxName=smsContent]').textbox('getValue')
+				}
+			}
+			
+			$.messager.confirm('Confirm', '복용유형 발송문자를 생성하시겠습니까?', function(r) {
+				if (!r) return;
+				
+				$.ajax({
+					url: '/api/v1/sms/addDosgTpSms',
+					method: 'post',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(formData),
+					success: function(res) {
+						if (res.status === 'success') {
+							$.messager.show({ title: '발송문자 등록', msg: res.message });
+							SMS3.search();
+						} else {
+							$.messager.alert('발송문자 등록', res.message);
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						$.messager.alert('발송문자 등록', xhr.responseJSON.message, 'error');
+					}
+				});
+		   	});
+		},
+		modifyDosgTpSms: function() {
+			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
+			var formData = {
+				criteria: {
+					"smsId" 		: smsId,
+					"dosgTpCd" 		: $('#dosgSmsFrm input[name=dosgTpCd]').val(),
+					"dosgSeq" 		: $('#dosgSmsFrm input[name=dosgSeq]').val(),
+					"sendHhmi" 		: $('#dosgSmsFrm input[textboxName=sendHhmi]').timespinner('getValue'),
 					"smsTitle" 		: $('#dosgSmsFrm input[textboxName=smsTitle]').textbox('getValue'),
 					"smsContent" 	: $('#dosgSmsFrm input[textboxName=smsContent]').textbox('getValue')
 				}
@@ -186,7 +201,7 @@ $(document).ready(function() {
 				if (!r) return;
 				
 				$.ajax({
-					url: (Number(smsId) === 0) ? '/api/v1/sms/addDosgTpSms' : '/api/v1/sms/modifyDosgTpSms',
+					url: '/api/v1/sms/modifyDosgTpSms',
 					method: 'post',
 					contentType: 'application/json',
 					dataType: 'json',
@@ -206,78 +221,33 @@ $(document).ready(function() {
 				});
 		   	});
 		},
-		changePass: function() {
-			var dlg_usrPwd = $('#passFrm input[textboxName=dlg_usrPwd]').textbox('getValue');
-			var dlg_usrPwdCfm = $('#passFrm input[textboxName=dlg_usrPwdCfm]').textbox('getValue');
-			if (dlg_usrPwd !== dlg_usrPwdCfm) {
-				$.messager.alert('비밀번호 변경','비밀번호가 일치하지 않습니다');
-				return;
-			}
+		removeDosgTpSms: function() {
+			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
 			var formData = {
 				criteria: {
-					usrNo : $('#passFrm input[name=dlg_usrNo]').val(),
-					usrPwd : dlg_usrPwd,
-					usrPwdCfm : dlg_usrPwdCfm
-				}
-			};
-						
-			$.messager.confirm('Confirm', '비밀번호를 변경하시겠습니까?', function(r) {
-				if (!r) return;
-				
-				$.ajax({
-					url: '/admin/modifyAdminPwd',
-					method: 'post',
-					contentType: 'application/json',
-					dataType: 'json',
-					data: JSON.stringify(formData),
-					success: function(res) {
-						if (res.status === 'success') {
-							$.messager.show({ title: '비밀번호 변경', msg: res.message });
-							SMS3.search();
-							$('#passDlg').dialog('close');
-						} else {
-							$.messager.alert('비밀번호 변경', res.message);
-							return;
-						}
-					},
-					error: function(xhr, status, error) {
-						$.messager.alert('비밀번호 변경', xhr.responseJSON.message, 'error');
-					}
-				});
-		   	});
-		},
-		removeUser: function() {
-			var row = $('#dg').datagrid('getSelected');
-			if (!row) {
-				$.messager.alert('관리자 삭제', '관리자 목록에서 삭제할 항목을 선택하세요.');
-				return false;
-			}
-			
-			var formData = {
-				criteria: {
-					"usrNo": 	row.usrNo
+					"smsId": 	smsId
 				}
 			} 
-			$.messager.confirm('Confirm', '사용자를 삭제하겠습니까?', function(r) {
+			$.messager.confirm('Confirm', '복용유형 발송문자를 삭제하겠습니까?', function(r) {
 				if (!r) return;
 				
 				$.ajax({
-					url: '/admin/removeAdmin',
+					url: '/api/v1/sms/removeDosgTpSms',
 					method: 'post',
 					contentType: 'application/json',
 					dataType: 'json',
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							$.messager.show({ title: '관리자 삭제', msg: res.message });
+							$.messager.show({ title: '발송문자 삭제', msg: res.message });
 							SMS3.search();
 						} else {
-							$.messager.alert('관리자 삭제', res.message);
+							$.messager.alert('발송문자 삭제', res.message);
 							return;
 						}
 					},
 					error: function(xhr, status, error) {
-						$.messager.alert('관리자 삭제', xhr.responseJSON.message, 'error');
+						$.messager.alert('발송문자 삭제', xhr.responseJSON.message, 'error');
 					}
 				});
 		   	});

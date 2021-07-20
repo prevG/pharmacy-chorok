@@ -57,8 +57,8 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<a href="javascript:void(0)" id="btnSearch" class="easyui-linkbutton ml-3" style="width: 100px;"
-						   data-options="iconCls:'icon-ok'">검색</a>
+						<a href="javascript:void(0)" id="btnSearch" class="easyui-linkbutton ml-2" style="width: 100px;"
+						   data-options="iconCls:'icon-search'">검색</a>
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 					</div>
@@ -69,27 +69,27 @@
 			<!-- Datagrid -->
 			<div class="row mt-2">
 				<div class="col-9">
-					<div class="easyui-panel p-2 mb-2" title="조회결과">
-						<div class="row">
-							<div class="col-12 mb-1">
-								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddUserPop"
-									data-options="iconCls:'icon-add'">추가</a>
-							</div>
-						</div>
-						<table id="dg" style="width: 100%;min-height: 620px;"></table>
+					<div class="easyui-panel p-2 mb-2" title="조회결과" style="width: 100%;">
+						<table id="dg" style="width: 100%;min-height: 650px;"></table>
 					</div>
 				</div>
 				<div class="col-3">
-					<div class="easyui-panel p-2 mb-2" title="발송문자">
+					<div class="easyui-panel p-2 mb-2" title="발송문자" style="width: 100%;">
 						<form id="dosgSmsFrm" method="post">
 						<input type="hidden" name="dosgTpCd">
 						<input type="hidden" name="dosgSeq">
 						<input type="hidden" name="smsId">
-						<div style="width: 100%;min-height: 654px;">
+						<div style="width: 100%;min-height: 650px;">
 							<div class="row">
-								<div class="col-12 d-flex justify-content-end">
-									<a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton c6" style="width: 100px;"
-						   				data-options="iconCls:'icon-ok'">저장</a>
+								<div class="col-4">
+									<a href="javascript:void(0)" id="btnAdd" class="easyui-linkbutton c8" style="width: 100px;"
+						   				data-options="iconCls:'icon-add'">신규등록</a>
+						   		</div>
+								<div class="col-8 d-flex justify-content-end">
+									<a href="javascript:void(0)" id="btnModify" class="easyui-linkbutton" style="width: 70px;"
+						   				data-options="iconCls:'icon-edit'">저장</a>
+									<a href="javascript:void(0)" id="btnRemove" class="easyui-linkbutton ml-2" style="width: 70px;"
+						   				data-options="iconCls:'icon-remove'">삭제</a>
 								</div>
 							</div>
 							<div class="row mt-1">
@@ -121,7 +121,7 @@
 							</div>
 							<div class="row mt-1">
 								<div class="col-12">
-									<input class="easyui-textbox" name="sendHhmi" style="width: 100%;text-align: center;"
+									<input class="easyui-timespinner" name="sendHhmi" style="width: 100%;text-align: center;"
 										   data-options="
 										   		label:'발송시간',
 										   		labelWidth:120,
