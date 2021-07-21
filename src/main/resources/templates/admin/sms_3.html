@@ -56,7 +56,7 @@
 									th:text="${data?.ditcNm}"></option>
 						</select>
 					</div>
-					<div class="col-2">
+					<div class="col-8">
 						<a href="javascript:void(0)" id="btnSearch" class="easyui-linkbutton ml-2" style="width: 100px;"
 						   data-options="iconCls:'icon-search'">검색</a>
 					</div>
@@ -69,12 +69,12 @@
 			<!-- Datagrid -->
 			<div class="row mt-2">
 				<div class="col-9">
-					<div class="easyui-panel p-2 mb-2" title="조회결과" style="width: 100%;">
+					<div class="easyui-panel p-2 mb-2" title="조회결과">
 						<table id="dg" style="width: 100%;min-height: 650px;"></table>
 					</div>
 				</div>
 				<div class="col-3">
-					<div class="easyui-panel p-2 mb-2" title="발송문자" style="width: 100%;">
+					<div class="easyui-panel p-2 mb-2" title="발송문자">
 						<form id="dosgSmsFrm" method="post">
 						<input type="hidden" name="dosgTpCd">
 						<input type="hidden" name="dosgSeq">
@@ -140,7 +140,7 @@
 							</div>
 							<div class="row mt-1">
 								<div class="col-12">
-									<input class="easyui-textbox" name="smsContent" style="width: 100%;height: 360px;text-align: center;"
+									<input class="easyui-textbox" name="smsContent" style="width: 100%;height: 300px;text-align: center;"
 										   data-options="
 										   		label:'내용',
 										   		labelWidth:120,
