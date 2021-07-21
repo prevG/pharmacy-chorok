@@ -63,7 +63,7 @@ $(document).ready(function() {
 			    ctrlSelect: true,
 			    idField: 'custId',
 			    rownumbers: true,
-				fitColumns: false, 
+				fitColumns: true, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        pagination: true,
@@ -119,7 +119,7 @@ $(document).ready(function() {
 		            },
 		            {field: 'sendHhmi'    	, title: '발송시간' 	, align: 'center', width: '70'},
 		            {field: 'smsTitle'    	, title: '제목' 		, align: 'center', width: '200'},
-		            {field: 'smsContent'    , title: '내용'    	, align: 'center', width: '500'}
+		            {field: 'smsContent'    , title: '내용'    	, align: 'left', width: '500'}
 		        ]]
 			});
 		
@@ -149,7 +149,7 @@ $(document).ready(function() {
 			$('#btnAdd').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
-					$.messager.alert('발송문자 등록', '복용유형 목록에서 등록할 항목을 선택하세요.');
+					$.messager.alert('복용유형 발송문자', '복용유형 목록에서 등록할 항목을 선택하세요.');
 					return false;
 				}
 				
@@ -157,12 +157,12 @@ $(document).ready(function() {
 			});
 
 			/**************************************************************
-		     * "정보저장" 버튼 클릭시
+		     * "수정" 버튼 클릭시
 		     **************************************************************/
 			$('#btnModify').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
-					$.messager.alert('발송문자 수정', '복용유형 목록에서 편집할 항목을 선택하세요.');
+					$.messager.alert('복용유형 발송문자', '복용유형 목록에서 수정할 항목을 선택하세요.');
 					return false;
 				}
 
@@ -176,15 +176,30 @@ $(document).ready(function() {
 			$('#dg').datagrid('load', '/api/v1/sms/dosgTpList');		
 		},
 		addDosgTpSms: function() {
-			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
+			var sendHhmi 	 = $('#dosgSmsFrm input[textboxName=sendHhmi]').timespinner('getValue');
+			if ($isEmpty(sendHhmi)) {
+				$.messager.alert('복용유형 발송문자', '발송시간을 입력해 주세요', 'error');
+				return;
+			}
+			var smsTitle 	= $('#dosgSmsFrm input[textboxName=smsTitle]').textbox('getValue');
+			if ($isEmpty(smsTitle)) {
+				$.messager.alert('복용유형 발송문자', '발송문자 제목을 입력해 주세요', 'error');
+				return;
+			}
+			var smsContent	= $('#dosgSmsFrm input[textboxName=smsContent]').textbox('getValue');
+			if ($isEmpty(smsContent)) {
+				$.messager.alert('복용유형 발송문자', '발송문자 내용을 입력해 주세요', 'error');
+				return;
+			}
+			
 			var formData = {
 				criteria: {
-					"smsId" 		: smsId,
+					"smsId" 		: '',
 					"dosgTpCd" 		: $('#dosgSmsFrm input[name=dosgTpCd]').val(),
 					"dosgSeq" 		: $('#dosgSmsFrm input[name=dosgSeq]').val(),
-					"sendHhmi" 		: $('#dosgSmsFrm input[textboxName=sendHhmi]').timespinner('getValue'),
-					"smsTitle" 		: $('#dosgSmsFrm input[textboxName=smsTitle]').textbox('getValue'),
-					"smsContent" 	: $('#dosgSmsFrm input[textboxName=smsContent]').textbox('getValue')
+					"sendHhmi" 		: sendHhmi,
+					"smsTitle" 		: smsTitle,
+					"smsContent" 	: smsContent
 				}
 			}
 			
@@ -199,21 +214,25 @@ $(document).ready(function() {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							$.messager.show({ title: '발송문자 등록', msg: res.message });
+							$.messager.show({ title: '복용유형 발송문자', msg: res.message });
 							SMS3.search();
 						} else {
-							$.messager.alert('발송문자 등록', res.message);
+							$.messager.alert('복용유형 발송문자', res.message, 'error');
 							return;
 						}
 					},
 					error: function(xhr, status, error) {
-						$.messager.alert('발송문자 등록', xhr.responseJSON.message, 'error');
+						$.messager.alert('복용유형 발송문자', xhr.responseJSON.message, 'error');
 					}
 				});
 		   	});
 		},
 		modifyDosgTpSms: function() {
 			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
+			if (Number(smsId) === 0) {
+				$.messager.alert('복용유형 발송문자', '발송문자 생성 후 수정하셔야 합니다.', 'error');
+				return;
+			}
 			var formData = {
 				criteria: {
 					"smsId" 		: smsId,
@@ -225,7 +244,7 @@ $(document).ready(function() {
 				}
 			}
 			
-			$.messager.confirm('Confirm', '복용유형 발송문자를 저장하시겠습니까?', function(r) {
+			$.messager.confirm('Confirm', '복용유형 발송문자를 수정하시겠습니까?', function(r) {
 				if (!r) return;
 				
 				$.ajax({
@@ -236,27 +255,31 @@ $(document).ready(function() {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							$.messager.show({ title: '발송문자 저장', msg: res.message });
+							$.messager.show({ title: '복용유형 발송문자', msg: res.message });
 							SMS3.search();
 						} else {
-							$.messager.alert('발송문자 저장', res.message);
+							$.messager.alert('복용유형 발송문자', res.message, 'error');
 							return;
 						}
 					},
 					error: function(xhr, status, error) {
-						$.messager.alert('발송문자 저장', xhr.responseJSON.message, 'error');
+						$.messager.alert('복용유형 발송문자', xhr.responseJSON.message, 'error');
 					}
 				});
 		   	});
 		},
 		removeDosgTpSms: function() {
 			var smsId 	 = $('#dosgSmsFrm input[name=smsId]').val();
+			if (Number(smsId) === 0) {
+				$.messager.alert('복용유형 발송문자', '발송문자 선택 후 삭제하셔야 합니다.', 'error');
+				return;
+			}
 			var formData = {
 				criteria: {
 					"smsId": 	smsId
 				}
 			} 
-			$.messager.confirm('Confirm', '복용유형 발송문자를 삭제하겠습니까?', function(r) {
+			$.messager.confirm('Confirm', '복용유형 발송문자를 삭제하시겠습니까?', function(r) {
 				if (!r) return;
 				
 				$.ajax({
@@ -270,7 +293,7 @@ $(document).ready(function() {
 							$.messager.show({ title: '발송문자 삭제', msg: res.message });
 							SMS3.search();
 						} else {
-							$.messager.alert('발송문자 삭제', res.message);
+							$.messager.alert('발송문자 삭제', res.message, 'error');
 							return;
 						}
 					},

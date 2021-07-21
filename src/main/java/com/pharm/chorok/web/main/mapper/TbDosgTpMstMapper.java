@@ -16,13 +16,5 @@ import com.pharm.chorok.domain.main.DosgTpSmsVo;
 public interface TbDosgTpMstMapper {
 
 	public List<DosgTpSmsVo> selectTbDosgTpMstList(DosgTpSmsVo dosgTpVo);
-
-	public long getNextSmsId();
-
-	public void insertDosgTpSms(DosgTpSmsVo criteria);
-
-	public void updateDosgTpSms(DosgTpSmsVo criteria);
-	
-	public void deleteDosgTpSms(DosgTpSmsVo criteria);
 	
 }

@@ -1,6 +1,8 @@
 package com.pharm.chorok.domain.main;
 
 import com.pharm.chorok.domain.entity.TbDosgTpMst;
+import com.pharm.chorok.domain.entity.TbDosgTpMstPk;
+import com.pharm.chorok.domain.entity.TbDosgTpSms;
 
 import lombok.Data;
 
@@ -24,10 +26,23 @@ public class DosgTpSmsVo {
     private String dosgTpCdNm;
     private String dosgLvCdNm;
     
-    public TbDosgTpMst toEntity() {
-		return TbDosgTpMst.builder()
+    public TbDosgTpSms toEntity() {
+    	return TbDosgTpSms.builder()
+    			.smsId(smsId == 0 ? null : smsId)
     			.dosgTpCd(dosgTpCd)
     			.dosgSeq(dosgSeq)
+    			.sendHhmi(sendHhmi)
+    			.smsTitle(smsTitle)
+    			.smsContent(smsContent)
+    			.build();
+    }
+    
+    public TbDosgTpMst toMstEntity() {
+		return TbDosgTpMst.builder()
+				.tbDosgTpMstPk(TbDosgTpMstPk.builder()
+						.dosgTpCd(dosgTpCd)
+						.dosgSeq(dosgSeq)
+						.build())
     			.dosgLvCd(dosgLvCd)
     			.build();
     }

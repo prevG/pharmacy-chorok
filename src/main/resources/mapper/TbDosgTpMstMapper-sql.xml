@@ -23,45 +23,5 @@
 		</where>
 		ORDER BY A.DOSG_TP_CD, A.DOSG_SEQ
 	</select>
-	
-	<select id="getNextSmsId" resultType="long">
-		SELECT CASE WHEN MAX(SMS_ID) IS NULL THEN 1 ELSE MAX(SMS_ID) + 1 END
-		FROM TB_DOSG_TP_SMS
-	</select>
-	
-	<insert id="insertDosgTpSms">
-		INSERT INTO TB_DOSG_TP_SMS (
-			SMS_ID
-			, DOSG_TP_CD
-			, DOSG_SEQ
-			, SEND_HHMI
-			, SMS_TITLE
-			, SMS_CONTENT
-		)
-		VALUES (
-			#{smsId}
-			, #{dosgTpCd}
-			, #{dosgSeq}
-			, #{sendHhmi}
-			, #{smsTitle}
-			, #{smsContent}
-		)
-	</insert>
-	
-	<update id="updateDosgTpSms">
-		UPDATE TB_DOSG_TP_SMS
-		SET SMS_ID = #{smsId}
-		  , DOSG_TP_CD = #{dosgTpCd}
-		  , DOSG_SEQ = #{dosgSeq}
-		  , SEND_HHMI = #{sendHhmi}
-		  , SMS_TITLE = #{smsTitle}
-		  , SMS_CONTENT = #{smsContent}
-		WHERE SMS_ID = #{smsId}
-	</update>
-	
-	<delete id="deleteDosgTpSms">
-		DELETE FROM TB_DOSG_TP_SMS
-		WHERE SMS_ID = #{smsId}
-	</delete>
 
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pharm.chorok.domain.main.DosgTpSmsVo;
+import com.pharm.chorok.domain.repository.TbDosgTpSmsRepository;
 import com.pharm.chorok.web.main.mapper.TbDosgTpMstMapper;
 
 /**
@@ -20,7 +21,10 @@ import com.pharm.chorok.web.main.mapper.TbDosgTpMstMapper;
 public class DosgTpMstService {
 	
 	@Autowired
-	public TbDosgTpMstMapper tbDosgTpMstMapper;
+	private TbDosgTpMstMapper tbDosgTpMstMapper;
+	
+	@Autowired
+	private TbDosgTpSmsRepository tbDosgTpSmsRepository;
 
 	/**
 	 * 복용유형 마스터 목록 조회 함수
@@ -33,18 +37,15 @@ public class DosgTpMstService {
 
 	public void addDosgTpSms(DosgTpSmsVo criteria) {
 		
-		long getNextSmsId = tbDosgTpMstMapper.getNextSmsId();
-		
-		criteria.setSmsId(getNextSmsId);
-		tbDosgTpMstMapper.insertDosgTpSms(criteria);
+		tbDosgTpSmsRepository.save(criteria.toEntity());
 	}
 
 	public void modifyDosgTpSms(DosgTpSmsVo criteria) {
-		tbDosgTpMstMapper.updateDosgTpSms(criteria);
+		tbDosgTpSmsRepository.save(criteria.toEntity());
 	}
 
 	public void removeDosgTpSms(DosgTpSmsVo criteria) {
-		tbDosgTpMstMapper.deleteDosgTpSms(criteria);
+		tbDosgTpSmsRepository.delete(criteria.toEntity());
 	}
 	
 }
