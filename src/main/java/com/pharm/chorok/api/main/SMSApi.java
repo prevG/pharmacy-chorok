@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,13 @@ public class SMSApi {
     @PostMapping("/addDosgTpSms")
     @ResponseBody
     public ResponseEntity<ResponseMessage> addDosgTpSms(@RequestBody PageCriteria<DosgTpSmsVo> pageCriteria) {
+    	Assert.hasLength(pageCriteria.getCriteria().getDosgTpCd(), "복용유형이 존재하지 않습니다");
+    	Assert.hasLength(pageCriteria.getCriteria().getSendHhmi(), "발송시간은 공백일 수 없습니다");
     	
+    	long existCnt = dosgTpMstService.existDosgTpSms(pageCriteria.getCriteria().getDosgTpCd(), pageCriteria.getCriteria().getDosgSeq(), pageCriteria.getCriteria().getSendHhmi());
+    	if (existCnt > 0) {
+    		return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "발송시간이 동일한 복용발송문자가 존재 합니다."), HttpStatus.OK);
+    	}
     	dosgTpMstService.addDosgTpSms(pageCriteria.getCriteria());
     	
     	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 생성 되었습니다."), HttpStatus.OK);
@@ -79,6 +86,7 @@ public class SMSApi {
     @PostMapping("/modifyDosgTpSms")
     @ResponseBody
     public ResponseEntity<ResponseMessage> modifyDosgTpSms(@RequestBody PageCriteria<DosgTpSmsVo> pageCriteria) {
+    	Assert.isTrue(pageCriteria.getCriteria().getSmsId() > 0, "발송문자 번호가 존재하지 않습니다");
     	
     	dosgTpMstService.modifyDosgTpSms(pageCriteria.getCriteria());
     	
@@ -94,6 +102,7 @@ public class SMSApi {
     @PostMapping("/removeDosgTpSms")
     @ResponseBody
     public ResponseEntity<ResponseMessage> removeDosgTpSms(@RequestBody PageCriteria<DosgTpSmsVo> pageCriteria) {
+    	Assert.isTrue(pageCriteria.getCriteria().getSmsId() > 0, "발송문자 번호가 존재하지 않습니다");
     	
     	dosgTpMstService.removeDosgTpSms(pageCriteria.getCriteria());
     	

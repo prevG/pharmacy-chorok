@@ -50,7 +50,7 @@
 							   		label:'복용유형',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
-							<option value="">전체</option>
+							<!-- <option value="" selected="selected">전체</option> -->
 							<option th:each="data, index : ${dosgTpList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -125,7 +125,8 @@
 										   data-options="
 										   		label:'발송시간',
 										   		labelWidth:120,
-										   		labelPosition:'left'">
+										   		labelPosition:'left',
+										   		prompt:'09:00'">
 								</div>
 							</div>
 							<div class="row mt-1">

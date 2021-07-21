@@ -47,5 +47,9 @@ public class DosgTpMstService {
 	public void removeDosgTpSms(DosgTpSmsVo criteria) {
 		tbDosgTpSmsRepository.delete(criteria.toEntity());
 	}
+
+	public long existDosgTpSms(String dosgTpCd, int dosgSeq, String sendHhmi) {
+		return tbDosgTpSmsRepository.countByDosgTpCdAndDosgSeqAndSendHhmi(dosgTpCd, dosgSeq, sendHhmi);
+	}
 	
 }

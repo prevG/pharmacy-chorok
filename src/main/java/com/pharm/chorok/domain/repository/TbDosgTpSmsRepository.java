@@ -14,4 +14,6 @@ import com.pharm.chorok.domain.entity.TbDosgTpSms;
 @Repository
 public interface TbDosgTpSmsRepository extends JpaRepository<TbDosgTpSms, Long> {
 
+	public long countByDosgTpCdAndDosgSeqAndSendHhmi(String dosgTpCd, int dosgSeq, String sendHhmi);
+
 }
