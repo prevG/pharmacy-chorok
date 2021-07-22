@@ -120,28 +120,28 @@
 		<input type="hidden" name="dlg_usrNo">
 		<div class="row p-2">
 			<div class="col-6">
-				<input name="dlg_usrEml" class="easyui-textbox" style="width: 100%"
-					data-options="label:'이메일:',labelWidth:90,required:true,validType:'email'">
+				<input name="dlg_usrEml" class="easyui-textbox" style="width: 100%;"
+					data-options="label:'이메일',labelWidth:110,required:true,validType:'email'">
 			</div>
 			<div class="col-6">
-				<input name="dlg_usrPwd" class="easyui-passwordbox" style="width: 100%"
-					data-options="label:'비밀번호:',labelWidth:90,required:true,validType:'length[6,20]'">
-			</div>
-		</div>
-		<div class="row p-2">
-			<div class="col-6">
-				<input name="dlg_usrNm" class="easyui-textbox" style="width: 100%"
-					data-options="label:'사용자이름:',labelWidth:90,required:true,validType:'length[2,10]'">
-			</div>
-			<div class="col-6">
-				<input name="dlg_usrPhnNo" class="easyui-textbox" style="width: 100%"
-					data-options="label:'핸드폰번호:',labelWidth:90,required:true,validType:'length[2,11]'">
+				<input name="dlg_usrPwd" class="easyui-passwordbox" style="width: 100%;"
+					data-options="label:'비밀번호',labelWidth:110,required:true,validType:'length[6,20]'">
 			</div>
 		</div>
 		<div class="row p-2">
 			<div class="col-6">
-				<select name="dlg_usrGrade" class="easyui-combobox" style="width: 100%"
-					data-options="label:'직위:',labelWidth:90">
+				<input name="dlg_usrNm" class="easyui-textbox" style="width: 100%;"
+					data-options="label:'사용자이름',labelWidth:110,required:true,validType:'length[0,10]'">
+			</div>
+			<div class="col-6">
+				<input name="dlg_usrPhnNo" class="easyui-textbox" style="width: 100%;"
+					data-options="label:'휴대폰번호',labelWidth:110,required:true,validType:'length[0,11]',prompt:'- 없이 입력해주세요'">
+			</div>
+		</div>
+		<div class="row p-2">
+			<div class="col-6">
+				<select name="dlg_usrGrade" class="easyui-combobox" style="width: 100%;"
+					data-options="label:'직위',labelWidth:110">
 					<option value="" selected="selected">선택</option>
 					<option th:each="data, index : ${usrGradeList}"
 							th:value="${data?.ditcCd}" 
@@ -149,8 +149,8 @@
 				</select>
 			</div>
 			<div class="col-6">
-				<select name="dlg_usrAuth" class="easyui-combobox" style="width: 100%"
-					data-options="label:'권한:',labelWidth:90">
+				<select name="dlg_usrAuth" class="easyui-combobox" style="width: 100%;"
+					data-options="label:'권한',labelWidth:110">
 					<option value="" selected="selected">선택</option>
 					<option th:each="data, index : ${usrAuthList}"
 							th:value="${data?.ditcCd}" 
@@ -160,8 +160,8 @@
 		</div>
 		<div class="row p-2">
 			<div class="col-6">
-				<select name="dlg_usrAprv" class="easyui-combobox" style="width: 100%"
-					data-options="label:'승인여부:',labelWidth:90">
+				<select name="dlg_usrAprv" class="easyui-combobox" style="width: 100%;"
+					data-options="label:'승인여부',labelWidth:110">
 					<option value="" selected="selected">선택</option>
 					<option th:each="data, index : ${usrAprvList}"
 							th:value="${data?.ditcCd}" 
@@ -169,10 +169,10 @@
 				</select>
 			</div>
 			<div class="col-6">
-				<select name="dlg_delYn" class="easyui-combobox" style="width: 100%"
-					data-options="label:'삭제여부:',labelWidth:90">
+				<select name="dlg_delYn" class="easyui-combobox" style="width: 100%;"
+					data-options="label:'사용여부',labelWidth:110">
 					<option value="N" selected="selected">사용</option>
-					<option value="Y">삭제</option>
+					<option value="Y">미사용</option>
 				</select>
 			</div>
 		</div>
@@ -195,11 +195,11 @@
 		<div class="row p-2">
 			<div class="col-6">
 				<input name="dlg_usrPwd" class="easyui-passwordbox" style="width: 100%;"
-					data-options="label:'비밀번호:',labelWidth:100,required:true,validType:'length[6,20]'">
+					data-options="label:'비밀번호',labelWidth:110,required:true,validType:'length[6,20]'">
 			</div>
 			<div class="col-6">
 				<input name="dlg_usrPwdCfm" class="easyui-passwordbox" style="width: 100%;"
-					data-options="label:'비밀번호 확인:',labelWidth:100,required:true,validType:'length[6,20]'">
+					data-options="label:'비밀번호 확인',labelWidth:110,required:true,validType:'length[6,20]'">
 			</div>
 		</div>
 		</form>
