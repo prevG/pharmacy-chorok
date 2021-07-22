@@ -58,7 +58,8 @@
 								data-options="
 							   		label:'상담한약사',
 							   		labelPosition:'left',
-							   		required:true">
+							   		required:true,
+							   		panelHeight:'auto'">
 								<option value="">선택</option>
 								<option th:each="data, index : ${chemistList}"
 									th:value="${data?.usrNo}" th:text="${data?.usrNm}"></option>
@@ -69,7 +70,8 @@
 								data-options="
 							   		label:'상담실장',
 							   		labelPosition:'left',
-							   		required:true">
+							   		required:true,
+							   		panelHeight:'auto'">
 								<option value="">선택</option>
 								<option th:each="data, index : ${counselorList}"
 									th:value="${data?.usrNo}" th:text="${data?.usrNm}"></option>
@@ -82,7 +84,8 @@
 								data-options="
 							   		label:'상담가능시간',
 							   		labelPosition:'left',
-							   		required:true">
+							   		required:true,
+							   		panelHeight:'auto'">
 								<option value="">시</option>
 								<option th:each="data, index : ${cnstHhList}"
 									th:value="${data?.ditcCd}" 
@@ -93,7 +96,8 @@
 							<select name="dosgTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'복용유형',
-							   		labelPosition:'left'">
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
 								<option value="">선택</option>
 								<option th:each="data, index : ${dosgTpCdList}"
 									th:value="${data?.ditcCd}" 
@@ -115,7 +119,8 @@
 								data-options="
 							   		label:'결재유형',
 							   		labelPosition:'left',
-							   		required:true">
+							   		required:true,
+							   		panelHeight:'auto'">
 								<option value="">선택</option>
 								<option th:each="data, index : ${payTpCdList}"
 									th:value="${data?.ditcCd}" 
@@ -183,7 +188,7 @@
 											precision:1,
 											groupSeparator:',',
 									   		readonly:true">
-			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 200px;text-align: center;"
+			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 230px;text-align: center;"
 									   data-options="
 									   		label:'복용시작일자',
 									   		labelWidth:100,
@@ -226,7 +231,7 @@
 		<div class="row">
 			<div class="col-md-4 p-2">
 				<select name="dlg_callYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-					    data-options="label:'상담예약',labelWidth:80">
+					    data-options="label:'상담예약',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
 					<option th:each="data, index : ${callYnList}"
 							th:value="${data?.ditcCd}" 
@@ -235,7 +240,7 @@
 			</div>
 			<div class="col-md-4 p-2">
 				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-						data-options="label:'복용여부',labelWidth:80">
+						data-options="label:'복용여부',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
 					<option th:each="data, index : ${dosgYnList}"
 							th:value="${data?.ditcCd}" 
@@ -244,7 +249,7 @@
 			</div>
 			<div class="col-md-4 p-2">
 				<select name="dlg_pausYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-						data-options="label:'통화여부',labelWidth:80">
+						data-options="label:'통화여부',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
 					<option th:each="data, index : ${pausYnList}"
 							th:value="${data?.ditcCd}" 
@@ -266,7 +271,7 @@
 					   				labelWidth:80,
 					   				readonly:true,
 									precision:1,
-									groupSeparator:',',">
+									groupSeparator:','">
 			</div>
 			<div class="col-md-4 p-2">
 				<input name="dlg_rmiWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
@@ -274,7 +279,7 @@
 					   				labelWidth:80,
 					   				readonly:true,
 					   				precision:1,
-					   				groupSeparator:',',">
+					   				groupSeparator:','">
 			</div>
 		</div>
 		<div class="row">

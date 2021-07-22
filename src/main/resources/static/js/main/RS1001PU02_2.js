@@ -124,29 +124,25 @@ $( document ).ready( function() {
 		        		title: '상담일시', 
 		        		align: 'center', 
 		        		width: '110', 
-		        		editor: 'text',
 		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
 		        	},
 		        	{
 		        		field: 'picUsrNoVal', 
 		        		title: '상담한약사', 
 		        		align: 'center', 
-		        		width: '70', 
-		        		editor: 'text'
+		        		width: '70'
 		        	},
 		        	{
 		        		field: 'pic2UsrNoVal', 
 		        		title: '상담실장', 
 		        		align: 'center', 
-		        		width: '70', 
-		        		editor: 'text'
+		        		width: '70'
 		        	},
 		        	{
 		        		field: 'dosgTpCd', 
 		        		title: '복용유형', 
 		        		align: 'center', 
 		        		width: '120', 
-		        		editor: 'text',
 		        		formatter: function(value, row) { return row.dosgTpCdVal; }
 		        	},
 		        	{
@@ -260,13 +256,8 @@ $( document ).ready( function() {
 		        		title: '복용일자', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'datebox',
-		        		formatter: function(value, row) {
-		        			return myformatter(value);
-		        		},
-		        		parser: function(value) {
-		        			return myparser(value);
-		        		}
+		        		formatter: function(value, row) { return myformatter(value); },
+		        		parser: function(value) { return myparser(value); }
 		        	},
 		        	{
 		        		field: 'daysStrKor', 
@@ -279,10 +270,6 @@ $( document ).ready( function() {
 		        		title: '상담예약', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: {
-		        			type: 'combobox',
-		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1016, required: true }
-		        		}, 
 		        		formatter: function(value, row) { return row.callYnVal; }
 		        	},
 		        	{
@@ -290,10 +277,6 @@ $( document ).ready( function() {
 		        		title: '복용여부', 
 		        		align: 'center', 
 		        		width: '90', 
-		        		editor: {
-		        			type: 'combobox',
-		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1017, required: true }
-		        		}, 
 		        		formatter: function(value, row) { return row.dosgYnVal; }
 		        	},
 		        	{
@@ -301,18 +284,13 @@ $( document ).ready( function() {
 		        		title: '통화여부', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: {
-		        			type: 'combobox',
-		        			options: { valueField: 'ditcCd', textField: 'ditcNm', data: gC1021, required: true }
-		        		}, 
 		        		formatter: function(value, row) { return row.pausYnVal; }
 		        	},
 		        	{
 		        		field: 'currWgt', 
 		        		title: '현재체중', 
 		        		align: 'center', 
-		        		width: '90', 
-		        		editor: 'numberbox'
+		        		width: '90'
 		        	},
 		        	{
 		        		field: 'lossWgt', 
@@ -330,15 +308,13 @@ $( document ).ready( function() {
 		        		field: 'dosgDesc1', 
 		        		title: '몸상태', 
 		        		align: 'center', 
-		        		width: '120', 
-		        		editor: 'text'
+		        		width: '120'
 		        	},
 		        	{
 		        		field: 'dosgDesc1', 
 		        		title: '약반응', 
 		        		align: 'center', 
-		        		width: '120', 
-		        		editor: 'text'
+		        		width: '120'
 		        	}
 		        ]]
 			});
@@ -645,7 +621,7 @@ $( document ).ready( function() {
 			var dosgTpCd 	   = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
 			var payTpCd 	   = $('#saveCnstFrm select[textboxName=payTpCd]').combobox('getValue');
 			var dlvDt 		   = $('#saveCnstFrm input[textboxName=dlvDt]').datebox('getValue');
-			if( selectedCnstId == "" ) {
+			if( $isEmpty(selectedCnstId) ) {
 				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
 			}
@@ -764,7 +740,7 @@ $( document ).ready( function() {
 		createDosingChart: function() {
 			// 상담차트
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
-			var cnstDesc = $('#cnstDesc').textbox('getValue');
+			var cnstDesc = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
 			var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
 			var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
@@ -775,15 +751,15 @@ $( document ).ready( function() {
 			var cnstHhCd = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
 			var cnstHhMemo = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
 			var dosgTpCd = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
-			if( selectedCnstId == "" ) {
+			if( $isEmpty(selectedCnstId) ) {
 				$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나<br>신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
 			}
-			if( dosgTpCd == "" ) {
+			if( $isEmpty(dosgTpCd) ) {
 				$.messager.alert("복용유형 선택", "상담정보에서 '복용유형'를 선택해 주세요.");
 				return false;
 			}
-			if( startDosgDt == "" ) {
+			if( $isEmpty(startDosgDt) ) {
 				$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.<br>복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
 				return false;
 			}
@@ -807,7 +783,6 @@ $( document ).ready( function() {
 				$.messager.alert("Warning","이미 복용차트가 생성되어 있습니다.<br>복용스케쥴의 일자를 변경하시기 바랍니다.");
 				return false;
 			}
-
 			
 			$.messager.confirm('Confirm', '신규 복용차트를 생성하시겠습니까?', function(r) {
 				if (!r) return;

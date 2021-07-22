@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +142,9 @@ public class CustomerService {
 	}
 
 	public List<ResultRcmdVo> findRcmdListByCustId(long custId) {
+		if (custId == 0)
+			return new ArrayList<ResultRcmdVo>();
+		
 		return customerRepo.findRcmdListByCustId( custId );
 	}
 }
