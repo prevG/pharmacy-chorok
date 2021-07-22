@@ -23,5 +23,73 @@
 		</where>
 		ORDER BY A.DOSG_TP_CD, A.DOSG_SEQ
 	</select>
+	
+	<select id="selectDosgTpSmsHistList" resultType="com.pharm.chorok.domain.main.ResultDosgTpSmsHistVo">
+	    /** com.pharm.chorok.web.main.mapper.TbDosgTpMstMapper.selectDosgTpSmsHistList */
+	    /** 금일 복용상담이 잡혀있는 고객정보 조회 (sms 발송 이력) */
+		<![CDATA[    
+		SELECT CUST.CUST_ID
+	         , CUST.CUST_USR_NM
+	         , CASE LENGTH(CUST.CUST_CELL_NO)
+	                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+	                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+	                ELSE ''
+	           END AS CUST_CELL_NO
+	         , CUST.ZIP_CODE
+	         , CUST.ADDR1
+	         , CASE WHEN CUST.CUST_GEN_TP_CD = 'F' THEN '여'
+	                WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
+	                ELSE ''
+	           END AS CUST_GEN_TP_NM
+	         , CCHART.*
+	         , CASE WHEN CCHART.CNST_HH_CD IS NULL THEN ''
+	                WHEN CCHART.CNST_HH_CD = ''    THEN ''
+	                ELSE CONCAT(CCHART.CNST_HH_CD, '시')
+	           END CNST_HH_NM
+	         , CCHART.CNST_ID
+			 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = DCHART.PAUS_YN AND T.GRP_CD = 'C1021') AS PAUS_YN
+	         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
+	         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
+			 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1018') AS DOSG_TP_NM
+			 , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
+			 , DCHART.DOSG_ID
+	         , DCHART.DOSG_SEQ
+	       	 , DSMS.DOSG_SMS_ID
+	         , DSMS.SEND_HHMI
+	         , DSMS.SMS_TITLE
+	         , DSMS.SMS_CONTENT
+	      FROM TB_CUSTOMER CUST
+	     INNER JOIN   
+	           TB_PP_CNST_CHART CCHART  
+	        ON CUST.CUST_ID = CCHART.CUST_ID       
+	     INNER JOIN
+	           TB_PP_DOSG_CHART DCHART 
+	        ON CCHART.CNST_ID = DCHART.CNST_ID
+	     INNER JOIN
+     	     TB_PP_DOSG_SMS DSMS
+     	  ON DCHART.DOSG_ID = DSMS.DOSG_ID
+	     WHERE 1 = 1
+	       AND DCHART.DOSG_DT = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
+		]]>
+		<if test="picUsrNo != null and  !''.equals(picUsrNo)">
+		   AND CCHART.PIC_USR_NO  = #{picUsrNo}
+		</if>
+		<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
+		   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+		</if>
+		<if test="pausYn != null and  !''.equals(pausYn)">
+		   AND DCHART.PAUS_YN = #{pausYn}
+		</if>
+		<choose>
+			<when test="callYn != null and  !''.equals(callYn)">
+		   AND DCHART.CALL_YN = #{callYn}
+		    </when>
+		    <otherwise>
+		    AND DCHART.CALL_YN IN ('CHEMIST', 'COUNSELOR')
+		    </otherwise>
+		</choose>
+	     ORDER
+	        BY CCHART.CNST_HH_CD ASC
+	</select>
 
 </mapper>

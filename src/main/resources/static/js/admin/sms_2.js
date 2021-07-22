@@ -37,7 +37,7 @@ $(document).ready(function() {
 			    ctrlSelect: true,
 			    idField: 'custId',
 			    rownumbers: true,
-				fitColumns: false, 
+				fitColumns: true, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        pagination: true,
@@ -53,7 +53,9 @@ $(document).ready(function() {
 		        		dosgTpNm 	: row.dosgTpNm,
 		        		dosgDt 		: row.dosgDt,
 		        		dosgSeqNm 	: row.dosgSeq === 0 ? '시작전날' : row.dosgSeq +' 일차',
-		        		smsMsg 		: 'xxx'
+		        		sendHhmi 	: row.sendHhmi,
+		        		smsTitle 	: row.smsTitle,
+		        		smsContent 	: row.smsContent
 		        	});
 		        },
 		        columns:[[
@@ -82,7 +84,10 @@ $(document).ready(function() {
 		            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80'},
 		            {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '80'},
 		            {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '80'},
-					{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'left' , halign: 'center', width: '200'}
+					{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'left' , halign: 'center', width: '200'},
+		            {field: 'sendHhmi'	 , title: '문자발송시간' , align: 'center', width: '80'},
+		            {field: 'smsTitle'	 , title: '문자제목' , align: 'center', width: '200'},
+		            {field: 'smsContent'	 , title: '문자내용' , align: 'left', width: '300'}
 		        ]]
 			});
 		
@@ -182,9 +187,7 @@ $(document).ready(function() {
 			queryParams.pic2UsrNo 	= $("#pic2UsrNo").val();
 			queryParams.pausYn 		= $("#pausYn").val();
 			
-			
-			
-			$('#dg').datagrid('load', '/api/v1/main/customer/findCustomerByDosgDt');		
+			$('#dg').datagrid('load', '/api/v1/sms/dosgTpSmsHistList');		
 		},
 		saveUser: function() {
 			var usrNo 	 = $('#userFrm input[name=dlg_usrNo]').val();

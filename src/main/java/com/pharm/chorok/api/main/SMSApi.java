@@ -1,5 +1,6 @@
 package com.pharm.chorok.api.main;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +10,24 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.SMSReservationVo;
 import com.pharm.chorok.domain.main.DosgTpSmsVo;
+import com.pharm.chorok.domain.main.ResultDosgTpSmsHistVo;
+import com.pharm.chorok.domain.main.SMSReservationVo;
 import com.pharm.chorok.web.admin.service.ADSMSService;
 import com.pharm.chorok.web.main.service.DosgTpMstService;
 
-
+/**
+ * 복용유형 발송문자 정보를 처리하는 클래스 
+ * 
+ * @author Jaratus
+ *
+ */
 @RequestMapping(value = "/api/v1/sms")
 @RestController
 public class SMSApi {
@@ -109,4 +117,29 @@ public class SMSApi {
     	return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 복용발송문자가 삭제 되었습니다."), HttpStatus.OK);
     }
     
+    /**
+     * 
+     * 
+     * @param dosgTpVo
+     * @return
+     */
+    @PostMapping("/dosgTpSmsHistList")
+    @ResponseBody
+    public List<ResultDosgTpSmsHistVo> dosgTpSmsHistList(
+    		@RequestParam("dosgDt") String dosgDt,
+    		@RequestParam("picUsrNo") String picUsrNo,
+    		@RequestParam("pic2UsrNo") String pic2UsrNo,
+    		@RequestParam("pausYn") String pausYn
+    		) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("dosgDt", dosgDt);
+		params.put("picUsrNo", picUsrNo);
+		params.put("pic2UsrNo", pic2UsrNo);
+		params.put("pausYn", pausYn);
+		
+    	List<ResultDosgTpSmsHistVo> dosgSmsList = dosgTpMstService.selectDosgTpSmsHistList(params);
+    	
+    	return dosgSmsList;
+    }
+
 }

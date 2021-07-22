@@ -1,5 +1,6 @@
 package com.pharm.chorok.web.main.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pharm.chorok.domain.main.DosgTpSmsVo;
+import com.pharm.chorok.domain.main.ResultDosgTpSmsHistVo;
 import com.pharm.chorok.domain.repository.TbDosgTpSmsRepository;
 import com.pharm.chorok.web.main.mapper.TbDosgTpMstMapper;
 
@@ -50,6 +52,10 @@ public class DosgTpMstService {
 
 	public long existDosgTpSms(String dosgTpCd, int dosgSeq, String sendHhmi) {
 		return tbDosgTpSmsRepository.countByDosgTpCdAndDosgSeqAndSendHhmi(dosgTpCd, dosgSeq, sendHhmi);
+	}
+
+	public List<ResultDosgTpSmsHistVo> selectDosgTpSmsHistList(HashMap<String, Object> params) {
+		return tbDosgTpMstMapper.selectDosgTpSmsHistList(params);
 	}
 	
 }

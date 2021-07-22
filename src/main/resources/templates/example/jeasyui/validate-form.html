@@ -15,6 +15,8 @@
 <script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
 <script type="text/javascript">
 $(function() {
+	$('#frm input[textboxName=uid]').textbox('textbox').attr('maxlength', 2);
+	
 	$('#frm').form('submit', {
 		onSubmit: function() {
 			return $(this).form('enableValidation').form('validate');
@@ -33,7 +35,8 @@ $(function() {
 		<form id="frm" method="post" data-options="novaliate:true">
 			<div style="margin-bottom: 20px;">
 				<input name="uid" class="easyui-textbox" style="width:200px;"
-					   data-options="label:'ID:',required:true"></input>
+					   data-options="label:'ID:',required:true"
+					   maxlength="2"></input>
 			</div>
 			<div>
 				<input name="uname" class="easyui-textbox" style="width:200px;"
