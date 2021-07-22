@@ -12,7 +12,7 @@ $(document).ready(function() {
 			    ctrlSelect: true,
 			    idField: 'usrNo',
 			    rownumbers: true,
-				fitColumns: true, 
+				fitColumns: false, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        pagination: true,
