@@ -10,6 +10,11 @@ $( document ).ready( function() {
 		init: function() {
 			
 		    /**************************************************************
+		     * 초기 바인딩
+		     **************************************************************/
+			$('#saveCustFrm [textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
+
+		    /**************************************************************
 		     * "고객정보 저장" 클릭시
 		     **************************************************************/
 			$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {

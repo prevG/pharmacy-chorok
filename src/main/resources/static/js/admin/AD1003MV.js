@@ -38,105 +38,79 @@ $(document).ready(function() {
 		        		title: '고객이름', 
 		        		align: 'center', 
 		        		width: '150', 
-		        		editor: 'text',
-		        		formatter: function(value, row, index) {
-		        			return '<span style="font-weight:bold;">'+ value +'</span>';
-		        		}
+		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
 		        	},
 		        	{
 		        		field: 'custCellNo', 
 		        		title: '핸드폰번호', 
 		        		align: 'center', 
-		        		width: '120', 
-		        		editor: 'numberbox'
+		        		width: '120'
 		        	},
 		        	{
 		        		field: 'custBirthDt', 
 		        		title: '생년월일', 
 		        		align: 'center', 
-		        		width: '120', 
-		        		editor: 'text'
+		        		width: '120'
 		        	},
 		        	{
 		        		field: 'custGenTpCd', 
 		        		title: '성별', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row) {
-		        			return row.custGenTpCdVal;
-		        		}
+		        		formatter: function(value, row) { return row.custGenTpCdVal; }
 		        	},
 		        	{
 		        		field: 'mrgYn', 
 		        		title: '결혼유무', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row) {
-		        			return row.mrgYnVal;
-		        		}
+		        		formatter: function(value, row) { return row.mrgYnVal; }
 		        	},
 		        	{
 		        		field: 'custMemo2', 
 		        		title: '특이사항', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row) {
-		        			return $isEmpty(row.custMemo2) ? '' : '***';
-		        		}
+		        		formatter: function(value, row) { return $isEmpty(row.custMemo2) ? '' : '***'; }
 		        	},
 		        	{
 		        		field: 'rcmdCnt', 
 		        		title: '추천인수', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row) {
-		        			return row.rcmdCnt > 0 ? row.rcmdCnt : '';
-		        		}
+		        		formatter: function(value, row) { return row.rcmdCnt > 0 ? row.rcmdCnt : ''; }
 		        	},
 		        	{
 		        		field: 'mileage', 
 		        		title: '마일리지', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row) {
-		        			return Number(row.mileage) === 0 ? '' : Number(row.mileage);
-		        		}
+		        		formatter: function(value, row) { return Number(row.mileage) === 0 ? '' : Number(row.mileage); }
 		        	},
 		        	{
 		        		field: 'zipCode', 
 		        		title: '우편번호', 
 		        		align: 'center', 
-		        		width: '100', 
-		        		editor: 'text'
+		        		width: '100'
 		        	},
 		        	{
 		        		field: 'addr1', 
 		        		title: '주소', 
 		        		align: 'center', 
-		        		width: '200', 
-		        		editor: 'text'
+		        		width: '200'
 		        	},
 		        	{
 		        		field: 'addr2', 
 		        		title: '상세주소', 
 		        		align: 'center', 
-		        		width: '150', 
-		        		editor: 'text'
+		        		width: '150'
 		        	},
 		        	{
 		        		field: 'delYn', 
-		        		title: '삭제여부', 
+		        		title: '사용여부', 
 		        		align: 'center', 
-		        		width: '100', 
-		        		editor: 'text',
-		        		formatter: function(value, row, index) {
-		        			return '<span>'+ (value) ? value : 'N' +'</span>';
-		        		}
+		        		width: '100',
+		        		formatter: function(value, row, index) { return (value === 'N') ? '사용' : '미사용'; }
 		        	},
 		        ]]
 			});
