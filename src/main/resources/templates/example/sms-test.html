@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<!-- easyui -->
+<link rel="stylesheet" th:href="@{/easyui/themes/bootstrap/easyui.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/icon.css}">
+<link rel="stylesheet" th:href="@{/easyui/themes/color.css}">
+
+<!-- easyui -->
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>  
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript">
+$(function() {
+	$('#sendSms').click(function(e) {
+		var appKey = "0rhL2B2YO15WTOXr"; //앱키
+		var formData = {
+			body : "문자보내기 테스트111",
+			sendNo : "01035693756",
+			recipientList:[
+				{
+				   "recipientNo" : "01035693756",
+				   "countryCode" : "82"
+				}
+   			],
+		};
+		
+		$.ajax({
+			url: "https://api-sms.cloud.toast.com/sms/v2.4/appKeys/" + appKey + "/sender/sms",
+			method: 'post',
+			contentType: 'application/json;charset=UTF-8',
+			dataType: 'json',
+			data: JSON.stringify(formData),
+			success: function(res) {
+				if (res.status === 'success') {
+					$.messager.show({ title: 'SMS', msg: 'Success' });
+				}
+			},
+			error: function(xhr, status, error) {
+				$.messager.alert('SMS', xhr.responseJSON, 'error');
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<div class="easyui-panel" title="Form Validate" style="width:100%;max-width:400px;padding:30px 60px;">
+		<form id="frm" method="post" data-options="novaliate:true">
+			<div style="margin-bottom: 20px;">
+				<input name="uid" class="easyui-textbox" style="width:200px;"
+					   data-options="label:'ID:',required:true"
+					   maxlength="2"></input>
+			</div>
+			<div>
+				<input name="uname" class="easyui-textbox" style="width:200px;"
+					   data-options="label:'Name:',required:true"></input>
+			</div>
+		</form>
+		<div>
+			<a href="javascript:void(0)" id="sendSms" class="easyui-linkbutton">Send SMS</a>
+		</div>
+	</div>
+</body>
+</html>

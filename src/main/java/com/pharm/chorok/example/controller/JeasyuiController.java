@@ -1,4 +1,4 @@
-package com.pharm.chorok.example.jeasyui.controller;
+package com.pharm.chorok.example.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class JeasyuiController {
 
-	@RequestMapping("/example/jeasyui/validate-form")
+	@RequestMapping("/example/validate-form")
 	public String form() {
 		
-		return "example/jeasyui/validate-form";
+		return "example/validate-form";
 	}
 	
-	@RequestMapping("/example/jeasyui/md-table")
+	@RequestMapping("/example/md-table")
 	public String mdtable() {
 		
-		return "example/jeasyui/md-table";
+		return "example/md-table";
 	}
 }
