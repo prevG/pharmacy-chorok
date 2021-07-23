@@ -28,9 +28,7 @@ $( document ).ready( function() {
 		        columns:[[
 		            {field: 'custId'   , title: '고객번호', align: 'center', halign: 'center', width: '80'},
 		        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '80',
-		        		formatter: function(value, row, index) {
-		        			return '<span style="color:blue;font-weight:bold;">'+ value +'</span>';
-		        		}
+		        		formatter: function(value, row) { return '<a href="javascript:void(0)" style="font-weight:bold;">'+ value +'</a>'; }
 		        	},
 		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox'},
 		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},

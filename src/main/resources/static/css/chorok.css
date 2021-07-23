@@ -33,3 +33,13 @@
 .textbox .textbox-text {
 	font-size: 14px !important;
 }
+
+/********************************************
+*
+* jeasyui datagrid
+*
+********************************************/
+
+.datagrid-row-selected * {
+	color: #fff;
+}

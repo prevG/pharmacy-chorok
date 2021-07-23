@@ -38,7 +38,7 @@ $(document).ready(function() {
 		        		title: '고객이름', 
 		        		align: 'center', 
 		        		width: '150', 
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
+		        		formatter: function(value, row) { return '<a href="javascript:void(0)" style="font-weight:bold;">'+ value +'</a>'; }
 		        	},
 		        	{
 		        		field: 'custCellNo', 

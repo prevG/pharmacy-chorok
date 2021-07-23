@@ -31,7 +31,7 @@ $(document).ready(function() {
 		        		title: '사용자이름', 
 		        		align: 'center', 
 		        		width: '150',
-		        		formatter: function(value, row) { return '<span style="font-weight: bold;">'+ value +'</span>'; }
+		        		formatter: function(value, row) { return '<a href="javascript:void(0)" style="font-weight:bold;">'+ value +'</a>'; }
 		        	},
 		        	{
 		        		field: 'usrEml', 
