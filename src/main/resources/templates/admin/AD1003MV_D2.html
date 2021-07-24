@@ -46,14 +46,9 @@
 					<div class="row m-2">
 						<div class="col-6">
 							<div class="input-group">
-								<select name="dlg_custBirthYy" class="easyui-combobox" style="width: 180px;text-align: center;"
-										data-options="label:'생년월일 *',labelWidth:110,required:true">
-									<option value="" selected="selected">년</option>
-									<option th:each="data, index : ${birthYyList}"
-											th:value="${data?.ditcCd}" 
-											th:text="${data?.ditcNm}"
-											th:selected="${#strings.length(custInfo?.custBirthDt) eq 8 and data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,0,4)}"></option>
-								</select>
+								<input name="dlg_custBirthYy" class="easyui-numberbox" style="width: 180px;text-align: center;"
+									   data-options="label:'생년월일 *',labelWidth:110,required:true,validType:'length[4,4]'"
+									   th:value="${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#strings.substring(custInfo?.custBirthDt,0,4)}:''">
 								<div class="ml-2"></div>
 								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 60px;text-align: center;"
 										data-options="required:true">

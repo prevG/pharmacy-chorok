@@ -98,7 +98,7 @@
 					<div class="easyui-panel p-2" title="조회결과">
 						<div class="d-flex justify-content-between mb-1">
 							<div>
-								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddUserPop"
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddCodePop"
 									data-options="iconCls:'icon-add'">추가</a>
 								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnRemoveUser"
 									data-options="iconCls:'icon-remove'">삭제</a>
@@ -116,9 +116,9 @@
 		<!-- /.container-fluid -->
 	</section>
 
-	<div id="userDlg" class="easyui-dialog" style="width: 700px;padding: 10px;display: none;"
+	<div id="codeDlg" class="easyui-dialog" style="width: 700px;padding: 10px;display: none;"
 		data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-		<form id="userFrm" method="post">
+		<form id="codeFrm" method="post">
 		<input type="hidden" name="dlg_usrNo">
 		<div class="row p-2">
 			<div class="col-6">
@@ -185,7 +185,7 @@
 					data-options="iconCls:'icon-ok'">저장</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton ml-2"
 					data-options="iconCls:'icon-cancel'"
-					onclick="javascript:$('#userDlg').dialog('close');">닫기</a>
+					onclick="javascript:$('#codeDlg').dialog('close');">닫기</a>
 			</div>
 		</div>
 	</div>

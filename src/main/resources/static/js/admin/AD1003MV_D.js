@@ -12,7 +12,8 @@ $( document ).ready( function() {
 		    /**************************************************************
 		     * 초기 바인딩
 		     **************************************************************/
-			$('#saveCustFrm [textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
+			$('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
+			$('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox('textbox').attr('maxlength', 4);
 
 		    /**************************************************************
 		     * "고객정보 저장" 클릭시
@@ -33,7 +34,7 @@ $( document ).ready( function() {
 				$.messager.alert('고객정보 저장', '휴대폰번호를 입력하세요.');
 				return;
 			}
-			var custBirthYy = $('#saveCustFrm select[textboxName=dlg_custBirthYy]').combobox('getValue');
+			var custBirthYy = $('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox('getValue');
 			if ($isEmpty(custBirthYy)) {
 				$.messager.alert('고객정보 저장', '생년월일 출생년도를 선택하세요.');
 				return;

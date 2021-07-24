@@ -100,11 +100,10 @@ $(document).ready(function() {
 			/**************************************************************
 		     * "추가" 버튼 클릭시
 		     **************************************************************/
-			$('#btnAddUserPop').click(function(e) {
-				$('#userFrm [textboxName=dlg_usrPwd]').parent().show(); // 비밀번호 숨김 처리 해제.
-				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 추가');
-			    $('#userFrm').form('clear');
-			    $('#userFrm').form('load', {
+			$('#btnAddCodePop').click(function(e) {
+				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','공통코드 추가');
+			    $('#codeFrm').form('clear');
+			    $('#codeFrm').form('load', {
 			    	dlg_usrNo 	 : '',
 					dlg_usrGrade : '',
 					dlg_usrAuth  : '',
@@ -126,14 +125,14 @@ $(document).ready(function() {
 			$('#btnModifyUserPop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
-					$.messager.alert('관리자 삭제', '관리자 목록에서 편집할 항목을 선택하세요.');
+					$.messager.alert('공통코드 관리', '공통코드 목록에서 편집할 항목을 선택하세요.');
 					return false;
 				}
 				
-				$('#userFrm [textboxName=dlg_usrPwd]').parent().hide(); // 비밀번호 숨김 처리.
-				$('#userDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
-				$('#userFrm').form('clear');
-				$('#userFrm').form('load', {
+				$('#codeFrm [textboxName=dlg_usrPwd]').parent().hide(); // 비밀번호 숨김 처리.
+				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
+				$('#codeFrm').form('clear');
+				$('#codeFrm').form('load', {
 					dlg_usrNo 	 : row.usrNo,
 					dlg_usrEml 	 : row.usrEml,
 					dlg_usrNm 	 : row.usrNm,
@@ -191,7 +190,7 @@ $(document).ready(function() {
 						if (res.status === 'success') {
 							$.messager.show({ title: '관리자 저장', msg: res.message });
 							AD1002MV.search();
-							$('#userDlg').dialog('close');
+							$('#codeDlg').dialog('close');
 						} else {
 							$.messager.alert('관리자 저장', res.message);
 							return;
