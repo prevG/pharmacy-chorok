@@ -41,31 +41,33 @@
 	<section class="content">
 		<div class="container-fluid">
 			<!-- Search -->
-			<div class="easyui-panel p-2 mb-2" title="검색">
-				<div class="row p-1">
+			<div class="easyui-panel p-2" title="검색"
+				data-options="cls:'c2'">
+				<form id="searchFrm" method="post">
+				<div class="row mb-1">
 					<div class="col-12">
 						<div class="input-group">
 							<select class="easyui-combobox" id="cb_srchKind" name="cb_srchKind" style="width: 250px;"
-								data-options="label:'검색어',labelWidth:110,labelPosition:'left',required:true">
+								data-options="label:'검색어',labelWidth:110,labelPosition:'left',required:true,panelHeight:'auto'">
 								<option value="all" selected="selected">전체</option>
 								<option value="gr">그룹코드</option>
 								<option value="cd">코드</option>
 							</select>
 							<div class="ml-2">
-								<input class="easyui-searchbox" id="srchTxt" name="srchTxt" style="width: 300px;">
+								<input class="easyui-textbox" id="srchTxt" name="srchTxt" style="width: 300px;">
 							</div>
 							<div class="ml-2">
-								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUsrSearch" style="width: 100px;"
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnSearch" style="width: 100px;"
 									data-options="iconCls:'icon-ok'">검색</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row p-1">
+				<div class="row mb-1">
 					<div class="col-12">
 						<div class="input-group">
 							<select class="easyui-combobox" id="cb_grpCd" name="cb_grpCd" style="width: 250px;"
-								data-options="label:'그룹코드',labelWidth:110,labelPosition:'left'">
+								data-options="label:'그룹코드',labelWidth:110,labelPosition:'left',panelHeight:'auto'">
 								<option value="" selected="selected">전체</option>
 								<option th:each="data, index : ${grpCdList}"
 										th:value="${data?.ditcCd}" 
@@ -74,11 +76,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="row p-1">
+				<div class="row mb-1">
 					<div class="col-12">
 						<div class="input-group">
 							<select class="easyui-combobox" id="cb_useYn" name="cb_useYn" style="width: 250px;"
-								data-options="label:'사용유무',labelWidth:110,labelPosition:'left'">
+								data-options="label:'사용유무',labelWidth:110,labelPosition:'left',panelHeight:'auto'">
 								<option value="" selected="selected">전체</option>
 								<option th:each="data, index : ${useYnList}"
 										th:value="${data?.ditcCd}" 
@@ -87,31 +89,34 @@
 						</div>
 					</div>
 				</div>
+				</form>
 			</div>
 
 			<!-- Datagrid -->
-			<div class="easyui-panel p-3 mb-2" title="조회결과">
-				<div class="d-flex justify-content-between mb-1">
-					<div>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddUserPop"
-							data-options="iconCls:'icon-add'">추가</a>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnRemoveUser"
-							data-options="iconCls:'icon-remove'">삭제</a>
-					</div>
-					<div>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnModifyUserPop"
-							data-options="iconCls:'icon-edit'">편집</a>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnModifyPassPop"
-							data-options="iconCls:'icon-lock'">비밀번호 변경</a>
+			<div class="row mt-2">
+				<div class="col-12">
+					<div class="easyui-panel p-2" title="조회결과">
+						<div class="d-flex justify-content-between mb-1">
+							<div>
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddUserPop"
+									data-options="iconCls:'icon-add'">추가</a>
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnRemoveUser"
+									data-options="iconCls:'icon-remove'">삭제</a>
+							</div>
+							<div>
+								<a href="javascript:void(0)" class="easyui-linkbutton" id="btnModifyUserPop"
+									data-options="iconCls:'icon-edit'">편집</a>
+							</div>
+						</div>
+						<table id="dg" style="width: 100%; min-height: 530px;"></table>
 					</div>
 				</div>
-				<table id="dg" style="width: 100%; min-height: 530px;"></table>
 			</div>
 		</div>
 		<!-- /.container-fluid -->
 	</section>
 
-	<div id="userDlg" class="easyui-dialog" style="width: 700px; padding: 10px;"
+	<div id="userDlg" class="easyui-dialog" style="width: 700px;padding: 10px;display: none;"
 		data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="userFrm" method="post">
 		<input type="hidden" name="dlg_usrNo">

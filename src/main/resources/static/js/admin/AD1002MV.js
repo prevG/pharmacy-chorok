@@ -84,14 +84,21 @@ $(document).ready(function() {
 			});		
 		
 			/**************************************************************
-		     * "조회 버튼" 클릭시
+		     * 초기 바인딩
 		     **************************************************************/
-			$('#btnUsrSearch').click(function(e) {
+			$('#srchTxt').textbox('textbox').bind('keydown', function(e) {
+				if (e.keyCode === 13) AD1002MV.search();
+			});
+
+			/**************************************************************
+		     * "검색" 버튼 클릭시
+		     **************************************************************/
+			$('#btnSearch').click(function(e) {
 				AD1002MV.search();
 			});
 			
 			/**************************************************************
-		     * "추가 버튼" 클릭시
+		     * "추가" 버튼 클릭시
 		     **************************************************************/
 			$('#btnAddUserPop').click(function(e) {
 				$('#userFrm [textboxName=dlg_usrPwd]').parent().show(); // 비밀번호 숨김 처리 해제.
@@ -107,14 +114,14 @@ $(document).ready(function() {
 			});
 
 			/**************************************************************
-		     * "삭제 버튼" 클릭시
+		     * "삭제" 버튼 클릭시
 		     **************************************************************/
 			$('#btnRemoveUser').click(function(e) {
 				AD1002MV.removeUser();
 			});
 
 			/**************************************************************
-		     * "편집 버튼" 클릭시
+		     * "편집" 버튼 클릭시
 		     **************************************************************/
 			$('#btnModifyUserPop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
@@ -144,35 +151,14 @@ $(document).ready(function() {
 			$('#btnSaveUser').click(function(e) {
 				AD1002MV.saveUser();
 			});
-
-			/**************************************************************
-		     * "비밀번호 변경" 클릭시
-		     **************************************************************/
-			$('#btnModifyPassPop').click(function(e) {
-				var row = $('#dg').datagrid('getSelected');
-				if (!row) return;
-				
-				$('#passDlg').dialog('open').dialog('center').dialog('setTitle','비밀번호 변경');
-				$('#passFrm').form('clear');
-				$('#passFrm').form('load', {
-					dlg_usrNo : row.usrNo
-				});
-			});
-
-			/**************************************************************
-		     * "비밀번호 저장" 클릭시
-		     **************************************************************/
-			$('#btnModifyPass').click(function(e) {
-				AD1002MV.changePass();
-			});
 		},
 		search: function() {
 			var queryParams = $("#dg").datagrid('options').queryParams;
-			queryParams.srchKind = $('#cb_srchKind').combobox('getValue');
-			queryParams.srchTxt = $("#srchTxt").val();
-			queryParams.grpCd = $('#cb_grpCd').combobox('getValue');
-			queryParams.useYn = $('#cb_useYn').combobox('getValue');
-			queryParams.target = "grid";
+			queryParams.srchKind 	= $('#cb_srchKind').combobox('getValue');
+			queryParams.srchTxt 	= $("#srchTxt").val();
+			queryParams.grpCd 		= $('#cb_grpCd').combobox('getValue');
+			queryParams.useYn 		= $('#cb_useYn').combobox('getValue');
+			queryParams.target 		= "grid";
 			
 			$('#dg').datagrid('load', '/admin/getCodesByGrpCd_2');			
 		},
@@ -213,46 +199,6 @@ $(document).ready(function() {
 					},
 					error: function(xhr, status, error) {
 						$.messager.alert('관리자 저장', xhr.responseJSON.message, 'error');
-					}
-				});
-		   	});
-		},
-		changePass: function() {
-			var dlg_usrPwd = $('#passFrm input[textboxName=dlg_usrPwd]').textbox('getValue');
-			var dlg_usrPwdCfm = $('#passFrm input[textboxName=dlg_usrPwdCfm]').textbox('getValue');
-			if (dlg_usrPwd !== dlg_usrPwdCfm) {
-				$.messager.alert('비밀번호 변경','비밀번호가 일치하지 않습니다');
-				return;
-			}
-			var formData = {
-				criteria: {
-					usrNo : $('#passFrm input[name=dlg_usrNo]').val(),
-					usrPwd : dlg_usrPwd,
-					usrPwdCfm : dlg_usrPwdCfm
-				}
-			};
-						
-			$.messager.confirm('Confirm', '비밀번호를 변경하시겠습니까?', function(r) {
-				if (!r) return;
-				
-				$.ajax({
-					url: '/admin/modifyAdminPwd',
-					method: 'post',
-					contentType: 'application/json',
-					dataType: 'json',
-					data: JSON.stringify(formData),
-					success: function(res) {
-						if (res.status === 'success') {
-							$.messager.show({ title: '비밀번호 변경', msg: res.message });
-							AD1002MV.search();
-							$('#passDlg').dialog('close');
-						} else {
-							$.messager.alert('비밀번호 변경', res.message);
-							return;
-						}
-					},
-					error: function(xhr, status, error) {
-						$.messager.alert('비밀번호 변경', xhr.responseJSON.message, 'error');
 					}
 				});
 		   	});
