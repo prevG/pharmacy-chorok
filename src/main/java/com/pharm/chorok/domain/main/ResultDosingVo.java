@@ -23,10 +23,10 @@ public class ResultDosingVo extends TbCommColumn {
     private String dosgDesc1;
     private String dosgDesc2;
 
-    private String dosgLvCdVal;
-    private String callYnVal;
-    private String dosgYnVal;
-    private String pausYnVal;
+    private String dosgLvCdNm;
+    private String callYnNm;
+    private String dosgYnNm;
+    private String pausYnNm;
 
     private String custUsrNm;
     private String custCellNo;
@@ -34,7 +34,10 @@ public class ResultDosingVo extends TbCommColumn {
     
     private String picUsrNm;
     private String pic2UsrNm;
+    private String cateTpNm;
+    private String cateTpValNm;
     private String dosgTpNm;
+    private String dosgTpValNm;
     private String zipCode;
     private String addr1;
     private String custGenTpNm;

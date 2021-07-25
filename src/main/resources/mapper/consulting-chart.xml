@@ -22,6 +22,7 @@
        , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
        , PIC_USR_NO
        , DEL_YN
+       , PRES_DESC
        , CNST_DESC
        , ORG_WGT
        , TGT_WGT
@@ -64,6 +65,7 @@
        , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
        , PIC_USR_NO
        , DEL_YN
+       , PRES_DESC
        , CNST_DESC
        , ORG_WGT
        , TGT_WGT
@@ -111,7 +113,6 @@
            CNST_ID
          , CUST_ID
          , CNST_DT
-         , PIC_USR_NO
          , DEL_YN
          , REG_DT
          , REG_USR_NO
@@ -119,7 +120,6 @@
            #{cnstId}
          , #{custId}
          , now()
-         , #{picUsrNo}
          , 'N'
          , now()
          , #{regUsrNo}
@@ -130,7 +130,8 @@
 	<update id="updateTbPpCnstChart">
 	/** com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
 	UPDATE TB_PP_CNST_CHART
-	   SET CNST_DESC      = #{cnstDesc}
+	   SET PRES_DESC 	   = #{presDesc}
+	   	   , CNST_DESC     = #{cnstDesc}
 		   , PIC_USR_NO    = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
 		   , PIC2_USR_NO   = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
 		   , ORG_WGT       = #{orgWgt}

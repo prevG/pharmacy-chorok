@@ -17,4 +17,11 @@ public class JeasyuiController {
 		
 		return "example/md-table";
 	}
+
+	@RequestMapping("/example/title-window")
+	public String titleWindow() {
+		
+		return "example/title-window";
+	}
+
 }

@@ -57,14 +57,14 @@ $(document).ready(function() {
 		        		title: '성별', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.custGenTpCdVal; }
+		        		formatter: function(value, row) { return row.custGenTpCdNm; }
 		        	},
 		        	{
 		        		field: 'mrgYn', 
 		        		title: '결혼유무', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.mrgYnVal; }
+		        		formatter: function(value, row) { return row.mrgYnNm; }
 		        	},
 		        	{
 		        		field: 'custMemo2', 
@@ -150,9 +150,9 @@ $(document).ready(function() {
 					return;	
 				}
 	
-				$("#custDlg").load("/customer/CUS1001ML_D/"+ row.custId +"/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/customer/CUS1001ML_D/"+ row.custId +"/0", function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
 		        });
 			});
 			
@@ -161,9 +161,9 @@ $(document).ready(function() {
 		     **************************************************************/
 			$(document).off("click", "#btnNewCustPop").on("click", "#btnNewCustPop", function (e) {
 				
-				$("#custDlg").load("/customer/CUS1001ML_D/0/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/customer/CUS1001ML_D/0/0", function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
 		        });
 			});
 		},

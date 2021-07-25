@@ -35,7 +35,24 @@ $( document ).ready( function() {
 		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '60'},
 		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '80' },
 		            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80' },
-		            {field: 'dosgTpNm'	 , title: '복용유형'    , align: 'center', width: '110'},
+		            {field: 'cateTpNm'	 , title: '감량/요요'   , align: 'center', width: '110',
+		                formatter: function(value, row, index) {
+		                    if( $isEmpty(row.cateTpValNm) ) {
+		                        return value;    
+		                    } else {
+		                        return value +'('+ row.cateTpValNm +')';
+		                    }
+		                }
+		            },
+		            {field: 'dosgTpNm'	 , title: '감량종류'    , align: 'center', width: '110',
+		                formatter: function(value, row, index) {
+		                    if( $isEmpty(row.dosgTpValNm) ) {
+		                        return value;    
+		                    } else {
+		                        return value +'('+ row.dosgTpValNm +')';
+		                    }
+		                }
+		            },
 		            {field: 'dosgSeq'    , title: '복용일차'    , align: 'center', width: '70',
 		                formatter: function(value, row, index) {
 		                    if( value == 0 ) {
@@ -45,7 +62,7 @@ $( document ).ready( function() {
 		                    }
 		                }
 		            },
-		            {field: 'pausYn'     , title: '통화여부'    , align: 'center', width: '90'},
+		            {field: 'pausYnNm'   , title: '통화여부'    , align: 'center', width: '90'},
 		            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80'},
 		            {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '80'},
 		            {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '80'},
@@ -65,9 +82,9 @@ $( document ).ready( function() {
 					return;	
 				}
 	
-				$("#custDlg").load("/customer/CUS1001ML_D/"+ row.custId +"/1", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/customer/CUS1001ML_D/"+ row.custId +"/1", function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
 		        });
 			});
 		},

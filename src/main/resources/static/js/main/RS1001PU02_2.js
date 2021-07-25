@@ -30,10 +30,6 @@ function fnZipCode() {
 }
 
 $( document ).ready( function() {
-	var gC1016 = [];
-	var gC1017 = [];
-	var gC1021 = [];
-
 	var RS1001PU02 = {
 		dg2EditIndex: -1,
 		dg2EndEditing: function() {
@@ -43,9 +39,6 @@ $( document ).ready( function() {
 			return true;
 		},
 		init: function() {
-			gC1016 = getCodeData('C1016'); // 한약사/상담실장
-			gC1017 = getCodeData('C1017'); // 예/아니오
-			gC1021 = getCodeData('C1021'); // 통화여부 코드
 			
             /**************************************************************
              * 상담차트 목록
@@ -96,6 +89,7 @@ $( document ).ready( function() {
 						dosgTpVal		: row.dosgTpVal,
 						payTpCd 		: row.payTpCd,
 						dlvDt 			: row.dlvDt,
+						presDesc 		: row.presDesc,
 						cnstDesc 		: row.cnstDesc
 					});
 					// 설문차트
@@ -225,7 +219,7 @@ $( document ).ready( function() {
 		        		dlg_dosgSeq		: row.dosgSeq,
 		        		dlg_dosgSeqStr 	: row.dosgSeqStr,
 		        		dlg_dosgLvCd 	: row.dosgLvCd,
-		        		dlg_dosgLvCdNm : row.dosgLvCdNm,
+		        		dlg_dosgLvCdNm  : row.dosgLvCdNm,
 		        		dlg_dosgDt 		: row.dosgDt,
 		        		dlg_callYn 		: row.callYn,
 		        		dlg_dosgYn 		: row.dosgYn,
@@ -237,7 +231,7 @@ $( document ).ready( function() {
 		        		dlg_dosgDesc2 	: row.dosgDesc2
 		        	});
 		        
-		        	$('#dosgDlg').dialog('open').dialog('center').dialog('setTitle','복용차트 정보');
+		        	$('#dosgDlg').window('open').window('center').window('setTitle', '복용차트 정보');
 		        },
 		        columns:[[
 					{
@@ -273,21 +267,21 @@ $( document ).ready( function() {
 		        		title: '상담예약', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.callYnVal; }
+		        		formatter: function(value, row) { return row.callYnNm; }
 		        	},
 		        	{
 		        		field: 'dosgYn', 
 		        		title: '복용여부', 
 		        		align: 'center', 
 		        		width: '90', 
-		        		formatter: function(value, row) { return row.dosgYnVal; }
+		        		formatter: function(value, row) { return row.dosgYnNm; }
 		        	},
 		        	{
 		        		field: 'pausYn', 
 		        		title: '통화여부', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.pausYnVal; }
+		        		formatter: function(value, row) { return row.pausYnNm; }
 		        	},
 		        	{
 		        		field: 'currWgt', 
@@ -612,6 +606,7 @@ $( document ).ready( function() {
 		saveCnstChart: function() {
 			// 상담차트
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			var presDesc 	   = $('#saveCnstFrm textarea[textboxName=presDesc]').textbox('getValue');
 			var cnstDesc 	   = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo 	   = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
 			var picUsrNoNm    = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
@@ -677,6 +672,7 @@ $( document ).ready( function() {
 			var formData = {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
+					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,
 					"picUsrNo"		: picUsrNo,
 					"pic2UsrNo"		: pic2UsrNo,
@@ -750,6 +746,7 @@ $( document ).ready( function() {
 		createDosingChart: function() {
 			// 상담차트
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			var presDesc = $('#saveCnstFrm textarea[textboxName=presDesc]').textbox('getValue');
 			var cnstDesc = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
 			var picUsrNoNm = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
@@ -776,6 +773,7 @@ $( document ).ready( function() {
 			var formData = {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
+					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,
 					"picUsrNo"		: picUsrNo,
 					"pic2UsrNo"		: pic2UsrNo,

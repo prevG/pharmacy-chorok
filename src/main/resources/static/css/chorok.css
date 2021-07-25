@@ -36,9 +36,12 @@
 
 /********************************************
 *
-* jeasyui datagrid
+* jeasyui css
 *
 ********************************************/
+.panel-tool a {
+	opacity: 1.0;
+}
 
 .datagrid-row-selected * {
 	color: #fff;

@@ -14,6 +14,7 @@ public class TbPpCnstChart extends TbCommColumn {
     private String custBirthDt;
     private String picUsrNo;
     private String delYn;
+    private String presDesc;
     private String cnstDesc;
     
     /**

@@ -57,14 +57,14 @@ $(document).ready(function() {
 		        		title: '성별', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.custGenTpCdVal; }
+		        		formatter: function(value, row) { return row.custGenTpCdNm; }
 		        	},
 		        	{
 		        		field: 'mrgYn', 
 		        		title: '결혼유무', 
 		        		align: 'center', 
 		        		width: '100', 
-		        		formatter: function(value, row) { return row.mrgYnVal; }
+		        		formatter: function(value, row) { return row.mrgYnNm; }
 		        	},
 		        	{
 		        		field: 'custMemo2', 
@@ -144,9 +144,9 @@ $(document).ready(function() {
 					return;	
 				}
 	
-				$("#custDlg").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
 		        });
 			});
 			
@@ -154,9 +154,10 @@ $(document).ready(function() {
 		     * "추가 버튼" 클릭시
 		     **************************************************************/
 		    $(document).off("click", "#btnAddUserPop").on("click", "#btnAddUserPop", function (e) {
-				$("#custDlg").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상담정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
+					
 					$('#saveCustFrm').form('clear'); // 위치 중요함 (dialog 앞에 위치하면 안됨)
 		        });
 			});
@@ -178,9 +179,9 @@ $(document).ready(function() {
 					return;	
 				}
 	
-				$("#custDlg").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
-					$('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객정보');
-					$.parser.parse($('#custDlg'));
+				$("#custDlgWrap").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
 		        });
 			});
 		},

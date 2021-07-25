@@ -352,9 +352,9 @@ $(document).ready(function () {
                 var params = {
                     "rsvtId": rsvtId
                 };
-                $("#custDlg").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
-                    $('#custDlg').dialog('open').dialog('center').dialog('setTitle','고객상세');
-                    $.parser.parse($('#custDlg') );
+                $("#custDlgWrap").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
+					$.parser.parse($('#custDlgWrap'));
+					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
                 });
             });
 

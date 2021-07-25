@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div th:fragment="customer-main-table">
-	<div class="col-sm-12">
+<div th:fragment="customer-main-table" id="custDlg" class="easyui-window" title="고객상담정보" style="width:90%;height:90%;padding:10px;" data-options="closed:true,cls:'c2'">
+	<div class="col-12">
 		<div id="custTabs" class="easyui-tabs" style="width: 100%;max-height: 830px;"
 			 data-options="labelWidth:120">
 			<div title="고객정보" id="custom-tabs-four-home" class="p-2">
@@ -31,7 +31,6 @@
 			</th:block>
 		</div>
 	</div>
-	<script type="text/javascript" th:src="@{/easyui/datagrid-cellediting.js}"></script>
 	<script type="text/javascript" th:src="@{/js/main/RS1001PU02_2.js}"></script>
 </div>
 </html>
