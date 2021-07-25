@@ -46,9 +46,9 @@ $( document ).ready( function() {
 			$('#dg').datagrid({
 			    singleSelect: true, 
 			    ctrlSelect: true,
-			    idField: 'custId',
+			    idField: 'cnstId',
 			    rownumbers: true,
-				fitColumns: true, 
+				fitColumns: false, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        dragSelection: true,
@@ -160,12 +160,17 @@ $( document ).ready( function() {
 			$('#dg2').datagrid({
 			    singleSelect: true, 
 			    ctrlSelect: true,
-			    idField: 'custId',
+			    idField: 'dosgId',
 			    rownumbers: true,
-				fitColumns: true, 
+				fitColumns: false, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
 		        dragSelection: true,
+		        rowStyler: function(index, row) {
+		        	if (!$isEmpty(row.dosgDesc1) || !$isEmpty(row.dosgDesc1)) {
+		        		return 'background-color:#ffee00;';
+		        	}
+		        },
 		        onLoadSuccess: function(data) {
 		        	var merges = [];
 		        	var rows = data.rows;
