@@ -162,7 +162,7 @@ $(document).ready(function() {
 			queryParams.useYn 		= $('#cb_useYn').combobox('getValue');
 			queryParams.target 		= "grid";
 			
-			$('#dg').datagrid('load', '/admin/getCodesByGrpCd_2');			
+			$('#dg').datagrid('load', '/admin/getCodes');			
 		},
 		saveCode: function() {
 			var ditcCd 	 = $('#codeFrm input[textboxName=dlg_ditcCd]').textbox('getValue');

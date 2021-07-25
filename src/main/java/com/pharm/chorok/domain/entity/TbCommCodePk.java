@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 복용차트 마스터 PK 클래스
+ * 공통코드 PK 클래스
  * 
  * @author Jaratus
  *
@@ -22,14 +22,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Embeddable
-public class TbDosgTpMstPk implements Serializable {
-	
+public class TbCommCodePk implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "DOSG_TP_CD")
-    private String dosgTpCd;		// 복용유형 코드
+	@Column(name = "GRP_CD")
+    private String grpCd;
 	
-	@Column(name = "DOSG_SEQ")
-    private int dosgSeq;
+	@Column(name = "DITC_CD")
+    private String ditcCd;
 	
 }

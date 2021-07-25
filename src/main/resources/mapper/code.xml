@@ -2,81 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pharm.chorok.web.admin.repository.ADCodeRepository">
-
-
-	<select id="selectCodesByGroupCd" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
-		<if test='target!=null and target.equals("combo")'>
-		SELECT '',
-			'00000' AS DITC_CD,
-			'',
-			<choose>
-				<when test='targetKind!=null and targetKind.equals("0")'>
-					CONCAT('[00000]','전체') AS DITC_CD_NM,
-				</when>
-				<when test='targetKind!=null and targetKind.equals("1")'>
-					CONCAT('[00000]','선택') AS DITC_CD_NM,
-				</when>
-				<otherwise>
-					CONCAT('[00000]','전체') AS DITC_CD_NM,
-				</otherwise>
-			</choose>
-			'',
-			'',
-			'',
-			'',
-			'',
-			0 AS V_ORDER,
-			'',
-			'',
-			'',
-			'',
-			'',
-			''
-		UNION ALL
-		</if>
-		SELECT GRP_CD,
-			DITC_CD,
-			DITC_NM,
-			CONCAT('[',DITC_CD,']',DITC_NM) AS DITC_CD_NM,
-			DITC_NM_ENG,
-			VALUE_CD,
-			VALUE_CD2,
-			CD_EXP,
-			CD_EXP_ENG,
-			V_ORDER,
-			LOCK_YN,
-			USE_YN,
-			REG_ID,
-			REG_DTTM,
-			UPD_ID,
-			UPD_DTTM
-		  FROM TB_COMM_CODE
-		 WHERE 1=1
-		 <if test='target!=null and target.equals("grid")'>
-		 <![CDATA[
-		 AND DITC_CD <> '00000'
-		 ]]>
-		 </if>
-		 AND GRP_CD = #{grpCd}
-		 <choose>
-			<when test='srchKind != null and srchKind.equals("ko")'>
-			 AND DITC_NM like concat('%',#{srchTxt},'%')
-			</when>
-			<when test='srchKind != null and srchKind.equals("en")'>
-			 AND DITC_NM_ENG like concat('%',#{srchTxt},'%')
-			</when>
-		</choose>
-		 <if test='useYn!=null and !useYn.equals("A")'>
-		 AND USE_YN = #{useYn}
-		 </if>
-		 ORDER BY V_ORDER
-	</select>
 	
-	<select id="selectCodesByGroupCd_2" resultType="com.pharm.chorok.domain.table.TbCommCode">
+	<select id="selectCodes" resultType="com.pharm.chorok.domain.main.TbCommCodeVo">
 		SELECT GRP_CD
 			 , DITC_CD
 			 , DITC_NM
-			 , CONCAT('[',DITC_CD,']',DITC_NM) AS DITC_CD_NM
 			 , DITC_NM_ENG
 			 , VALUE_CD
 			 , VALUE_CD2
@@ -92,6 +22,11 @@
 		  FROM TB_COMM_CODE
 		 <where>
 			<choose>
+				<when test='srchKind != null and srchKind.equals("all")'>
+					<if test='srchTxt != null and !srchTxt.equals("")'>
+					(GRP_CD LIKE CONCAT('%',#{srchTxt},'%') OR DITC_CD LIKE CONCAT('%',#{srchTxt},'%') OR DITC_NM LIKE CONCAT('%',#{srchTxt},'%'))
+					</if>
+				</when>
 				<when test='srchKind != null and srchKind.equals("gr")'>
 				GRP_CD LIKE CONCAT('%',#{srchTxt},'%')
 				</when>
@@ -109,100 +44,36 @@
 		 ORDER BY GRP_CD, V_ORDER
 	</select>
 	
-	<select id="selectCodes" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
-		SELECT GRP_CD,
-			DITC_CD,
-			DITC_NM,
-			CONCAT('[',DITC_CD,']',DITC_NM) AS DITC_CD_NM,
-			DITC_NM_ENG,
-			VALUE_CD,
-			VALUE_CD2,
-			CD_EXP,
-			CD_EXP_ENG,
-			V_ORDER,
-			LOCK_YN,
-			USE_YN,
-			REG_ID,
-			REG_DTTM,
-			UPD_ID,
-			UPD_DTTM
-		  FROM TB_COMM_CODE
-		 WHERE 1=1
-		 AND GRP_CD = #{grpCd}
-		 <if test='useYn!=null and !useYn.equals("A")'>
-		 AND USE_YN = #{useYn}
-		 </if>
-		 ORDER BY V_ORDER
+	<select id="selectCodesByGrpCd" resultType="com.pharm.chorok.domain.main.TbCommCodeVo">
+		SELECT GRP_CD
+			 , DITC_CD
+			 , DITC_NM
+			 , DITC_NM_ENG
+			 , VALUE_CD
+			 , VALUE_CD2
+			 , CD_EXP
+			 , CD_EXP_ENG
+			 , V_ORDER
+			 , LOCK_YN
+			 , USE_YN
+			 , REG_ID
+			 , REG_DTTM
+			 , UPD_ID
+			 , UPD_DTTM
+		 FROM TB_COMM_CODE
+		WHERE GRP_CD = #{grpCd}
+		<if test='useYn != null and !useYn.equals("")'>
+			AND USE_YN = #{useYn}
+		</if>
+		ORDER BY GRP_CD, V_ORDER
 	</select>
 	
-	<select id="selectAbbrGrpCodes" resultType="com.pharm.chorok.domain.table.TbCommCode">
+	<select id="selectAbbrGrpCodes" resultType="com.pharm.chorok.domain.main.TbCommCodeVo">
 		SELECT GRP_CD AS DITC_CD
 			 , GRP_CD AS DITC_NM
 		  FROM TB_COMM_CODE
 		 GROUP BY GRP_CD
 		 ORDER BY GRP_CD
 	</select>
-	
-	<select id="selectAbbrCodes" parameterType="com.pharm.chorok.domain.table.TbCommCode" resultType="com.pharm.chorok.domain.table.TbCommCode">
-		SELECT DITC_CD,
-			DITC_NM
-		  FROM TB_COMM_CODE
-		 WHERE 1=1
-		 AND GRP_CD = #{grpCd}
-		 <if test='useYn!=null and !useYn.equals("A")'>
-		 AND USE_YN = #{useYn}
-		 </if>
-		 ORDER BY V_ORDER
-	</select>
-	
-	<update id="removeCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
-		UPDATE TB_COMM_CODE
-		SET USE_YN = 'N'
-		WHERE 1=1
-		AND GRP_CD = #{grpCd}
-		<if test='ditcCd!=null'>
-		AND DITC_CD = #{ditcCd}
-		</if>
-	</update>
-
-
-	<insert id="saveCode" parameterType="com.pharm.chorok.domain.table.TbCommCode">
-		INSERT INTO TB_COMM_CODE
-		(	GRP_CD,
-			DITC_CD,
-			DITC_NM,
-			DITC_NM_ENG,
-			VALUE_CD,
-			VALUE_CD2,
-			CD_EXP,
-			CD_EXP_ENG,
-			V_ORDER,
-			LOCK_YN,
-			USE_YN,
-			REG_ID,
-			REG_DTTM,
-			UPD_ID,
-			UPD_DTTM
-		)
-		VALUES
-		(	#{grpCd},
-			#{ditcCd},
-			#{ditcNm},
-			#{ditcNmENG},
-			#{valueCd},
-			#{valueCd2},
-			#{cdExp},
-			#{cdExpEnG},
-			#{vOrder},
-			#{lockYn},
-			#{useYn},
-			#{regId},
-			#{regDttm},
-			#{updId},
-			#{updDttm}
-		)
-			
-	</insert>
-	
 	
 </mapper>

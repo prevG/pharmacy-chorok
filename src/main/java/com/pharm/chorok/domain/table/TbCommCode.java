@@ -5,6 +5,12 @@ import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @deprecated vo 클래스로 대체함.
+ * 
+ * @author Jaratus
+ *
+ */
 @Data
 @NoArgsConstructor
 public class TbCommCode {

@@ -22,7 +22,7 @@ import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ResultRcmdVo;
-import com.pharm.chorok.domain.table.TbCommCode;
+import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
 import com.pharm.chorok.web.main.service.CustomerService;
@@ -162,15 +162,15 @@ public class ADUserController {
         List<ResultRcmdVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
         
         //생년월일
-        List<TbCommCode> birthYyList = CommCodeEx.birthYyList();
-        List<TbCommCode> birthMmList = CommCodeEx.birthMmList();
-        List<TbCommCode> birthDdList = CommCodeEx.birthDdList();
+        List<TbCommCodeVo> birthYyList = CommCodeEx.birthYyList();
+        List<TbCommCodeVo> birthMmList = CommCodeEx.birthMmList();
+        List<TbCommCodeVo> birthDdList = CommCodeEx.birthDdList();
         
         // 출산자녀수
-        List<TbCommCode> childCntList = CommCodeEx.childCntList();
+        List<TbCommCodeVo> childCntList = CommCodeEx.childCntList();
         
         // 마지막 출산년도
-        List<TbCommCode> pcrtYearList = CommCodeEx.pcrtYearList();
+        List<TbCommCodeVo> pcrtYearList = CommCodeEx.pcrtYearList();
         
         model.addAttribute("custInfo", custInfo);
         model.addAttribute("rcmdList", rcmdList);

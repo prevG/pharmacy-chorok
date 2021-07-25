@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pharm.chorok.common.component.SMSComponent;
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.common.service.SMSService;
+import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADCodeService;
 import com.pharm.chorok.web.main.service.CommUserDetailsService;
@@ -64,7 +64,7 @@ public class ADSMSController {
         //상담실장목록 조회
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         //통화여부 코드목록
-        List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
         
 		model.addAttribute("dosgDt", cal.getBaseDt());
 		model.addAttribute("counselorList", counselorList);
@@ -78,7 +78,7 @@ public class ADSMSController {
 	public String sms_3(Model model) {
 		
         //복용유형 코드목록
-        List<TbCommCode> dosgTpList = codeService.selectAbbrCodes(new TbCommCode("C1018", "Y"));
+        List<TbCommCodeVo> dosgTpList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1018", "Y"));
         
 		model.addAttribute("dosgTpList", dosgTpList);
 

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.table.TbCommCode;
+import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.web.admin.service.ADAdminService;
 import com.pharm.chorok.web.admin.service.ADCodeService;
@@ -48,10 +48,10 @@ public class ADAdminController {
 	@GetMapping("/AD1001MV_2")
 	public String admin2(Model model) {
 		
-		List<TbCommCode> usrAuthList = codeService.selectAbbrCodes(new TbCommCode("C1016", "Y"));
-		List<TbCommCode> usrAprvList = codeService.selectAbbrCodes(new TbCommCode("C1010", "Y"));
-		List<TbCommCode> usrGradeList = codeService.selectAbbrCodes(new TbCommCode("C1003", "Y"));
-		List<TbCommCode> delYnList = codeService.selectAbbrCodes(new TbCommCode("C1012", "Y"));
+		List<TbCommCodeVo> usrAuthList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1016", "Y"));
+		List<TbCommCodeVo> usrAprvList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1010", "Y"));
+		List<TbCommCodeVo> usrGradeList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1003", "Y"));
+		List<TbCommCodeVo> delYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1012", "Y"));
 		
 		model.addAttribute("usrAuthList", usrAuthList); // 권한코드
 		model.addAttribute("usrAprvList", usrAprvList); // 승인코드

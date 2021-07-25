@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
-import com.pharm.chorok.domain.table.TbCommCode;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -85,7 +85,7 @@ public class CustomerController {
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
         //통화여부 코드목록
-        List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
         
 
 		model.addAttribute("dosgDt", cal.getBaseDt());
@@ -193,33 +193,33 @@ public class CustomerController {
         List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
         
         //상담가능시간 코드
-        List<TbCommCode> cnstHhList = codeService.selectAbbrCodes(new TbCommCode("C1019", "Y"));
+        List<TbCommCodeVo> cnstHhList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1019", "Y"));
         
         //복용유형 코드
-        List<TbCommCode> dosgTpCdList = codeService.selectAbbrCodes(new TbCommCode("C1018", "Y"));
+        List<TbCommCodeVo> dosgTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1018", "Y"));
         
         //복용여부 코드
-        List<TbCommCode> dosgYnList = codeService.selectAbbrCodes(new TbCommCode("C1017", "Y"));
+        List<TbCommCodeVo> dosgYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1017", "Y"));
         
         //상담예약 코드
-        List<TbCommCode> callYnList = codeService.selectAbbrCodes(new TbCommCode("C1016", "Y"));
+        List<TbCommCodeVo> callYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1016", "Y"));
 
         //통화여부 코드
-        List<TbCommCode> pausYnList = codeService.selectAbbrCodes(new TbCommCode("C1021", "Y"));
+        List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
         
         //결재유형 코드
-        List<TbCommCode> payTpCdList = codeService.selectAbbrCodes(new TbCommCode("C1022", "Y"));
+        List<TbCommCodeVo> payTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1022", "Y"));
         
         //생년월일
-        List<TbCommCode> birthYyList = CommCodeEx.birthYyList();
-        List<TbCommCode> birthMmList = CommCodeEx.birthMmList();
-        List<TbCommCode> birthDdList = CommCodeEx.birthDdList();
+        List<TbCommCodeVo> birthYyList = CommCodeEx.birthYyList();
+        List<TbCommCodeVo> birthMmList = CommCodeEx.birthMmList();
+        List<TbCommCodeVo> birthDdList = CommCodeEx.birthDdList();
         
         // 출산자녀수
-        List<TbCommCode> childCntList = CommCodeEx.childCntList();
+        List<TbCommCodeVo> childCntList = CommCodeEx.childCntList();
         
         // 마지막 출산년도
-        List<TbCommCode> pcrtYearList = CommCodeEx.pcrtYearList();
+        List<TbCommCodeVo> pcrtYearList = CommCodeEx.pcrtYearList();
 
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);

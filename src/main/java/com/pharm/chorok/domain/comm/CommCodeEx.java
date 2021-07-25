@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pharm.chorok.domain.table.TbCommCode;
+import com.pharm.chorok.domain.main.TbCommCodeVo;
 
 public class CommCodeEx {
 
@@ -13,16 +13,15 @@ public class CommCodeEx {
 	 * 
 	 * @return
 	 */
-	public static List<TbCommCode> birthYyList() {
-		List<TbCommCode> yyList = new ArrayList<TbCommCode>();
+	public static List<TbCommCodeVo> birthYyList() {
+		List<TbCommCodeVo> yyList = new ArrayList<TbCommCodeVo>();
 		
 		LocalDate dt = LocalDate.now();
 		for (int i = 0; i < 50; i++) {
-			TbCommCode code = new TbCommCode();
-			code.setDitcCd(String.valueOf(dt.getYear() - i));
-			code.setDitcNm(String.valueOf(dt.getYear() - i));
-			
-			yyList.add(code);
+			yyList.add(TbCommCodeVo.builder()
+					.ditcCd(String.valueOf(dt.getYear() - i))
+					.ditcNm(String.valueOf(dt.getYear() - i))
+					.build());
 		}
 		
 		return yyList;
@@ -33,15 +32,14 @@ public class CommCodeEx {
 	 * 
 	 * @return
 	 */
-	public static List<TbCommCode> birthMmList() {
-		List<TbCommCode> mmList = new ArrayList<TbCommCode>();
+	public static List<TbCommCodeVo> birthMmList() {
+		List<TbCommCodeVo> mmList = new ArrayList<TbCommCodeVo>();
 		
 		for (int i = 1; i <= 12; i++) {
-			TbCommCode code = new TbCommCode();
-			code.setDitcCd(i < 10 ? "0" + i : String.valueOf(i));
-			code.setDitcNm(String.valueOf(i));
-			
-			mmList.add(code);
+			mmList.add(TbCommCodeVo.builder()
+					.ditcCd(i < 10 ? "0" + i : String.valueOf(i))
+					.ditcNm(String.valueOf(i))
+					.build());
 		}
 		
 		return mmList;
@@ -52,15 +50,14 @@ public class CommCodeEx {
 	 * 
 	 * @return
 	 */
-	public static List<TbCommCode> birthDdList() {
-		List<TbCommCode> ddList = new ArrayList<TbCommCode>();
+	public static List<TbCommCodeVo> birthDdList() {
+		List<TbCommCodeVo> ddList = new ArrayList<TbCommCodeVo>();
 		
 		for (int i = 1; i <= 31; i++) {
-			TbCommCode code = new TbCommCode();
-			code.setDitcCd(i < 10 ? "0" + i : String.valueOf(i));
-			code.setDitcNm(String.valueOf(i));
-			
-			ddList.add(code);
+			ddList.add(TbCommCodeVo.builder()
+					.ditcCd(i < 10 ? "0" + i : String.valueOf(i))
+					.ditcNm(String.valueOf(i))
+					.build());
 		}
 		
 		return ddList;
@@ -71,15 +68,14 @@ public class CommCodeEx {
 	 * 
 	 * @return
 	 */
-	public static List<TbCommCode> childCntList() {
-		List<TbCommCode> ccList = new ArrayList<TbCommCode>();
+	public static List<TbCommCodeVo> childCntList() {
+		List<TbCommCodeVo> ccList = new ArrayList<TbCommCodeVo>();
 		
 		for (int i = 1; i <= 10; i++) {
-			TbCommCode code = new TbCommCode();
-			code.setDitcCd(String.valueOf(i));
-			code.setDitcNm(String.valueOf(i));
-			
-			ccList.add(code);
+			ccList.add(TbCommCodeVo.builder()
+					.ditcCd(String.valueOf(i))
+					.ditcNm(String.valueOf(i))
+					.build());
 		}
 		
 		return ccList;
@@ -90,16 +86,15 @@ public class CommCodeEx {
 	 * 
 	 * @return
 	 */
-	public static List<TbCommCode> pcrtYearList() {
-		List<TbCommCode> pyList = new ArrayList<TbCommCode>();
+	public static List<TbCommCodeVo> pcrtYearList() {
+		List<TbCommCodeVo> pyList = new ArrayList<TbCommCodeVo>();
 		
 		LocalDate dt = LocalDate.now();
 		for (int i = 0; i < 50; i++) {
-			TbCommCode code = new TbCommCode();
-			code.setDitcCd(String.valueOf(dt.getYear() - i));
-			code.setDitcNm(String.valueOf(dt.getYear() - i));
-			
-			pyList.add(code);
+			pyList.add(TbCommCodeVo.builder()
+					.ditcCd(String.valueOf(dt.getYear() - i))
+					.ditcNm(String.valueOf(dt.getYear() - i))
+					.build());
 		}
 		
 		return pyList;
