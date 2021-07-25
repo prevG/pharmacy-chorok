@@ -48,18 +48,18 @@ $(document).ready(function() {
 		        		width: '100'
 		        	},
 		        	{
-		        		field: 'cdExp', 
-		        		title: '코드값 설명', 
-		        		width: '100'
-		        	},
-		        	{
 		        		field: 'valueCd2', 
 		        		title: '코드값2', 
 		        		width: '100'
 		        	},
 		        	{
-		        		field: 'cdExp2', 
-		        		title: '코드값2 설명', 
+		        		field: 'cdExp', 
+		        		title: '설명', 
+		        		width: '100'
+		        	},
+		        	{
+		        		field: 'cdExpEng', 
+		        		title: '설명(영문)', 
 		        		width: '100'
 		        	},
 		        	{
@@ -101,54 +101,57 @@ $(document).ready(function() {
 		     * "추가" 버튼 클릭시
 		     **************************************************************/
 			$('#btnAddCodePop').click(function(e) {
-				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','공통코드 추가');
+				$('#codeFrm [textboxName=dlg_ditcCd]').textbox('enable'); // 코드
+				$('#codeFrm [textboxName=dlg_grpCd]').textbox('enable');  // 그룹코드
+				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','공통코드 관리');
 			    $('#codeFrm').form('clear');
 			    $('#codeFrm').form('load', {
-			    	dlg_usrNo 	 : '',
-					dlg_usrGrade : '',
-					dlg_usrAuth  : '',
-					dlg_usrAprv  : '',
-			    	dlg_delYn 	 : 'N'
+			    	dlg_lockYn 		: 'N',
+					dlg_useYn		: 'Y'
 				});
 			});
 
 			/**************************************************************
 		     * "삭제" 버튼 클릭시
 		     **************************************************************/
-			$('#btnRemoveUser').click(function(e) {
-				AD1002MV.removeUser();
+			$('#btnRemoveCode').click(function(e) {
+				AD1002MV.removeCode();
 			});
 
 			/**************************************************************
 		     * "편집" 버튼 클릭시
 		     **************************************************************/
-			$('#btnModifyUserPop').click(function(e) {
+			$('#btnModifyCodePop').click(function(e) {
 				var row = $('#dg').datagrid('getSelected');
 				if (!row) {
 					$.messager.alert('공통코드 관리', '공통코드 목록에서 편집할 항목을 선택하세요.');
 					return false;
 				}
 				
-				$('#codeFrm [textboxName=dlg_usrPwd]').parent().hide(); // 비밀번호 숨김 처리.
-				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','관리자 수정');
+				$('#codeFrm [textboxName=dlg_ditcCd]').textbox('disable'); // 코드
+				$('#codeFrm [textboxName=dlg_grpCd]').textbox('disable');  // 그룹코드
+				$('#codeDlg').dialog('open').dialog('center').dialog('setTitle','공통코드 관리');
 				$('#codeFrm').form('clear');
 				$('#codeFrm').form('load', {
-					dlg_usrNo 	 : row.usrNo,
-					dlg_usrEml 	 : row.usrEml,
-					dlg_usrNm 	 : row.usrNm,
-					dlg_usrPhnNo : row.usrPhnNo,
-					dlg_usrGrade : row.usrGrade,
-					dlg_usrAuth  : row.usrAuth,
-					dlg_usrAprv  : row.usrAprv,
-					dlg_delYn 	 : row.delYn
+					dlg_grpCd 	 	: row.grpCd,
+					dlg_ditcCd 		: row.ditcCd,
+					dlg_ditcNm 	 	: row.ditcNm,
+					dlg_ditcNmEng 	: row.ditcNmEng,
+					dlg_valueCd 	: row.valueCd,
+					dlg_valueCd2  	: row.valueCd2,
+					dlg_cdExp  		: row.cdExp,
+					dlg_cdExpEng 	: row.cdExpEng,
+					dlg_vOrder 		: row.vOrder,
+					dlg_lockYn 		: row.lockYn,
+					dlg_useYn		: row.useYn
 				});
 			});
 
 			/**************************************************************
 		     * "관리자 저장" 클릭시
 		     **************************************************************/
-			$('#btnSaveUser').click(function(e) {
-				AD1002MV.saveUser();
+			$('#btnSaveCode').click(function(e) {
+				AD1002MV.saveCode();
 			});
 		},
 		search: function() {
@@ -161,13 +164,28 @@ $(document).ready(function() {
 			
 			$('#dg').datagrid('load', '/admin/getCodesByGrpCd_2');			
 		},
-		saveUser: function() {
-			var usrNo 	 = $('#userFrm input[name=dlg_usrNo]').val();
+		saveCode: function() {
+			var ditcCd 	 = $('#codeFrm input[textboxName=dlg_ditcCd]').textbox('getValue');
+			if ($isEmpty(ditcCd)) {
+				$.messager.alert('공통코드 관리', '코드를 입력해 주세요', 'error');
+				return;
+			}
+			var grpCd 	 = $('#codeFrm input[textboxName=dlg_grpCd]').textbox('getValue');
+			if ($isEmpty(grpCd)) {
+				$.messager.alert('공통코드 관리', '그룹코드를 입력해 주세요', 'error');
+				return;
+			}
+			var ditcNm 	 = $('#codeFrm input[textboxName=dlg_ditcNm]').textbox('getValue');
+			if ($isEmpty(ditcNm)) {
+				$.messager.alert('공통코드 관리', '코드명을 입력해 주세요', 'error');
+				return;
+			}
+			
 			var formData = {
 				criteria: {
-					"usrNo" 	: usrNo,
-					"usrEml" 	: $('#userFrm input[textboxName=dlg_usrEml]').textbox('getValue'),
-					"usrPwd" 	: $('#userFrm input[textboxName=dlg_usrPwd]').passwordbox('getValue'),
+					"ditcCd" 	: ditcCd,
+					"grpCd" 	: grpCd,
+					"ditcNm" 	: ditcNm,
 					"usrNm" 	: $('#userFrm input[textboxName=dlg_usrNm]').textbox('getValue'),
 					"usrPhnNo" 	: $('#userFrm input[textboxName=dlg_usrPhnNo]').textbox('getValue'),
 					"usrGrade" 	: $('#userFrm select[textboxName=dlg_usrGrade]').combobox('getValue'),
@@ -177,7 +195,7 @@ $(document).ready(function() {
 				}
 			}
 			
-			$.messager.confirm('Confirm', '사용자 정보를 저장하겠습니까?', function(r) {
+			$.messager.confirm('Confirm', '공통코드 정보를 저장하겠습니까?', function(r) {
 				if (!r) return;
 				
 				$.ajax({

@@ -1,7 +1,5 @@
 package com.pharm.chorok.web.admin.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pharm.chorok.domain.table.TbCommVer;
 import com.pharm.chorok.web.admin.service.ADVersionService;
 
 @RequestMapping(value = "/admin")
@@ -26,9 +23,5 @@ public class ADVersionController {
 		mv.setViewName("/admin/AD1005MV");
 		return mv;
 	}
-	
-	
-	
-	
 
 }

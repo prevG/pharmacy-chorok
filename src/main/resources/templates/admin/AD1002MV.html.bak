@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/admin_layout">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div id="content-wrapper" class="d-flex flex-column" layout:fragment="content">
+
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item"><a href="#">공통코드 관리</a></li>
+			<li class="breadcrumb-item active" aria-current="page">공통코드 관리</li>
+		</ol>
+	</nav>
+
+	<!-- Main Content -->
+	<div id="content">
+		<!-- Begin Page Content -->
+		<div class="container-fluid">
+
+			<!-- Top Content -->
+			<div class="card shadow mb-1">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">검색</h5>
+				</div>
+				<div class="card-body">
+					<form class="form-inline">
+						<div class="form-group" style="display:none;">
+							<select id="cb_cd" class="easyui-combobox" name="cb_cd" style="width:200px;" label="검색어">
+								<option value="0" selected="selected">선택</option>
+							    <option value="ko">코드명</option>
+							    <option value="en">코드명(영어)</option>
+							</select>
+							&nbsp;
+							<input class="easyui-textbox" data-options="iconCls:'icon-search'" style="width:300px" id="srchTxt">
+						</div>
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
+						<div class="form-group">
+							<select id="cb_grpCd" class="easyui-combobox" name="cb_grpCd" style="width:300px;" label="그룹코드">
+							</select>
+							&nbsp;
+							<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width: 80px" onClick="fnSearch();">검색</a>
+							&nbsp;
+							※ 그룹코드를 선택하지 않으면 그룸코드 목록이 조회됩니다.
+						</div>
+					</form>
+					<hr class="mt-2 mb-2" />
+					<form class="form-inline">
+						<div class="form-group">
+							<select id="cb_useYn" class="easyui-combobox" name="cb_useYn" style="width:200px;" label="사용유무">
+								<option value="A" selected="selected">전체</option>
+							    <option value="Y">사용</option>
+							    <option value="N">비사용</option>
+							</select>
+						</div> 
+					</form>
+
+				</div>
+			</div>
+
+
+			<div class="card shadow">
+				<div class="card-header">
+					<h5 class="m-0 font-weight-bold text-primary">조회내역</h5>
+				</div>
+				<div class="card-body" style="min-height: 530px;">
+					<div class="d-flex justify-content-between">
+						<div>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onClick="fn_add();">추가</a> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onClick="fn_remove();">삭제</a> 
+						</div>
+						<div> 
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="fn_edit();">편집</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="fn_save();">저장</a>
+							<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="fn_cancel();">취소</a>
+						</div>
+					</div>
+				
+					<table id="dg" style="width:100%"></table>
+					
+					 <!-- <table id="dg" class="easyui-datagrid" title="DataGrid" style="width:100%;height:600px" data-options="
+				          singleSelect:false, 
+				          ctrlSelect:true,
+				          idField:'id',
+				          rownumbers:true,
+				          pagination:true,pageSize:50,pageList:[50],
+				          dragSelection: true">
+				      <thead>
+				        <tr>
+				          <th data-options="field:'grpCd',width:150,align:'center'">그룹코드</th>
+				          <th data-options="field:'ditcCd',width:150,align:'center'">상세코드</th>
+				          <th data-options="field:'ditcNm',width:300,align:'center'">상세코드이름</th>
+				          <th data-options="field:'cdExp',width:300,align:'center'">코드설명</th>
+				          <th data-options="field:'vOrder',width:100,align:'center'">순서</th>
+				          <th data-options="field:'lockYn',width:130,align:'center'">잠금여부</th>
+				          <th data-options="field:'useYn',width:130,align:'center'">사용여부</th>
+				        </tr>
+				      </thead>
+				    </table> -->
+
+
+					<!-- 
+					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">위로이동</button>
+					<button type="button" class="btn-sm btn-success mr-1 float-right px-4" id="modBtn">아래로이동</button>
+					<button type="button" class="btn-sm btn-secondary mr-1 float-right px-4" id="modBtn">수정</button> -->
+				</div>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- End of Main Content -->
+
+	<div id="addDlg" class="easyui-dialog" style="width:700px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+		<form id="addFrm" method="post" novalidate style="margin: 0; padding: 20px 50px">
+			<div style="margin-bottom: 10px">
+				<select id="selCdKind" class="easyui-combobox" required="true" name="selCdKind" style="width:200px;" label="코드구분:">
+					<option value="S" selected="selected">선택</option>
+				    <option value="G">코드그룹</option>
+				    <option value="C">코드</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px;display:none;" id="grpRg">
+				<div class="row">
+				    <div class="col-6">
+				    	<select id="grpRg_grpCd" class="easyui-combobox" required="true" name="grpRg_grpCd" style="width:270px;" label="그룹코드">
+							<option value="00000">선택</option>
+						</select>
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input id="grpRg_ditcCd" name="grpRg_ditcCd" class="easyui-textbox" required="true" label="코드:" style="width:170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'"  onClick="fnChkDup('ditc');">중복확인</a>
+				    </div>
+				</div>
+			</div>
+			<div style="margin-bottom: 10px;display:none;" id="cdRg">
+				<div class="row">
+				    <div class="col-6">
+				    	<input id="cdRg_grpCd" name="cdRg_grpCd"  class="easyui-textbox" required="true" label="그룹코드:" style="width: 170px">
+				    	<a href="#" class="easyui-linkbutton float-right mx-2" data-options="iconCls:'icon-search'" style="width:88px" onClick="fnChkDup('grp');">중복확인</a>
+				    </div>
+				    <div class="col-6 text-right">
+				    	<input id="cdRg_ditcCd" name="cdRg_ditcCd" class="easyui-textbox" required="true" label="상위코드:" style="width: 200px" value="00000">
+				    </div>
+				</div>
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="ditcNm" name="ditcNm" class="easyui-textbox" required="true" label="코드이름:" style="width: 100%">
+			</div>
+			<div style="margin-bottom: 10px">
+				<input id="cdExp" name="cdExp" class="easyui-textbox" required="true" validType="email" label="코드설명:" style="width: 100%">
+			</div>
+			<!-- <div style="margin-bottom: 10px">
+				<input name="vOrder" class="easyui-textbox" required="true" label="순서:" style="width:150px;">
+			</div> -->
+			<div style="margin-bottom: 10px">
+				<select id="lockYn" class="easyui-combobox" required="true" name="lockYn" style="width:200px;" label="잠금여부:">
+				    <option value="Y" selected="selected">잠금</option>
+				    <option value="N">비잠금</option>
+				</select>
+			</div>
+			<div style="margin-bottom: 10px">
+				<select id="useYn" class="easyui-combobox" required="true" name="useYn" style="width:200px;" label="사용여부">
+				    <option value="Y" selected="selected">사용</option>
+				    <option value="N">비사용</option>
+				</select>
+			</div>
+		</form>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onClick="saveDlgCode(selCdKind.value);">저장</a>
+	</div>
+
+	<footer th:replace="fragments/admin_footer :: footerFragment"></footer>
+
+	<script type="text/javascript" th:src="@{/js/admin/AD1002MV.js}"></script>
+
+</div>
+
+
+</html>
