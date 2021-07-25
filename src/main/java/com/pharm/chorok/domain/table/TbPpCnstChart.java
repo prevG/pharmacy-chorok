@@ -27,7 +27,10 @@ public class TbPpCnstChart extends TbCommColumn {
     private String pic2UsrNo;		// 상담실장 아이디
     private String cnstHhCd;		// 상담가능시간 코드
     private String cnstHhMemo; 		// 상담가능시간 메모
-    private String dosgTpCd;		// 복용유형 코드
+    private String cateTpCd;		// 감량요요 코드
+    private String cateTpVal;		// 감량요요 값
+    private String dosgTpCd;		// 감량종류 코드
+    private String dosgTpVal;		// 감량종류 값
     private String payTpCd;			// 결재유형 코드
     private String dlvDt;			// 택배발송일
     

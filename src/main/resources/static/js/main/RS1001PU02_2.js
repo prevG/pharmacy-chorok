@@ -90,7 +90,10 @@ $( document ).ready( function() {
 						pic2UsrNo		: row.pic2UsrNo,
 						cnstHhCd		: row.cnstHhCd,
 						cnstHhMemo		: row.cnstHhMemo,
+						cateTpCd		: row.cateTpCd,
+						cateTpVal		: row.cateTpVal,
 						dosgTpCd		: row.dosgTpCd,
+						dosgTpVal		: row.dosgTpVal,
 						payTpCd 		: row.payTpCd,
 						dlvDt 			: row.dlvDt,
 						cnstDesc 		: row.cnstDesc
@@ -127,23 +130,23 @@ $( document ).ready( function() {
 		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
 		        	},
 		        	{
-		        		field: 'picUsrNoVal', 
+		        		field: 'picUsrNoNm', 
 		        		title: '상담한약사', 
 		        		align: 'center', 
 		        		width: '70'
 		        	},
 		        	{
-		        		field: 'pic2UsrNoVal', 
+		        		field: 'pic2UsrNoNm', 
 		        		title: '상담실장', 
 		        		align: 'center', 
 		        		width: '70'
 		        	},
 		        	{
 		        		field: 'dosgTpCd', 
-		        		title: '복용유형', 
+		        		title: '감량종류', 
 		        		align: 'center', 
 		        		width: '120', 
-		        		formatter: function(value, row) { return row.dosgTpCdVal; }
+		        		formatter: function(value, row) { return row.dosgTpCdNm; }
 		        	},
 		        	{
 		        		field: '삭제', 
@@ -222,7 +225,7 @@ $( document ).ready( function() {
 		        		dlg_dosgSeq		: row.dosgSeq,
 		        		dlg_dosgSeqStr 	: row.dosgSeqStr,
 		        		dlg_dosgLvCd 	: row.dosgLvCd,
-		        		dlg_dosgLvCdVal : row.dosgLvCdVal,
+		        		dlg_dosgLvCdNm : row.dosgLvCdNm,
 		        		dlg_dosgDt 		: row.dosgDt,
 		        		dlg_callYn 		: row.callYn,
 		        		dlg_dosgYn 		: row.dosgYn,
@@ -242,7 +245,7 @@ $( document ).ready( function() {
 		        		title: '복용단계', 
 		        		align: 'center', 
 		        		width: '110', 
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdVal +'</span>'; }
+		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdNm +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgSeq', 
@@ -611,15 +614,18 @@ $( document ).ready( function() {
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 			var cnstDesc 	   = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo 	   = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
-			var picUsrNoVal    = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
+			var picUsrNoNm    = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
 			var pic2UsrNo 	   = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
-			var pic2UsrNoVal   = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			var pic2UsrNoNm   = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
 			var orgWgt 		   = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
 			var tgtWgt 		   = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
 			var startDosgDt    = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
 			var cnstHhCd 	   = $('#saveCnstFrm select[textboxName=cnstHhCd]').combobox('getValue');
 			var cnstHhMemo 	   = $('#saveCnstFrm input[textboxName=cnstHhMemo]').textbox('getValue');
+			var cateTpCd 	   = $('#saveCnstFrm select[textboxName=cateTpCd]').combobox('getValue');
+			var cateTpVal 	   = $('#saveCnstFrm select[textboxName=cateTpVal]').combobox('getValue');
 			var dosgTpCd 	   = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
+			var dosgTpVal 	   = $('#saveCnstFrm select[textboxName=dosgTpVal]').combobox('getValue');
 			var payTpCd 	   = $('#saveCnstFrm select[textboxName=payTpCd]').combobox('getValue');
 			var dlvDt 		   = $('#saveCnstFrm input[textboxName=dlvDt]').datebox('getValue');
 			if( $isEmpty(selectedCnstId) ) {
@@ -679,7 +685,10 @@ $( document ).ready( function() {
 					"startDosgDt" 	: startDosgDt,
 					"cnstHhCd"		: cnstHhCd,
 					"cnstHhMemo"	: cnstHhMemo,
+					"cateTpCd"		: cateTpCd,
+					"cateTpVal"		: cateTpVal,
 					"dosgTpCd"		: dosgTpCd,
+					"dosgTpVal"		: dosgTpVal,
 					"payTpCd" 		: payTpCd,
 					"dlvDt" 		: moment(dlvDt).format("YYYYMMDD"),
 					"srvChartList" 	: cnstPaperList
@@ -743,9 +752,9 @@ $( document ).ready( function() {
 			var selectedCnstId = $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 			var cnstDesc = $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
-			var picUsrNoVal = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
+			var picUsrNoNm = $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
 			var pic2UsrNo = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
-			var pic2UsrNoVal = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			var pic2UsrNoNm = $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
 			var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
 			var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
 			var startDosgDt = $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
