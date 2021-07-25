@@ -79,6 +79,52 @@
 						</div>
 					</div>
 					<div class="row m-2">
+						<div class="col-4">
+							<select name="cateTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
+								data-options="
+							   		label:'감량/요요',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+								<option value="">선택</option>
+								<option th:each="data, index : ${cateTpCdList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
+							</select>
+						</div>
+						<div class="col-2">
+							<select name="cateTpVal" class="easyui-combobox" style="width: 100%; text-align: center;"
+								data-options="
+							   		panelHeight:'auto'">
+								<option value="">선택</option>
+								<option th:each="data, index : ${cateTpValList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
+							</select>
+						</div>
+						<div class="col-4">
+							<select name="dosgTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
+								data-options="
+							   		label:'감량종류',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+								<option value="">선택</option>
+								<option th:each="data, index : ${dosgTpCdList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
+							</select>
+						</div>
+						<div class="col-2">
+							<select name="dosgTpVal" class="easyui-combobox" style="width: 100%; text-align: center;"
+								data-options="
+							   		panelHeight:'auto'">
+								<option value="">선택</option>
+								<option th:each="data, index : ${dosgTpValList}"
+									th:value="${data?.ditcCd}" 
+									th:text="${data?.ditcNm}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="row m-2">
 						<div class="col-6">
 							<select name="cnstHhCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
@@ -93,24 +139,8 @@
 							</select>
 						</div>
 						<div class="col-6">
-							<select name="dosgTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
-								data-options="
-							   		label:'복용유형',
-							   		labelPosition:'left',
-							   		panelHeight:'auto'">
-								<option value="">선택</option>
-								<option th:each="data, index : ${dosgTpCdList}"
-									th:value="${data?.ditcCd}" 
-									th:text="${data?.ditcNm}"></option>
-							</select>
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-12">
 							<input name="cnstHhMemo" class="easyui-textbox" style="width: 100%;"
-								data-options="
-							   		label:'상담시간메모',
-							   		labelPosition:'left'">
+								data-options="prompt:'상담시간메모'">
 						</div>
 					</div>
 					<div class="row m-2">

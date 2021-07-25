@@ -195,8 +195,17 @@ public class CustomerController {
         //상담가능시간 코드
         List<TbCommCodeVo> cnstHhList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1019", "Y"));
         
-        //복용유형 코드
-        List<TbCommCodeVo> dosgTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1018", "Y"));
+        //감량/요요 코드
+        List<TbCommCodeVo> cateTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1023", "Y"));
+
+        //감량/요요 값
+        List<TbCommCodeVo> cateTpValList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1025", "Y"));
+
+        //감량종류 코드
+        List<TbCommCodeVo> dosgTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1024", "Y"));
+        
+        //감량종류 값
+        List<TbCommCodeVo> dosgTpValList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1026", "Y"));
         
         //복용여부 코드
         List<TbCommCodeVo> dosgYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1017", "Y"));
@@ -228,7 +237,10 @@ public class CustomerController {
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);
+        model.addAttribute("cateTpCdList", cateTpCdList);
+        model.addAttribute("cateTpValList", cateTpValList);
         model.addAttribute("dosgTpCdList", dosgTpCdList);
+        model.addAttribute("dosgTpValList", dosgTpValList);
         model.addAttribute("dosgYnList", dosgYnList);
         model.addAttribute("callYnList", callYnList);
         model.addAttribute("pausYnList", pausYnList);
