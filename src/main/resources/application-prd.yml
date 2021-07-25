@@ -15,7 +15,7 @@ logging:
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb-live-chorok.cqxvmdetneem.ap-northeast-2.rds.amazonaws.com:3306/chorokdb
+    url: jdbc:log4jdbc:mariadb://mariadb-live-chorok.cqxvmdetneem.ap-northeast-2.rds.amazonaws.com:3306/chorokdb
     username: chorokadm
     password: Tower@545271   
 #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
