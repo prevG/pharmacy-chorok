@@ -192,6 +192,11 @@ public class ChartService {
 	public int updateTbPpCnstChart(TbPpCnstChart inCnstChart) throws Exception {
 		return consultingRepo.updateTbPpCnstChart(inCnstChart);
 	}
+    
+    @Transactional
+    public int updateTbPpCnstChartWithDosgChart(TbPpCnstChart inCnstChart) {
+    	return consultingRepo.updateTbPpCnstChartWithDosgChart(inCnstChart);
+    }
 	
 }
 

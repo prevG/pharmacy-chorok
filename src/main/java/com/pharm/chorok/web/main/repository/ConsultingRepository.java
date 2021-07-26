@@ -21,4 +21,5 @@ public interface ConsultingRepository {
     public int deleteTbPpCnstChart( TbPpCnstChart cnstInfo ) throws Exception;
     
     public long selectTbPpCnstChartPrevCnstId(TbPpCnstChart cnstInfo) throws DataAccessException;
+	public int updateTbPpCnstChartWithDosgChart(TbPpCnstChart inCnstChart);
 }

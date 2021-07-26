@@ -111,18 +111,32 @@ public class ChartApi {
     @ResponseBody
 	public ResponseEntity<ResponseMessage> createDosgChart_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
     	Assert.isTrue(pageCriteria.getCriteria().getCnstId() > 0, "상담번호가 존재하지 않습니다.");
-    	Assert.hasLength(pageCriteria.getCriteria().getDosgTpCd(), "복용유형을 선택하세요.");
+    	Assert.hasLength(pageCriteria.getCriteria().getCateTpCd(), "감량/요요 유형을 선택하세요.");
+    	Assert.hasLength(pageCriteria.getCriteria().getDosgTpCd(), "감량종류 유형을 선택하세요.");
     	Assert.hasLength(pageCriteria.getCriteria().getStartDosgDt(), "복용시작일자를 선택하세요.");
     	
-    	//상담정보 저장
-    	chartSvc.updateTbPpCnstChart(pageCriteria.getCriteria());
+    	//상담정보 저장 (복용차트 생성시 필요한 상담차트 정보만 저장)
+    	chartSvc.updateTbPpCnstChartWithDosgChart(pageCriteria.getCriteria());
     	//복용차트 생성
     	dosingSvc.createDosingChartByCnstId( pageCriteria.getCriteria() );
     	
     	return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 복용차트가 생성 되었습니다."), HttpStatus.OK );
 	}
     
+    @PostMapping("/removeDosingChart_2")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> removeDosgChart_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
+    	Assert.isTrue(pageCriteria.getCriteria().getCnstId() > 0, "상담번호가 존재하지 않습니다.");
+    	
+    	//복용차트 생성
+    	dosingSvc.deleteDosingChartByCnstId( pageCriteria.getCriteria() );
+    	
+    	return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 복용차트가 삭제 되었습니다."), HttpStatus.OK );
+    }
+    
     /**
+     * @deprecated /saveCnstChart_2 함수로 대체함.
+     * 
      * 상담정보 수정
      * 
      * @param inCnstChart

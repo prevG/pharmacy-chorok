@@ -147,6 +147,17 @@
 		   , DLV_DT   	   = #{dlvDt}
 	 WHERE CNST_ID = #{cnstId}
 	</update>
+	
+	<update id="updateTbPpCnstChartWithDosgChart">
+	/** com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChartWithDosgChart */
+	UPDATE TB_PP_CNST_CHART
+	   SET START_DOSG_DT 	= CASE WHEN #{startDosgDt} = '' THEN NULL ELSE #{startDosgDt} END
+		   , CATE_TP_CD    	= #{cateTpCd}
+		   , CATE_TP_VAL   	= #{cateTpVal}
+		   , DOSG_TP_CD    	= #{dosgTpCd}
+		   , DOSG_TP_VAL   	= #{dosgTpVal}
+	 WHERE CNST_ID = #{cnstId}
+	</update>
 
 	<delete id="deleteTbPpCnstChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    

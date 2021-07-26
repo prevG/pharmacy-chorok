@@ -15,6 +15,7 @@ public class TbPpDosgChart extends TbCommColumn {
     private String callYn;
     private String pausYn;
     private String dosgYn;
+    private String mealTpCd;
     private float currWgt;
     private float lossWgt;
     private float rmiWgt;

@@ -25,4 +25,6 @@ public interface DosingRepository {
     public List<ResultDashBoard01VO> selectDashDosingList01() throws Exception;
     public List<ResultDashBoard01VO> selectDashDosingList02() throws Exception;
     public List<ResultDashBoard01VO> selectDashDosingList03() throws Exception;
+    
+    public int initTbPpDosgChart(TbPpDosgChart dosgChart);
 }

@@ -210,6 +210,9 @@ public class CustomerController {
         //복용여부 코드
         List<TbCommCodeVo> dosgYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1017", "Y"));
         
+        //식사 코드
+        List<TbCommCodeVo> mealTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1027", "Y"));
+        
         //상담예약 코드
         List<TbCommCodeVo> callYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1016", "Y"));
 
@@ -242,6 +245,7 @@ public class CustomerController {
         model.addAttribute("dosgTpCdList", dosgTpCdList);
         model.addAttribute("dosgTpValList", dosgTpValList);
         model.addAttribute("dosgYnList", dosgYnList);
+        model.addAttribute("mealTpCdList", mealTpCdList);
         model.addAttribute("callYnList", callYnList);
         model.addAttribute("pausYnList", pausYnList);
         model.addAttribute("payTpCdList", payTpCdList);

@@ -21,6 +21,8 @@
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
          , PAUS_YN          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+         , MEAL_TP_CD          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT
@@ -53,6 +55,8 @@
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
          , PAUS_YN          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+         , MEAL_TP_CD          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
          , CURR_WGT    
          , LOSS_WGT     
          , RMI_WGT
@@ -129,6 +133,24 @@
 	]]>
     </select>
 
+	<insert id="initTbPpDosgChart">
+		INSERT INTO TB_PP_DOSG_CHART (
+			CNST_ID
+			, DOSG_SEQ
+			, DOSG_DT
+			, DOSG_LV_CD
+			, REG_DT
+			, REG_USR_NO
+		)
+		VALUES (
+			#{cnstId}
+			, #{dosgSeq}
+			, #{dosgDt}
+			, #{dosgLvCd}
+			, NOW()
+			, #{regUsrNo}
+		)
+	</insert>
 
     <insert id="insertTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
 	<![CDATA[    
@@ -193,6 +215,7 @@
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
          , PAUS_YN     = #{pausYn}
+         , MEAL_TP_CD  = #{mealTpCd}
          , CURR_WGT    = #{currWgt} 
          , LOSS_WGT    = #{lossWgt}
          , RMI_WGT     = #{rmiWgt}

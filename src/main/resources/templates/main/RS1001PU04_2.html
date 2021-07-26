@@ -233,6 +233,8 @@
 									   		parser:myparser">
 								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-2" style="width:120px;"
 								   data-options="iconCls:'icon-edit'">복용차트 생성</a>
+								<a href="javascript:void(0)" id="btnRemoveDosgChart" class="easyui-linkbutton ml-2" style="width:120px;"
+								   data-options="iconCls:'icon-cut'">복용차트 삭제</a>
 			 		 		</div>
 			 		 		<div class="col-md-2 d-flex justify-content-end">
 			 		 		</div>
@@ -248,27 +250,27 @@
 	</div>
 	
 	<!-- dosg dialog -->
-	<div id="dosgDlg" class="easyui-window" style="width:700px;min-height:430px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="dosgDlg" class="easyui-window" style="width:700px;min-height:470px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="dosgDlgFrm" name="dosgDlgFrm" method="post" novalidate>
 		<input type="hidden" class="textbox-value" name="dlg_dosgId">
 		<input type="hidden" class="textbox-value" name="dlg_dosgSeq">
 		<input type="hidden" class="textbox-value" name="dlg_dosgLvCd">
-		<div class="row">
-			<div class="col-md-4 p-2">
+		<div class="row p-1">
+			<div class="col-md-4">
 				<input name="dlg_dosgSeqStr" class="easyui-textbox" style="width: 100%;text-align: center;"
 					   data-options="label:'일수 *',labelWidth:80,required:true,readonly:true">
 			</div>
-			<div class="col-md-4 p-2">
+			<div class="col-md-4">
 				<input name="dlg_dosgLvCdNm" class="easyui-textbox" style="width: 100%;text-align: center;"
 					   data-options="label:'복용단계 *',labelWidth:80,required:true,readonly:true" >
 			</div>
-			<div class="col-md-4 p-2">
+			<div class="col-md-4">
 				<input name="dlg_dosgDt" class="easyui-datebox" style="width: 100%;text-align: center;"
 					   data-options="label:'복용일자',labelWidth:80,required:true,formatter:myformatter,parser:myparser">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-4 p-2">
+		<div class="row p-1">
+			<div class="col-md-4">
 				<select name="dlg_callYn" class="easyui-combobox" style="width: 100%;text-align: center;"
 					    data-options="label:'상담예약',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
@@ -277,16 +279,7 @@
 							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
-			<div class="col-md-4 p-2">
-				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-						data-options="label:'복용여부',labelWidth:80,panelHeight:'auto'">
-					<option value="">선택</option>
-					<option th:each="data, index : ${dosgYnList}"
-							th:value="${data?.ditcCd}" 
-							th:text="${data?.ditcNm}"></option>
-				</select>
-			</div>
-			<div class="col-md-4 p-2">
+			<div class="col-md-4">
 				<select name="dlg_pausYn" class="easyui-combobox" style="width: 100%;text-align: center;"
 						data-options="label:'통화여부',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
@@ -295,16 +288,40 @@
 							th:text="${data?.ditcNm}"></option>
 				</select>
 			</div>
+			<div class="col-md-4">
+			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-4 p-2">
+		<div class="row p-1">
+			<div class="col-md-4">
+				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
+						data-options="label:'복용식사',labelWidth:80,panelHeight:'auto'">
+					<option value="">선택</option>
+					<option th:each="data, index : ${dosgYnList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
+				</select>
+			</div>
+			<div class="col-md-4">
+				<select name="dlg_mealTpCd" class="easyui-combobox" style="width: 100%;text-align: center;"
+						data-options="label:'식사',labelWidth:80,panelHeight:'auto'">
+					<option value="">선택</option>
+					<option th:each="data, index : ${mealTpCdList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
+				</select>
+			</div>
+			<div class="col-md-4">
+			</div>
+		</div>
+		<div class="row p-1">
+			<div class="col-md-4">
 				<input name="dlg_currWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
 					   data-options="label:'현재체중',
 					   				labelWidth:80,
 									precision:2,
 									groupSeparator:',',">
 			</div>
-			<div class="col-md-4 p-2">
+			<div class="col-md-4">
 				<input name="dlg_lossWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
 					   data-options="label:'감량체중',
 					   				labelWidth:80,
@@ -312,7 +329,7 @@
 									precision:2,
 									groupSeparator:','">
 			</div>
-			<div class="col-md-4 p-2">
+			<div class="col-md-4">
 				<input name="dlg_rmiWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
 					   data-options="label:'남은체중',
 					   				labelWidth:80,
@@ -321,20 +338,20 @@
 					   				groupSeparator:','">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12 p-2">
-				<input name="dlg_dosgDesc1" class="easyui-textbox" style="width: 100%;height:80px"
+		<div class="row p-1">
+			<div class="col-md-12">
+				<input name="dlg_dosgDesc1" class="easyui-textbox" style="width: 100%;height:100px"
 					   data-options="label:'몸상태',labelWidth:80,multiline:true">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12 p-2">
-				<input name="dlg_dosgDesc2" class="easyui-textbox" style="width: 100%;height:80px"
+		<div class="row p-1">
+			<div class="col-md-12">
+				<input name="dlg_dosgDesc2" class="easyui-textbox" style="width: 100%;height:100px"
 					   data-options="label:'약반응',labelWidth:80,multiline:true">
 			</div>
 		</div>
 		</form>
-		<div class="row py-2">
+		<div class="row py-1">
 			<div class="col-12 d-flex justify-content-end">
 				<a href="javascript:void(0)" id="btnSaveDosgChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">저장</a>
 				<a href="javascript:void(0)" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#dosgDlg').dialog('close');">닫기</a>
