@@ -144,6 +144,7 @@ $(document).ready(function() {
 					return;	
 				}
 	
+				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
@@ -154,6 +155,7 @@ $(document).ready(function() {
 		     * "추가 버튼" 클릭시
 		     **************************************************************/
 		    $(document).off("click", "#btnAddUserPop").on("click", "#btnAddUserPop", function (e) {
+		    	$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/admin/AD1003MV_D/0", function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
@@ -178,7 +180,8 @@ $(document).ready(function() {
 					$.messager.confirm('사용자 관리', '사용자 목록에서 항목을 선택해 주세요');
 					return;	
 				}
-	
+				
+				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/admin/AD1003MV_D/"+ row.custId, function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');

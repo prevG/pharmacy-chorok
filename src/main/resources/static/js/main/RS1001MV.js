@@ -352,6 +352,8 @@ $(document).ready(function () {
                 var params = {
                     "rsvtId": rsvtId
                 };
+                
+                $("#custDlg").remove(); // need to clear...
                 $("#custDlgWrap").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');

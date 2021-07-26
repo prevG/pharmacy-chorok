@@ -149,7 +149,8 @@ $(document).ready(function() {
 					$.messager.confirm('고객목록', '고객목록에서 고객을 선택해 주세요');
 					return;	
 				}
-	
+				
+				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/customer/CUS1001ML_D/"+ row.custId +"/0", function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
@@ -161,6 +162,7 @@ $(document).ready(function() {
 		     **************************************************************/
 			$(document).off("click", "#btnNewCustPop").on("click", "#btnNewCustPop", function (e) {
 				
+				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/customer/CUS1001ML_D/0/0", function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
 					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
