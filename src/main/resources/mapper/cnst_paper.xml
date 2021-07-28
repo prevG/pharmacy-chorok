@@ -62,13 +62,13 @@
 	 WHERE A.CNST_ID = #{cnstId}
 	   AND B.USE_YN  = 'Y'
 	 ORDER
-        BY A.CNST_PAPER_NUM
+        BY B.DISP_ORD
 	]]>
 	</select>
 
 	<insert id="insertTbPpSrvChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstPaper">
 	<![CDATA[    
-		/** com.pharm.chorok.web.main.repository.CnstPaperRepository.selectSurveyChartByCnstId */
+		/** com.pharm.chorok.web.main.repository.CnstPaperRepository.insertTbPpSrvChart */
 		INSERT INTO TB_PP_SRV_CHART
 		(
 		 	CNST_ID,
