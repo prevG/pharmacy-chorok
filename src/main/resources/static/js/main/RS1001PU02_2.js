@@ -610,9 +610,13 @@ $( document ).ready( function() {
 									
 						//화면 그린후에 textarea dp 
 						$("#cnstPaper textarea").on('keydown keyup', function ( e ) {
-							$(this).height(1).height( $(this).prop('scrollHeight') );
+							$(this).height(1).height( $(this).prop('scrollHeight') );	
+							
+							//RS1001PU02.textareaAutoHeight( $(this) );
 						});
-  						$("#cnstPaper textarea").keyup();
+						setTimeout(function() {
+							$("#cnstPaper textarea").keyup();
+						}, 1000);
 
 					} else {
 						$.messager.alert('Error', res.message);

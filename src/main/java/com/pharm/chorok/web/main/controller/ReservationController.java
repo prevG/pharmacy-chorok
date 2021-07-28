@@ -395,7 +395,7 @@ public class ReservationController {
 						+ "  <th scope=\"row\" class=\"align-middle\">"+ (i+1) +"</th>\n"
 						+ "    <td class=\"align-middle\">"+ vo.getQuestText() +"</td>\n"
 						+ "    <td data-el=\""+ vo.getExamCd() +"\" data-nm=\""+ vo.getId() +"\" data-ver=\""+ vo.getCnstVer() +"\" data-num=\""+ vo.getNum() +"\" data-attr=\""+ vo.getRefAttrCd() +"\" data-type=\""+ vo.getDataType() +"\">\n"
-					    + "      <textarea name=\""+ vo.getId() +"\" maxlength=\"1000\" style=\"border-color:#868388;width:100%;min-height:44px;overflow:visible;\" placeholder=\""+ vo.getPlaceholder() +"\">"+ vo.getCnstPaperVal() +"</textarea>\n"
+					    + "      <textarea name=\""+ vo.getId() +"\" maxlength=\"1000\" style=\"border-color:#868388;width:100%;min-height:44px;\" placeholder=\""+ vo.getPlaceholder() +"\">"+ vo.getCnstPaperVal() +"</textarea>\n"
 						+ "    </td>\n"
 						+ "  </tr>\n";
 			}
