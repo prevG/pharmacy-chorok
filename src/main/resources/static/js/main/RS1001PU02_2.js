@@ -449,7 +449,6 @@ $( document ).ready( function() {
 					RS1001PU02.saveDosingChart();
 				//});
 			});
-
 		},
 		saveCust: function() {
 			var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
@@ -608,6 +607,13 @@ $( document ).ready( function() {
 						});
 						$('#cnstPaper').html(html);
 						$.parser.parse($('#cnstPaper'));
+									
+						//화면 그린후에 textarea dp 
+						$("#cnstPaper textarea").on('keydown keyup', function ( e ) {
+							$(this).height(1).height( $(this).prop('scrollHeight') );
+						});
+  						$("#cnstPaper textarea").keyup();
+
 					} else {
 						$.messager.alert('Error', res.message);
 						return;
@@ -659,6 +665,8 @@ $( document ).ready( function() {
 				var cnstPaperVal = "";
 				if (cnstPaperKind === "TEXT") {
 					cnstPaperVal = paperObj.find("input[type='text']").val();
+				} else if (cnstPaperKind === "TEXTAREA") {
+					cnstPaperVal = paperObj.find("TEXTAREA").val();
 				} else if (cnstPaperKind === "CHECK") {
 					var len = paperObj.find("input[type='checkbox']").length;
 					var c = 0;
@@ -940,6 +948,14 @@ $( document ).ready( function() {
 				}
 			});
 		}
+		,textareaAutoHeight : function(textEle) {
+			textEle.css("height", 'auto');
+			var textEleHeight = textEle.prop('scrollHeight');
+			textEle.css('height', textEleHeight);
+		}
+
+
+
 	};
 	
 	// init
