@@ -80,7 +80,7 @@ public class DosingChartService {
 					TbPpDosgChart dosgChart = new TbPpDosgChart();
 					dosgChart.setCnstId(inCnstParam.getCnstId());
 					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
 					dosgChartList.add(dosgChart);
 				}
@@ -90,7 +90,7 @@ public class DosingChartService {
 					TbPpDosgChart dosgChart = new TbPpDosgChart();
 					dosgChart.setCnstId(inCnstParam.getCnstId());
 					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
 					dosgChartList.add(dosgChart);
 				}
@@ -100,7 +100,7 @@ public class DosingChartService {
 					TbPpDosgChart dosgChart = new TbPpDosgChart();
 					dosgChart.setCnstId(inCnstParam.getCnstId());
 					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
 					dosgChartList.add(dosgChart);
     			}
