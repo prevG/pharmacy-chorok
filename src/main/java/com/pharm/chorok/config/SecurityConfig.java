@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/vendor/**", "/webjars/**", "/adminlte/**", "/easyui/**", "/example/**");	
+		web.ignoring().antMatchers( "/css/**", "/js/**", "/img/**", "/vendor/**", "/webjars/**", "/adminlte/**", "/easyui/**", "/example/**");	
 	}
 	
 	/*
@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
 			.authorizeRequests()
+            	.antMatchers( "/favicon.ico").permitAll()
 				.antMatchers("/account/**").permitAll()
 				.antMatchers("/customer/**").permitAll()
 				.anyRequest().authenticated()
