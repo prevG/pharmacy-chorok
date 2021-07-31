@@ -71,7 +71,11 @@ public class CustomerService {
      */
 	@Transactional
 	public int saveCustomer_2(TbCustomer custInfo) throws Exception {
-		return  customerRepo.updateTbCustomer( custInfo );
+		int result = customerRepo.updateTbCustomer( custInfo );
+		for (ResultRcmdVo rcmdVo : custInfo.getRcmdMilgList()) {
+			customerRepo.updateRcmdMilgYn(rcmdVo);
+		}
+		return result;
 	}
 
 	public TbCustomer findCustomerByCustIdOrRsvtId(TbCustomer custParam, TbPpRsvtSch rsvtParam) throws Exception {

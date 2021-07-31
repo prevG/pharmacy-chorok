@@ -59,8 +59,9 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
+         , RCMD_MILG_YN
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = #{custId}) AS RCMD_CNT
-         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = #{custId}) * 100 AS MILEAGE
+         , MILEAGE
       FROM TB_CUSTOMER
      WHERE CUST_ID = #{custId}
 	]]>
@@ -93,8 +94,9 @@
          , CUST.RCMD_CUST_ID
          , CUST.RCMD_CUST_NM
          , CUST.RCMD_CELL_NO
+         , CUST.RCMD_MILG_YN
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = CUST.CUST_ID) AS RCMD_CNT
-         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = CUST.CUST_ID) * 100 AS MILEAGE
+         , CUST.MILEAGE
       FROM TB_CUSTOMER CUST
       LEFT OUTER JOIN
            TB_PP_RSVT_SCH RSVT
@@ -193,20 +195,21 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
+         , RCMD_MILG_YN
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_NM
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = MRG_YN AND USE_YN = 'Y') AS MRG_YN_NM
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = A.CUST_ID) AS RCMD_CNT
-         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = A.CUST_ID) * 100 AS MILEAGE
+         , MILEAGE
       FROM TB_CUSTOMER A
      WHERE 1 = 1
     ]]>
-    <if test="delYn !=null and !''.equals(delYn)">
+    <if test="delYn != null and !''.equals(delYn)">
        AND DEL_YN = #{delYn}
     </if>
-    <if test="custUsrNm !=null and !''.equals(custUsrNm)">
+    <if test="custUsrNm != null and !''.equals(custUsrNm)">
        AND CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
     </if>
-    <if test="custCellNo !=null and !''.equals(custCellNo)">
+    <if test="custCellNo != null and !''.equals(custCellNo)">
        AND CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%')
     </if>
 	<![CDATA[    
@@ -218,7 +221,9 @@
 	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.ResultRcmdVo">
 		SELECT CUST_ID
 			  , CUST_USR_NM
-			  , CUST_CELL_NO 
+			  , CUST_CELL_NO
+			  , RCMD_CUST_ID
+			  , RCMD_MILG_YN 
 		FROM TB_CUSTOMER A
 		WHERE RCMD_CUST_ID = #{custId}
      	ORDER
@@ -249,6 +254,7 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
+         , MILEAGE
     ) VALUES (
            #{custId}
          , #{custUsrNm}
@@ -271,6 +277,7 @@
          , #{rcmdCustId}
          , #{rcmdCustNm}
          , #{rcmdCellNo}
+         , #{mileage}
     )
 	]]>
 	</insert>
@@ -298,7 +305,15 @@
          , RCMD_CUST_ID    = #{rcmdCustId}
          , RCMD_CUST_NM    = #{rcmdCustNm}
          , RCMD_CELL_NO    = #{rcmdCellNo}
+         , MILEAGE		   = #{mileage}
      WHERE CUST_ID = #{custId}
 	]]>
+	</update>
+	
+	<update id="updateRcmdMilgYn">
+		UPDATE TB_CUSTOMER
+		SET RCMD_MILG_YN = #{rcmdMilgYn}
+		WHERE CUST_ID = #{custId}
+		AND RCMD_CUST_ID = #{rcmdCustId}
 	</update>
 </mapper>

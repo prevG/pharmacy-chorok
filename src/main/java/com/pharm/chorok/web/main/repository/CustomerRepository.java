@@ -29,5 +29,6 @@ public interface CustomerRepository {
     public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
 	
     public List<ResultRcmdVo> findRcmdListByCustId(long custId);
+	public void updateRcmdMilgYn(ResultRcmdVo rcmdVo);
 
 }

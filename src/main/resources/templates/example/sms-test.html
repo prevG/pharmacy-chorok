@@ -15,11 +15,11 @@
 <script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
 <script type="text/javascript">
 $(function() {
-	$('#sendSms').click(function(e) {
+	$('#sendSms1').click(function(e) {
 		var appKey = "0rhL2B2YO15WTOXr"; //앱키
 		var formData = {
 			body : "문자보내기 테스트111",
-			sendNo : "01035693756",
+			sendNo : "01030038397",
 			recipientList:[
 				{
 				   "recipientNo" : "01035693756",
@@ -44,6 +44,27 @@ $(function() {
 			}
 		});
 	});
+	
+	$('#sendSms2').click(function(e) {
+		var xhr = new XMLHttpRequest();
+	    // var formData = new FormData();
+	    // formData.append('body', '문자보내기 테스트');
+	    // formData.append('sendNo', '01038252547');
+	    xhr.onload = function() {
+	      if (xhr.status === 200 || xhr.status === 201) {
+	        console.log(xhr.responseText);
+	      } else {
+	        console.error(xhr.responseText);
+	      }
+	    };
+	    var appKey = "0rhL2B2YO15WTOXr"; //앱키
+	    var body = "문자보내기 테스트";
+	    var sendNo = "01030038397";
+	    var recipientNo = '01035693756';
+	    xhr.open("POST", "https://api-sms.cloud.toast.com/sms/v2.4/appKeys/" + appKey + "/sender/sms?startRequestDate=2021-04-14 23:08:00&endRequestDate=2021-04-14 23:08:00");
+	    xhr.withCredentials = true;
+	    xhr.send("{\"body\":\"" + body + "\", \"sendNo\":\"" + sendNo + "\", \"recipientList\":[{\"recipientNo\":\"" + recipientNo + "\"}]}");
+	});
 });
 </script>
 </head>
@@ -60,8 +81,9 @@ $(function() {
 					   data-options="label:'Name:',required:true"></input>
 			</div>
 		</form>
-		<div>
-			<a href="javascript:void(0)" id="sendSms" class="easyui-linkbutton">Send SMS</a>
+		<div style="margin-top: 10px;">
+			<a href="javascript:void(0)" id="sendSms1" class="easyui-linkbutton">SMS - 1</a>
+			<a href="javascript:void(0)" id="sendSms2" class="easyui-linkbutton ml-2">SMS - 2</a>
 		</div>
 	</div>
 </body>

@@ -19,10 +19,10 @@ import net.minidev.json.JSONObject;
 
 @Component
 public class SMSComponent {
-	static final String apiKey = "0rhL2B2YO15WTOXr";
+	static final String apiKey = "4PbyZIDlDUSx4SsL";
 	static final String hostNameUrl = "https://api-sms.cloud.toast.com";
 	static final String method = "POST";
-	static final String sendNo = "01038252547";
+	static final String sendNo = "01035693756";
 	public static enum MESSAGETYPE{
 		SMSTYPE,
 		MMSTYPE,
@@ -51,12 +51,12 @@ public class SMSComponent {
 		    JSONArray  toArr = new JSONArray();
 
 		    bodyJson.put("sendNo",sendNo);
-			bodyJson.put("body","sms");
+			bodyJson.put("body","sms1234");
 			//bodyJson.put("senderGroupingKey","senderGroupingKey");
 			
 			
 		    //곽경준전화번호(받는사람)
-		    toJson.put("recipientNo","01030038397");
+		    toJson.put("recipientNo","01035693756");
 		    //toJson.put("recipientGroupingKey","recipientGroupingKey");
 		    toArr.add(toJson);
 		    //받는사람
@@ -126,7 +126,7 @@ public class SMSComponent {
 						
 		    
 		    //곽경준전화번호(받는사람)
-		    toJson.put("recipientNo","01030038397");			
+		    toJson.put("recipientNo","01035693756");			
 		    toArr.add(toJson);
 		    
 			//받는사람

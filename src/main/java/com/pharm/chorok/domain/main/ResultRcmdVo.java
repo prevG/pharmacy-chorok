@@ -11,4 +11,8 @@ public class ResultRcmdVo {
 	
 	private String custCellNo;
 	
+	private long rcmdCustId;
+	
+	private String rcmdMilgYn;
+	
 }

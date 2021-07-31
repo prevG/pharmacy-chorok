@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div id="customer-table" th:fragment="customer-table">
+<div id="customer-table" th:fragment="customer-table"
+	th:with="
+		birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
+		thisYear=${#dates.year(#dates.createNow()) + 1}
+	">
 	<div class="row">
 		<div class="col-12 d-flex justify-content-end">
 			<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">고객정보 저장</a>
@@ -83,6 +87,15 @@
 							</div>
 						</div>
 					</div>
+					<div class="row m-2">
+						<div class="col-6">
+							<input name="dlg_custAge" class="easyui-textbox" style="width: 100%;text-align: center;"
+								   data-options="label:'나이',labelWidth:110,readonly:true"
+								   th:value="${birthYear} gt 0 and ${thisYear} gt ${birthYear} ? ${thisYear} - ${birthYear} : ''">
+						</div>
+						<div class="col-6">
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row p-1">
@@ -98,7 +111,7 @@
 				</div>
 			</div>
 			<div class="row p-1">
-				<div class="easyui-panel" title="추천인정보" style="width: 100%;min-height: 120px;"
+				<div class="easyui-panel" title="추천인정보 (나를 추천한 사람)" style="width: 100%;min-height: 120px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
@@ -223,17 +236,41 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-8">
-							<ul class="easyui-datalist" title="추천인 목록" style="width: 100%;height: 150px;"
-								data-options="lines:true">
-								<li th:each="data, index : ${rcmdList}"
-									th:value="${data?.custId}" 
-									th:text="${data?.custUsrNm +' / '+ data?.custCellNo}"></li>
-							</ul>
+							<div class="easyui-panel" title="추천인 목록 (내가 추천한 사람)" style="width: 100%;min-height: 150px;">
+								<table class="table table-bordered table-sm">
+									<thead class="thead-light">
+										<tr>
+											<th scope="col" class="col-4">고개이름</th>
+											<th scope="col" class="col-5">휴대폰번호</th>
+											<th scope="col" class="col-3">마일리지 적용여부</th>
+										</tr>
+									</thead>
+									<tbody id="rcmdIds">
+										<tr th:each="data, index : ${rcmdList}">
+											<th scope="row" class="col-4" th:text="${data?.custUsrNm}"></th>
+											<td class="col-5" th:text="${data?.custCellNo}"></td>
+											<td class="col-3" style="text-align: center;">
+												<input class="easyui-checkbox" name="dlg_rcmdYn[]" th:value="${data?.custId}"
+													th:checked="${data?.rcmdMilgYn} eq 'Y'">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="col-4">
-							<input name="dlg_rcmdCellNo11" class="easyui-textbox" style="width: 100%;text-align: center;"
-								   data-options="label:'점수',labelWidth:110,readonly:true"
-								   th:value="${custInfo?.mileage}">
+							<div class="row">
+								<div class="col-12">
+									<a href="javascript:void(0)" id="btnCalcMileage" class="easyui-linkbutton c2" style="width: 100%;">마일리지 다시계산</a>
+								</div>
+							</div>
+							<div class="row pt-2">
+								<div class="col-12">
+									<input name="dlg_mileage" class="easyui-numberbox" style="width: 100%;text-align: center;"
+										   data-options="label:'마일리지 점수',labelWidth:110"
+										   th:value="${custInfo?.mileage}">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
