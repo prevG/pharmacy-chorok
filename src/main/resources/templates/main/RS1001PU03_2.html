@@ -89,9 +89,9 @@
 					</div>
 					<div class="row m-2">
 						<div class="col-6">
-							<input name="dlg_custAge" class="easyui-textbox" style="width: 100%;text-align: center;"
-								   data-options="label:'나이',labelWidth:110,readonly:true"
-								   th:value="${birthYear} gt 0 and ${thisYear} gt ${birthYear} ? ${thisYear} - ${birthYear} : ''">
+							<input name="dlg_custAge" class="easyui-numberbox" style="width: 100%;text-align: center;"
+								   data-options="label:'나이',labelWidth:110,validType:'length[0,3]'"
+								   th:value="${custInfo?.custAge}">
 						</div>
 						<div class="col-6">
 						</div>
@@ -242,7 +242,7 @@
 										<tr>
 											<th scope="col" class="col-4">고개이름</th>
 											<th scope="col" class="col-5">휴대폰번호</th>
-											<th scope="col" class="col-3">마일리지 적용여부</th>
+											<th scope="col" class="col-3">마일리지 사용여부</th>
 										</tr>
 									</thead>
 									<tbody id="rcmdIds">

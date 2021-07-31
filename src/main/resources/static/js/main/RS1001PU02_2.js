@@ -383,6 +383,7 @@ $( document ).ready( function() {
 		     **************************************************************/
 			$('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
 			$('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox('textbox').attr('maxlength', 4);
+			$('#saveCustFrm input[textboxName=dlg_custAge]').numberbox('textbox').attr('maxlength', 3);
 			$('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox({
 				onChange: function(value) {
 					var custAge;
@@ -505,7 +506,7 @@ $( document ).ready( function() {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
 				return;
 			}
-			// 추천인 마일리지 적용 목록
+			// 추천인 마일리지 사용 목록
 			var rcmdMilgList = [];
 			$('#rcmdIds').find('input[checkboxname="dlg_rcmdYn[]"]').each(function(index, item) {
 				var chkVal = 'N';
@@ -532,6 +533,7 @@ $( document ).ready( function() {
 						"custCellNo" 	: 	custCellNo,
 						"custBirthDt" 	: 	custBirthDt,
 						"custGenTpCd" 	: 	custGenTpCd,
+						"custAge" 		:   $('#saveCustFrm input[textboxName=dlg_custAge]').numberbox('getValue'),
 						"mrgYn" 		: 	$('#saveCustFrm input[name=dlg_mrgYn]:checked').val(),
 						"pcrtChdCnt" 	: 	$('#saveCustFrm select[textboxName=dlg_pcrtChdCnt]').combobox('getValue'),
 						"lstPcrtYear" 	: 	$('#saveCustFrm select[textboxName=dlg_lstPcrtYear]').combobox('getValue'),
@@ -589,13 +591,13 @@ $( document ).ready( function() {
 			$.messager.confirm('Confirm', '마일리지 점수를 다시 계산하시겠습니까?<br>마일리지 점수 변경 후에는 반드시 고객정보를 저장하셔야 합니다.', function(r) {
 				if (!r) return;
 				
-				var chkCnt = 0;
+				var mileageCnt = 0;
 				$('#rcmdIds').find('input[checkboxname="dlg_rcmdYn[]"]').each(function(index, item) {
-					if ($(item).checkbox('options').checked) {
-						chkCnt++;
+					if (!$(item).checkbox('options').checked) {
+						mileageCnt++;
 					}
 				});
-				$('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('setValue', chkCnt * 10);
+				$('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('setValue', mileageCnt * 10);
 			});
 		},
 		createCnstChart: function() {
