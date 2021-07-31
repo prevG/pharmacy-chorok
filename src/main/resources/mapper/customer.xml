@@ -122,6 +122,7 @@
                 WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
                 ELSE ''
            END AS CUST_GEN_TP_NM
+         , CASE WHEN LENGTH(CUST_BIRTH_DT) = 8 THEN YEAR(CURDATE()) - SUBSTRING(CUST_BIRTH_DT,1,4) + 1 END AS CUST_AGE
          , CCHART.*
          , CASE WHEN CCHART.CNST_HH_CD IS NULL THEN ''
                 WHEN CCHART.CNST_HH_CD = ''    THEN ''

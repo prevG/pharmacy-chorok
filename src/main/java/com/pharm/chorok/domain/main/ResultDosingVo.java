@@ -33,6 +33,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String custUsrNm;
     private String custCellNo;
     private String custId;
+    private int custAge;
     
     private String picUsrNm;
     private String pic2UsrNm;

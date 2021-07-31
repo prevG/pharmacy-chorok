@@ -32,7 +32,9 @@ $( document ).ready( function() {
 		        	},
 		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox'},
 		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '80'},
-		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '60'},
+		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '60',
+		            	formatter: function(value, row) { return value > 0 ? value : ''; }
+		            },
 		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '80' },
 		            {field: 'dosgDt'     , title: '복용일자'    , align: 'center', width: '80' },
 		            {field: 'cateTpNm'	 , title: '감량/요요'   , align: 'center', width: '110',
