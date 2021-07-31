@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <!--로그 파일 저장 위치-->
-    <property name="LOGS_PATH" value="./../logs/chorok-crm"/>
+    <property name="LOGS_PATH" value="./logs/chorok-crm"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -50,7 +49,7 @@
     <logger name="jdbc.audit" level="OFF"/> 
     <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. --> 
     <logger name="jdbc.resultset" level="OFF"/> <!-- SQL 결과 조회된 데이터의 table을 로그로 남긴다. --> 
-    <logger name="jdbc.resultsettable" level="OFF" />
+    <logger name="jdbc.resultsettable" level="DEBUG" />
 
     
 </configuration>
