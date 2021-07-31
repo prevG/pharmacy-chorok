@@ -126,11 +126,6 @@ $(document).ready(function() {
 			$('#custCellNo').numberbox('textbox').bind('keydown', function(e) {
 				if (e.keyCode === 13) CUS1001ML.search();
 			});
-			$("#custDlg").dialog({
-				onClose: function() {
-					CUS1001ML.search();
-				}
-			});
 			
 			/**************************************************************
 		     * "검색" 클릭시
@@ -153,7 +148,12 @@ $(document).ready(function() {
 				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/customer/CUS1001ML_D/"+ row.custId +"/0", function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
-					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
+					$('#custDlg').window({
+						onBeforeClose: function() { CUS1001ML.search(); }
+					})
+					.window('open')
+					.window('center')
+					.window('setTitle', '고객상담정보');
 		        });
 			});
 			
@@ -165,7 +165,12 @@ $(document).ready(function() {
 				$("#custDlg").remove(); // need to clear...
 				$("#custDlgWrap").load("/customer/CUS1001ML_D/0/0", function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
-					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
+					$('#custDlg').window({
+						onBeforeClose: function() { CUS1001ML.search(); }
+					})
+					.window('open')
+					.window('center')
+					.window('setTitle', '고객상담정보');
 		        });
 			});
 		},
