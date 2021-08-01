@@ -81,9 +81,9 @@
                 WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
            END AS CUST_CELL_NO
          , C.ADDR1
-      FROM bazzarmall.TB_PP_DOSG_CHART A
-         , bazzarmall.TB_PP_CNST_CHART B
-         , bazzarmall.TB_CUSTOMER C
+      FROM TB_PP_DOSG_CHART A
+         , TB_PP_CNST_CHART B
+         , TB_CUSTOMER C
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
        AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
@@ -100,9 +100,9 @@
                 WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
            END AS CUST_CELL_NO
          , C.ADDR1
-      FROM bazzarmall.TB_PP_DOSG_CHART A
-         , bazzarmall.TB_PP_CNST_CHART B
-         , bazzarmall.TB_CUSTOMER C
+      FROM TB_PP_DOSG_CHART A
+         , TB_PP_CNST_CHART B
+         , TB_CUSTOMER C
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
        AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
@@ -121,9 +121,9 @@
            END AS CUST_CELL_NO
          , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
          , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
-	  FROM bazzarmall.TB_PP_DOSG_CHART A
-         , bazzarmall.TB_PP_CNST_CHART B
-         , bazzarmall.TB_CUSTOMER C
+	  FROM TB_PP_DOSG_CHART A
+         , TB_PP_CNST_CHART B
+         , TB_CUSTOMER C
      WHERE A.CNST_ID = B.CNST_ID
        AND B.CUST_ID = C.CUST_ID
        AND A.PAUS_YN = 'Y'
@@ -185,7 +185,7 @@
             FROM (
                 SELECT CAL.*
                         , @ROWNUM := @ROWNUM + 1 AS ROWNUM
-                    FROM bazzarmall.TB_COMM_CALENDAR CAL
+                    FROM TB_COMM_CALENDAR CAL
                         , (SELECT @ROWNUM :=-1) TMP
                         , (SELECT STR_TO_DATE( #{startDosgDt}, '%Y-%m-%d') AS START_DOSING_DT) T
                     WHERE 1 = 1
