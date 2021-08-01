@@ -5,11 +5,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pharm.chorok.domain.entity.TbCommCode;
 import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.repository.TbCommCodeRepository;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpDosgChart;
 import com.pharm.chorok.web.main.repository.DosingRepository;
@@ -19,6 +22,9 @@ public class DosingChartService {
 
     @Autowired
     private DosingRepository dosingRepo;
+    
+    @Autowired
+    private TbCommCodeRepository tbCommCodeRepository;
 
     /**
      * 상담번호에 대한 복용차트 조회
@@ -59,52 +65,26 @@ public class DosingChartService {
      */
     @Transactional
     public int createDosingChartByCnstId( TbPpCnstChart inCnstParam ) throws Exception {
+    	List<TbCommCode> dosgTypeList = tbCommCodeRepository.findByTbCommCodePkGrpCdAndCdExpAndValueCd2OrderBySortNo(
+    			"C1014",
+    			inCnstParam.getCateTpCd(),
+    			String.valueOf(inCnstParam.getDosgTpVal())
+    			);
+
     	List<TbPpDosgChart> dosgChartList = new ArrayList<TbPpDosgChart>();
-    	LocalDate dosgDt = LocalDate.parse(inCnstParam.getStartDosgDt(), DateTimeFormatter.ISO_DATE); // yyyy-MM-dd
-    	int weekCnt = (inCnstParam.getCateTpCd().equals("3")) ? 6 : 4;
-    	int dayCnt = inCnstParam.getDosgTpVal();
-    	int dosgLv = 0;
-    	int dosgSeq = 1;
-    	for (int i = 0; i < weekCnt; i++) {
-    		if (i == 0) {
-    			// dosgLv = 0
-				TbPpDosgChart initChart = new TbPpDosgChart();
-				initChart.setCnstId(inCnstParam.getCnstId());
-				initChart.setDosgSeq(0);
-				initChart.setDosgDt(dosgDt.plusDays(-1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-				initChart.setDosgLvCd(String.valueOf(dosgLv));
-				dosgChartList.add(initChart);
-				// dosgLv = 1
-				dosgLv = 1;
-				for (int j = 0; j < dayCnt; j++) {
-					TbPpDosgChart dosgChart = new TbPpDosgChart();
-					dosgChart.setCnstId(inCnstParam.getCnstId());
-					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
-					dosgChartList.add(dosgChart);
-				}
-				// dosgLv = 2
-				dosgLv = 2;
-				for (int j = dayCnt; j < 7; j++) {
-					TbPpDosgChart dosgChart = new TbPpDosgChart();
-					dosgChart.setCnstId(inCnstParam.getCnstId());
-					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
-					dosgChartList.add(dosgChart);
-				}
-    		} else {
-    			dosgLv = dosgLv + 1;
-    			for (int j = 0; j < 7; j++) {
-					TbPpDosgChart dosgChart = new TbPpDosgChart();
-					dosgChart.setCnstId(inCnstParam.getCnstId());
-					dosgChart.setDosgSeq(dosgSeq++);
-					dosgChart.setDosgDt(dosgDt.plusDays(dosgSeq-2).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
-					dosgChart.setDosgLvCd(String.valueOf(dosgLv));
-					dosgChartList.add(dosgChart);
-    			}
-    		
+    	LocalDate startDosgDt = LocalDate.parse(inCnstParam.getStartDosgDt(), DateTimeFormatter.ISO_DATE).plusDays(-1); // yyyy-MM-dd
+    	int dosgSeq = 0;
+    	for (TbCommCode dosgTypeVo : dosgTypeList) {
+    		int dayCnt = StringUtils.isEmpty(dosgTypeVo.getValueCd()) ? 0 : Integer.valueOf(dosgTypeVo.getValueCd());
+    		for (int i = 0; i < dayCnt; i++) {
+    			TbPpDosgChart dosgChart = new TbPpDosgChart();
+    			dosgChart.setCnstId(inCnstParam.getCnstId());
+    			dosgChart.setDosgSeq(dosgSeq);
+    			dosgChart.setDosgDt(startDosgDt.plusDays(dosgSeq).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+    			dosgChart.setDosgLvCd(dosgTypeVo.getTbCommCodePk().getDitcCd());
+    			dosgChartList.add(dosgChart);
+    			
+    			dosgSeq = dosgSeq + 1;
     		}
     	}
     	

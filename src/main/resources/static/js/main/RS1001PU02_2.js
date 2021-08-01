@@ -75,6 +75,7 @@ $( document ).ready( function() {
 		        },
 		        onSelect: function(index, row) {
 					// 상담정보
+					$('#saveCnstFrm').form('clear');
 					$('#saveCnstFrm').form('load', {
 						selectedIndex	: index,
 						selectedCnstId 	: row.cnstId,
@@ -93,6 +94,7 @@ $( document ).ready( function() {
 						cnstDesc 		: row.cnstDesc
 					});
 					// 설문차트
+					$('#saveDosgFrm').form('clear');
 					$('#saveDosgFrm').form('load', {
 						orgWgt 			: row.orgWgt,
 						tgtWgt			: row.tgtWgt,
@@ -228,6 +230,7 @@ $( document ).ready( function() {
 		        		dlg_dosgDt 		: row.dosgDt,
 		        		dlg_callYn 		: row.callYn,
 		        		dlg_dosgYn 		: row.dosgYn,
+		        		dlg_mealTpCd 	: row.mealTpCd,
 		        		dlg_pausYn 		: row.pausYn,
 		        		dlg_currWgt 	: row.currWgt,
 		        		dlg_lossWgt 	: row.lossWgt,
@@ -276,7 +279,7 @@ $( document ).ready( function() {
 		        	},
 		        	{
 		        		field: 'dosgYn', 
-		        		title: '복용식사', 
+		        		title: '특별식', 
 		        		align: 'center', 
 		        		width: '90', 
 		        		formatter: function(value, row) { return row.dosgYnNm; }
@@ -412,7 +415,7 @@ $( document ).ready( function() {
 			});
 			
 			/**************************************************************
-		     * "상담차트 생성" 클릭시
+		     * "상담차트 생성" 버튼 클릭시
 		     **************************************************************/
 			$(document).off("click", "#btnNewCnstChart").on("click", "#btnNewCnstChart", function (e) {
 				RS1001PU02.createCnstChart();

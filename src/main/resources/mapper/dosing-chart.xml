@@ -6,34 +6,35 @@
     <select id="selectDosingChartByCnstId"  parameterType="com.pharm.chorok.domain.table.TbPpCnstChart" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
 	<![CDATA[    
 	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCnstId */
-	/** 차트번호에 대한 차트마스터 정보 조회 */
-    SELECT DOSG_ID
-         , CNST_ID
-    	 , DOSG_SEQ
-         , CONCAT(DOSG_SEQ, '일차') AS DOSG_SEQ_STR
-         , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
-         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
-         , DOSG_LV_CD
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM
+	/** 차트번호에 대한 복용차트 정보 조회 */
+    SELECT DC.DOSG_ID
+         , DC.CNST_ID
+    	 , DC.DOSG_SEQ
+         , CONCAT(DC.DOSG_SEQ, '일차') AS DOSG_SEQ_STR
+         , DATE_FORMAT(DC.DOSG_DT, '%Y-%m-%d') AS DOSG_DT
+         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DC.DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
+         , DC.DOSG_LV_CD
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DC.DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM
          , CALL_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM       
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = DC.CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM       
          , DOSG_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DC.DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
          , PAUS_YN          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = DC.PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
          , MEAL_TP_CD          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
-         , CURR_WGT    
-         , LOSS_WGT     
-         , RMI_WGT
-         , DOSG_DESC1       
-         , DOSG_DESC2       
-         , REG_DT           
-         , REG_USR_NO
-      FROM TB_PP_DOSG_CHART
-     WHERE CNST_ID = #{cnstId}
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = DC.MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
+         , DC.CURR_WGT    
+         , DC.LOSS_WGT     
+         , DC.RMI_WGT
+         , DC.DOSG_DESC1       
+         , DC.DOSG_DESC2       
+         , DC.REG_DT           
+         , DC.REG_USR_NO
+      FROM TB_PP_DOSG_CHART DC
+      INNER JOIN TB_PP_CNST_CHART CC ON CC.CNST_ID = DC.CNST_ID
+     WHERE DC.CNST_ID = #{cnstId}
      ORDER
-        BY DOSG_ID
+        BY DC.DOSG_ID
 	]]>
     </select>
 

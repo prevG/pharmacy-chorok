@@ -65,7 +65,7 @@
 							   		labelPosition:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${chemistList}"
 									th:value="${data?.usrNo}" th:text="${data?.usrNm}"></option>
 							</select>
@@ -77,7 +77,7 @@
 							   		labelPosition:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${counselorList}"
 									th:value="${data?.usrNo}" th:text="${data?.usrNm}"></option>
 							</select>
@@ -90,7 +90,7 @@
 							   		label:'감량/요요',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${cateTpCdList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -100,7 +100,7 @@
 							<select name="cateTpVal" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${cateTpValList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -112,7 +112,7 @@
 							   		label:'감량종류',
 							   		labelPosition:'left',
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${dosgTpCdList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -122,7 +122,7 @@
 							<select name="dosgTpVal" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		panelHeight:'auto'">
-								<option value="">선택</option>
+								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${dosgTpValList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -137,7 +137,7 @@
 							   		labelPosition:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
-								<option value="">시</option>
+								<option value="" selected="selected">시</option>
 								<option th:each="data, index : ${cnstHhList}"
 									th:value="${data?.ditcCd}" 
 									th:text="${data?.ditcNm}"></option>
@@ -299,7 +299,7 @@
 		<div class="row p-1">
 			<div class="col-md-4">
 				<select name="dlg_dosgYn" class="easyui-combobox" style="width: 100%;text-align: center;"
-						data-options="label:'복용식사',labelWidth:80,panelHeight:'auto'">
+						data-options="label:'특별식',labelWidth:80,panelHeight:'auto'">
 					<option value="">선택</option>
 					<option th:each="data, index : ${dosgYnList}"
 							th:value="${data?.ditcCd}" 
