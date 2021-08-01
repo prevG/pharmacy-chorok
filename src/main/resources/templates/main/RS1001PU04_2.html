@@ -21,7 +21,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col">
-							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 180px;text-align: center;"
+							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 220px;text-align: center;"
 								   data-options="label:'고객이름/번호',labelWidth:90,required:true,readonly:true"
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 							<input name="selectedCustId" class="easyui-textbox" style="width:50px;text-align: center;"
@@ -31,7 +31,7 @@
 						</div>
 					</div>
 					<div class="row m-2">
-						<table id="dg" style="width: 100%;min-height: 180px;"></table>
+						<table id="dg" style="width: 100%;min-height: 160px;"></table>
 					</div>
 				</div>
 			</div>
@@ -174,14 +174,14 @@
 					<div class="row m-2">
 						<div class="col-12">
 							<textarea name="presDesc" class="easyui-textbox"
-								style="width: 100%; height: 80px;"
+								style="width: 100%; height: 110px;"
 								data-options="label:'처방',labelPosition:'left',multiline:true"></textarea>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
 							<textarea name="cnstDesc" class="easyui-textbox"
-								style="width: 100%; height: 80px;"
+								style="width: 100%; height: 105px;"
 								data-options="label:'상담메모',labelPosition:'left',multiline:true"></textarea>
 						</div>
 					</div>
@@ -191,11 +191,11 @@
 		</div>
 		<div class="col-md-8">
 			<div class="row p-1">
-				<div class="easyui-tabs" style="width: 100%;height: 720px;"
+				<div class="easyui-tabs" style="width: 100%;height: 710px;"
 			 		 data-options="tabWidth:120">
 			 		 <div title="설문차트" class="py-2" style="overflow: hidden;">
 			 		 	<form id="saveSurvFrm" name="saveSurvFrm" method="post">
-			 		 	<div style="height: 700px;overflow: auto;">
+			 		 	<div style="height: 650px;overflow: auto;">
 				 		 	<table class="table table-sm table-hover">
 				 		 		<thead>
 				 		 			<tr>
@@ -212,41 +212,41 @@
 			 		 </div>
 			 		 <div title="복용차트" class="py-2" style="width: 100%;overflow: hidden;">
 	 		 			<form id="saveDosgFrm" name="saveDosgFrm" method="post">
-			 		 	<div class="row mb-2">
-			 		 		<div class="col-md-10 form-inline">
-			 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'시작체중',
-									   		labelWidth:100,
-									   		labelPosition:'left',
-											precision:2,
-											groupSeparator:',',
-									   		readonly:true">
-			 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
-									   data-options="
-									   		label:'희망체중',
-									   		labelWidth:100,
-									   		labelPosition:'left',
-											precision:2,
-											groupSeparator:',',
-									   		readonly:true">
-			 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 230px;text-align: center;"
-									   data-options="
-									   		label:'복용시작일자',
-									   		labelWidth:100,
-									   		formatter:myformatter,
-									   		parser:myparser">
-								<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-2" style="width:120px;"
-								   data-options="iconCls:'icon-edit'">복용차트 생성</a>
-								<a href="javascript:void(0)" id="btnRemoveDosgChart" class="easyui-linkbutton ml-2" style="width:120px;"
-								   data-options="iconCls:'icon-cut'">복용차트 삭제</a>
-			 		 		</div>
-			 		 		<div class="col-md-2 d-flex justify-content-end">
-			 		 		</div>
-			 		 	</div>
+				 		 	<div class="row mb-2">
+				 		 		<div class="col-md-10 form-inline">
+				 		 			<input name="orgWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
+										   data-options="
+										   		label:'시작체중',
+										   		labelWidth:100,
+										   		labelPosition:'left',
+												precision:2,
+												groupSeparator:',',
+										   		readonly:true">
+				 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
+										   data-options="
+										   		label:'희망체중',
+										   		labelWidth:100,
+										   		labelPosition:'left',
+												precision:2,
+												groupSeparator:',',
+										   		readonly:true">
+				 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 230px;text-align: center;"
+										   data-options="
+										   		label:'복용시작일자',
+										   		labelWidth:100,
+										   		formatter:myformatter,
+										   		parser:myparser">
+									<a href="javascript:void(0)" id="btnNewDosgChart" class="easyui-linkbutton c8 ml-2" style="width:120px;"
+									   data-options="iconCls:'icon-edit'">복용차트 생성</a>
+									<a href="javascript:void(0)" id="btnRemoveDosgChart" class="easyui-linkbutton ml-2" style="width:120px;"
+									   data-options="iconCls:'icon-cut'">복용차트 삭제</a>
+				 		 		</div>
+				 		 		<div class="col-md-2 d-flex justify-content-end">
+				 		 		</div>
+				 		 	</div>
 	 		 			</form>
 			 		 	<div class="row mb-2">
-			 		 		<table id="dg2" style="width: 100%;min-height: 580px;height: 580px;"></table>
+			 		 		<table id="dg2" style="width:100%;min-height: 630px;"></table>
 			 		 	</div>
 			 		 </div>
 				</div>

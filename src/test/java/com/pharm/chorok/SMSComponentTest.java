@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.pharm.chorok.common.component.SMSComponent;
-import com.pharm.chorok.common.component.SMSComponent.MESSAGETYPE;
 
 @SpringBootTest
 class SMSComponentTest {

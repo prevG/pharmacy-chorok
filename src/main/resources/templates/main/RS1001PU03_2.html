@@ -5,8 +5,7 @@
 <div id="customer-table" th:fragment="customer-table"
 	th:with="
 		birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
-		thisYear=${#dates.year(#dates.createNow()) + 1}
-	">
+		thisYear=${#dates.year(#dates.createNow()) + 1}">
 	<div class="row">
 		<div class="col-12 d-flex justify-content-end">
 			<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">고객정보 저장</a>
@@ -103,7 +102,7 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 100px;"
+							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 200px;"
 								   data-options="multiline:true"
 								   th:value="${custInfo?.custMemo}">
 						</div>
@@ -111,20 +110,13 @@
 				</div>
 			</div>
 			<div class="row p-1">
-				<div class="easyui-panel" title="추천인정보 (나를 추천한 사람)" style="width: 100%;min-height: 120px;"
+				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 150px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인 이름',labelWidth:110"
-								   th:value="${custInfo?.rcmdCustNm}">
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="col-12">
-							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
-								   data-options="label:'추천인 연락처',labelWidth:110"
-								   th:value="${custInfo?.rcmdCellNo}">
+							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 180px;"
+								   data-options="multiline:true"
+								   th:value="${custInfo?.custMemo2}">
 						</div>
 					</div>
 				</div>
@@ -220,13 +212,20 @@
 				</div>
 			</div>
 			<div class="row p-1">
-				<div class="easyui-panel" title="특이사항" style="width: 100%;min-height: 150px;"
+				<div class="easyui-panel" title="추천인정보 (나를 추천한 사람)" style="width: 100%;min-height: 120px;"
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 100px;"
-								   data-options="multiline:true"
-								   th:value="${custInfo?.custMemo2}">
+							<input name="dlg_rcmdCustNm" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인 이름',labelWidth:110"
+								   th:value="${custInfo?.rcmdCustNm}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_rcmdCellNo" class="easyui-textbox" style="width: 100%;"
+								   data-options="label:'추천인 연락처',labelWidth:110"
+								   th:value="${custInfo?.rcmdCellNo}">
 						</div>
 					</div>
 				</div>
