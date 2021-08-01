@@ -14,14 +14,10 @@ logging:
 ### spring ############################################################
 spring:
   datasource:
-    #driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    #url: jdbc:log4jdbc:mariadb://bazzarmall.cafe24.com:3306/bazzarmall
-    #username: bazzarmall
-    #password: Tower@545271   
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://mariadb-live-chorok.cqxvmdetneem.ap-northeast-2.rds.amazonaws.com:3306/chorokdb
-    username: chorokadm
-    password: Tower@545271
+    url: jdbc:log4jdbc:mariadb://bazzarmall.cafe24.com:3306/bazzarmall
+    username: bazzarmall
+    password: Tower@545271   
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 30
