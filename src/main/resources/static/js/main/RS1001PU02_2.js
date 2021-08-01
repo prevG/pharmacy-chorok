@@ -253,14 +253,14 @@ $( document ).ready( function() {
 		        		field: 'dosgSeq', 
 		        		title: '일수', 
 		        		align: 'center', 
-		        		width: '80', 
+		        		width: '70', 
 		        		formatter: function(value, row) { return '<span style="font-weight:bold;text-decoration:underline;">'+ row.dosgSeqStr +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgDt', 
 		        		title: '복용일자', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '90', 
 		        		formatter: function(value, row) { return myformatter(value); },
 		        		parser: function(value) { return myparser(value); }
 		        	},
@@ -268,27 +268,27 @@ $( document ).ready( function() {
 		        		field: 'daysStrKor', 
 		        		title: '요일', 
 		        		align: 'center', 
-		        		width: '70'
+		        		width: '50'
 		        	},
 		        	{
 		        		field: 'callYn', 
 		        		title: '상담예약', 
 		        		align: 'center', 
-		        		width: '100', 
+		        		width: '80', 
 		        		formatter: function(value, row) { return row.callYnNm; }
 		        	},
 		        	{
 		        		field: 'dosgYn', 
 		        		title: '특별식', 
 		        		align: 'center', 
-		        		width: '90', 
+		        		width: '80', 
 		        		formatter: function(value, row) { return row.dosgYnNm; }
 		        	},
 		        	{
 		        		field: 'mealTpCd', 
 		        		title: '식사', 
 		        		align: 'center', 
-		        		width: '90', 
+		        		width: '60', 
 		        		formatter: function(value, row) { return row.mealTpCdNm; }
 		        	},
 		        	{
@@ -302,19 +302,19 @@ $( document ).ready( function() {
 		        		field: 'currWgt', 
 		        		title: '현재체중', 
 		        		align: 'center', 
-		        		width: '90'
+		        		width: '60'
 		        	},
 		        	{
 		        		field: 'lossWgt', 
 		        		title: '감량체중', 
 		        		align: 'center', 
-		        		width: '90'
+		        		width: '60'
 		        	},
 		        	{
 		        		field: 'rmiWgt', 
 		        		title: '남은체중', 
 		        		align: 'center', 
-		        		width: '90'
+		        		width: '60'
 		        	},
 		        	{
 		        		field: 'dosgDesc1', 
