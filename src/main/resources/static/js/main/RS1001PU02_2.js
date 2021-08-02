@@ -234,6 +234,7 @@ $( document ).ready( function() {
 		        		dlg_dosgYn 		: row.dosgYn,
 		        		dlg_mealTpCd 	: row.mealTpCd,
 		        		dlg_pausYn 		: row.pausYn,
+		        		dlg_stopYn 	    : row.stopYn,
 		        		dlg_currWgt 	: row.currWgt,
 		        		dlg_lossWgt 	: row.lossWgt,
 		        		dlg_rmiWgt 		: row.rmiWgt,
@@ -299,6 +300,13 @@ $( document ).ready( function() {
 		        		align: 'center', 
 		        		width: '100', 
 		        		formatter: function(value, row) { return row.pausYnNm; }
+		        	},
+		        	{
+		        		field: 'stopYn', 
+		        		title: '보류여부', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		formatter: function(value, row) { return row.stopYnNm; }
 		        	},
 		        	{
 		        		field: 'currWgt', 
@@ -981,6 +989,7 @@ $( document ).ready( function() {
 			var callYn     = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
 			var dosgYn     = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
 			var pausYn     = $('#dosgDlgFrm select[textboxName=dlg_pausYn]').combobox('getValue');
+			var stopYn     = $('#dosgDlgFrm select[textboxName=dlg_stopYn]').combobox('getValue');
 			var mealTpCd   = $('#dosgDlgFrm select[textboxName=dlg_mealTpCd]').combobox('getValue');
 			var currWgt    = $('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox('getValue');
 			var lossWgt    = $('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('getValue');
@@ -990,20 +999,21 @@ $( document ).ready( function() {
 
 			var formData = {
 				criteria: {
-					"cnstId":	    selectedCnstId,
-					"dosgId":		dosgId,
-					"dosgSeq": 		dosgSeq,
-					"dosgLvCd":		dosgLvCd,
-					"dosgDt":		moment(dosgDt).format("YYYYMMDD"),
-					"callYn":		callYn,
-					"dosgYn": 		dosgYn,
-					"pausYn": 		pausYn,
-					"mealTpCd": 	mealTpCd,
-					"currWgt": 		currWgt,
-					"lossWgt":		lossWgt,
-					"rmiWgt":		rmiWgt,
-					"dosgDesc1":	dosgDesc1,
-					"dosgDesc2": 	dosgDesc2
+					"cnstId" 	:	selectedCnstId,
+					"dosgId" 	:	dosgId,
+					"dosgSeq" 	: 	dosgSeq,
+					"dosgLvCd" 	:	dosgLvCd,
+					"dosgDt" 	:	moment(dosgDt).format("YYYYMMDD"),
+					"callYn" 	:	callYn,
+					"dosgYn" 	: 	dosgYn,
+					"pausYn" 	: 	pausYn,
+					"stopYn" 	: 	stopYn,
+					"mealTpCd" 	: 	mealTpCd,
+					"currWgt" 	: 	currWgt,
+					"lossWgt" 	:	lossWgt,
+					"rmiWgt" 	:	rmiWgt,
+					"dosgDesc1" :	dosgDesc1,
+					"dosgDesc2" : 	dosgDesc2
 				}
 			};
 			

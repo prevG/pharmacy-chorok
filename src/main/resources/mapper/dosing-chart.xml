@@ -21,6 +21,8 @@
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DC.DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
          , PAUS_YN          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = DC.PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+         , STOP_YN          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
          , MEAL_TP_CD          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = DC.MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
          , DC.CURR_WGT    
@@ -56,6 +58,8 @@
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
          , PAUS_YN          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+         , STOP_YN          
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
          , MEAL_TP_CD          
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
          , CURR_WGT    
@@ -216,6 +220,7 @@
          , CALL_YN     = #{callYn}
          , DOSG_YN     = #{dosgYn}
          , PAUS_YN     = #{pausYn}
+         , STOP_YN 	   = #{stopYn}
          , MEAL_TP_CD  = #{mealTpCd}
          , CURR_WGT    = #{currWgt} 
          , LOSS_WGT    = #{lossWgt}

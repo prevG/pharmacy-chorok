@@ -306,6 +306,13 @@
 				</select>
 			</div>
 			<div class="col-md-4">
+				<select name="dlg_stopYn" class="easyui-combobox" style="width: 100%;text-align: center;"
+						data-options="label:'보류여부',labelWidth:80,panelHeight:'auto'">
+					<option value="">선택</option>
+					<option th:each="data, index : ${stopYnList}"
+							th:value="${data?.ditcCd}" 
+							th:text="${data?.ditcNm}"></option>
+				</select>
 			</div>
 		</div>
 		<div class="row p-1">

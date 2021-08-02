@@ -87,7 +87,6 @@ public class CustomerController {
         //통화여부 코드목록
         List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
         
-
 		model.addAttribute("dosgDt", cal.getBaseDt());
 		model.addAttribute("counselorList", counselorList);
 		model.addAttribute("chemistList", chemistList);
@@ -219,6 +218,9 @@ public class CustomerController {
         //통화여부 코드
         List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
         
+        //보류여부 코드
+        List<TbCommCodeVo> stopYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1028", "Y"));
+
         //결재유형 코드
         List<TbCommCodeVo> payTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1022", "Y"));
         
@@ -248,6 +250,7 @@ public class CustomerController {
         model.addAttribute("mealTpCdList", mealTpCdList);
         model.addAttribute("callYnList", callYnList);
         model.addAttribute("pausYnList", pausYnList);
+        model.addAttribute("stopYnList", stopYnList);
         model.addAttribute("payTpCdList", payTpCdList);
         model.addAttribute("birthYyList", birthYyList);
         model.addAttribute("birthMmList", birthMmList);

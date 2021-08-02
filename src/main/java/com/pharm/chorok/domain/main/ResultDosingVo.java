@@ -17,6 +17,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String callYn;
     private String dosgYn;
     private String pausYn;
+    private String stopYn;
     private String mealTpCd;
     private float currWgt;
     private float lossWgt;
@@ -28,6 +29,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String callYnNm;
     private String dosgYnNm;
     private String pausYnNm;
+    private String stopYnNm;
     private String mealTpCdNm;
 
     private String custUsrNm;
