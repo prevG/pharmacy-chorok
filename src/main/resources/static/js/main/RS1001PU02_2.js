@@ -786,7 +786,7 @@ $( document ).ready( function() {
 			var formData = {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
-					"cnstDt" 		: cnstDt +' '+ cnstDtHh +':'+ cnstDtMm,
+					"cnstDt" 		: moment(cnstDt + ' ' + cnstDtHh + ":" + cnstDtMm),
 					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,
 					"picUsrNo"		: picUsrNo,
@@ -801,7 +801,7 @@ $( document ).ready( function() {
 					"dosgTpCd"		: dosgTpCd,
 					"dosgTpVal"		: dosgTpVal,
 					"payTpCd" 		: payTpCd,
-					"dlvDt" 		: moment(dlvDt).format("YYYYMMDD"),
+					"dlvDt" 		: $isEmpty(dlvDt) ? "" : moment(dlvDt).format("YYYYMMDD"),
 					"srvChartList" 	: cnstPaperList
 				}
 			};
