@@ -240,4 +240,15 @@
        AND DOSG_ID     > #{dosgId}
 	]]>
 	</update>
+
+    <update id="updateTbPpDosgChartStopYn" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartStopYn */
+    UPDATE TB_PP_DOSG_CHART 
+       SET STOP_YN     = #{stopYn}
+     WHERE CNST_ID     = #{cnstId}
+       AND DOSG_ID     > #{dosgId}
+	]]>
+	</update>
+
 </mapper>

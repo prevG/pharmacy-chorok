@@ -20,7 +20,8 @@ public interface DosingRepository {
     public int insertTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int deleteTbPpDosgChart(TbPpCnstChart chartParam ) throws Exception;
     public int updateTbPpDosgChart(TbPpDosgChart dosingInfo ) throws Exception;
-    public int updateTbPpDosgChartStartDt(TbPpDosgChart criteria) throws DataAccessException;
+    public int updateTbPpDosgChartStartDt(TbPpDosgChart criteria);
+	public int updateTbPpDosgChartStopYn(TbPpDosgChart criteria);
 
     public List<ResultDashBoard01VO> selectDashDosingList01() throws Exception;
     public List<ResultDashBoard01VO> selectDashDosingList02() throws Exception;

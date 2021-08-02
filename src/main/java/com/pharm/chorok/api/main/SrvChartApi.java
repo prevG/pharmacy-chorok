@@ -100,8 +100,10 @@ public class SrvChartApi {
 
 		//복용정보 저장
 		dosingRepo.updateTbPpDosgChart(pageCriteria.getCriteria());
-		//복용순번 이후 날짜 변경.
+		//복용일자 변경시 이후 일수 변경
 		dosingRepo.updateTbPpDosgChartStartDt(pageCriteria.getCriteria());
+		//보류여부 변경시 이후 일수 변경
+		dosingRepo.updateTbPpDosgChartStopYn(pageCriteria.getCriteria());
 		
 		return new ResponseEntity<ResponseMessage>( new ResponseMessage("success", "정상적으로 저장되었습니다."), HttpStatus.OK );
 	}
