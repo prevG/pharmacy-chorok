@@ -130,7 +130,8 @@
 	<update id="updateTbPpCnstChart">
 	/** com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
 	UPDATE TB_PP_CNST_CHART
-	   SET PRES_DESC 	   = #{presDesc}
+	   SET CNST_DT 		   = #{cnstDt}
+	   	   , PRES_DESC 	   = #{presDesc}
 	   	   , CNST_DESC     = #{cnstDesc}
 		   , PIC_USR_NO    = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
 		   , PIC2_USR_NO   = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END

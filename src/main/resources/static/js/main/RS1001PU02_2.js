@@ -79,7 +79,9 @@ $( document ).ready( function() {
 					$('#saveCnstFrm').form('load', {
 						selectedIndex	: index,
 						selectedCnstId 	: row.cnstId,
-						cnstDt 			: row.cnstDt,
+						cnstDt 			: row.cnstDt.substring(0,10),
+						cnstDtHh 		: row.cnstDt.substring(11,13),
+						cnstDtMm 		: row.cnstDt.substring(14,16),
 						picUsrNo		: row.picUsrNo,
 						pic2UsrNo		: row.pic2UsrNo,
 						cnstHhCd		: row.cnstHhCd,
@@ -693,6 +695,9 @@ $( document ).ready( function() {
 		saveCnstChart: function() {
 			// 상담차트
 			var selectedCnstId 	= $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
+			var cnstDt          = $('#saveCnstFrm input[textboxName=cnstDt]').datebox('getValue');
+			var cnstDtHh        = $('#saveCnstFrm select[textboxName=cnstDtHh]').combobox('getValue');
+			var cnstDtMm        = $('#saveCnstFrm select[textboxName=cnstDtMm]').combobox('getValue');
 			var presDesc 	   	= $('#saveCnstFrm textarea[textboxName=presDesc]').textbox('getValue');
 			var cnstDesc 	   	= $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
 			var picUsrNo 	   	= $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
@@ -712,6 +717,18 @@ $( document ).ready( function() {
 			var dlvDt 		   	= $('#saveCnstFrm input[textboxName=dlvDt]').datebox('getValue');
 			if( $isEmpty(selectedCnstId) ) {
 				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
+				return false;
+			}
+			if( $isEmpty(cnstDt) ) {
+				$.messager.alert( "상담차트 선택", "상담정보 상담일시에서 '상담일'을 선택해 주세요.");
+				return false;
+			}
+			if( $isEmpty(cnstDtHh) ) {
+				$.messager.alert( "상담차트 선택", "상담정보 상담일시에서 '시간'을 선택해 주세요.");
+				return false;
+			}
+			if( $isEmpty(cnstDtMm) ) {
+				$.messager.alert( "상담차트 선택", "상담정보 상담일시에서 '분'을 선택해 주세요.");
 				return false;
 			}
 			// 설문차트
@@ -761,6 +778,7 @@ $( document ).ready( function() {
 			var formData = {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
+					"cnstDt" 		: cnstDt +' '+ cnstDtHh +':'+ cnstDtMm,
 					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,
 					"picUsrNo"		: picUsrNo,

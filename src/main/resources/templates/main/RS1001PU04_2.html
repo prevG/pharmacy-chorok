@@ -41,20 +41,32 @@
 					<form id="saveCnstFrm" name="saveCnstFrm" method="post">
 					<input type="hidden" name="selectedIndex">
 					<div class="row m-2">
-						<div class="col-6">
+						<div class="col-4">
 							<input name="selectedCnstId" class="easyui-textbox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'상담번호 *',
 							   		required:true,
 							   		readonly:true">
 						</div>
-						<div class="col-6">
-							<input name="cnstDt" class="easyui-textbox" style="width: 100%; text-align: center;"
+						<div class="col-8">
+							<input name="cnstDt" class="easyui-datebox" style="width: 190px; text-align: center;"
 								data-options="
 							   		label:'상담일시 *',
 							   		labelPosition:'left',
-							   		required:true,
-							   		readonly:true">
+							   		formatter:myformatter,
+							   		parser:myparser">
+							<select name="cnstDtHh" class="easyui-combobox" style="width: 70px; text-align: center;">
+								<option value="" selected="selected">시</option>
+								<option th:each="i: ${#numbers.sequence(1, 24)}"
+									    th:value="${i} lt 10 ? '0'+ ${i} : ${i}"
+									    th:text="${i}+'시'"></option>
+							</select>
+							<select name="cnstDtMm" class="easyui-combobox" style="width: 70px; text-align: center;">
+								<option value="" selected="selected">분</option>
+								<option th:each="i: ${#numbers.sequence(1, 60)}"
+									    th:value="${i} lt 10 ? '0'+ ${i} : ${i}"
+									    th:text="${i}+'분'"></option>
+							</select>
 						</div>
 					</div>
 					<div class="row m-2">
