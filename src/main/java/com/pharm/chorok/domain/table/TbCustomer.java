@@ -41,6 +41,7 @@ public class TbCustomer extends TbCommColumn {
 	private String mrgYnNm;			// 기혼/미혼
 	private int mileage;			// 마일리지 점수
 	private int rcmdCnt;			// 추천인수
+	private String custRegYear;		// 고객등록년월
 	
 	//검색용으로 추가
 	private String cbSrch;

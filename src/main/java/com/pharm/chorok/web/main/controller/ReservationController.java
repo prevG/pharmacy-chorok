@@ -270,9 +270,8 @@ public class ReservationController {
 	public ResponseEntity<ResponseMessage> saveCustomer_2(
 			@RequestBody PageCriteria<TbCustomer> pageCriteria
 			) throws Exception {
-		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm(), "고객이름을 입력하세요");
-		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo(), "핸드폰번호를 입력하세요");
-		Assert.hasLength(pageCriteria.getCriteria().getCustBirthDt(), "생년월일을 입력하세요");
+		Assert.hasLength(pageCriteria.getCriteria().getCustUsrNm()	, "고객이름을 입력하세요");
+		Assert.hasLength(pageCriteria.getCriteria().getCustCellNo()	, "핸드폰번호를 입력하세요");
 		Assert.hasLength(pageCriteria.getCriteria().getCustGenTpCd(), "성별을 입력하세요");
 		
 		// 신규고객 등록

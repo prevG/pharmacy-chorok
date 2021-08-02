@@ -484,26 +484,29 @@ $( document ).ready( function() {
 				$.messager.alert('고객정보 저장', '휴대폰번호를 입력하세요.');
 				return;
 			}
+			
 			var custBirthYy = $('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox('getValue');
+			var custBirthMm = $('#saveCustFrm select[textboxName=dlg_custBirthMm]').combobox('getValue');
+			var custBirthDd = $('#saveCustFrm select[textboxName=dlg_custBirthDd]').combobox('getValue');
+			var custBirthDt = custBirthYy + custBirthMm + custBirthDd;
+			/*			
 			if ($isEmpty(custBirthYy) || custBirthYy.length !== 4) {
 				$.messager.alert('고객정보 저장', '생년월일 출생년도를 입력하세요.');
 				return;
 			}
-			var custBirthMm = $('#saveCustFrm select[textboxName=dlg_custBirthMm]').combobox('getValue');
 			if ($isEmpty(custBirthMm)) {
 				$.messager.alert('고객정보 저장', '생년월일 출생월을 선택하세요.');
 				return;
 			}
-			var custBirthDd = $('#saveCustFrm select[textboxName=dlg_custBirthDd]').combobox('getValue');
 			if ($isEmpty(custBirthDd)) {
 				$.messager.alert('고객정보 저장', '생년월일 출생일을 선택하세요.');
 				return;
 			}
-			var custBirthDt = custBirthYy + custBirthMm + custBirthDd;
 			if ($isEmpty(custBirthDt) || custBirthDt.length != 8) {
 				$.messager.alert('고객정보 저장', '생년월일을 입력하세요.');
 				return;
 			}
+			*/
 			var custGenTpCd = $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val();
 			if ($isEmpty(custGenTpCd)) {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
@@ -552,6 +555,7 @@ $( document ).ready( function() {
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
 						"mileage" 		:   $('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('getValue'),
+						"custRegYear" 	:   $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue'),
 						"rcmdMilgList" 	:   rcmdMilgList
 					}
 				};
