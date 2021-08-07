@@ -14,10 +14,10 @@ class SMSComponentTest {
 	@Autowired
 	private SMSComponent sms;
 
-	@Test
+//	@Test
 	void test() {
 		
-//		sms.sendMessage(MESSAGETYPE.SMSTYPE);
+		sms.sendMmsWithAttach();
 		
 		assertTrue(true);
 	}

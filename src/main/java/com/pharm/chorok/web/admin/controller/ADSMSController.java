@@ -51,7 +51,7 @@ public class ADSMSController {
 		
 		//smsService.insertSmsHist();
 		
-		SmsComponent.sendMessage(SMSComponent.MESSAGETYPE.SMSTYPE);
+		SmsComponent.sendSms();
 		return mv;
 	}
 	

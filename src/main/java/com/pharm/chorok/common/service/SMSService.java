@@ -19,14 +19,13 @@ public class SMSService {
 	SmsRepository smsRepository;
 	
 	//파라미터 받아야됨... 누구한테 보낼지.. 
-	public void insertSmsHist() throws Exception{
+	public void insertSmsHist() throws Exception {
 		//파라미터 넘겨줘야됨..
-		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendMessage(SMSComponent.MESSAGETYPE.SMSTYPE);
+		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendSms();
 		
-		for(int i=0; i<tbPpSmsHists.size(); i++) {
+		for ( int i = 0; i < tbPpSmsHists.size(); i++ ) {
 			smsRepository.insertSmsHist(tbPpSmsHists.get(i));	
 		}		
     }
-	
 	
 }
