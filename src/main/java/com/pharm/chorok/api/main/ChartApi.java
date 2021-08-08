@@ -172,6 +172,7 @@ public class ChartApi {
     @ResponseBody
     public ResponseEntity<ResponseMessage> saveCnstChart_2(@RequestBody PageCriteria<TbPpCnstChart> pageCriteria) throws Exception {
     	Assert.isTrue(pageCriteria.getCriteria().getCnstId().compareTo(0L) > 0, "상담번호가 존재하지 않습니다.");
+    	Assert.isTrue(pageCriteria.getCriteria().getCustId().compareTo(0L) > 0, "고객번호가 존재하지 않습니다.");
     	
     	chartSvc.updateTbPpCnstChart(pageCriteria.getCriteria());
     	for (TbPpSrvChart srvChart : pageCriteria.getCriteria().getSrvChartList()) {

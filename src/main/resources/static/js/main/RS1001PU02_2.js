@@ -702,6 +702,7 @@ $( document ).ready( function() {
 		},
 		saveCnstChart: function() {
 			// 상담차트
+			var selectedCustId 	= $('#custCnstFrm input[textboxName=selectedCustId]').textbox('getValue');
 			var selectedCnstId 	= $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
 			var cnstDt          = $('#saveCnstFrm input[textboxName=cnstDt]').datebox('getValue');
 			var cnstDtHh        = $('#saveCnstFrm select[textboxName=cnstDtHh]').combobox('getValue');
@@ -786,6 +787,7 @@ $( document ).ready( function() {
 			var formData = {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
+					"custId" 		: selectedCustId,
 					"cnstDt" 		: moment(cnstDt + ' ' + cnstDtHh + ":" + cnstDtMm),
 					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,

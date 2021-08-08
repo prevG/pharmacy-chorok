@@ -3,9 +3,15 @@ package com.pharm.chorok.web.main.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.pharm.chorok.domain.main.ResultConsultingVo;
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.main.ResultSurveyChartVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
 import com.pharm.chorok.domain.table.TbPpCnstPaper;
@@ -14,11 +20,6 @@ import com.pharm.chorok.util.SecurityContextUtil;
 import com.pharm.chorok.web.main.repository.CnstPaperRepository;
 import com.pharm.chorok.web.main.repository.ConsultingRepository;
 import com.pharm.chorok.web.main.repository.DosingRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ChartService {
@@ -41,7 +42,9 @@ public class ChartService {
     @Autowired
     private CnstPaperService cnstPaperSvc;
 
-
+    @Autowired
+    private ConsultingMileageService consultingMileageService;
+    
     /**
      * 차트번호에 해당하는 차트마스터/설문차트/복용차트 정보조회
      */
@@ -190,6 +193,23 @@ public class ChartService {
      */
     @Transactional
 	public int updateTbPpCnstChart(TbPpCnstChart inCnstChart) throws Exception {
+    	// 결재유형에 따른 마일리지 정보 저장
+    	double mile = 10;
+    	TbPpCnstMileVo cnstMileVo = consultingMileageService.findByCnstId(inCnstChart.getCnstId());
+    	if (cnstMileVo != null) {
+    		cnstMileVo.setPayTpCd(inCnstChart.getPayTpCd());
+    		cnstMileVo.setPayMile(mile);
+    		consultingMileageService.saveCnstMile(cnstMileVo);
+    	} else {
+    		consultingMileageService.saveCnstMile(TbPpCnstMileVo.builder()
+    				.cnstId(inCnstChart.getCnstId())
+    				.custId(inCnstChart.getCustId())
+    				.payTpCd(inCnstChart.getPayTpCd())
+    				.payMile(mile)
+    				.useYn("N")
+    				.build());
+    	}
+    	
 		return consultingRepo.updateTbPpCnstChart(inCnstChart);
 	}
     
@@ -199,5 +219,3 @@ public class ChartService {
     }
 	
 }
-
-        
