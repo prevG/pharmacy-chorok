@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.TbCustomerMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
@@ -28,7 +29,10 @@ public class CustomerService {
     // private ConsultingRepository consultingRepo;
 
     @Autowired
-    private ReservationRepository reservationRepo;    
+    private ReservationRepository reservationRepo;   
+    
+    @Autowired
+    private CustomerMileageService customerMileageService;
     
     public Map<String,Object> getUsrTotInfo(TbSurvey tbSurvey) throws Exception {
     	Map<String,Object> result = new HashMap<String, Object>();
@@ -48,12 +52,19 @@ public class CustomerService {
 		//신규 고객번호 생성
 		Long newCustId = customerRepo.selectNewCustId();
 
-		//고객정보저장
+		//고객정보 저장
 		custInfo.setCustId( newCustId );
 		customerRepo.insertTbCustomer( custInfo );
+		
+		//추천인정보 저장
+		TbCustomerMileVo custMileVo = custInfo.getCustMile();
+		custMileVo.setCustId( newCustId );
+		if (custMileVo.getRcmdCustId() > 0) {
+			customerMileageService.saveCustomerMile(custMileVo);
+		}
 
 		//예약테이블 고객번호 update
-		if( rsvtId  > 0) {
+		if( rsvtId > 0 ) {
 			TbPpRsvtSch rsvtInfo = new TbPpRsvtSch();
 			rsvtInfo.setRsvtId( rsvtId );
 			rsvtInfo.setCustId( newCustId );
@@ -72,6 +83,21 @@ public class CustomerService {
 	@Transactional
 	public int saveCustomer_2(TbCustomer custInfo) throws Exception {
 		int result = customerRepo.updateTbCustomer( custInfo );
+		
+		//추천인정보 저장
+		TbCustomerMileVo custMileVo = customerMileageService.findByCustomerMileById(custInfo.getCustId());
+		if (custMileVo != null) {
+			//고객정보에서 추천인 마일리지와 사용여부는 저장하지 않는다.
+			custMileVo.setRcmdCustId(custInfo.getRcmdCustId());
+			custMileVo.setRcmdCustNm(custInfo.getRcmdCustNm());
+			custMileVo.setRcmdCellNo(custInfo.getRcmdCellNo());
+			customerMileageService.saveCustomerMile(custMileVo);
+		} else {
+			custMileVo = custInfo.getCustMile();
+			custMileVo.setUseYn("N");
+			customerMileageService.saveCustomerMile(custMileVo);
+		}
+			
 		for (ResultRcmdVo rcmdVo : custInfo.getRcmdMilgList()) {
 			customerRepo.updateRcmdMilgYn(rcmdVo);
 		}

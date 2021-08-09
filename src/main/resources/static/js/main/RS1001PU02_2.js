@@ -566,7 +566,13 @@ $( document ).ready( function() {
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
 						"mileage" 		:   $('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('getValue'),
 						"custRegYear" 	:   $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue'),
-						"rcmdMilgList" 	:   rcmdMilgList
+						"rcmdMilgList" 	:   rcmdMilgList,
+						"custMile" 		:   {
+							"custId" 		: 	custId,
+							"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
+							"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
+							"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')
+						}
 					}
 				};
 				

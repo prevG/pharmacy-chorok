@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.TbCustomerMileVo;
 
 import lombok.Data;
 
@@ -56,4 +57,6 @@ public class TbCustomer extends TbCommColumn {
 	//추천인 마일리지 적용목록
 	private List<ResultRcmdVo> rcmdMilgList;
 	
+	//추천인 정보
+	private TbCustomerMileVo custMile;
 }
