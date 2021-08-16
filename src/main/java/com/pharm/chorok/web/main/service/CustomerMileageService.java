@@ -26,6 +26,16 @@ public class CustomerMileageService {
 		return null;
 	}
 
+	@Transactional
+	public TbCustomerMileVo findByCustIdAndRcmdCustId(long custId, long rcmdCustId) {
+		Optional<TbCustomerMile> optional = tbCustomerMileRepository.findById(custId);
+		if (optional.isPresent())
+			return new TbCustomerMileVo(optional.get());
+		
+		return null;
+	}
+
+	@Transactional
 	public void saveCustomerMile(TbCustomerMileVo custMile) {
 		tbCustomerMileRepository.save(custMile.toEntity());
 	}

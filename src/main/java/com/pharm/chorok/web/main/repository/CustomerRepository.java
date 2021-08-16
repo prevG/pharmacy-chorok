@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.main.ResultRcmdMileVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -32,5 +33,6 @@ public interface CustomerRepository {
     public List<ResultRcmdMileVo> findRcmdListByCustId(long custId);
 	public void updateRcmdMilgYn(ResultRcmdMileVo rcmdVo);
 	public void updateTbCustMileage(TbCustomer custInfo) throws DataAccessException;
+	public List<TbPpCnstMileVo> findPayListByCustId(long custId) throws DataAccessException;
 
 }

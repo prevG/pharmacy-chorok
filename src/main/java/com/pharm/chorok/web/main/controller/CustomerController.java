@@ -15,6 +15,7 @@ import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCommCodeVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
@@ -184,8 +185,23 @@ public class CustomerController {
         
         //고객 추천인 목록
         List<ResultRcmdMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( custId );
+        double rcmdMileage = 0;
+        for (ResultRcmdMileVo rcmdMileVo : rcmdMileList) {
+        	if ("N".equals(rcmdMileVo.getRcmdMileYn())) {
+        		rcmdMileage = rcmdMileage + rcmdMileVo.getRcmdMilePnt();
+        	}
+        }
+        custInfo.setRcmdMileage(rcmdMileage);
         
-        
+        //고객상담 결재유형 목록
+        List<TbPpCnstMileVo> payMileList = customerSvc.findPayListByCustId( custId );
+        double payMileage = 0;
+        for (TbPpCnstMileVo payMileVo : payMileList) {
+        	if ("N".equals(payMileVo.getPayMileYn())) {
+        		payMileage = payMileage + payMileVo.getPayMilePnt();
+        	}
+        }
+        custInfo.setPayMileage(payMileage);
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -241,6 +257,7 @@ public class CustomerController {
         model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", custInfo);
         model.addAttribute("rcmdMileList", rcmdMileList);
+        model.addAttribute("payMileList", payMileList);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);

@@ -229,16 +229,36 @@
 	</select>
 	
 	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.ResultRcmdMileVo">
-    /** com.pharm.chorok.web.main.repository.CustomerRepository.findRcmdListByCustId */
-		SELECT CUST_ID
-			  , CUST_USR_NM
-			  , CUST_CELL_NO
-			  , RCMD_CUST_ID
-			  , RCMD_MILE_YN 
-		FROM TB_CUSTOMER A
-		WHERE RCMD_CUST_ID = #{custId}
+    	/** com.pharm.chorok.web.main.repository.CustomerRepository.findRcmdListByCustId */
+		SELECT A.CUST_ID
+			  , B.CUST_USR_NM
+			  , B.CUST_CELL_NO
+			  , A.RCMD_CUST_ID
+			  , A.RCMD_MILE_PNT
+			  , A.RCMD_MILE_MEMO
+			  , A.RCMD_MILE_YN 
+		FROM TB_CUSTOMER_MILE A
+		INNER JOIN TB_CUSTOMER B ON B.CUST_ID = A.CUST_ID
+		WHERE A.RCMD_CUST_ID = #{custId}
      	ORDER
-           BY CUST_USR_NM
+           BY B.CUST_USR_NM
+	</select>
+	
+	<select id="findPayListByCustId" resultType="com.pharm.chorok.domain.main.TbPpCnstMileVo">
+		/** com.pharm.chorok.web.main.repository.CustomerRepository.findPayListByCustId */
+		SELECT A.CNST_ID
+			, DATE_FORMAT( B.CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
+			, A.CUST_ID
+			, A.PAY_TP_CD
+			, (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1022' AND DITC_CD = A.PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_NM
+			, A.PAY_MILE_PNT
+			, A.PAY_MILE_MEMO
+			, A.PAY_MILE_YN
+		FROM TB_PP_CNST_MILE A
+		INNER JOIN TB_PP_CNST_CHART B ON B.CNST_ID = A.CNST_ID
+		WHERE A.CUST_ID = #{custId}
+		ORDER
+		   BY A.CNST_ID
 	</select>
 
     <insert id="insertTbCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer">
@@ -337,10 +357,10 @@
 	</update>
 	
 	<update id="updateTbCustMileage">
-	/** com.pharm.chorok.web.main.repository.CustomerRepository.updateTbCustMileage */
-	UPDATE TB_CUSTOMER
-	SET MILEAGE 		= #{mileage}
-		, MILEAGE_MEMO 	= #{mileageMemo}
-	WHERE CUST_ID = #{custId}
+		/** com.pharm.chorok.web.main.repository.CustomerRepository.updateTbCustMileage */
+		UPDATE TB_CUSTOMER
+		SET MILEAGE 		= #{mileage}
+			, MILEAGE_MEMO 	= #{mileageMemo}
+		WHERE CUST_ID = #{custId}
 	</update>
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCustomerMileVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 
 import lombok.Data;
 
@@ -40,7 +41,9 @@ public class TbCustomer extends TbCommColumn {
 	private String rcmdMilgYn;		// 추천인 마일리지 적용여부
 	private String custGenTpCdNm;	// 남성/여성 
 	private String mrgYnNm;			// 기혼/미혼
-	private int mileage;			// 마일리지 점수
+	private int mileage;			// 마일리지 점수(총계)
+	private double payMileage;		// 현금결재 마일리지 점수
+	private double rcmdMileage; 	// 추천결재 마일리지 점수
 	private String mileageMemo;		// 마일리지 메모
 	private int rcmdCnt;			// 추천인수
 	private String custRegYear;		// 고객등록년월
@@ -55,8 +58,10 @@ public class TbCustomer extends TbCommColumn {
 	//예약정보로 고객정보 생성시
 	private long rsvtId;
 	
-	//추천인 마일리지 적용목록
+	//추천인 마일리지 목록
 	private List<ResultRcmdMileVo> rcmdMileList;
+	//상담결재 마일리지 목록
+	private List<TbPpCnstMileVo> payMileList;
 	
 	//추천인 정보
 	private TbCustomerMileVo custMile;

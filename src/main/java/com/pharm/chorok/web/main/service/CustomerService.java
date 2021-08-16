@@ -8,6 +8,7 @@ import java.util.Map;
 import com.pharm.chorok.domain.main.ResultDosingVo;
 import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCustomerMileVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
@@ -33,6 +34,9 @@ public class CustomerService {
     
     @Autowired
     private CustomerMileageService customerMileageService;
+    
+    @Autowired
+    private ConsultingMileageService consultingMileageService;
     
     public Map<String,Object> getUsrTotInfo(TbSurvey tbSurvey) throws Exception {
     	Map<String,Object> result = new HashMap<String, Object>();
@@ -190,6 +194,24 @@ public class CustomerService {
 				customerMileageService.saveCustomerMile(custMileVo);
 			}
 		}
+		
+		for (TbPpCnstMileVo payMileVo : custInfo.getPayMileList()) {
+			TbPpCnstMileVo cnstMileVo = consultingMileageService.findByCnstId(payMileVo.getCnstId());
+			if (cnstMileVo != null) {
+				cnstMileVo.setPayMilePnt(payMileVo.getPayMilePnt());
+				cnstMileVo.setPayMileMemo(payMileVo.getPayMileMemo());
+				cnstMileVo.setPayMileYn(payMileVo.getPayMileYn());
+				
+				consultingMileageService.saveCnstMile(cnstMileVo);
+			}
+		}
+	}
+
+	public List<TbPpCnstMileVo> findPayListByCustId(long custId) {
+		if (custId == 0)
+			return new ArrayList<TbPpCnstMileVo>();
+		
+		return customerRepo.findPayListByCustId( custId );
 	}
 }
 

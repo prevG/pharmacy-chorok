@@ -22,9 +22,13 @@ public class TbPpCnstMileVo {
 
 	private long cnstId;
 	
+	private String cnstDt;
+	
 	private long custId;
 	
 	private String payTpCd;
+	
+	private String payTpCdNm;
 	
 	private double payMilePnt;
 	

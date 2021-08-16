@@ -482,6 +482,14 @@ $( document ).ready( function() {
 				//});
 			});
 			
+		    /**************************************************************
+		     * "마일리지 다시계산" 버튼 클릭시 - 2
+		     **************************************************************/
+			$(document).off("click", "#btnCalcMileage2").on("click", "#btnCalcMileage2", function (e) {
+
+				RS1001PU02.calcMileage2();
+			});
+			
 			/**************************************************************
 		     * "마일리지 저장" 버튼 클릭시
 		     **************************************************************/
@@ -1057,6 +1065,43 @@ $( document ).ready( function() {
 				}
 			});
 		},
+		calcMileage2: function() {
+			// 고객 마일리지 점수 계산.
+			$.messager.confirm('Confirm', '마일리지 점수를 다시 계산하시겠습니까?<br>마일리지 점수 변경 후에는 반드시 마일리지정보를 저장하셔야 합니다.', function(r) {
+				if (!r) return;
+				
+				var mileage = 0;
+				var rcmdMileYn = [];
+				var rcmdMilePnt = [];
+				$('#rcmdMileIds').find('input[checkboxname="dlg_rcmdMileYn[]"]').each(function(index, item) {
+					rcmdMileYn.push( ($(item).checkbox('options').checked) ? 'Y' : 'N' );
+				});
+				$('#rcmdMileIds').find('input[textboxName="dlg_rcmdMilePnt[]"]').each(function(index, item) {
+					rcmdMilePnt.push( $(item).val() );
+				});
+				for (var i = 0; i < rcmdMileYn.length; i++) {
+					if (rcmdMileYn[i] === 'N') {
+						mileage = mileage + Number(rcmdMilePnt[i]);
+					}
+				}
+				
+				var payMileYn = [];
+				var payMilePnt = [];
+				$('#payMileIds').find('input[checkboxname="dlg_payMileYn[]"]').each(function(index, item) {
+					payMileYn.push( ($(item).checkbox('options').checked) ? 'Y' : 'N' );
+				});
+				$('#payMileIds').find('input[textboxName="dlg_payMilePnt[]"]').each(function(index, item) {
+					payMilePnt.push( $(item).val() );
+				});
+				for (var i = 0; i < payMileYn.length; i++) {
+					if (payMileYn[i] === 'N') {
+						mileage = mileage + Number(payMilePnt[i]);
+					}
+				}
+								
+				$('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('setValue', mileage);
+			});
+		},
 		saveCustMileage: function() {
 			var custId    	 = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 			var mileage 	 = $('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('getValue');
@@ -1088,12 +1133,39 @@ $( document ).ready( function() {
 				});
 			}
 			
+			// 상담결재 마일리지 사용 목록
+			var payMileList = [];
+			var payCnstId = [];
+			var payMileYn = [];
+			var payMilePnt = [];
+			var payMileMemo = [];
+			$('#payMileIds').find('input[checkboxname="dlg_payMileYn[]"]').each(function(index, item) {
+				payCnstId.push( $(item).val() );
+				payMileYn.push( ($(item).checkbox('options').checked) ? 'Y' : 'N' );
+			});
+			$('#payMileIds').find('input[textboxName="dlg_payMilePnt[]"]').each(function(index, item) {
+				payMilePnt.push( $(item).val() );
+			});
+			$('#payMileIds').find('input[textboxName="dlg_payMileMemo[]"]').each(function(index, item) {
+				payMileMemo.push( $(item).val() );
+			});
+			for (var i = 0; i < payCnstId.length; i++) {
+				payMileList.push({
+					"cnstId" 	 	: payCnstId[i],
+					"cstId" 		: custId,
+					"payMileYn" 	: payMileYn[i],
+					"payMilePnt" 	: payMilePnt[i],
+					"payMileMemo" 	: payMileMemo[i]
+				});
+			}			
+			
 			var formData = {
 				criteria: {
 					"custId" 		:	custId,
 					"mileage" 		:	mileage,
 					"mileageMemo" 	: 	mileageMemo,
-					"rcmdMileList" 	:   rcmdMileList
+					"rcmdMileList" 	:   rcmdMileList,
+					"payMileList" 	:   payMileList
 				}
 			};
 			
