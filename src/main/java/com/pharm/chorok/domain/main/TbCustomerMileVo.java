@@ -28,9 +28,11 @@ public class TbCustomerMileVo {
 
 	private String rcmdCellNo;
 
-	private double rcmdMile;
+	private double rcmdMilePnt;
+	
+	private String rcmdMileMemo;
 
-	private String useYn;
+	private String rcmdMileYn;
 	
 	public TbCustomerMile toEntity() {
 		return TbCustomerMile.builder()
@@ -38,8 +40,9 @@ public class TbCustomerMileVo {
 				.rcmdCustId(rcmdCustId)
 				.rcmdCustNm(rcmdCustNm)
 				.rcmdCellNo(rcmdCellNo)
-				.rcmdMile(rcmdMile)
-				.useYn(useYn)
+				.rcmdMilePnt(rcmdMilePnt)
+				.rcmdMileMemo(rcmdMileMemo)
+				.rcmdMileYn(rcmdMileYn)
 				.build();
 	}
 
@@ -48,8 +51,9 @@ public class TbCustomerMileVo {
 		this.rcmdCustId = entity.getRcmdCustId();
 		this.rcmdCustNm = entity.getRcmdCustNm();
 		this.rcmdCellNo = entity.getRcmdCellNo();
-		this.rcmdMile = entity.getRcmdMile();
-		this.useYn = entity.getUseYn();
+		this.rcmdMilePnt = entity.getRcmdMilePnt();
+		this.rcmdMileMemo = entity.getRcmdMileMemo();
+		this.rcmdMileYn = entity.getRcmdMileYn();
 	}
 	
 }

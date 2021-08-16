@@ -252,12 +252,12 @@
 										</tr>
 									</thead>
 									<tbody id="rcmdIds">
-										<tr th:each="data, index : ${rcmdList}">
+										<tr th:each="data, index : ${rcmdMileList}">
 											<th scope="row" class="col-4" th:text="${data?.custUsrNm}"></th>
 											<td class="col-5" th:text="${data?.custCellNo}"></td>
 											<td class="col-3" style="text-align: center;">
 												<input class="easyui-checkbox" name="dlg_rcmdYn[]" th:value="${data?.custId}"
-													th:checked="${data?.rcmdMilgYn} eq 'Y'">
+													th:checked="${data?.rcmdMileYn} eq 'Y'">
 											</td>
 										</tr>
 									</tbody>

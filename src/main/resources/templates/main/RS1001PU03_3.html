@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div id="mileage-table" th:fragment="mileage-table"
+	th:with="
+		birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
+		thisYear=${#dates.year(#dates.createNow()) + 1}">
+	<div class="row">
+		<div class="col-12 d-flex justify-content-end">
+			<a href="javascript:void(0)" id="btnSaveMileage" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">마일리지 저장</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#custDlg').dialog('close');">닫기</a>
+		</div>
+	</div>
+    <form id="saveMileFrm" name="saveMileFrm" method="post">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row p-1">
+				<div class="easyui-panel" title="마일리지 총계" style="width: 100%;min-height: 150px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_mileage1" class="easyui-numberbox" style="width: 100%;text-align: center;"
+								   data-options="label:'사용가능(현금결재)',labelWidth:180"
+								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_mileage2" class="easyui-numberbox" style="width: 100%;text-align: center;"
+								   data-options="label:'사용가능(추천결재)',labelWidth:180"
+								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_mileage" class="easyui-numberbox" style="width: 500px;text-align: center;"
+								   data-options="label:'마일리지 총계',labelWidth:180,readonly:true"
+								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
+							<a href="javascript:void(0)" id="btnCalcMileage2" class="easyui-linkbutton c2 ml-2" style="width: 180px;">마일리지 다시계산</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-1">
+				<div class="easyui-panel" title="마일리지 메모" style="width: 100%;min-height: 495px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<input name="dlg_mileageMemo" class="easyui-textbox" style="width: 100%;height: 495px;"
+								   data-options="multiline:true"
+								   th:value="${custInfo?.mileageMemo}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="row p-1">
+				<div class="easyui-panel" title="현금결재" style="width: 100%;min-height: 300px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<div class="easyui-panel" style="width: 100%;min-height: 300px;">
+								<table class="table table-bordered table-sm">
+									<thead class="thead-light">
+										<tr>
+											<th scope="col" class="col-2">상담일시</th>
+											<th scope="col" class="col-2">결재유형</th>
+											<th scope="col" class="col-2">사용일자</th>
+											<th scope="col" class="col-2">마일리지</th>
+											<th scope="col" class="col-4">설명</th>
+										</tr>
+									</thead>
+									<tbody id="payMileIds">
+										<tr th:each="data, index : ${rcmdMileList}">
+											<th scope="row" class="col-2" th:text="${data?.custUsrNm}"></th>
+											<td class="col-2" th:text="${data?.custCellNo}"></td>
+											<td class="col-2" style="text-align: center;">
+												<input class="easyui-checkbox" name="dlg_rcmdYn[]" th:value="${data?.custId}"
+													th:checked="${data?.rcmdMileYn} eq 'Y'">
+											</td>
+											<td class="col-2" style="text-align: center;"></td>
+											<td class="col-4" style="text-align: center;"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row p-1">
+				<div class="easyui-panel" title="내가 추천한 사람" style="width: 100%;min-height: 300px;"
+					 data-options="collapsible:true">
+					<div class="row m-2">
+						<div class="col-12">
+							<div class="easyui-panel" style="width: 100%;min-height: 300px;">
+								<table class="table table-bordered table-sm">
+									<thead class="thead-light">
+										<tr>
+											<th scope="col" class="col-2">고객이름</th>
+											<th scope="col" class="col-2">휴대폰번호</th>
+											<th scope="col" class="col-2">사용여부</th>
+											<th scope="col" class="col-2">마일리지</th>
+											<th scope="col" class="col-4">설명</th>
+										</tr>
+									</thead>
+									<tbody id="rcmdMileIds">
+										<tr th:each="data, index : ${rcmdMileList}">
+											<th scope="row" class="col-2" style="vertical-align: middle;" 
+												th:text="${data?.custUsrNm}"></th>
+											<td class="col-2" style="vertical-align: middle;" 
+												th:text="${data?.custCellNo}"></td>
+											<td class="col-2" style="vertical-align: middle;text-align: center;">
+												<input class="easyui-checkbox" name="dlg_rcmdMileYn[]" th:value="${data?.custId}"
+													th:checked="${data?.rcmdMileYn} eq 'Y'">
+											</td>
+											<td class="col-2">
+												<input class="easyui-numberbox" name="dlg_rcmdMilePnt[]" style="width: 100%;height: 26px;"
+													th:value="${data?.rcmdMilePnt}">
+											</td>
+											<td class="col-4">
+												<input class="easyui-textbox" name="dlg_rcmdMileMemo[]" style="width: 100%;height: 26px;"
+													th:value="${data?.rcmdMileMemo}">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    </form>
+
+</div>

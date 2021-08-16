@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCustomerMileVo;
 
 import lombok.Data;
@@ -41,6 +41,7 @@ public class TbCustomer extends TbCommColumn {
 	private String custGenTpCdNm;	// 남성/여성 
 	private String mrgYnNm;			// 기혼/미혼
 	private int mileage;			// 마일리지 점수
+	private String mileageMemo;		// 마일리지 메모
 	private int rcmdCnt;			// 추천인수
 	private String custRegYear;		// 고객등록년월
 	
@@ -55,7 +56,7 @@ public class TbCustomer extends TbCommColumn {
 	private long rsvtId;
 	
 	//추천인 마일리지 적용목록
-	private List<ResultRcmdVo> rcmdMilgList;
+	private List<ResultRcmdMileVo> rcmdMileList;
 	
 	//추천인 정보
 	private TbCustomerMileVo custMile;

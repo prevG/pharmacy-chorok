@@ -61,9 +61,10 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
-         , RCMD_MILG_YN
+         , RCMD_MILE_YN
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = #{custId}) AS RCMD_CNT
          , MILEAGE
+         , MILEAGE_MEMO
          , CUST_REG_YEAR
       FROM TB_CUSTOMER
      WHERE CUST_ID = #{custId}
@@ -98,7 +99,7 @@
          , CUST.RCMD_CUST_ID
          , CUST.RCMD_CUST_NM
          , CUST.RCMD_CELL_NO
-         , CUST.RCMD_MILG_YN
+         , CUST.RCMD_MILE_YN
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = CUST.CUST_ID) AS RCMD_CNT
          , CUST.MILEAGE
          , CUST.CUST_REG_YEAR
@@ -202,11 +203,12 @@
          , RCMD_CUST_ID
          , RCMD_CUST_NM
          , RCMD_CELL_NO
-         , RCMD_MILG_YN
+         , RCMD_MILE_YN
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_NM
          , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = MRG_YN AND USE_YN = 'Y') AS MRG_YN_NM
          , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = A.CUST_ID) AS RCMD_CNT
          , MILEAGE
+         , MILEAGE_MEMO
          , CUST_REG_YEAR
       FROM TB_CUSTOMER A
      WHERE 1 = 1
@@ -226,13 +228,13 @@
 	]]>
 	</select>
 	
-	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.ResultRcmdVo">
+	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.ResultRcmdMileVo">
     /** com.pharm.chorok.web.main.repository.CustomerRepository.findRcmdListByCustId */
 		SELECT CUST_ID
 			  , CUST_USR_NM
 			  , CUST_CELL_NO
 			  , RCMD_CUST_ID
-			  , RCMD_MILG_YN 
+			  , RCMD_MILE_YN 
 		FROM TB_CUSTOMER A
 		WHERE RCMD_CUST_ID = #{custId}
      	ORDER
@@ -329,8 +331,16 @@
 	
 	<update id="updateRcmdMilgYn">
 		UPDATE TB_CUSTOMER
-		SET RCMD_MILG_YN = #{rcmdMilgYn}
+		SET RCMD_MILE_YN = #{rcmdMileYn}
 		WHERE CUST_ID = #{custId}
 		AND RCMD_CUST_ID = #{rcmdCustId}
+	</update>
+	
+	<update id="updateTbCustMileage">
+	/** com.pharm.chorok.web.main.repository.CustomerRepository.updateTbCustMileage */
+	UPDATE TB_CUSTOMER
+	SET MILEAGE 		= #{mileage}
+		, MILEAGE_MEMO 	= #{mileageMemo}
+	WHERE CUST_ID = #{custId}
 	</update>
 </mapper>

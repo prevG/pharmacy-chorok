@@ -481,6 +481,17 @@ $( document ).ready( function() {
 					RS1001PU02.saveDosingChart();
 				//});
 			});
+			
+			/**************************************************************
+		     * "마일리지 저장" 버튼 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnSaveMileage").on("click", "#btnSaveMileage", function (e) {
+				//$.messager.confirm('Confirm', '마일리지 정보를 저장하시겠습니까?', function(r) {
+				//	if (!r) return;
+					
+					RS1001PU02.saveCustMileage();
+				//});
+			});
 		},
 		saveCust: function() {
 			var custId    = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
@@ -523,7 +534,7 @@ $( document ).ready( function() {
 				return;
 			}
 			// 추천인 마일리지 사용 목록
-			var rcmdMilgList = [];
+			var rcmdMileList = [];
 			$('#rcmdIds').find('input[checkboxname="dlg_rcmdYn[]"]').each(function(index, item) {
 				var chkVal = 'N';
 				if ($(item).checkbox('options').checked) {
@@ -532,9 +543,9 @@ $( document ).ready( function() {
 				var rcmdCust = {
 					"custId" 	 : $(item).val(),
 					"rcmdCustId" : custId,
-					"rcmdMilgYn" : chkVal
+					"rcmdMileYn" : chkVal
 				}
-				rcmdMilgList.push(rcmdCust);				
+				rcmdMileList.push(rcmdCust);				
 			});
 		
 			$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
@@ -566,7 +577,7 @@ $( document ).ready( function() {
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
 						"mileage" 		:   $('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('getValue'),
 						"custRegYear" 	:   $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue'),
-						"rcmdMilgList" 	:   rcmdMilgList,
+						"rcmdMileList" 	:   rcmdMileList,
 						"custMile" 		:   {
 							"custId" 		: 	custId,
 							"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
@@ -1045,14 +1056,71 @@ $( document ).ready( function() {
 					$.messager.alert('복용차트 저장', xhr.responseJSON.message, 'error');
 				}
 			});
+		},
+		saveCustMileage: function() {
+			var custId    	 = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
+			var mileage 	 = $('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('getValue');
+			var mileageMemo  = $('#saveMileFrm input[textboxName=dlg_mileageMemo]').textbox('getValue');
+			
+			// 추천인 마일리지 사용 목록
+			var rcmdMileList = [];
+			var rcmdCustId = [];
+			var rcmdMileYn = [];
+			var rcmdMilePnt = [];
+			var rcmdMileMemo = [];
+			$('#rcmdMileIds').find('input[checkboxname="dlg_rcmdMileYn[]"]').each(function(index, item) {
+				rcmdCustId.push( $(item).val() );
+				rcmdMileYn.push( ($(item).checkbox('options').checked) ? 'Y' : 'N' );
+			});
+			$('#rcmdMileIds').find('input[textboxName="dlg_rcmdMilePnt[]"]').each(function(index, item) {
+				rcmdMilePnt.push( $(item).val() );
+			});
+			$('#rcmdMileIds').find('input[textboxName="dlg_rcmdMileMemo[]"]').each(function(index, item) {
+				rcmdMileMemo.push( $(item).val() );
+			});
+			for (var i = 0; i < rcmdCustId.length; i++) {
+				rcmdMileList.push({
+					"custId" 	 	: rcmdCustId[i],
+					"rcmdCustId" 	: custId,
+					"rcmdMileYn" 	: rcmdMileYn[i],
+					"rcmdMilePnt" 	: rcmdMilePnt[i],
+					"rcmdMileMemo" 	: rcmdMileMemo[i]
+				});
+			}
+			
+			var formData = {
+				criteria: {
+					"custId" 		:	custId,
+					"mileage" 		:	mileage,
+					"mileageMemo" 	: 	mileageMemo,
+					"rcmdMileList" 	:   rcmdMileList
+				}
+			};
+			
+			$.ajax({
+				url: '/reservation/RS1001PU02/saveCustMileage',
+				method: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(formData),
+				success: function(res) {
+					if (res.status === 'success') {
+						$.messager.show({ title: '마일리지 저장', msg: res.message });
+					} else {
+						$.messager.alert('마일리지 저장', res.message);
+						return;
+					}
+				},
+				error: function(xhr, status, error) {
+					$.messager.alert('마일리지 저장', xhr.responseJSON.message, 'error');
+				}
+			});
 		}
 		,textareaAutoHeight : function(textEle) {
 			textEle.css("height", 'auto');
 			var textEleHeight = textEle.prop('scrollHeight');
 			textEle.css('height', textEleHeight);
 		}
-
-
 
 	};
 	

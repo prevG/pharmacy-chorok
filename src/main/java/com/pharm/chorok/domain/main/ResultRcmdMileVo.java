@@ -3,7 +3,7 @@ package com.pharm.chorok.domain.main;
 import lombok.Data;
 
 @Data
-public class ResultRcmdVo {
+public class ResultRcmdMileVo {
 
 	private long custId;
 	
@@ -13,6 +13,10 @@ public class ResultRcmdVo {
 	
 	private long rcmdCustId;
 	
-	private String rcmdMilgYn;
+	private double rcmdMilePnt;
+	
+	private String rcmdMileMemo;
+	
+	private String rcmdMileYn;
 	
 }

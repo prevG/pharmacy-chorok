@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
@@ -159,7 +159,7 @@ public class ADUserController {
         TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
         
         //고객 추천인 목록
-        List<ResultRcmdVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
+        List<ResultRcmdMileVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
         
         //생년월일
         List<TbCommCodeVo> birthYyList = CommCodeEx.birthYyList();

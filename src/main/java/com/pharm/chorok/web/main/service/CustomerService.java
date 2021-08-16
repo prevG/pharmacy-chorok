@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCustomerMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
@@ -94,11 +94,11 @@ public class CustomerService {
 			customerMileageService.saveCustomerMile(custMileVo);
 		} else {
 			custMileVo = custInfo.getCustMile();
-			custMileVo.setUseYn("N");
+			custMileVo.setRcmdMileYn("N");
 			customerMileageService.saveCustomerMile(custMileVo);
 		}
 			
-		for (ResultRcmdVo rcmdVo : custInfo.getRcmdMilgList()) {
+		for (ResultRcmdMileVo rcmdVo : custInfo.getRcmdMileList()) {
 			customerRepo.updateRcmdMilgYn(rcmdVo);
 		}
 		return result;
@@ -151,7 +151,6 @@ public class CustomerService {
 		return resultList;
 	}
 
-
     public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) throws Exception {
 
 		String cstUsrNm  = customerParam.getCustUsrNm();
@@ -171,11 +170,26 @@ public class CustomerService {
 		return 0;
 	}
 
-	public List<ResultRcmdVo> findRcmdListByCustId(long custId) {
+	public List<ResultRcmdMileVo> findRcmdListByCustId(long custId) {
 		if (custId == 0)
-			return new ArrayList<ResultRcmdVo>();
+			return new ArrayList<ResultRcmdMileVo>();
 		
 		return customerRepo.findRcmdListByCustId( custId );
+	}
+
+	@Transactional
+	public void saveCustMileage(TbCustomer custInfo) {
+		customerRepo.updateTbCustMileage( custInfo );
+		for (ResultRcmdMileVo rcmdMileVo : custInfo.getRcmdMileList()) {
+			TbCustomerMileVo custMileVo = customerMileageService.findByCustomerMileById(rcmdMileVo.getCustId());
+			if (custMileVo != null) {
+				custMileVo.setRcmdMilePnt(rcmdMileVo.getRcmdMilePnt());
+				custMileVo.setRcmdMileMemo(rcmdMileVo.getRcmdMileMemo());
+				custMileVo.setRcmdMileYn(rcmdMileVo.getRcmdMileYn());
+				
+				customerMileageService.saveCustomerMile(custMileVo);
+			}
+		}
 	}
 }
 

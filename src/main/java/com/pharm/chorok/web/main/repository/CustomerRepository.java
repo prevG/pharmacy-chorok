@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.main.ResultRcmdVo;
+import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -28,7 +29,8 @@ public interface CustomerRepository {
     public int updateTbCustomer(TbCustomer custInfo) throws Exception;
     public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
 	
-    public List<ResultRcmdVo> findRcmdListByCustId(long custId);
-	public void updateRcmdMilgYn(ResultRcmdVo rcmdVo);
+    public List<ResultRcmdMileVo> findRcmdListByCustId(long custId);
+	public void updateRcmdMilgYn(ResultRcmdMileVo rcmdVo);
+	public void updateTbCustMileage(TbCustomer custInfo) throws DataAccessException;
 
 }

@@ -194,19 +194,19 @@ public class ChartService {
     @Transactional
 	public int updateTbPpCnstChart(TbPpCnstChart inCnstChart) throws Exception {
     	// 결재유형에 따른 마일리지 정보 저장
-    	double mile = 10;
+    	double milePnt = 10;
     	TbPpCnstMileVo cnstMileVo = consultingMileageService.findByCnstId(inCnstChart.getCnstId());
     	if (cnstMileVo != null) {
     		cnstMileVo.setPayTpCd(inCnstChart.getPayTpCd());
-    		cnstMileVo.setPayMile(mile);
+    		cnstMileVo.setPayMilePnt(milePnt);
     		consultingMileageService.saveCnstMile(cnstMileVo);
     	} else {
     		consultingMileageService.saveCnstMile(TbPpCnstMileVo.builder()
     				.cnstId(inCnstChart.getCnstId())
     				.custId(inCnstChart.getCustId())
     				.payTpCd(inCnstChart.getPayTpCd())
-    				.payMile(mile)
-    				.useYn("N")
+    				.payMilePnt(milePnt)
+    				.payMileYn("N")
     				.build());
     	}
     	

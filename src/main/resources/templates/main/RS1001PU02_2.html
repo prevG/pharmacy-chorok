@@ -10,10 +10,14 @@
 				<div th:replace="main/RS1001PU03_2 :: customer-table"></div>
 			</div>
 			<th:block th:if="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0}">
-			<div title="차트정보" id="custom-tabs-four-profile" class="p-2"
-				 data-options="labelWidth:120,disabled:true">
-				<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
-			</div>
+				<div title="차트정보" id="custom-tabs-four-profile" class="p-2"
+					 data-options="labelWidth:120,disabled:true">
+					<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
+				</div>
+				<div title="마일리지" id="custom-tabs-four-mileage" class="p-2"
+					 data-options="labelWidth:120,disabled:true">
+					<div th:replace="main/RS1001PU03_3 :: mileage-table"></div>
+				</div>
 			</th:block>
 			<th:block th:unless="${custInfo?.custId == null or custInfo?.custId == '' or custInfo?.custId == 0}">
 				<th:block th:if="${tabNo} eq 0">
@@ -21,11 +25,19 @@
 						 data-options="labelWidth:120">
 						<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
 					</div>
+					<div title="마일리지" id="custom-tabs-four-mileage" class="p-2"
+						 data-options="labelWidth:120">
+						<div th:replace="main/RS1001PU03_3 :: mileage-table"></div>
+					</div>
 				</th:block>
 				<th:block th:unless="${tabNo} eq 0">
 					<div title="차트정보" id="custom-tabs-four-profile" class="p-2"
 						 data-options="labelWidth:120,selected:1">
 						<div th:replace="main/RS1001PU04_2 :: charts-table"></div>
+					</div>
+					<div title="마일리지" id="custom-tabs-four-mileage" class="p-2"
+						 data-options="labelWidth:120">
+						<div th:replace="main/RS1001PU03_3 :: mileage-table"></div>
 					</div>
 				</th:block>
 			</th:block>

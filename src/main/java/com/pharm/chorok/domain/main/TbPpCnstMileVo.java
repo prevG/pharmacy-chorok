@@ -26,17 +26,20 @@ public class TbPpCnstMileVo {
 	
 	private String payTpCd;
 	
-	private double payMile;
+	private double payMilePnt;
 	
-	private String useYn;
+	private String payMileMemo;
+	
+	private String payMileYn;
 	
 	public TbPpCnstMile toEntity() {
 		return TbPpCnstMile.builder()
 				.cnstId(cnstId)
 				.custId(custId)
 				.payTpCd(payTpCd)
-				.payMile(payMile)
-				.useYn(useYn)
+				.payMilePnt(payMilePnt)
+				.payMileMemo(payMileMemo)
+				.payMileYn(payMileYn)
 				.build();
 	}
 
@@ -44,8 +47,9 @@ public class TbPpCnstMileVo {
 		this.cnstId = entity.getCnstId();
 		this.custId = entity.getCustId();
 		this.payTpCd = entity.getPayTpCd();
-		this.payMile = entity.getPayMile();
-		this.useYn = entity.getUseYn();
+		this.payMilePnt = entity.getPayMilePnt();
+		this.payMileMemo = entity.getPayMileMemo();
+		this.payMileYn = entity.getPayMileYn();
 	}
 	
 }

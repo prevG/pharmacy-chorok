@@ -35,10 +35,13 @@ public class TbPpCnstMile {
 	@Column(name = "PAY_TP_CD")
 	private String payTpCd;
 	
-	@Column(name = "PAY_MILE")
-	private double payMile;
+	@Column(name = "PAY_MILE_PNT")
+	private double payMilePnt;
 	
-	@Column(name = "USE_YN")
-	private String useYn;
+	@Column(name = "PAY_MILE_MEMO")
+	private String payMileMemo;
+	
+	@Column(name = "PAY_MILE_YN")
+	private String payMileYn;
 	
 }

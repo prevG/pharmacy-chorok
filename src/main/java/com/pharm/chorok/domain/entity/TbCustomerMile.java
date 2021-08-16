@@ -38,10 +38,13 @@ public class TbCustomerMile {
 	@Column(name = "RCMD_CELL_NO")
 	private String rcmdCellNo;
 
-	@Column(name = "RCMD_MILE")
-	private double rcmdMile;
+	@Column(name = "RCMD_MILE_PNT")
+	private double rcmdMilePnt;
 
-	@Column(name = "USE_YN")
-	private String useYn;
+	@Column(name = "RCMD_MILE_MEMO")
+	private String rcmdMileMemo;
+
+	@Column(name = "RCMD_MILE_YN")
+	private String rcmdMileYn;
 	
 }

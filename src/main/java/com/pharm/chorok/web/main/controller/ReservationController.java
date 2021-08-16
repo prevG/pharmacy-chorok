@@ -299,6 +299,17 @@ public class ReservationController {
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);
 	}
+	
+	@PostMapping("/RS1001PU02/saveCustMileage")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> saveCustMileage(
+			@RequestBody PageCriteria<TbCustomer> pageCriteria
+			) throws Exception {
+		
+		customerSvc.saveCustMileage(pageCriteria.getCriteria());
+			
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 마일리지정보가 수정되었습니다."), HttpStatus.OK);
+	}
 
 	/**
 	 * @deprecated /RS1001PU02/findPaperChartByCnstId_2 함수로 대체함.
