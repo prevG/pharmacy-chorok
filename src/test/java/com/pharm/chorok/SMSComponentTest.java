@@ -19,7 +19,7 @@ class SMSComponentTest {
 		
 		sms.sendMmsWithAttach();
 		
-		assertTrue(true, "sms test");
+		assertTrue(true, "sms test222");
 	}
 
 }
