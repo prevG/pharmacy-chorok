@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCustomerMileVo;
 import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCustomer;
@@ -14,11 +18,6 @@ import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbSurvey;
 import com.pharm.chorok.web.main.repository.CustomerRepository;
 import com.pharm.chorok.web.main.repository.ReservationRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 @Service
 public class CustomerService {
@@ -63,6 +62,8 @@ public class CustomerService {
 		//추천인정보 저장
 		TbCustomerMileVo custMileVo = custInfo.getCustMile();
 		custMileVo.setCustId( newCustId );
+		custMileVo.setRcmdMilePnt(20); // default 20 point
+		custMileVo.setRcmdMileYn("N");
 		if (custMileVo.getRcmdCustId() > 0) {
 			customerMileageService.saveCustomerMile(custMileVo);
 		}
@@ -88,23 +89,21 @@ public class CustomerService {
 	public int saveCustomer_2(TbCustomer custInfo) throws Exception {
 		int result = customerRepo.updateTbCustomer( custInfo );
 		
-		//추천인정보 저장
+		//기존 추천인 조회.
 		TbCustomerMileVo custMileVo = customerMileageService.findByCustomerMileById(custInfo.getCustId());
 		if (custMileVo != null) {
-			//고객정보에서 추천인 마일리지와 사용여부는 저장하지 않는다.
+			//고객정보에서 마일리지 포인트와 사용여부는 저장 안함.
 			custMileVo.setRcmdCustId(custInfo.getRcmdCustId());
 			custMileVo.setRcmdCustNm(custInfo.getRcmdCustNm());
 			custMileVo.setRcmdCellNo(custInfo.getRcmdCellNo());
 			customerMileageService.saveCustomerMile(custMileVo);
 		} else {
 			custMileVo = custInfo.getCustMile();
+			custMileVo.setRcmdMilePnt(20); // default 20 point
 			custMileVo.setRcmdMileYn("N");
 			customerMileageService.saveCustomerMile(custMileVo);
 		}
-			
-		for (ResultRcmdMileVo rcmdVo : custInfo.getRcmdMileList()) {
-			customerRepo.updateRcmdMilgYn(rcmdVo);
-		}
+
 		return result;
 	}
 
@@ -174,9 +173,9 @@ public class CustomerService {
 		return 0;
 	}
 
-	public List<ResultRcmdMileVo> findRcmdListByCustId(long custId) {
+	public List<TbCustomerMileVo> findRcmdListByCustId(long custId) {
 		if (custId == 0)
-			return new ArrayList<ResultRcmdMileVo>();
+			return new ArrayList<TbCustomerMileVo>();
 		
 		return customerRepo.findRcmdListByCustId( custId );
 	}
@@ -184,7 +183,8 @@ public class CustomerService {
 	@Transactional
 	public void saveCustMileage(TbCustomer custInfo) {
 		customerRepo.updateTbCustMileage( custInfo );
-		for (ResultRcmdMileVo rcmdMileVo : custInfo.getRcmdMileList()) {
+		//추천인 마일리지
+		for (TbCustomerMileVo rcmdMileVo : custInfo.getRcmdMileList()) {
 			TbCustomerMileVo custMileVo = customerMileageService.findByCustomerMileById(rcmdMileVo.getCustId());
 			if (custMileVo != null) {
 				custMileVo.setRcmdMilePnt(rcmdMileVo.getRcmdMilePnt());
@@ -195,6 +195,7 @@ public class CustomerService {
 			}
 		}
 		
+		//상담결재 마일리지 
 		for (TbPpCnstMileVo payMileVo : custInfo.getPayMileList()) {
 			TbPpCnstMileVo cnstMileVo = consultingMileageService.findByCnstId(payMileVo.getCnstId());
 			if (cnstMileVo != null) {

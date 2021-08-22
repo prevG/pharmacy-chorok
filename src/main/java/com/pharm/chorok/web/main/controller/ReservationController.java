@@ -276,13 +276,7 @@ public class ReservationController {
 		
 		// 신규고객 등록
 		long orgCustId = pageCriteria.getCriteria().getCustId();
-		if ( orgCustId == 0) {
-			
-			// //이미 등록된 핸드폰번호가 존재하는지 확인
-			// int newCellNoCount = userService.countUserCellNo(pageCriteria.getCriteria());
-			// if (newCellNoCount > 0) {
-			// 	return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
-			// }
+		if ( orgCustId == 0 ) {
 
 			//1. 고객정보 신규등록 or 수정
 			//2. 예약정보에 고객ID 수정
@@ -292,9 +286,6 @@ public class ReservationController {
 		}
 
 		// 기존고객 수정
-		// int cellNoCount = userService.countUserCellNoByExcludeCustId(pageCriteria.getCriteria());
-		// if (cellNoCount > 0)
-		// 	return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "핸드폰번호가 이미 존재합니다."), HttpStatus.OK);
 		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);

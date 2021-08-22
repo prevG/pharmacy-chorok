@@ -10,6 +10,7 @@ public class CommCodeEx {
 
 	/**
 	 * 생년월일 - 년도
+	 * @deprecated don't use
 	 * 
 	 * @return
 	 */
@@ -65,6 +66,7 @@ public class CommCodeEx {
 	
 	/**
 	 * 출산자녀수
+	 * @deprecated don't use
 	 * 
 	 * @return
 	 */
@@ -83,6 +85,7 @@ public class CommCodeEx {
 	
 	/**
 	 * 마지막 출산년도
+	 * @deprecated don't use
 	 * 
 	 * @return
 	 */

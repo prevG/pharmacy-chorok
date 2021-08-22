@@ -518,43 +518,11 @@ $( document ).ready( function() {
 			var custBirthMm = $('#saveCustFrm select[textboxName=dlg_custBirthMm]').combobox('getValue');
 			var custBirthDd = $('#saveCustFrm select[textboxName=dlg_custBirthDd]').combobox('getValue');
 			var custBirthDt = custBirthYy + custBirthMm + custBirthDd;
-			/*			
-			if ($isEmpty(custBirthYy) || custBirthYy.length !== 4) {
-				$.messager.alert('고객정보 저장', '생년월일 출생년도를 입력하세요.');
-				return;
-			}
-			if ($isEmpty(custBirthMm)) {
-				$.messager.alert('고객정보 저장', '생년월일 출생월을 선택하세요.');
-				return;
-			}
-			if ($isEmpty(custBirthDd)) {
-				$.messager.alert('고객정보 저장', '생년월일 출생일을 선택하세요.');
-				return;
-			}
-			if ($isEmpty(custBirthDt) || custBirthDt.length != 8) {
-				$.messager.alert('고객정보 저장', '생년월일을 입력하세요.');
-				return;
-			}
-			*/
 			var custGenTpCd = $('#saveCustFrm input[name=dlg_custGenTpCd]:checked').val();
 			if ($isEmpty(custGenTpCd)) {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
 				return;
 			}
-			// 추천인 마일리지 사용 목록
-			var rcmdMileList = [];
-			$('#rcmdIds').find('input[checkboxname="dlg_rcmdYn[]"]').each(function(index, item) {
-				var chkVal = 'N';
-				if ($(item).checkbox('options').checked) {
-					chkVal = 'Y';
-				}
-				var rcmdCust = {
-					"custId" 	 : $(item).val(),
-					"rcmdCustId" : custId,
-					"rcmdMileYn" : chkVal
-				}
-				rcmdMileList.push(rcmdCust);				
-			});
 		
 			$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
 				if (!r) return;
@@ -569,11 +537,6 @@ $( document ).ready( function() {
 						"custBirthDt" 	: 	custBirthDt,
 						"custGenTpCd" 	: 	custGenTpCd,
 						"custAge" 		:   $('#saveCustFrm input[textboxName=dlg_custAge]').numberbox('getValue'),
-						"mrgYn" 		: 	$('#saveCustFrm input[name=dlg_mrgYn]:checked').val(),
-						"pcrtChdCnt" 	: 	$('#saveCustFrm select[textboxName=dlg_pcrtChdCnt]').combobox('getValue'),
-						"lstPcrtYear" 	: 	$('#saveCustFrm select[textboxName=dlg_lstPcrtYear]').combobox('getValue'),
-						"brstFdgYn" 	: 	$('#saveCustFrm input[name=dlg_brstFdgYn]:checked').val(),
-						"vistTpCd" 		: 	$('#saveCustFrm input[name=dlg_vistTpCd]:checked').val(),
 						"zipCode" 		: 	$('#saveCustFrm input[textboxName=dlg_zipCode]').textbox('getValue'),
 						"addr1" 		: 	$('#saveCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
 						"addr2" 		: 	$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
@@ -583,15 +546,7 @@ $( document ).ready( function() {
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
-						"mileage" 		:   $('#saveCustFrm input[textboxName=dlg_mileage]').numberbox('getValue'),
-						"custRegYear" 	:   $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue'),
-						"rcmdMileList" 	:   rcmdMileList,
-						"custMile" 		:   {
-							"custId" 		: 	custId,
-							"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
-							"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
-							"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')
-						}
+						"custRegYear" 	:   $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue')
 					}
 				};
 				
@@ -1067,10 +1022,11 @@ $( document ).ready( function() {
 		},
 		calcMileage2: function() {
 			// 고객 마일리지 점수 계산.
-			$.messager.confirm('Confirm', '마일리지 점수를 다시 계산하시겠습니까?<br>마일리지 점수 변경 후에는 반드시 마일리지정보를 저장하셔야 합니다.', function(r) {
+			$.messager.confirm('Confirm', '마일리지 점수를 다시 계산하시겠습니까?<br>마일리지 점수 계산 후에는 반드시 마일리지정보를 저장하셔야 합니다.', function(r) {
 				if (!r) return;
 				
 				var mileage = 0;
+				var rcmdMileage = 0;
 				var rcmdMileYn = [];
 				var rcmdMilePnt = [];
 				$('#rcmdMileIds').find('input[checkboxname="dlg_rcmdMileYn[]"]').each(function(index, item) {
@@ -1081,10 +1037,11 @@ $( document ).ready( function() {
 				});
 				for (var i = 0; i < rcmdMileYn.length; i++) {
 					if (rcmdMileYn[i] === 'N') {
-						mileage = mileage + Number(rcmdMilePnt[i]);
+						rcmdMileage = rcmdMileage + Number(rcmdMilePnt[i]);
 					}
 				}
 				
+				var payMileage = 0;
 				var payMileYn = [];
 				var payMilePnt = [];
 				$('#payMileIds').find('input[checkboxname="dlg_payMileYn[]"]').each(function(index, item) {
@@ -1095,10 +1052,13 @@ $( document ).ready( function() {
 				});
 				for (var i = 0; i < payMileYn.length; i++) {
 					if (payMileYn[i] === 'N') {
-						mileage = mileage + Number(payMilePnt[i]);
+						payMileage = payMileage + Number(payMilePnt[i]);
 					}
 				}
-								
+				mileage = Number(rcmdMileage) + Number(payMileage); 
+				
+				$('#saveMileFrm input[textboxName=dlg_rcmdMileage]').numberbox('setValue', rcmdMileage);
+				$('#saveMileFrm input[textboxName=dlg_payMileage]').numberbox('setValue', payMileage);
 				$('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('setValue', mileage);
 			});
 		},
@@ -1157,8 +1117,27 @@ $( document ).ready( function() {
 					"payMilePnt" 	: payMilePnt[i],
 					"payMileMemo" 	: payMileMemo[i]
 				});
-			}			
+			}
+			// 마일리지 다시 계산
+			var mileage = 0;
+			var rcmdMileage = 0;
+			for (var i = 0; i < rcmdMileYn.length; i++) {
+				if (rcmdMileYn[i] === 'N') {
+					rcmdMileage = rcmdMileage + Number(rcmdMilePnt[i]);
+				}
+			}
+			var payMileage = 0;
+			for (var i = 0; i < payMileYn.length; i++) {
+				if (payMileYn[i] === 'N') {
+					payMileage = payMileage + Number(payMilePnt[i]);
+				}
+			}
+			mileage = Number(rcmdMileage) + Number(payMileage); 
 			
+			$('#saveMileFrm input[textboxName=dlg_rcmdMileage]').numberbox('setValue', rcmdMileage);
+			$('#saveMileFrm input[textboxName=dlg_payMileage]').numberbox('setValue', payMileage);
+			$('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('setValue', mileage);
+							
 			var formData = {
 				criteria: {
 					"custId" 		:	custId,

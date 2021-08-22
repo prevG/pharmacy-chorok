@@ -228,12 +228,14 @@
 	]]>
 	</select>
 	
-	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.ResultRcmdMileVo">
+	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.TbCustomerMileVo">
     	/** com.pharm.chorok.web.main.repository.CustomerRepository.findRcmdListByCustId */
 		SELECT A.CUST_ID
 			  , B.CUST_USR_NM
 			  , B.CUST_CELL_NO
 			  , A.RCMD_CUST_ID
+			  , A.RCMD_CUST_NM
+			  , A.RCMD_CELL_NO
 			  , A.RCMD_MILE_PNT
 			  , A.RCMD_MILE_MEMO
 			  , A.RCMD_MILE_YN 

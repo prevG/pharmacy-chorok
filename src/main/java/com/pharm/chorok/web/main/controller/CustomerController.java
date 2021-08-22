@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharm.chorok.common.service.CalendarService;
 import com.pharm.chorok.domain.comm.CommCodeEx;
-import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCommCodeVo;
+import com.pharm.chorok.domain.main.TbCustomerMileVo;
 import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
@@ -159,9 +159,9 @@ public class CustomerController {
 	}
 
 	/**
-	 * 고객정보 목록     - 신규등록 /수정
-	 * 복용상담차트 목록  - 신규등록 /수정
-	 * 주간예약스케쥴     - 상담하기
+	 * 고객정보 목록 	- 신규등록 /수정
+	 * 복용상담차트 목록 	- 신규등록 /수정
+	 * 주간예약스케쥴 	- 상담하기
 	 */
 	@RequestMapping(value="/CUS1001ML_D/{custId}/{tabNo}", method={RequestMethod.GET, RequestMethod.POST})
 	public String CUS1001ML_D(Model model, 
@@ -184,9 +184,9 @@ public class CustomerController {
         TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
         
         //고객 추천인 목록
-        List<ResultRcmdMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( custId );
+        List<TbCustomerMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( custId );
         double rcmdMileage = 0;
-        for (ResultRcmdMileVo rcmdMileVo : rcmdMileList) {
+        for (TbCustomerMileVo rcmdMileVo : rcmdMileList) {
         	if ("N".equals(rcmdMileVo.getRcmdMileYn())) {
         		rcmdMileage = rcmdMileage + rcmdMileVo.getRcmdMilePnt();
         	}
@@ -242,17 +242,11 @@ public class CustomerController {
         //결재유형 코드
         List<TbCommCodeVo> payTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1022", "Y"));
         
-        //생년월일
-        List<TbCommCodeVo> birthYyList = CommCodeEx.birthYyList();
+        //월
         List<TbCommCodeVo> birthMmList = CommCodeEx.birthMmList();
+        //일
         List<TbCommCodeVo> birthDdList = CommCodeEx.birthDdList();
         
-        // 출산자녀수
-        List<TbCommCodeVo> childCntList = CommCodeEx.childCntList();
-        
-        // 마지막 출산년도
-        List<TbCommCodeVo> pcrtYearList = CommCodeEx.pcrtYearList();
-
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", custInfo);
@@ -271,11 +265,8 @@ public class CustomerController {
         model.addAttribute("pausYnList", pausYnList);
         model.addAttribute("stopYnList", stopYnList);
         model.addAttribute("payTpCdList", payTpCdList);
-        model.addAttribute("birthYyList", birthYyList);
         model.addAttribute("birthMmList", birthMmList);
         model.addAttribute("birthDdList", birthDdList);
-        model.addAttribute("childCntList", childCntList);
-        model.addAttribute("pcrtYearList", pcrtYearList);
 
         return "main/RS1001PU02_2 :: customer-main-table";
 	}

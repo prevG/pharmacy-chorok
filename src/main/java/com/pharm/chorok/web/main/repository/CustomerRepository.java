@@ -3,14 +3,14 @@ package com.pharm.chorok.web.main.repository;
 import java.util.HashMap;
 import java.util.List;
 
-import com.pharm.chorok.domain.main.ResultDosingVo;
-import com.pharm.chorok.domain.main.ResultRcmdMileVo;
-import com.pharm.chorok.domain.main.TbPpCnstMileVo;
-import com.pharm.chorok.domain.table.TbCustomer;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
+import com.pharm.chorok.domain.main.ResultDosingVo;
+import com.pharm.chorok.domain.main.TbCustomerMileVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
+import com.pharm.chorok.domain.table.TbCustomer;
 
 @Mapper
 @Repository
@@ -30,8 +30,8 @@ public interface CustomerRepository {
     public int updateTbCustomer(TbCustomer custInfo) throws Exception;
     public int insertNewChartInfo(TbCustomer custInfo) throws Exception;
 	
-    public List<ResultRcmdMileVo> findRcmdListByCustId(long custId);
-	public void updateRcmdMilgYn(ResultRcmdMileVo rcmdVo);
+    public List<TbCustomerMileVo> findRcmdListByCustId(long custId);
+	public void updateRcmdMilgYn(TbCustomerMileVo rcmdVo);
 	public void updateTbCustMileage(TbCustomer custInfo) throws DataAccessException;
 	public List<TbPpCnstMileVo> findPayListByCustId(long custId) throws DataAccessException;
 

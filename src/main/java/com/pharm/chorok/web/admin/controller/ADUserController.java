@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pharm.chorok.domain.comm.CommCodeEx;
 import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
-import com.pharm.chorok.domain.main.ResultRcmdMileVo;
 import com.pharm.chorok.domain.main.TbCommCodeVo;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.web.admin.service.ADUserService;
@@ -158,27 +157,13 @@ public class ADUserController {
 		customer.setCustId( custId );
         TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
         
-        //고객 추천인 목록
-        List<ResultRcmdMileVo> rcmdList = customerSvc.findRcmdListByCustId( custId );
-        
         //생년월일
-        List<TbCommCodeVo> birthYyList = CommCodeEx.birthYyList();
         List<TbCommCodeVo> birthMmList = CommCodeEx.birthMmList();
         List<TbCommCodeVo> birthDdList = CommCodeEx.birthDdList();
         
-        // 출산자녀수
-        List<TbCommCodeVo> childCntList = CommCodeEx.childCntList();
-        
-        // 마지막 출산년도
-        List<TbCommCodeVo> pcrtYearList = CommCodeEx.pcrtYearList();
-        
         model.addAttribute("custInfo", custInfo);
-        model.addAttribute("rcmdList", rcmdList);
-        model.addAttribute("birthYyList", birthYyList);
         model.addAttribute("birthMmList", birthMmList);
         model.addAttribute("birthDdList", birthDdList);
-        model.addAttribute("childCntList", childCntList);
-        model.addAttribute("pcrtYearList", pcrtYearList);
         
 		return "admin/AD1003MV_D :: customer-main-table";
 	}

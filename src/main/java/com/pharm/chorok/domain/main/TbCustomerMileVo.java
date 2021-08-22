@@ -34,6 +34,10 @@ public class TbCustomerMileVo {
 
 	private String rcmdMileYn;
 	
+	private String custUsrNm;
+	
+	private String custCellNo;
+	
 	public TbCustomerMile toEntity() {
 		return TbCustomerMile.builder()
 				.custId(custId)
