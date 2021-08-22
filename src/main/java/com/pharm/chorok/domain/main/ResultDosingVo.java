@@ -14,6 +14,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String dosgDt;
     private String daysStrKor;
     private String dosgLvCd;
+    private String dosgTpCd;
     private String callYn;
     private String dosgYn;
     private String pausYn;
@@ -24,8 +25,10 @@ public class ResultDosingVo extends TbCommColumn {
     private float rmiWgt;
     private String dosgDesc1;
     private String dosgDesc2;
+    private String smsYn;
 
     private String dosgLvCdNm;
+    private String dosgTpCdNm;
     private String callYnNm;
     private String dosgYnNm;
     private String pausYnNm;

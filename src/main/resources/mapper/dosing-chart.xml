@@ -4,138 +4,144 @@
 <mapper namespace="com.pharm.chorok.web.main.repository.DosingRepository">
 
     <select id="selectDosingChartByCnstId"  parameterType="com.pharm.chorok.domain.table.TbPpCnstChart" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
-	<![CDATA[    
-	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCnstId */
-	/** 차트번호에 대한 복용차트 정보 조회 */
-    SELECT DC.DOSG_ID
-         , DC.CNST_ID
-    	 , DC.DOSG_SEQ
-         , CONCAT(DC.DOSG_SEQ, '일차') AS DOSG_SEQ_STR
-         , DATE_FORMAT(DC.DOSG_DT, '%Y-%m-%d') AS DOSG_DT
-         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DC.DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
-         , DC.DOSG_LV_CD
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DC.DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM
-         , CALL_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = DC.CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM       
-         , DOSG_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DC.DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
-         , PAUS_YN          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = DC.PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
-         , STOP_YN          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
-         , MEAL_TP_CD          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = DC.MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
-         , DC.CURR_WGT    
-         , DC.LOSS_WGT     
-         , DC.RMI_WGT
-         , DC.DOSG_DESC1       
-         , DC.DOSG_DESC2       
-         , DC.REG_DT           
-         , DC.REG_USR_NO
-      FROM TB_PP_DOSG_CHART DC
-      INNER JOIN TB_PP_CNST_CHART CC ON CC.CNST_ID = DC.CNST_ID
-     WHERE DC.CNST_ID = #{cnstId}
-     ORDER
-        BY DC.DOSG_ID
-	]]>
+		<![CDATA[    
+		/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCnstId */
+		/** 차트번호에 대한 복용차트 정보 조회 */
+	    SELECT DC.DOSG_ID
+	         , DC.CNST_ID
+	    	 , DC.DOSG_SEQ
+	         , CONCAT(DC.DOSG_SEQ, '일차') AS DOSG_SEQ_STR
+	         , DATE_FORMAT(DC.DOSG_DT, '%Y-%m-%d') AS DOSG_DT
+	         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DC.DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
+	         , DC.DOSG_LV_CD
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DC.DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM
+	         , DC.DOSG_TP_CD
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1024' AND DITC_CD = DC.DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM
+	         , CALL_YN
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = DC.CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM       
+	         , DOSG_YN
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DC.DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
+	         , PAUS_YN          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = DC.PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+	         , STOP_YN          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
+	         , MEAL_TP_CD          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = DC.MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
+	         , DC.CURR_WGT    
+	         , DC.LOSS_WGT     
+	         , DC.RMI_WGT
+	         , DC.DOSG_DESC1       
+	         , DC.DOSG_DESC2
+	         , DC.SMS_YN       
+	         , DC.REG_DT           
+	         , DC.REG_USR_NO
+	      FROM TB_PP_DOSG_CHART DC
+	      INNER JOIN TB_PP_CNST_CHART CC ON CC.CNST_ID = DC.CNST_ID
+	     WHERE DC.CNST_ID = #{cnstId}
+	     ORDER
+	        BY DC.DOSG_ID
+		]]>
     </select>
 
     <select id="selectDosingChartByCallYn"  parameterType="com.pharm.chorok.domain.table.TbPpCnstChart" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
-	<![CDATA[    
-	/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCallYn */
-	/** 차트번호에 대한 차트마스터 정보 조회 */
-    SELECT DOSG_ID
-         , CNST_ID
-    	 , DOSG_SEQ
-         , CONCAT(DOSG_SEQ, '일차') AS DOSG_SEQ_STR
-         , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
-         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
-         , DOSG_LV_CD
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_VAL
-         , CALL_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM        
-         , DOSG_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
-         , PAUS_YN          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
-         , STOP_YN          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
-         , MEAL_TP_CD          
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
-         , CURR_WGT    
-         , LOSS_WGT     
-         , RMI_WGT
-         , DOSG_DESC1       
-         , DOSG_DESC2       
-         , REG_DT           
-         , REG_USR_NO
-      FROM TB_PP_DOSG_CHART
-     WHERE CALL_YN = 'Y'
-     ORDER
-        BY DOSG_ID
-	]]>
+		<![CDATA[    
+		/** com.pharm.chorok.web.main.repository.DosingRepository.selectDosingChartByCallYn */
+		/** 차트번호에 대한 차트마스터 정보 조회 */
+	    SELECT DOSG_ID
+	         , CNST_ID
+	    	 , DOSG_SEQ
+	         , CONCAT(DOSG_SEQ, '일차') AS DOSG_SEQ_STR
+	         , DATE_FORMAT(DOSG_DT, '%Y-%m-%d') AS DOSG_DT
+	         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
+	         , DOSG_LV_CD
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_VAL
+	         , DOSG_TP_CD
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1024' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM
+	         , CALL_YN
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1016' AND DITC_CD = CALL_YN AND USE_YN = 'Y') AS CALL_YN_NM        
+	         , DOSG_YN
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1017' AND DITC_CD = DOSG_YN AND USE_YN = 'Y') AS DOSG_YN_NM        
+	         , PAUS_YN          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1021' AND DITC_CD = PAUS_YN AND USE_YN = 'Y') AS PAUS_YN_NM        
+	         , STOP_YN          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
+	         , MEAL_TP_CD          
+	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
+	         , CURR_WGT    
+	         , LOSS_WGT     
+	         , RMI_WGT
+	         , DOSG_DESC1       
+	         , DOSG_DESC2
+	         , SMS_YN       
+	         , REG_DT           
+	         , REG_USR_NO
+	      FROM TB_PP_DOSG_CHART
+	     WHERE CALL_YN = 'Y'
+	     ORDER
+	        BY DOSG_ID
+		]]>
     </select>
 
     <select id="selectDashDosingList01"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList01 */
-    SELECT C.CUST_USR_NM
-         , CASE LENGTH(C.CUST_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
-           END AS CUST_CELL_NO
-         , C.ADDR1
-      FROM TB_PP_DOSG_CHART A
-         , TB_PP_CNST_CHART B
-         , TB_CUSTOMER C
-     WHERE A.CNST_ID = B.CNST_ID
-       AND B.CUST_ID = C.CUST_ID
-       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
-       AND A.CALL_YN = 'CHEMIST' -- 한약사
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList01 */
+	    SELECT C.CUST_USR_NM
+	         , CASE LENGTH(C.CUST_CELL_NO)
+	                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+	                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+	           END AS CUST_CELL_NO
+	         , C.ADDR1
+	      FROM TB_PP_DOSG_CHART A
+	         , TB_PP_CNST_CHART B
+	         , TB_CUSTOMER C
+	     WHERE A.CNST_ID = B.CNST_ID
+	       AND B.CUST_ID = C.CUST_ID
+	       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+	       AND A.CALL_YN = 'CHEMIST' -- 한약사
+		]]>
     </select>
 
     <select id="selectDashDosingList02"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList02 */
-    SELECT C.CUST_USR_NM
-         , CASE LENGTH(C.CUST_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
-           END AS CUST_CELL_NO
-         , C.ADDR1
-      FROM TB_PP_DOSG_CHART A
-         , TB_PP_CNST_CHART B
-         , TB_CUSTOMER C
-     WHERE A.CNST_ID = B.CNST_ID
-       AND B.CUST_ID = C.CUST_ID
-       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
-       AND A.CALL_YN = 'COUNSELOR' -- 상담실장
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList02 */
+	    SELECT C.CUST_USR_NM
+	         , CASE LENGTH(C.CUST_CELL_NO)
+	                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+	                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+	           END AS CUST_CELL_NO
+	         , C.ADDR1
+	      FROM TB_PP_DOSG_CHART A
+	         , TB_PP_CNST_CHART B
+	         , TB_CUSTOMER C
+	     WHERE A.CNST_ID = B.CNST_ID
+	       AND B.CUST_ID = C.CUST_ID
+	       AND DOSG_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+	       AND A.CALL_YN = 'COUNSELOR' -- 상담실장
+		]]>
     </select>
 
     <select id="selectDashDosingList03"  resultType="com.pharm.chorok.domain.main.ResultDashBoard01VO">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList03 */
-    SELECT B.CNST_ID
-         , C.CUST_USR_NM
-         , CASE LENGTH(C.CUST_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
-           END AS CUST_CELL_NO
-         , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
-         , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
-	  FROM TB_PP_DOSG_CHART A
-         , TB_PP_CNST_CHART B
-         , TB_CUSTOMER C
-     WHERE A.CNST_ID = B.CNST_ID
-       AND B.CUST_ID = C.CUST_ID
-       AND A.PAUS_YN = 'Y'
-	 GROUP
-        BY B.CNST_ID
-         , C.CUST_USR_NM
-         , C.CUST_CELL_NO
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.selectDashDosingList03 */
+	    SELECT B.CNST_ID
+	         , C.CUST_USR_NM
+	         , CASE LENGTH(C.CUST_CELL_NO)
+	                WHEN 11 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(C.CUST_CELL_NO, 4))
+	                WHEN 10 THEN CONCAT(LEFT(C.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(C.CUST_CELL_NO, 4))
+	           END AS CUST_CELL_NO
+	         , MAX(ABS(DATEDIFF(  dosg_dt, DATE_FORMAT(NOW(), '%Y%m%d')))) AS PASS_DAYS
+	         , MAX(STR_TO_DATE(DOSG_DT, '%Y%m%d')) as LAST_DOSG_DT
+		  FROM TB_PP_DOSG_CHART A
+	         , TB_PP_CNST_CHART B
+	         , TB_CUSTOMER C
+	     WHERE A.CNST_ID = B.CNST_ID
+	       AND B.CUST_ID = C.CUST_ID
+	       AND A.PAUS_YN = 'Y'
+		 GROUP
+	        BY B.CNST_ID
+	         , C.CUST_USR_NM
+	         , C.CUST_CELL_NO
+		]]>
     </select>
 
 	<insert id="initTbPpDosgChart">
@@ -144,6 +150,8 @@
 			, DOSG_SEQ
 			, DOSG_DT
 			, DOSG_LV_CD
+			, DOSG_TP_CD
+			, SMS_YN
 			, REG_DT
 			, REG_USR_NO
 		)
@@ -152,103 +160,110 @@
 			, #{dosgSeq}
 			, #{dosgDt}
 			, #{dosgLvCd}
+			, #{dosgTpCd}
+			, #{smsYn}
 			, NOW()
 			, #{regUsrNo}
 		)
 	</insert>
 
+	<!-- deprecated -->
     <insert id="insertTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.insertTbPpDosgChart */
-    INSERT INTO TB_PP_DOSG_CHART (
-          CNST_ID
-        , DOSG_SEQ
-        , DOSG_DT
-        , DOSG_LV_CD
-        , CALL_YN
-        , REG_DT
-        , REG_USR_NO
-    ) 
-    SELECT #{cnstId}
-    	 , ROWNUM
-         , BASE_DT_STR
-         , DOSG_LV_CD
-         , ''
-         , now()
-         , #{regUsrNo}
-      FROM (
-            SELECT A.ROWNUM
-                 , CASE WHEN ROWNUM  = 0  THEN  '0'
-                        WHEN ROWNUM  <= 3  THEN '1'
-                        WHEN ROWNUM  <= 7  THEN '2'
-                        WHEN ROWNUM  <= 14 THEN '3'
-                        WHEN ROWNUM  <= 21 THEN '4'
-                        WHEN ROWNUM  <= 28 THEN '5'
-                END AS DOSG_LV_CD
-                , A.BASE_DT_STR
-            FROM (
-                SELECT CAL.*
-                        , @ROWNUM := @ROWNUM + 1 AS ROWNUM
-                    FROM TB_COMM_CALENDAR CAL
-                        , (SELECT @ROWNUM :=-1) TMP
-                        , (SELECT STR_TO_DATE( #{startDosgDt}, '%Y-%m-%d') AS START_DOSING_DT) T
-                    WHERE 1 = 1
-                    AND BASE_DT_STR >= DATE_FORMAT( DATE_ADD( T.START_DOSING_DT, INTERVAL -1 DAY), '%Y%m%d')
-                    AND BASE_DT_STR < DATE_ADD( T.START_DOSING_DT, INTERVAL 27 DAY)
-                ) A
-            ORDER
-                BY A.ROWNUM
-            ) A
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.insertTbPpDosgChart */
+	    INSERT INTO TB_PP_DOSG_CHART (
+	          CNST_ID
+	        , DOSG_SEQ
+	        , DOSG_DT
+	        , DOSG_LV_CD
+	        , CALL_YN
+	        , REG_DT
+	        , REG_USR_NO
+	    ) 
+	    SELECT #{cnstId}
+	    	 , ROWNUM
+	         , BASE_DT_STR
+	         , DOSG_LV_CD
+	         , ''
+	         , now()
+	         , #{regUsrNo}
+	      FROM (
+	            SELECT A.ROWNUM
+	                 , CASE WHEN ROWNUM  = 0  THEN  '0'
+	                        WHEN ROWNUM  <= 3  THEN '1'
+	                        WHEN ROWNUM  <= 7  THEN '2'
+	                        WHEN ROWNUM  <= 14 THEN '3'
+	                        WHEN ROWNUM  <= 21 THEN '4'
+	                        WHEN ROWNUM  <= 28 THEN '5'
+	                END AS DOSG_LV_CD
+	                , A.BASE_DT_STR
+	            FROM (
+	                SELECT CAL.*
+	                        , @ROWNUM := @ROWNUM + 1 AS ROWNUM
+	                    FROM TB_COMM_CALENDAR CAL
+	                        , (SELECT @ROWNUM :=-1) TMP
+	                        , (SELECT STR_TO_DATE( #{startDosgDt}, '%Y-%m-%d') AS START_DOSING_DT) T
+	                    WHERE 1 = 1
+	                    AND BASE_DT_STR >= DATE_FORMAT( DATE_ADD( T.START_DOSING_DT, INTERVAL -1 DAY), '%Y%m%d')
+	                    AND BASE_DT_STR < DATE_ADD( T.START_DOSING_DT, INTERVAL 27 DAY)
+	                ) A
+	            ORDER
+	                BY A.ROWNUM
+	            ) A
+		]]>
 	</insert>
 
     <delete id="deleteTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.deleteTbPpDosgChart */
-    DELETE FROM TB_PP_DOSG_CHART
-     WHERE CNST_ID = #{cnstId}
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.deleteTbPpDosgChart */
+	    DELETE FROM TB_PP_DOSG_CHART
+	     WHERE CNST_ID = #{cnstId}
+		]]>
 	</delete>
 
     <update id="updateTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChart */
-    UPDATE TB_PP_DOSG_CHART 
-       SET DOSG_SEQ    = #{dosgSeq}
-       	 , DOSG_DT     = #{dosgDt}
-         , DOSG_LV_CD  = #{dosgLvCd}
-         , CALL_YN     = #{callYn}
-         , DOSG_YN     = #{dosgYn}
-         , PAUS_YN     = #{pausYn}
-         , STOP_YN 	   = #{stopYn}
-         , MEAL_TP_CD  = #{mealTpCd}
-         , CURR_WGT    = #{currWgt} 
-         , LOSS_WGT    = #{lossWgt}
-         , RMI_WGT     = #{rmiWgt}
-         , DOSG_DESC1  = #{dosgDesc1} 
-         , DOSG_DESC2  = #{dosgDesc2} 
-     WHERE DOSG_ID     = #{dosgId}
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChart */
+	    UPDATE TB_PP_DOSG_CHART 
+	       SET DOSG_SEQ    = #{dosgSeq}
+	       	 , DOSG_DT     = #{dosgDt}
+	         , DOSG_LV_CD  = #{dosgLvCd}
+	         , DOSG_TP_CD  = #{dosgTpCd}
+	         , CALL_YN     = #{callYn}
+	         , DOSG_YN     = #{dosgYn}
+	         , PAUS_YN     = #{pausYn}
+	         , STOP_YN 	   = #{stopYn}
+	         , MEAL_TP_CD  = #{mealTpCd}
+	         , CURR_WGT    = #{currWgt} 
+	         , LOSS_WGT    = #{lossWgt}
+	         , RMI_WGT     = #{rmiWgt}
+	         , DOSG_DESC1  = #{dosgDesc1} 
+	         , DOSG_DESC2  = #{dosgDesc2}
+	         , SMS_YN      = #{smsYn} 
+	     WHERE DOSG_ID     = #{dosgId}
+		]]>
 	</update>
 
     <update id="updateTbPpDosgChartStartDt" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartStartDt */
-    UPDATE TB_PP_DOSG_CHART 
-       SET DOSG_DT     = DATE_FORMAT(DATE_ADD(STR_TO_DATE(#{dosgDt}, '%Y%m%d'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY), '%Y%m%d')
-     WHERE CNST_ID     = #{cnstId}
-       AND DOSG_ID     > #{dosgId}
-	]]>
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartStartDt */
+	    UPDATE TB_PP_DOSG_CHART 
+	       SET DOSG_DT     = DATE_FORMAT(DATE_ADD(STR_TO_DATE(#{dosgDt}, '%Y%m%d'), INTERVAL DOSG_SEQ - #{dosgSeq} DAY), '%Y%m%d')
+	     WHERE CNST_ID     = #{cnstId}
+	       AND DOSG_ID     > #{dosgId}
+		]]>
 	</update>
 
-    <update id="updateTbPpDosgChartStopYn" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
-	<![CDATA[    
-    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartStopYn */
-    UPDATE TB_PP_DOSG_CHART 
-       SET STOP_YN     = #{stopYn}
-     WHERE CNST_ID     = #{cnstId}
-       AND DOSG_ID     > #{dosgId}
-	]]>
+    <update id="updateTbPpDosgChartAdjust" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
+		<![CDATA[    
+	    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChartAdjust */
+	    UPDATE TB_PP_DOSG_CHART 
+	       SET DOSG_TP_CD  = #{dosgTpCd}
+	         , STOP_YN     = #{stopYn}
+	         , SMS_YN      = #{smsYn}
+	     WHERE CNST_ID     = #{cnstId}
+	       AND DOSG_ID     > #{dosgId}
+		]]>
 	</update>
 
 </mapper>

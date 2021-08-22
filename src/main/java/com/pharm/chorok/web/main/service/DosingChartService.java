@@ -82,6 +82,8 @@ public class DosingChartService {
     			dosgChart.setDosgSeq(dosgSeq);
     			dosgChart.setDosgDt(startDosgDt.plusDays(dosgSeq).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
     			dosgChart.setDosgLvCd(dosgTypeVo.getTbCommCodePk().getDitcCd());
+    			dosgChart.setDosgTpCd(inCnstParam.getDosgTpCd());
+    			dosgChart.setSmsYn("Y");
     			dosgChartList.add(dosgChart);
     			
     			dosgSeq = dosgSeq + 1;

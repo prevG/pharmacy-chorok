@@ -229,6 +229,7 @@ $( document ).ready( function() {
 		        		dlg_dosgSeqStr 	: row.dosgSeqStr,
 		        		dlg_dosgLvCd 	: row.dosgLvCd,
 		        		dlg_dosgLvCdNm  : row.dosgLvCdNm,
+		        		dlg_dosgTpCd 	: row.dosgTpCd,
 		        		dlg_dosgDt 		: row.dosgDt,
 		        		dlg_callYn 		: row.callYn,
 		        		dlg_dosgYn 		: row.dosgYn,
@@ -239,7 +240,8 @@ $( document ).ready( function() {
 		        		dlg_lossWgt 	: row.lossWgt,
 		        		dlg_rmiWgt 		: row.rmiWgt,
 		        		dlg_dosgDesc1 	: row.dosgDesc1,
-		        		dlg_dosgDesc2 	: row.dosgDesc2
+		        		dlg_dosgDesc2 	: row.dosgDesc2,
+		        		dlg_smsYn 		: row.smsYn
 		        	});
 		        
 		        	$('#dosgDlg').window('open').window('center').window('setTitle', '복용차트 정보');
@@ -251,6 +253,13 @@ $( document ).ready( function() {
 		        		align: 'center', 
 		        		width: '110', 
 		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdNm +'</span>'; }
+		        	},
+		        	{
+		        		field: 'dosgTpCd', 
+		        		title: '감량종류', 
+		        		align: 'center', 
+		        		width: '70', 
+		        		formatter: function(value, row) { return '<span style="font-weight:bold;">'+ row.dosgTpCdNm +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgSeq', 
@@ -272,6 +281,12 @@ $( document ).ready( function() {
 		        		title: '요일', 
 		        		align: 'center', 
 		        		width: '50'
+		        	},
+		        	{
+		        		field: 'smsYn', 
+		        		title: '문자전송', 
+		        		align: 'center', 
+		        		width: '60'
 		        	},
 		        	{
 		        		field: 'callYn', 
@@ -967,6 +982,7 @@ $( document ).ready( function() {
 			var dosgId     = $('#dosgDlgFrm input[name=dlg_dosgId]').val();
 			var dosgSeq    = $('#dosgDlgFrm input[name=dlg_dosgSeq]').val();
 			var dosgLvCd   = $('#dosgDlgFrm input[name=dlg_dosgLvCd]').val();
+			var dosgTpCd   = $('#dosgDlgFrm select[textboxName=dlg_dosgTpCd]').combobox('getValue');
 			var dosgDt     = $('#dosgDlgFrm input[textboxName=dlg_dosgDt]').datebox('getValue');
 			var callYn     = $('#dosgDlgFrm select[textboxName=dlg_callYn]').combobox('getValue');
 			var dosgYn     = $('#dosgDlgFrm select[textboxName=dlg_dosgYn]').combobox('getValue');
@@ -978,13 +994,15 @@ $( document ).ready( function() {
 			var rmiWgt     = $('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('getValue');
 			var dosgDesc1  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc1]').textbox('getValue');
 			var dosgDesc2  = $('#dosgDlgFrm input[textboxName=dlg_dosgDesc2]').textbox('getValue');
-
+			var smsYn      = $('#dosgDlgFrm select[textboxName=dlg_smsYn]').combobox('getValue');
+			
 			var formData = {
 				criteria: {
 					"cnstId" 	:	selectedCnstId,
 					"dosgId" 	:	dosgId,
 					"dosgSeq" 	: 	dosgSeq,
 					"dosgLvCd" 	:	dosgLvCd,
+					"dosgTpCd" 	:   dosgTpCd,
 					"dosgDt" 	:	moment(dosgDt).format("YYYYMMDD"),
 					"callYn" 	:	callYn,
 					"dosgYn" 	: 	dosgYn,
@@ -995,7 +1013,8 @@ $( document ).ready( function() {
 					"lossWgt" 	:	lossWgt,
 					"rmiWgt" 	:	rmiWgt,
 					"dosgDesc1" :	dosgDesc1,
-					"dosgDesc2" : 	dosgDesc2
+					"dosgDesc2" : 	dosgDesc2,
+					"smsYn" 	:   smsYn
 				}
 			};
 			
