@@ -98,7 +98,13 @@ public class CustomerService {
 			custMileVo.setRcmdCellNo(custInfo.getRcmdCellNo());
 			customerMileageService.saveCustomerMile(custMileVo);
 		} else {
-			custMileVo = custInfo.getCustMile();
+			custMileVo = TbCustomerMileVo.builder()
+					.custId(custInfo.getCustId())
+					.rcmdCustId(custInfo.getRcmdCustId())
+					.rcmdCustNm(custInfo.getRcmdCustNm())
+					.rcmdCellNo(custInfo.getCustCellNo())
+					.build();
+			custInfo.getCustMile();
 			custMileVo.setRcmdMilePnt(20); // default 20 point
 			custMileVo.setRcmdMileYn("N");
 			customerMileageService.saveCustomerMile(custMileVo);
