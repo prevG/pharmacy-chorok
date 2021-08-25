@@ -422,6 +422,13 @@ $( document ).ready( function() {
 					$('#saveCustFrm input[textboxName=dlg_custAge]').textbox('setValue', custAge);
 				}
 			});
+			$('#custTabs').tabs({
+				onSelect: function(title) {
+					if (title === '마일리지') {
+						RS1001PU02.syncCustMileage();
+					}
+				}
+			});
 
 		    /**************************************************************
 		     * "고객정보 저장" 버튼 클릭시
@@ -1185,8 +1192,83 @@ $( document ).ready( function() {
 					$.messager.alert('마일리지 저장', xhr.responseJSON.message, 'error');
 				}
 			});
-		}
-		,textareaAutoHeight : function(textEle) {
+		},
+		syncCustMileage: function() {
+			var custId    	 = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
+			var formData = {
+				criteria: {
+					"custId" 		:	custId
+				}
+			};
+
+			$.ajax({
+				url: '/reservation/RS1001PU02/syncCustMileage',
+				method: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify(formData),
+				success: function(res) {
+					if (res.status === 'success') {
+						var data = res.data;
+						var mileage = Number(data.rcmdMileage) + Number(data.payMileage); 
+			
+						$('#saveMileFrm input[textboxName=dlg_rcmdMileage]').numberbox('setValue', data.rcmdMileage);
+						$('#saveMileFrm input[textboxName=dlg_payMileage]').numberbox('setValue', data.payMileage);
+						$('#saveMileFrm input[textboxName=dlg_mileage]').numberbox('setValue', mileage);
+						
+						// 상담결재 마일리지
+						$('#payMileIds').empty();
+						var html = '';
+						for (var i = 0; i < data.payMileList.length; i++) {
+							html += '<tr>';
+							html += '<th scope="row" class="col-2" style="vertical-align: middle;">'+ data.payMileList[i].cnstDt +'</th>';
+							html += '<td class="col-3" style="vertical-align: middle;">'+ data.payMileList[i].payTpCdNm +'</td>';
+							html += '<td class="col-2" style="vertical-align: middle;text-align: center;">';
+							html += '	<input class="easyui-checkbox" name="dlg_payMileYn[]" value="'+ data.payMileList[i].cnstId +'" '+ (data.payMileList[i].payMileYn === 'Y' ? 'checked="checked"' : '') +'>';
+							html += '</td>';
+							html += '<td class="col-2">';
+							html += '	<input class="easyui-numberbox" name="dlg_payMilePnt[]" style="width: 100%;height: 26px;text-align: center;" value="'+ data.payMileList[i].payMilePnt +'">';
+							html += '</td>';
+							html += '<td class="col-3">';
+							html += '	<input class="easyui-textbox" name="dlg_payMileMemo[]" style="width: 100%;height: 26px;" value="'+ data.payMileList[i].payMileMemo +'">';
+							html += '</td>';
+							html += '</tr>';
+						}
+						$('#payMileIds').append(html);
+						$.parser.parse($('#payMileIds'));
+						
+						//추천 마일리지
+						$('#rcmdMileIds').empty();
+						html = '';
+						for (var i = 0; i < data.rcmdMileList.length; i++) {
+							html += '<tr>';
+							html += '<th scope="row" class="col-2" style="vertical-align: middle;">'+ data.rcmdMileList[i].custUsrNm +'</th>';
+							html += '<td class="col-3" style="vertical-align: middle;">'+ data.rcmdMileList[i].custCellNo +'</td>';
+							html += '<td class="col-2" style="vertical-align: middle;text-align: center;">';
+							html += '	<input class="easyui-checkbox" name="dlg_rcmdMileYn[]" value="'+ data.rcmdMileList[i].custId +'" '+ (data.rcmdMileList[i].rcmdMileYn === 'Y' ? 'checked="checked"' : '') +'>';
+							html += '</td>';
+							html += '<td class="col-2">';
+							html += '	<input class="easyui-numberbox" name="dlg_rcmdMilePnt[]" style="width: 100%;height: 26px;text-align: center;" value="'+ data.rcmdMileList[i].rcmdMilePnt +'">';
+							html += '</td>';
+							html += '<td class="col-3">';
+							html += '	<input class="easyui-textbox" name="dlg_rcmdMileMemo[]" style="width: 100%;height: 26px;" value="'+ data.rcmdMileList[i].rcmdMileMemo +'">';
+							html += '</td>';
+							html += '</tr>';
+						}
+						html += '</tr>';
+						$('#rcmdMileIds').append(html);
+						$.parser.parse($('#rcmdMileIds'));
+					} else {
+						$.messager.alert('마일리지', res.message);
+						return;
+					}
+				},
+				error: function(xhr, status, error) {
+					$.messager.alert('마일리지', xhr.responseJSON.message, 'error');
+				}
+			});
+		},
+		textareaAutoHeight : function(textEle) {
 			textEle.css("height", 'auto');
 			var textEleHeight = textEle.prop('scrollHeight');
 			textEle.css('height', textEleHeight);

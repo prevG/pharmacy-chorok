@@ -23,6 +23,8 @@ import com.pharm.chorok.domain.comm.PageCriteria;
 import com.pharm.chorok.domain.comm.ResponseMessage;
 import com.pharm.chorok.domain.main.ReservationPagination;
 import com.pharm.chorok.domain.main.ResultSurveyChartVo;
+import com.pharm.chorok.domain.main.TbCustomerMileVo;
+import com.pharm.chorok.domain.main.TbPpCnstMileVo;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbCustomer;
 import com.pharm.chorok.domain.table.TbPpCnstChart;
@@ -291,6 +293,13 @@ public class ReservationController {
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);
 	}
 	
+	/**
+	 * 고객 마일리지 저장
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/RS1001PU02/saveCustMileage")
 	@ResponseBody
 	public ResponseEntity<ResponseMessage> saveCustMileage(
@@ -300,6 +309,46 @@ public class ReservationController {
 		customerSvc.saveCustMileage(pageCriteria.getCriteria());
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 마일리지정보가 수정되었습니다."), HttpStatus.OK);
+	}
+
+	/**
+	 * 고객 마일리지 동기화
+	 * 
+	 * @param pageCriteria
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/RS1001PU02/syncCustMileage")
+	@ResponseBody
+	public ResponseEntity<ResponseMessage> syncCustMileage(
+			@RequestBody PageCriteria<TbCustomer> pageCriteria
+			) throws Exception {
+		
+		//customerSvc.syncCustMileage(pageCriteria.getCriteria());
+		TbCustomer custInfo = pageCriteria.getCriteria();
+        //고객 추천인 목록
+        List<TbCustomerMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( pageCriteria.getCriteria().getCustId() );
+        double rcmdMileage = 0;
+        for (TbCustomerMileVo rcmdMileVo : rcmdMileList) {
+        	if ("N".equals(rcmdMileVo.getRcmdMileYn())) {
+        		rcmdMileage = rcmdMileage + rcmdMileVo.getRcmdMilePnt();
+        	}
+        }
+        custInfo.setRcmdMileage(rcmdMileage);
+        
+        //고객상담 결재유형 목록
+        List<TbPpCnstMileVo> payMileList = customerSvc.findPayListByCustId( pageCriteria.getCriteria().getCustId() );
+        double payMileage = 0;
+        for (TbPpCnstMileVo payMileVo : payMileList) {
+        	if ("N".equals(payMileVo.getPayMileYn())) {
+        		payMileage = payMileage + payMileVo.getPayMilePnt();
+        	}
+        }
+        custInfo.setPayMileage(payMileage);
+        custInfo.setRcmdMileList(rcmdMileList);
+        custInfo.setPayMileList(payMileList);
+        
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 마일리지정보가 조회되었습니다.", custInfo), HttpStatus.OK);
 	}
 
 	/**
