@@ -60,10 +60,15 @@ public class CustomerService {
 		customerRepo.insertTbCustomer( custInfo );
 		
 		//추천인정보 저장
-		TbCustomerMileVo custMileVo = custInfo.getCustMile();
-		custMileVo.setCustId( newCustId );
-		custMileVo.setRcmdMilePnt(20); // default 20 point
-		custMileVo.setRcmdMileYn("N");
+		TbCustomerMileVo custMileVo = TbCustomerMileVo.builder()
+				.custId(newCustId)
+				.rcmdCustId(custInfo.getRcmdCustId())
+				.rcmdCustNm(custInfo.getRcmdCustNm())
+				.rcmdCellNo(custInfo.getRcmdCellNo())
+				.rcmdMilePnt(20)
+				.rcmdMileMemo("")
+				.rcmdMileYn("Y")
+				.build();
 		if (custMileVo.getRcmdCustId() > 0) {
 			customerMileageService.saveCustomerMile(custMileVo);
 		}
@@ -75,6 +80,7 @@ public class CustomerService {
 			rsvtInfo.setCustId( newCustId );
 			reservationRepo.updateCustIdByRsvtId( rsvtInfo );
 		}
+		
 		return newCustId;
 	}
 	

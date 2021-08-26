@@ -182,26 +182,29 @@ public class CustomerController {
 		//고객ID로 조회
         customer.setCustId( custId );
         TbCustomer custInfo = customerSvc.findCustomerByCustId( customer );
-        
-        //고객 추천인 목록
-        List<TbCustomerMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( custId );
-        double rcmdMileage = 0;
-        for (TbCustomerMileVo rcmdMileVo : rcmdMileList) {
-        	if ("N".equals(rcmdMileVo.getRcmdMileYn())) {
-        		rcmdMileage = rcmdMileage + rcmdMileVo.getRcmdMilePnt();
-        	}
+        if (custInfo != null) {
+            //고객 추천인 목록
+            List<TbCustomerMileVo> rcmdMileList = customerSvc.findRcmdListByCustId( custId );
+            double rcmdMileage = 0;
+            for (TbCustomerMileVo rcmdMileVo : rcmdMileList) {
+            	if ("N".equals(rcmdMileVo.getRcmdMileYn())) {
+            		rcmdMileage = rcmdMileage + rcmdMileVo.getRcmdMilePnt();
+            	}
+            }
+            custInfo.setRcmdMileage(rcmdMileage);
+            custInfo.setRcmdMileList(rcmdMileList);
+            
+            //고객상담 결재유형 목록
+            List<TbPpCnstMileVo> payMileList = customerSvc.findPayListByCustId( custId );
+            double payMileage = 0;
+            for (TbPpCnstMileVo payMileVo : payMileList) {
+            	if ("N".equals(payMileVo.getPayMileYn())) {
+            		payMileage = payMileage + payMileVo.getPayMilePnt();
+            	}
+            }
+            custInfo.setPayMileage(payMileage);     
+            custInfo.setPayMileList(payMileList);
         }
-        custInfo.setRcmdMileage(rcmdMileage);
-        
-        //고객상담 결재유형 목록
-        List<TbPpCnstMileVo> payMileList = customerSvc.findPayListByCustId( custId );
-        double payMileage = 0;
-        for (TbPpCnstMileVo payMileVo : payMileList) {
-        	if ("N".equals(payMileVo.getPayMileYn())) {
-        		payMileage = payMileage + payMileVo.getPayMilePnt();
-        	}
-        }
-        custInfo.setPayMileage(payMileage);
 
 		//약사목록 조회
         List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
@@ -250,8 +253,6 @@ public class CustomerController {
         model.addAttribute("tabNo", tabNo);
         model.addAttribute("rsvtInfo", outRsvtSch);
         model.addAttribute("custInfo", custInfo);
-        model.addAttribute("rcmdMileList", rcmdMileList);
-        model.addAttribute("payMileList", payMileList);
         model.addAttribute("chemistList", chemistList);
         model.addAttribute("counselorList", counselorList);
         model.addAttribute("cnstHhList", cnstHhList);

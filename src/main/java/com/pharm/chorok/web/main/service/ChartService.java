@@ -206,6 +206,7 @@ public class ChartService {
     				.custId(inCnstChart.getCustId())
     				.payTpCd(inCnstChart.getPayTpCd())
     				.payMilePnt(milePnt)
+    				.payMileMemo("")
     				.payMileYn("N")
     				.build());
     	}

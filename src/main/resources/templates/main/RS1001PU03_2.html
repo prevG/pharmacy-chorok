@@ -5,7 +5,10 @@
 <div id="customer-table" th:fragment="customer-table"
 	th:with="
 		birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
-		thisYear=${#dates.year(#dates.createNow()) + 1}">
+		thisYear=${#dates.year(#dates.createNow()) + 1},
+		custCellNo1=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 3} ? ${#strings.substring(custInfo?.custCellNo,0,3)} : '',
+		custCellNo2=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 7} ? ${#strings.substring(custInfo?.custCellNo,3,7)} : '',
+		custCellNo3=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 10} ? ${#strings.substring(custInfo?.custCellNo,7,11)} : ''">
 	<div class="row">
 		<div class="col-12 d-flex justify-content-end">
 			<a href="javascript:void(0)" id="btnSaveCustomer" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">고객정보 저장</a>
@@ -41,9 +44,30 @@
 								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
 						</div>
 						<div class="col-6">
-							<input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
+							<!-- <input name="dlg_custCellNo" class="easyui-textbox" style="width: 100%;"
 								   data-options="label:'휴대폰번호 *',labelWidth:110,required:true"
-								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}">
+								   th:value="${#strings.isEmpty(custInfo?.custCellNo)} ? ${rsvtInfo?.rsvtCellNo}:${custInfo?.custCellNo}"> -->
+							<div class="input-group">
+								<select name="dlg_custCellNo1" class="easyui-combobox" style="width: 210px;text-align: center;"
+									data-options="label:'휴대폰번호*',
+												   labelWidth:110,
+												   required:true,
+												   panelHeight:'auto'">
+									<option value="010" selected="selected">010</option>
+									<option value="011" th:selected="${custCellNo1 eq '011'}">011</option>
+									<option value="016" th:selected="${custCellNo1 eq '016'}">016</option>
+									<option value="017" th:selected="${custCellNo1 eq '017'}">017</option>
+									<option value="019" th:selected="${custCellNo1 eq '019'}">019</option>
+								</select>
+								<div class="ml-2"></div>
+								<input name="dlg_custCellNo2" class="easyui-textbox" style="width: 60px;text-align: center;"
+									data-options="required:true,validType:'length[3,4]'"
+									th:value="${custCellNo2}">
+								<div class="ml-2"></div>
+								<input name="dlg_custCellNo3" class="easyui-textbox" style="width: 60px;text-align: center;"
+									data-options="required:true,validType:'length[4,4]'"
+									th:value="${custCellNo3}">
+							</div>
 						</div>
 					</div>
 					<div class="row m-2">
@@ -56,7 +80,7 @@
 													   validType:'length[0,4]'"
 									   th:value="${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#strings.substring(custInfo?.custBirthDt,0,4)}:''">
 								<div class="ml-2"></div>
-								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 60px;text-align: center;">
+								<select name="dlg_custBirthMm" class="easyui-combobox" style="width: 70px;text-align: center;">
 									<option value="" selected="selected">월</option>
 									<option th:each="data, index : ${birthMmList}"
 											th:value="${data?.ditcCd}" 
@@ -64,7 +88,7 @@
 											th:selected="${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8 and data?.ditcCd eq #strings.substring(custInfo?.custBirthDt,4,6)}"></option>
 								</select>
 								<div class="ml-2"></div>
-								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 60px;text-align: center;">
+								<select name="dlg_custBirthDd" class="easyui-combobox" style="width: 70px;text-align: center;">
 									<option value="" selected="selected">일</option>
 									<option th:each="data, index : ${birthDdList}"
 											th:value="${data?.ditcCd}" 

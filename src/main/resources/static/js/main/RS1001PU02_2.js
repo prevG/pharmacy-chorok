@@ -409,12 +409,44 @@ $( document ).ready( function() {
 		    /**************************************************************
 		     * 초기 바인딩
 		     **************************************************************/
-			$('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
+			//$('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('textbox').attr('maxlength', 11);
+			/*$('#saveCustFrm input[textboxName=dlg_custCellNo2]').textbox({
+				inputEvents: {
+					keypress: function(e) {
+						var tmp = $('<span></span>');
+						tmp.html(String.fromCharCode(e.which));
+						var c = tmp.text();
+						tmp.remove();
+						if ('0123456789'.indexOf(c) >= 0) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+				}
+			});*/
+			$('#saveCustFrm input[textboxName=dlg_custCellNo2]').textbox('textbox').attr('maxlength', 4);
+			/*$('#saveCustFrm input[textboxName=dlg_custCellNo3]').textbox({
+				inputEvents: {
+					keypress: function(e) {
+						var tmp = $('<span></span>');
+						tmp.html(String.fromCharCode(e.which));
+						var c = tmp.text();
+						tmp.remove();
+						if ('0123456789'.indexOf(c) >= 0) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+				}
+			});*/
+			$('#saveCustFrm input[textboxName=dlg_custCellNo3]').textbox('textbox').attr('maxlength', 4);
 			$('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox('textbox').attr('maxlength', 4);
 			$('#saveCustFrm input[textboxName=dlg_custAge]').numberbox('textbox').attr('maxlength', 3);
 			$('#saveCustFrm input[textboxName=dlg_custBirthYy]').numberbox({
 				onChange: function(value) {
-					var custAge;
+					var custAge = '';
 					if (value.length === 4) {
 						custAge = new Date().getFullYear() - Number(value) + 1;
 						custAge = custAge > 0 ? custAge : '';
@@ -435,7 +467,7 @@ $( document ).ready( function() {
 		     **************************************************************/
 			$(document).off("click", "#btnSaveCustomer").on("click", "#btnSaveCustomer", function (e) {
 
-				RS1001PU02.saveCust();
+				RS1001PU02.saveCustInfo();
 			});
 			
 		    /**************************************************************
@@ -523,15 +555,18 @@ $( document ).ready( function() {
 				//});
 			});
 		},
-		saveCust: function() {
+		saveCustInfo: function() {
 			var custId    = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 			var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
 			if ($isEmpty(custUsrNm)) {
 				$.messager.alert('고객정보 저장', '고객이름을 입력하세요.');
 				return;
 			}
-			var custCellNo = $('#saveCustFrm input[textboxName=dlg_custCellNo]').textbox('getValue');
-			if ($isEmpty(custCellNo)) {
+			var custCellNo1 = $('#saveCustFrm select[textboxName=dlg_custCellNo1]').combobox('getValue');
+			var custCellNo2 = $('#saveCustFrm input[textboxName=dlg_custCellNo2]').textbox('getValue');
+			var custCellNo3 = $('#saveCustFrm input[textboxName=dlg_custCellNo3]').textbox('getValue');
+			var custCellNo = custCellNo1 + custCellNo2 + custCellNo3;
+			if ($isEmpty(custCellNo) || custCellNo.length < 10) {
 				$.messager.alert('고객정보 저장', '휴대폰번호를 입력하세요.');
 				return;
 			}
