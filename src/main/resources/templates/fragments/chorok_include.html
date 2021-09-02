@@ -35,7 +35,8 @@
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.js}"></script>
 	<!-- easyui -->
-	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+    <script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-ko.js}"></script>
 	
 	<script>
     $.widget.bridge('uibutton', $.ui.button)
