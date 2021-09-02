@@ -556,6 +556,7 @@ $( document ).ready( function() {
 			});
 		},
 		saveCustInfo: function() {
+			
 			var custId    = $('#saveCustFrm input[textboxName=dlg_custId]').textbox('getValue');
 			var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
 			if ($isEmpty(custUsrNm)) {
@@ -616,6 +617,7 @@ $( document ).ready( function() {
 					success: function(res) {
 						if (res.status === 'success') {
 							var custId 	  = res.data;
+
 							var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
 
 							//고객차트탭의 고객번호 업데이트
@@ -627,6 +629,7 @@ $( document ).ready( function() {
 
 							//고객번호 있는 경우 차트탭 활성화
 							$('#custTabs').tabs('enableTab', 1);
+							$('#custTabs').tabs('enableTab', 2);
 							
 							$.messager.show({ title: '고객정보 저장', msg: res.message });
 						} else {

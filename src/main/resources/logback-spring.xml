@@ -29,7 +29,7 @@
         </rollingPolicy>
     </appender>
     
-    <logger name="com.pharm.chorok" level="INFO">
+    <logger name="com.pharm.chorok" level="DEBUG">
         <appender-ref ref="SAMPLE" />
     </logger>
     <logger name="com.pharm.chorok" level="INFO">

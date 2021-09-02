@@ -34,5 +34,6 @@ public interface CustomerRepository {
 	public void updateRcmdMilgYn(TbCustomerMileVo rcmdVo);
 	public void updateTbCustMileage(TbCustomer custInfo) throws DataAccessException;
 	public List<TbPpCnstMileVo> findPayListByCustId(long custId) throws DataAccessException;
+    public List<TbPpCnstMileVo> findByCustUsrNmAndCustCellNo(TbCustomer custInfo);
 
 }

@@ -282,13 +282,18 @@ public class ReservationController {
 
 			//1. 고객정보 신규등록 or 수정
 			//2. 예약정보에 고객ID 수정
+			int savedUsrCnt = customerSvc.findByCustUsrNmAndCustCellNo( pageCriteria.getCriteria() );
+			if( savedUsrCnt > 0 ) {
+				return new ResponseEntity<ResponseMessage>(new ResponseMessage("fail", "동일한 고객이 이미 등록되어 있습니다.(고객명+전화번호)", 0), HttpStatus.OK);
+			}
+
 			long newCustId = customerSvc.saveCustomer( pageCriteria.getCriteria() );
-			
 			return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 등록되었습니다.", newCustId), HttpStatus.OK);
+			
 		}
 
 		// 기존고객 수정
-		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
+		customerSvc.(pageCriteria.getCriteria());
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);
 	}

@@ -226,6 +226,12 @@ public class CustomerService {
 		
 		return customerRepo.findPayListByCustId( custId );
 	}
+
+	public int findByCustUsrNmAndCustCellNo( TbCustomer custInfo ) {
+
+		return customerRepo.findByCustUsrNmAndCustCellNo( custInfo );
+
+	}
 }
 
 

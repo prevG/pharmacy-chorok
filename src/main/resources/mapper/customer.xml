@@ -263,6 +263,17 @@
 		   BY A.CNST_ID
 	</select>
 
+   <select id="findByCustUsrNmAndCustCellNo" resultType="long">
+	<![CDATA[    
+	/** com.pharm.chorok.web.main.repository.CustomerRepository.findByCustUsrNmAndCustCellNo */
+   /** 이름+휴대번호로 중복고객 여부 확인 */
+    SELECT COUNT(*) AS CNT
+      FROM TB_CUSTOMER
+     WHERE CUST_USR_NM  = #{custUsrNm}
+       AND CUST_CELL_NO = #{custCellNo}
+	]]>
+	</select>
+
     <insert id="insertTbCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
     /** com.pharm.chorok.web.main.repository.CustomerRepository.insertTbCustomer */
