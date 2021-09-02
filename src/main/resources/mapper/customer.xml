@@ -263,7 +263,7 @@
 		   BY A.CNST_ID
 	</select>
 
-   <select id="findByCustUsrNmAndCustCellNo" resultType="long">
+   <select id="findByCustUsrNmAndCustCellNo" resultType="int">
 	<![CDATA[    
 	/** com.pharm.chorok.web.main.repository.CustomerRepository.findByCustUsrNmAndCustCellNo */
    /** 이름+휴대번호로 중복고객 여부 확인 */

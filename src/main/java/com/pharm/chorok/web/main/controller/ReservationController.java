@@ -293,7 +293,7 @@ public class ReservationController {
 		}
 
 		// 기존고객 수정
-		customerSvc.(pageCriteria.getCriteria());
+		customerSvc.saveCustomer_2(pageCriteria.getCriteria());
 			
 		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 고객정보가 수정되었습니다.", orgCustId), HttpStatus.OK);
 	}
