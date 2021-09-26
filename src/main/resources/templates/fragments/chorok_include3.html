@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="config">
+	<title>초록건강한약국</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--공통 CSS -->
+	<link rel="stylesheet" th:href="@{/css/chorok.css}">
+	<!-- easyui -->
+    <link rel="stylesheet" th:href="@{/easyui/themes/bootstrap/easyui.css}">
+    <link rel="stylesheet" th:href="@{/easyui/themes/icon.css}">
+    <link rel="stylesheet" th:href="@{/easyui/themes/color.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.4.0/font/bootstrap-icons.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+	
+	<link rel="stylesheet" th:href="@{/webjars/AdminLTE/3.1.0-rc/dist/css/adminlte.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/AdminLTE/3.1.0-rc/plugins/fontawesome-free/css/all.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/AdminLTE/3.1.0-rc/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+	<!--
+	<link rel="stylesheet" th:href="@{/webjars/tabulator-tables/4.9.3/dist/css/tabulator.min.css}"> 	
+	 -->
+	<link rel="stylesheet" th:href="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-contextmenu/2.8.0/dist/jquery.contextMenu.min.css}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+	<!--공통 js -->
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.js}"></script>
+
+	<link rel="stylesheet" th:href="@{/webjars/select2/4.0.13/css/select2.min.css}">
+	
+	<script>
+    $.widget.bridge('uibutton', $.ui.button)
+  	</script>
+  	<!-- Bootstrap 4 -->
+  	<script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+  	<script type="text/javascript" th:src="@{/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/tabulator.custom.js}"></script>
+	
+	<script type="text/javascript" th:src="@{/webjars/AdminLTE/3.1.0-rc/dist/js/adminlte.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/datetimepicker/2.5.20-1/build/jquery.datetimepicker.full.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/momentjs/2.29.1/moment.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/chorok.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/chorok_admin.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common/daum_post.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/select2/4.0.13/js/select2.min.js}"></script>
+
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+	<!-- 컨텐츠페이지의 CSS 영역이 들어감 -->
+	<th:block layout:fragment="css">
+	</th:block>
+
+	<!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
+	<th:block layout:fragment="script">		
+	</th:block>
+</head>
+</html>

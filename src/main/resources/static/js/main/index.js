@@ -149,15 +149,16 @@ $( document ).ready( function() {
         location.href = "/customer/CUS2001ML";
     });
 
-    /**************************************************************
+   	/**************************************************************
     * 예약고객 휴대전화번호 / 추천인 휴대전화번호 입력시 숫자만 입력되도록
     **************************************************************/
-    $("#rsvtCellNo").textbox('textbox').bind('keyup', function(e){
+	/* 
+    $("input[name='rsvtCellNo2]").textbox('textbox').bind('keyup', function(e){
         $onlyNum(this);
     });
-    $("#rcmdCellNo").textbox('textbox').bind('keyup', function(e){
+    $("input[name='rsvtCellNo3]").textbox('textbox').bind('keyup', function(e){
         $onlyNum(this);
-    });
+    });*/
 
     /**************************************************************
      * 예약자명  autocomplete 생성
@@ -307,7 +308,9 @@ $( document ).ready( function() {
                    rsvtTpCd   : data.rsvtTpCd,
                    rsvtUsrNm  : data.rsvtUsrNm,
                    genTpCd    : data.genTpCd,
-                   rsvtCellNo : data.rsvtCellNo,
+                   rsvtCellNo1 : data.rsvtCellNo1,
+                   rsvtCellNo2 : data.rsvtCellNo2,
+                   rsvtCellNo3 : data.rsvtCellNo3,
                    rcmdUsrNm  : data.rcmdUsrNm,
                    rcmdCellNo : data.rcmdCellNo,
                    rcmdCellNo : data.rcmdCellNo,
@@ -410,7 +413,8 @@ $( document ).ready( function() {
 		var rsvtTpCd       = $("input[name='rsvtTpCd']:checked").length; //상담구분
 		var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
 		var genTpCd        = $("input[name='genTpCd']:checked").length; //예약자성별
-		var rsvtCellNo     = $("input[name='rsvtCellNo']").val(); //예약자휴대전화번호
+		var rsvtCellNo2     = $("input[name='rsvtCellNo2']").val(); //예약자휴대전화번호
+		var rsvtCellNo3     = $("input[name='rsvtCellNo3']").val(); //예약자휴대전화번호
 
 
 		// if ($isEmpty(rsvtDt)) {
@@ -446,9 +450,14 @@ $( document ).ready( function() {
 			$("input[name='genTpCd']").radiobutton('textbox').focus()
 			return false;
 		}
-		if ($isEmpty(rsvtCellNo)) {
+		if ($isEmpty(rsvtCellNo2)) {
 			$.messager.alert("경고","예약자 [휴대전화번호]를 입력해주세요.");
-			$("#rsvtCellNo").textbox('textbox').focus();
+			$("#rsvtCellNo2").textbox('textbox').focus();
+			return false;
+		}
+		if ($isEmpty(rsvtCellNo3)) {
+			$.messager.alert("경고","예약자 [휴대전화번호]를 입력해주세요.");
+			$("#rsvtCellNo3").textbox('textbox').focus();
 			return false;
 		}
 		return true;

@@ -450,54 +450,6 @@ $(document).ready(function () {
                 }
                 return true;
             }
-
-		    /**************************************************************
-		     * 예약문자보내기
-		     **************************************************************/
-		    $(document).off("click", "a[name='btnSendSms']").on("click", "a[name='btnSendSms']", function (e) {
-		
-		        var isOk = validateSubmit();
-		        if( !isOk ) {
-		            return false;
-		        }
-				
-				var rsvtDt         = $("input[name='rsvtDt']").val(); //예약일시
-                var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
-                var rsvtDtHh       = $("input[name='rsvtDtHh']").val(); //예약일시
-                var rsvtDtMm       = $("input[name='rsvtDtMm']").val(); //예약일시
-                var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
-
-
-				var smsMsg = "";
-				smsMsg += rsvtUsrNm + "님."+"\n";
-				smsMsg += rsvtDtYyyymmdd + "일 "
-				smsMsg += rsvtDtHh + "시"
-				smsMsg += rsvtDtMm + "분"
-				smsMsg += "에 초록건강한약국 상담이 예약되었습니다.";
-				
-		
-		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg);
-		        if( !isOk ) {
-		            return false;
-		        }
-				
-		        var params = $("form[name=detailForm]").serialize();
-		        $.ajax({
-		            type: 'post',
-		            url: '/api/v1/sms/reservation',
-		            data: params,
-		            success: function (result) {
-		
-		                if (result.status == "success") {
-		                    alert(result.message);
-		                    refreshTimeTable();
-		                    findReservationDetail(params);
-		                } else {
-		                    alert(result.errorMessage);
-		                }
-		            }
-		        });
-		    });
                 
             //예약 상세정보조회
             findReservationDetail = function (params, obj) {
@@ -524,7 +476,7 @@ $(document).ready(function () {
                 $.post('/api/v1/main/reservation/findByRsvtId', params, function(result) {
                     if(result.status == 'success') {
                         $('#rsvtForm').form('clear');
-
+                    
                         var data = result.data;
                         $('#rsvtForm').form('load', {
                         rsvtDtYyyymmdd : data.rsvtDtYyyymmdd,
@@ -533,9 +485,7 @@ $(document).ready(function () {
                         rsvtTpCd       : data.rsvtTpCd,
                         rsvtUsrNm      : data.rsvtUsrNm,
                         genTpCd        : data.genTpCd,
-                        rsvtCellNo1     : data.rsvtCellNo1,
-                        rsvtCellNo2     : data.rsvtCellNo2,
-                        rsvtCellNo3    : data.rsvtCellNo3,
+                        rsvtCellNo     : data.rsvtCellNo,
                         rcmdUsrNm      : data.rcmdUsrNm,
                         rcmdCellNo     : data.rcmdCellNo,
                         rcmdCellNo     : data.rcmdCellNo,
@@ -544,6 +494,13 @@ $(document).ready(function () {
                         picUsrNo       : data.picUsrNo,
                         rsvtId         : data.rsvtId,
                         custId         : data.custId
+
+							//th:with="
+							//	birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
+							//	thisYear=${#dates.year(#dates.createNow()) + 1},
+							//	custCellNo1=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 3} ? ${#strings.substring(custInfo?.custCellNo,0,3)} : '',
+							//	custCellNo2=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 7} ? ${#strings.substring(custInfo?.custCellNo,3,7)} : '',
+							//	custCellNo3=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 10} ? ${#strings.substring(custInfo?.custCellNo,7,11)} : ''">
                         });
                     } else {
                         $.messager.show({ title: 'Error', msg: result.Msg });

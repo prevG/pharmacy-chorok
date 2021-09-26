@@ -8,6 +8,9 @@ public class TbPpRsvtSch extends TbCommColumn {
     private Long rsvtId;
     private String rsvtUsrNm;
     private String rsvtCellNo;
+    private String rsvtCellNo1;
+    private String rsvtCellNo2;
+    private String rsvtCellNo3;
     private String rsvtPhnNo;
     private String genTpCd;
     private String rsvtTpCd;

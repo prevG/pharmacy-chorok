@@ -147,6 +147,7 @@
 					<div class="col">
 						<input class="easyui-datebox" name="rsvtDtYyyymmdd" id="rsvtDtYyyymmdd" 
 								data-options="label:'예약일자',
+										    labelWidth:90,
 											labelPosition:'left',
 											formatter:myformatter,
 											parser:myparser,
@@ -186,30 +187,45 @@
 				</div>
 				<div class="row" style="margin-bottom: 10px">
 					<div class="col">
-						<label style="margin-right: 35px;">상담구분</label>
+						<label style="margin-right: 40px;">상담구분</label>
 						<input class="easyui-radiobutton" name="rsvtTpCd" id="rsvtTpCd1" label="전화" labelWidth="50" labelPosition="after" value="C" tabindex="4">
 						<input class="easyui-radiobutton" name="rsvtTpCd" id="rsvtTpCd2" label="방문" labelWidth="50" labelPosition="after" value="R" tabindex="5">
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 10px">
 					<div class="col">
-						<input class="easyui-textbox" data-options="label:'예약자성명'"
+						<input class="easyui-textbox" data-options="label:'예약자성명',
+										    labelWidth:90"
 						       id="rsvtUsrNm" name="rsvtUsrNm" maxlength="20" placeholder="예약자성명" tabindex="6"
-							   style="width:280px;margin-right:30px;">
+							   style="width:280px;margin-right:35px;">
 						<label style="margin-right: 35px;"></label>
 						<input class="easyui-radiobutton" name="genTpCd" id="genTpCd1" label="여성" labelWidth="50" labelPosition="after" value="F" tabindex="7">
 						<input class="easyui-radiobutton" name="genTpCd" id="genTpCd2" label="남성" labelWidth="50" labelPosition="after" value="M" tabindex="8">
 					</div>
 				</div>
 				<div class="row" style="margin-bottom: 10px">
-					<div class="col">
-						<input class="easyui-textbox" id="rsvtCellNo" name="rsvtCellNo" maxlength="13" placeholder="예약자 휴대전화번호" tabindex="9" 
-						       data-options="label:'예약자 연락처',
-								             required:true"
-							   style="width:280px;margin-right:30px;">
+					<div class="col input-group ">
+						<select name="rsvtCellNo1" class="easyui-combobox" style="width:200px;text-align: center;" tabindex="9"
+							data-options="label:'예약자 연락처',
+										   labelWidth:90,
+										   panelHeight:'auto'">
+							<option value="010" selected="selected">010</option>
+							<option value="011" th:selected="${custCellNo1 eq '011'}">011</option>
+							<option value="016" th:selected="${custCellNo1 eq '016'}">016</option>
+							<option value="017" th:selected="${custCellNo1 eq '017'}">017</option>
+							<option value="019" th:selected="${custCellNo1 eq '019'}">019</option>
+						</select>
+						
+						<div class="ml-2"></div>
+						<input name="rsvtCellNo2" class="easyui-textbox" style="width: 80px;text-align: center;" tabindex="10"
+							data-options="validType:'length[3,4]'">
+							
+						<div class="ml-2"></div>
+						<input name="rsvtCellNo3" class="easyui-textbox" style="width: 80px;text-align: center;" tabindex="11"
+							data-options="validType:'length[4,4]'">
 					</div>
 				</div>
-				<div class="row" style="margin-bottom: 10px">
+				<!-- <div class="row" style="margin-bottom: 10px">
 					<div class="col">
 						<input class="easyui-textbox" id="rcmdUsrNm" name="rcmdUsrNm" maxlength="20" tabindex="10"
 									data-options="label:'추천인 정보',
@@ -221,13 +237,14 @@
 							   style="width:200px;margin-right:30px;">
 						<input type="hidden" id="rcmdUsrNo"  name="rcmdUsrNo" tabindex="9" placeholder="추천인 고객번호"> 
 					</div>
-				</div>
+				</div> -->
 				<div class="row" style="margin-bottom: 10px">
 					<div class="col">
-						<textarea class="easyui-textbox"  id="rsvtDest" name="rsvtDesc"
-							data-options="label:'예약메모',multiline:true"
+						<input class="easyui-textbox"  id="rsvtDest" name="rsvtDesc"
+							data-options="label:'예약메모',
+										   labelWidth:90,
+										   multiline:true"
 							style="width: 100%;height: 150px;padding: 5px;" tabindex="12">
-						</textarea>
 					</div>
 				</div>
 
@@ -235,6 +252,7 @@
 					<div class="col">
 						<select class="easyui-combobox" name="picUsrNo" id="picUsrNo" 
 								data-options="panelHeight:'auto',
+										    labelWidth:90,
 											label:'담당한약사'"
 								style="width:280px;height:auto;margin-right:20px;" tabindex="13">
 							<option value=""  th:selected="${''  eq schInfo?.picUsrNo}">선택하세요</option>
@@ -252,12 +270,14 @@
 								th:value="${schInfo?.rsvtId}"
 								data-options="label:'예약번호',
 											prompt:'예약번호',
+										   labelWidth:90,
 											readonly:true"
 								style="width:240px;margin-right:30px;" tabindex="15">
 						<input class="easyui-textbox" id="custId" name="custId"
 								th:value="${schInfo?.custId}"
 								data-options="label:'고객번호',
 											prompt:'고객번호',
+										   labelWidth:90,
 											readonly:true"
 								style="width:240px;margin-right:30px;" tabindex="16">
 					</div>

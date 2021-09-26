@@ -91,7 +91,7 @@
 								FROM TB_COMM_CALENDAR 
 								WHERE BASE_DT_STR = #{baseDtStr}
 							)
-            AND CAL.DAYS_NUM > 0
+        AND CAL.DAYS_NUM > 0
         ) SCH
         ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
     AND WT.END_HM   >= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
@@ -132,7 +132,21 @@
 	/** com.pharm.chorok.web.main.repository.ReservationScheduleRepository.findReservationInfoByRsvtId */
 	SELECT RSVT_ID
 	     , RSVT_USR_NM
-         , RSVT_CELL_NO
+         , CASE LENGTH(SCH.RSVT_CELL_NO)
+                WHEN 11 THEN LEFT(SCH.RSVT_CELL_NO, 3)
+                WHEN 10 THEN LEFT(SCH.RSVT_CELL_NO, 3)
+                ELSE ''
+           END AS RSVT_CELL_NO1
+         , CASE LENGTH(SCH.RSVT_CELL_NO)
+                WHEN 11 THEN MID(SCH.RSVT_CELL_NO, 4, 4)
+                WHEN 10 THEN MID(SCH.RSVT_CELL_NO, 4, 3)
+                ELSE ''
+           END AS RSVT_CELL_NO2
+          , CASE LENGTH(SCH.RSVT_CELL_NO)
+                WHEN 11 THEN RIGHT(SCH.RSVT_CELL_NO, 4)
+                WHEN 10 THEN RIGHT(SCH.RSVT_CELL_NO, 4)
+                ELSE ''
+           END AS RSVT_CELL_NO3
 	     , RSVT_PHN_NO
 	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
 		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d') AS RSVT_DT_YYYYMMDD
@@ -156,8 +170,8 @@
 	     , RSVT_USR_NM
 	     , RSVT_PHN_NO
 	     , CASE LENGTH(SCH.RSVT_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
+                WHEN 11 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID(SCH.RSVT_CELL_NO, 4, 4), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(SCH.RSVT_CELL_NO, 3), '-', MID(SCH.RSVT_CELL_NO, 4, 3), '-', RIGHT(SCH.RSVT_CELL_NO, 4))
                 ELSE ''
            END AS RSVT_CELL_NO
 	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
@@ -198,7 +212,7 @@
 		 , PIC_USR_NO
 		 , CUST_ID
 	  FROM TB_PP_RSVT_SCH SCH
-	 WHERE SCH.RSVT_CELL_NO = #{rsvtCellNo}
+	 WHERE SCH.RSVT_CELL_NO = CONCAT(#{rsvtCellNo1}, #{rsvtCellNo2}, #{rsvtCellNo3})
 	   AND SCH.RSVT_DT = STR_TO_DATE( CONCAT( #{rsvtDtYyyymmdd}, #{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
 	]]>
 	</select>
@@ -250,7 +264,7 @@
 	) VALUES (
 	     #{rsvtUsrNm}	   
 	   , STR_TO_DATE( CONCAT(#{rsvtDtYyyymmdd},#{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
-	   , REPLACE( #{rsvtCellNo}, '-', '')
+	   , CONCAT( #{rsvtCellNo1}, #{rsvtCellNo2}, #{rsvtCellNo3} ) 
 	   , REPLACE( #{rsvtPhnNo} , '-', '') 
 	   , #{rsvtTpCd}
 	   , #{rsvtDesc}
@@ -281,7 +295,7 @@
 		 , UPD_USR_NO    = #{updUsrNo}
 		 , RSVT_USR_NM   = #{rsvtUsrNm}		 
 		 , RSVT_DT       = STR_TO_DATE( CONCAT(#{rsvtDtYyyymmdd},#{rsvtDtHh}, #{rsvtDtMm}), '%Y-%m-%d %H%i')
-		 , RSVT_CELL_NO  = REPLACE( #{rsvtCellNo}, '-', '') 
+		 , RSVT_CELL_NO  = CONCAT( #{rsvtCellNo1}, #{rsvtCellNo2}, #{rsvtCellNo3} ) 
 		 , RSVT_PHN_NO   = REPLACE( #{rsvtPhnNo} , '-', '') 
 		 , RSVT_TP_CD    = #{rsvtTpCd} 
 		 , RSVT_DESC     = #{rsvtDesc} 

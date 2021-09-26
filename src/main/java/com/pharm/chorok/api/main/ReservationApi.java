@@ -36,6 +36,7 @@ public class ReservationApi {
 		TbPpRsvtSch resultRsvt = null;
 		try {
 			reservationSvc.saveReservation( rsvt );
+			
 			if( rsvt.getRsvtId() != null && rsvt.getRsvtId() > 0 ) {
 				resultRsvt = reservationSvc.findReservationByRsvtId( rsvt );
 			} else {
