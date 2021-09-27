@@ -70,6 +70,8 @@
                 WHEN 11 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(RSVT_CELL_NO, 4))
                 WHEN 10 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(RSVT_CELL_NO, 4))
            END AS RSVT_CELL_NO
+         , SCH.RSVT_TP_CD
+         , CASE WHEN SCH.RSVT_TP_CD = 'R' THEN '(방)' ELSE '' END AS RSVT_TP_CD_NM
          , SCH.DAYS_NUM           AS "cal.daysNum"
       FROM TB_PP_WORK_TIME WT
     INNER JOIN
@@ -79,6 +81,7 @@
 			, RSVT_DT
 			, RSVT_USR_NM
 			, RSVT_CELL_NO
+			, RSVT_TP_CD
 			, CUST_ID
 			, PIC_USR_NO
 			, CAL.DAYS_NUM

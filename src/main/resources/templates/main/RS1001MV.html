@@ -82,7 +82,7 @@
 											<div th:data-id="${data.rsvtId}">
 												<button type="button" name="rsvtSch" class="btn btn-sm" 
 												 th:classappend="${data.picUsrNo eq '1' ? 'btn-outline-success' : (data.picUsrNo eq '2' ? 'btn-outline-primary' : 'btn-outline-secondary') }"
-												style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
+												style="padding-top:0px;padding-bottom:0px;margin-top:1px;" th:text="|${data.rsvtTpCdNm} ${data.rsvtUsrNm} / ${data.rsvtCellNo}|">Small button</button>
 											</div>
 											</th:block>
 										</td>
