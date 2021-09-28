@@ -72,7 +72,18 @@ $(document).ready(function () {
                 },
             });
 
-
+            /**************************************************************
+             * 예약일자 선택에서 토/일요일 선택 안되게 처리
+             **************************************************************/
+            $("#rsvtDtYyyymmdd").datebox().datebox('calendar').calendar({
+            	validator: function(date) {
+            		var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    return d1<=date && date<=d2;
+            	}
+            });
+            
             /**************************************************************
              * 예약자명 또는 전화번호로 예약정보 검색시
              **************************************************************/
