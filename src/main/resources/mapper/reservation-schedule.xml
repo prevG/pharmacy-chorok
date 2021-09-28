@@ -18,7 +18,9 @@
 	                       FROM TB_COMM_CALENDAR 
 						  WHERE BASE_DT_STR = #{baseDtStr}
 						)
-	   AND DAYS_NUM > 1
+	   AND DAYS_NUM != 1
+	   AND DAYS_NUM != 7
+
      ORDER
 		BY BASE_DT
 	]]>
@@ -67,8 +69,8 @@
          , SCH.RSVT_USR_NM
 		 , SCH.PIC_USR_NO
          , CASE LENGTH(RSVT_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(RSVT_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(RSVT_CELL_NO, 4))
+                WHEN 11 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID(RSVT_CELL_NO, 4, 4), '-', RIGHT(RSVT_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(RSVT_CELL_NO, 3), '-', MID(RSVT_CELL_NO , 4, 3), '-', RIGHT(RSVT_CELL_NO, 4))
            END AS RSVT_CELL_NO
          , SCH.RSVT_TP_CD
          , CASE WHEN SCH.RSVT_TP_CD = 'R' THEN '(방)' ELSE '' END AS RSVT_TP_CD_NM
@@ -94,7 +96,9 @@
 								FROM TB_COMM_CALENDAR 
 								WHERE BASE_DT_STR = #{baseDtStr}
 							)
-        AND CAL.DAYS_NUM > 0
+        
+	   AND CAL.DAYS_NUM != 1
+	   AND CAL.DAYS_NUM != 7
         ) SCH
         ON WT.START_HM <= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
     AND WT.END_HM   >= STR_TO_DATE(SCH.RSVT_HM, '%H%i%s')
@@ -150,6 +154,7 @@
                 WHEN 10 THEN RIGHT(SCH.RSVT_CELL_NO, 4)
                 ELSE ''
            END AS RSVT_CELL_NO3
+		 , RSVT_CELL_NO
 	     , RSVT_PHN_NO
 	     , DATE_FORMAT(RSVT_DT, '%Y-%m-%d %H:%i') AS RSVT_DT
 		 , DATE_FORMAT( SCH.RSVT_DT, '%Y-%m-%d') AS RSVT_DT_YYYYMMDD

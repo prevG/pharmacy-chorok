@@ -78,9 +78,15 @@ $(document).ready(function () {
             $("#rsvtDtYyyymmdd").datebox().datebox('calendar').calendar({
             	validator: function(date) {
             		var now = new Date();
-                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                    var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
-                    return d1<=date && date<=d2;
+                    console.log( date );
+                    
+                    if( date.getDay()== 0 || date.getDay() == 6) {
+                         return false;
+                    }
+                    return true;
+                    // var d1 = c;
+                    // var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    // return d1<=date && date<=d2;
             	}
             });
             
