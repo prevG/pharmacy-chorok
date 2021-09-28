@@ -101,13 +101,12 @@ $(document).ready(function () {
             /**************************************************************
              * [상담하기] 팝업이 close 될경우 
              **************************************************************/
-			$("#custDlg").dialog({
+			/*$("#custDlg").dialog({
 				onClose: function() {
                     var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
 					refreshTimeTable( rsvtId );
 				}
-			});
-
+			});*/
 
             /**************************************************************
              * 주간스케줄표의 예약고객을 클릭할 경우
@@ -356,7 +355,18 @@ $(document).ready(function () {
                 $("#custDlg").remove(); // need to clear...
                 $("#custDlgWrap").load("/customer/CUS1001ML_D/"+ custId + "/0", params, function (data, status, xhr) {
 					$.parser.parse($('#custDlgWrap'));
-					$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
+					$('#custDlg').window({
+						onBeforeClose: function() {
+							var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
+							refreshTimeTable( rsvtId );						
+						}
+					})
+					.window('open')
+					.window('center')
+					.window('setTitle', '고객상담정보');                
+                
+					//$.parser.parse($('#custDlgWrap'));
+					//$('#custDlg').window('open').window('center').window('setTitle', '고객상담정보');
                 });
             });
 
