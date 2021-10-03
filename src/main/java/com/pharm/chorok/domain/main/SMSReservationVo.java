@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 public class SMSReservationVo {
 
+	public Long rsvtId;
     public String rsvtCellNo;
     public String rsctUsrNo;
     public String rsvtUsrNm;
