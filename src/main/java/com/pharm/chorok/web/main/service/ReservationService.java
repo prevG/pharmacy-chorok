@@ -3,18 +3,20 @@ package com.pharm.chorok.web.main.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.pharm.chorok.common.service.CalendarService;
+import com.pharm.chorok.common.service.SMSService;
 import com.pharm.chorok.domain.main.ReservationPagination;
+import com.pharm.chorok.domain.main.SMSReservationVo;
 import com.pharm.chorok.domain.table.TbCommCalendar;
 import com.pharm.chorok.domain.table.TbCommUser;
 import com.pharm.chorok.domain.table.TbPpRsvtSch;
 import com.pharm.chorok.domain.table.TbPpWorkTime;
 import com.pharm.chorok.web.main.repository.ReservationRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class ReservationService {
@@ -28,6 +30,9 @@ public class ReservationService {
 	@Autowired
 	private CommUserDetailsService commUserDetailsSvc;
 
+	@Autowired
+	private SMSService smsService;
+	
 	public ModelAndView getDashBoard( ModelAndView mv, ReservationPagination reservationPagination ) throws Exception {
 
 		getDashBoardReservationByDt(mv, reservationPagination );
@@ -204,7 +209,6 @@ public class ReservationService {
 		}
 		return result;
 	}
-	
 
 	/**
 	 * 예약상세정보 삭제
@@ -216,4 +220,14 @@ public class ReservationService {
 	public int deleteReservation(TbPpRsvtSch rsvt) throws Exception {
 		return rsvtSchRepo.deleteTbPpRsvtSch( rsvt );
 	}
+
+	/**
+	 * 상담예약문자 발송
+	 * 
+	 * @param rsvtVo
+	 */
+	public void sendSmsReservation(SMSReservationVo rsvtVo) {
+		smsService.sendSms(rsvtVo.getRsvtCellNo(), rsvtVo.getSndMsg());
+	}
+	
 }

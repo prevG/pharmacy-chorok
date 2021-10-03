@@ -481,20 +481,23 @@ $(document).ready(function () {
 		    /**************************************************************
 		     * 예약문자보내기
 		     **************************************************************/
-		    $(document).off("click", "a[name='btnSendSms']").on("click", "a[name='btnSendSms']", function (e) {
+		    $(document).off("click", "#btnSendSms").on("click", "#btnSendSms", function (e) {
 		
 		        var isOk = validateSubmit();
 		        if( !isOk ) {
 		            return false;
 		        }
-				
+
 				var rsvtDt         = $("input[name='rsvtDt']").val(); //예약일시
                 var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
                 var rsvtDtHh       = $("input[name='rsvtDtHh']").val(); //예약일시
                 var rsvtDtMm       = $("input[name='rsvtDtMm']").val(); //예약일시
                 var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
-
-
+                var rsvtCellNo1    = $("input[name='rsvtCellNo1']").val(); //예약자휴대전화번호 앞자리
+                var rsvtCellNo2    = $("input[name='rsvtCellNo2']").val(); //예약자휴대전화번호 중간자리
+                var rsvtCellNo3    = $("input[name='rsvtCellNo3']").val(); //예약자휴대전화번호 끝자리
+                
+                var rsvtCellNo = rsvtCellNo1 + rsvtCellNo2 + rsvtCellNo3;
 				var smsMsg = "";
 				smsMsg += rsvtUsrNm + "님."+"\n";
 				smsMsg += rsvtDtYyyymmdd + "일 "
@@ -502,16 +505,45 @@ $(document).ready(function () {
 				smsMsg += rsvtDtMm + "분"
 				smsMsg += "에 초록건강한약국 상담이 예약되었습니다.";
 				
-		
 		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg);
 		        if( !isOk ) {
 		            return false;
 		        }
 				
-		        var params = $("form[name=detailForm]").serialize();
+				var formData = {
+					criteria : {
+						"rsvtId" 		: 	$("#rsvtId").val(),
+						"rsvtCellNo" 	: 	rsvtCellNo,
+						"rsvtUsrNm" 	: 	rsvtUsrNm,
+						"rsvtDt" 		: 	rsvtDt,
+						"sndMsg" 		: 	smsMsg
+					}
+				};
+				
+				$.ajax({
+					url: '/api/v1/sms/reservation_2',
+					method: 'post',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(formData),
+					success: function(res) {
+						if (res.status === 'success') {
+							
+							$.messager.show({ title: '예약문자 발송', msg: res.message });
+						} else {
+							$.messager.alert('예약문자 발송', res.message);
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						$.messager.alert('예약문자 발송', xhr.responseJSON.message, 'error');
+					}
+				});
+								
+		        /*var params = $("form[name=detailForm]").serialize();
 		        $.ajax({
 		            type: 'post',
-		            url: '/api/v1/sms/reservation',
+		            url: '/api/v1/sms/reservation_2',
 		            data: params,
 		            success: function (result) {
 		
@@ -523,7 +555,7 @@ $(document).ready(function () {
 		                    alert(result.errorMessage);
 		                }
 		            }
-		        });
+		        });*/
 		    });
                 
             //예약 상세정보조회
@@ -641,8 +673,9 @@ $(document).ready(function () {
                 var rsvtTpCd       = $("input[name='rsvtTpCd']:checked").length; //상담구분
                 var rsvtUsrNm      = $("input[name='rsvtUsrNm']").val(); //예약자명
                 var genTpCd        = $("input[name='genTpCd']:checked").length; //예약자성별
-                var rsvtCellNo2    = $("input[name='rsvtCellNo2']").val(); //예약자휴대전화번호
-                var rsvtCellNo3    = $("input[name='rsvtCellNo3']").val(); //예약자휴대전화번호
+                var rsvtCellNo1    = $("input[name='rsvtCellNo1']").val(); //예약자휴대전화번호 앞자리
+                var rsvtCellNo2    = $("input[name='rsvtCellNo2']").val(); //예약자휴대전화번호 중간자리
+                var rsvtCellNo3    = $("input[name='rsvtCellNo3']").val(); //예약자휴대전화번호 끝자리
 
                 // if ($isEmpty(rsvtDt)) {
                 //     $.messager.alert("경고","예약일시를 입력해주세요.");

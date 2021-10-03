@@ -1,25 +1,34 @@
 package com.pharm.chorok;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.pharm.chorok.common.component.SMSComponent;
+import com.pharm.chorok.domain.table.TbPpSmsHist;
 
 @SpringBootTest
 class SMSComponentTest {
 	
 	@Autowired
-	private SMSComponent sms;
+	private SMSComponent smsComponent;
 
-//	@Test
-	void test() {
+	@Test
+	void testSms() {
+		// given
+		String recipientNo = "01035693756";
+		String smsContent = "Say Hello!";
 		
-		sms.sendMmsWithAttach();
+		// when
+		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendSms(recipientNo, smsContent);
 		
-		assertTrue(true, "sms test2221113333");
+		// then
+		assertEquals(1, tbPpSmsHists.size(), "sms test success "+ LocalDateTime.now().toString());
 	}
 
 }

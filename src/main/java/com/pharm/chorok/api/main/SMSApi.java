@@ -21,6 +21,7 @@ import com.pharm.chorok.domain.main.ResultDosgTpSmsHistVo;
 import com.pharm.chorok.domain.main.SMSReservationVo;
 import com.pharm.chorok.web.admin.service.ADSMSService;
 import com.pharm.chorok.web.main.service.DosgTpMstService;
+import com.pharm.chorok.web.main.service.ReservationService;
 
 /**
  * 복용유형 발송문자 정보를 처리하는 클래스 
@@ -36,8 +37,17 @@ public class SMSApi {
     public ADSMSService ADSMSSvc;
     
     @Autowired
-    public DosgTpMstService dosgTpMstService; 
+    private ReservationService reservationService;
+    
+    @Autowired
+    private DosgTpMstService dosgTpMstService; 
 
+    /**
+     * @deprecated sendSmsReservation2 함수로 대체함.
+     * 
+     * @param smsObj
+     * @return
+     */
     @PostMapping("/reservation")
     public ResponseEntity<ResponseMessage> sendSmsReservation(SMSReservationVo smsObj) {
 		
@@ -53,6 +63,21 @@ public class SMSApi {
 			resMsg.setMessage( e.getMessage() );
 		}
 		return new ResponseEntity<ResponseMessage>( resMsg, HttpStatus.OK );
+	}
+    
+    /**
+     * 상담예약문자 발송
+     * 
+     * @param pageCriteria
+     * @return
+     */
+    @PostMapping("/reservation_2")
+    public ResponseEntity<ResponseMessage> sendSmsReservation2(@RequestBody PageCriteria<SMSReservationVo> pageCriteria) {
+		Assert.notNull(pageCriteria.getCriteria(), "상담예약문자 정보가 없습니다.");
+		
+		reservationService.sendSmsReservation( pageCriteria.getCriteria() );
+
+		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 상담예약문자가 발송 되었습니다."), HttpStatus.OK);
 	}
     
     @PostMapping("/dosgTpList")

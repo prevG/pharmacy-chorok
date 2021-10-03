@@ -31,20 +31,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class SMSComponent {
-	static final String apiKey = "4PbyZIDlDUSx4SsL";
-	static final String hostNameUrl = "https://api-sms.cloud.toast.com";
-	static final String method = "POST";
-	static final String sendNo = "01035693756";
-	static final String recipientNo = "01035693756";
+	public static final String apiKey = "4PbyZIDlDUSx4SsL";
+	public static final String hostNameUrl = "https://api-sms.cloud.toast.com";
+	public static final String SMS_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/sender/sms";
+	public static final String MMS_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/sender/mms";
+	public static final String ATTACH_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/attachfile/binaryUpload";
+	public static final String method = "POST";
+	public static final String sendNo = "01035693756";
+
 	public static enum MESSAGETYPE {
 		SMSTYPE,
 		MMSTYPE,
 		TEMPLATETYPE
 	}
 	
-	public List<TbPpSmsHist> sendSms() {
-		String requestUrl= "/sms/v2.4/appKeys/"+ apiKey +"/sender/sms";
-		String apiUrl = hostNameUrl + requestUrl;
+	static final String onlyTestRecipientNo = "01035693756";
+	
+	public List<TbPpSmsHist> sendSms(String recipientNo, String smsContent) {
+		String apiUrl = hostNameUrl + SMS_REQUEST_URL;
 		
 		JSONObject bodyJson = new JSONObject();
 		JSONObject toJson = new JSONObject();
@@ -55,7 +59,7 @@ public class SMSComponent {
 	    toArr.put(toJson);
 	    // body
 	    bodyJson.put("sendNo", sendNo);
-		bodyJson.put("body", "sms body");
+		bodyJson.put("body", smsContent);
 	    bodyJson.put("recipientList", toArr);
 	    String body = bodyJson.toString();
 	    
@@ -63,15 +67,14 @@ public class SMSComponent {
 	}
 	
 	public List<TbPpSmsHist> sendMms() {
-		String requestUrl = "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";
-		String apiUrl = hostNameUrl + requestUrl;	
+		String apiUrl = hostNameUrl + MMS_REQUEST_URL;	
 		
 		JSONObject bodyJson = new JSONObject();
 		JSONObject toJson = new JSONObject();
 	    JSONArray  toArr = new JSONArray();
 		
 	    // receiver
-	    toJson.put("recipientNo", recipientNo);			
+	    toJson.put("recipientNo", onlyTestRecipientNo);			
 	    toArr.put(toJson);
 	    // body
 	  	bodyJson.put("sendNo", sendNo);
@@ -91,15 +94,14 @@ public class SMSComponent {
 	 * @return
 	 */
 	public List<TbPpSmsHist> sendMmsTemplate() {
-		String requestUrl = "/sms/v2.4/appKeys/"+apiKey+"/sender/mms";
-		String apiUrl = hostNameUrl + requestUrl;
+		String apiUrl = hostNameUrl + MMS_REQUEST_URL;
 		
 		JSONObject bodyJson = new JSONObject();
 		JSONObject toJson = new JSONObject();
 	    JSONArray  toArr = new JSONArray();
 	    
 	    // receiver
-	    toJson.put("recipientNo", recipientNo);			
+	    toJson.put("recipientNo", onlyTestRecipientNo);			
 	    toArr.put(toJson);
 	    // body
 		bodyJson.put("sendNo", sendNo);
@@ -113,15 +115,14 @@ public class SMSComponent {
 	}
 	
 	public List<TbPpSmsHist> sendMmsWithAttach() {
-		String requestUrl = "/sms/v2.4/appKeys/"+ apiKey +"/sender/mms";
-		String apiUrl = hostNameUrl + requestUrl;	
+		String apiUrl = hostNameUrl + MMS_REQUEST_URL;	
 		
 		JSONObject bodyJson = new JSONObject();
 		JSONObject toJson = new JSONObject();
 	    JSONArray  toArr = new JSONArray();
 		
 	    // receiver
-	    toJson.put("recipientNo", recipientNo);			
+	    toJson.put("recipientNo", onlyTestRecipientNo);			
 	    toArr.put(toJson);
 	    // body
 	  	bodyJson.put("sendNo", sendNo);
@@ -137,8 +138,7 @@ public class SMSComponent {
 	}
 	
 	private AttachResponseVo sendAttach() {
-		String requestUrl = "/sms/v2.4/appKeys/"+ apiKey +"/attachfile/binaryUpload";
-		String apiUrl = hostNameUrl + requestUrl;
+		String apiUrl = hostNameUrl + ATTACH_REQUEST_URL;
 		
 		JSONObject bodyJson = new JSONObject();
 		
@@ -264,19 +264,19 @@ public class SMSComponent {
 	private List<TbPpSmsHist> getTbPpSmsHists(String resStr) {
 		List<TbPpSmsHist> ret = new ArrayList<TbPpSmsHist>();
 		
-		JSONObject jObject = new JSONObject(resStr);
-        JSONObject jheader = jObject.getJSONObject("header");
-        JSONObject jbody = jObject.getJSONObject("body");
+		JSONObject jsonObject = new JSONObject(resStr);
+        JSONObject jsonHeader = jsonObject.getJSONObject("header");
+        JSONObject jsonBody = jsonObject.getJSONObject("body");
 
-        Integer rstCd = (Integer) jheader.get("resultCode");
-        String rstMsg = (String) jheader.get("resultMessage");
-        JSONArray sendResultList = jbody.getJSONObject("data").getJSONArray("sendResultList");
+        Integer rstCd = (Integer) jsonHeader.get("resultCode");
+        String rstMsg = (String) jsonHeader.get("resultMessage");
+        JSONArray sendResultList = jsonBody.getJSONObject("data").getJSONArray("sendResultList");
         
         for ( int i = 0; i < sendResultList.length(); i++ ) {
         	JSONObject sendResultItem = (JSONObject) sendResultList.get(i);
-        	String rcpNo = (String)sendResultItem.get("recipientNo");
-        	Integer rcpRstCd = (Integer)sendResultItem.get("resultCode");
-        	String rcpRstMsg = (String)sendResultItem.get("resultMessage");
+        	String rcpNo = (String) sendResultItem.get("recipientNo");
+        	Integer rcpRstCd = (Integer) sendResultItem.get("resultCode");
+        	String rcpRstMsg = (String) sendResultItem.get("resultMessage");
         	
         	TbPpSmsHist tbPpSmsHist = new TbPpSmsHist();
         	

@@ -16,7 +16,7 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 @Service
-public class ADSMSService{
+public class ADSMSService {
 
 	@Autowired
 	private ADSMSRepository SMSRepository;
