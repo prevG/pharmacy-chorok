@@ -15,7 +15,7 @@ public class TbPpRsvtSch extends TbCommColumn {
     private String genTpCd;
     private String rsvtTpCd;
     private Long custId;
-
+    private String rsvtSmsDt;	// 마지막 상담문자 발송일시
     
     private String rsvtDt;
     private String rsvtDtYyyymmdd;

@@ -528,7 +528,10 @@ $(document).ready(function () {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							
+							var params = $("form[name=detailForm]").serialize();
+							refreshTimeTable();
+		                    findReservationDetail(params);
+		                    
 							$.messager.show({ title: '예약문자 발송', msg: res.message });
 						} else {
 							$.messager.alert('예약문자 발송', res.message);
@@ -592,8 +595,8 @@ $(document).ready(function () {
                         rsvtTpCd       : data.rsvtTpCd,
                         rsvtUsrNm      : data.rsvtUsrNm,
                         genTpCd        : data.genTpCd,
-                        rsvtCellNo1     : data.rsvtCellNo1,
-                        rsvtCellNo2     : data.rsvtCellNo2,
+                        rsvtCellNo1    : data.rsvtCellNo1,
+                        rsvtCellNo2    : data.rsvtCellNo2,
                         rsvtCellNo3    : data.rsvtCellNo3,
                         rcmdUsrNm      : data.rcmdUsrNm,
                         rcmdCellNo     : data.rcmdCellNo,
@@ -602,7 +605,8 @@ $(document).ready(function () {
                         rsvtDesc       : data.rsvtDesc,
                         picUsrNo       : data.picUsrNo,
                         rsvtId         : data.rsvtId,
-                        custId         : data.custId
+                        custId         : data.custId,
+                        rsvtSmsDt      : data.rsvtSmsDt
                         });
                     } else {
                         $.messager.show({ title: 'Error', msg: result.Msg });
