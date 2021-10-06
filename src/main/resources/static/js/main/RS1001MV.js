@@ -159,10 +159,8 @@ $(document).ready(function () {
                     
                     //스케쥴표에서 선택된 예약이 있으면 스타일 초기화
                     clearSelectedReservation();
+				}
 
-                    //예약상세스케쥴 폼 클리어
-                    $('#rsvtForm').form('clear');
-                }
             });
 
             /**************************************************************
@@ -175,8 +173,6 @@ $(document).ready(function () {
                 //스케쥴표에서 선택된 예약이 있으면 스타일 초기화
                 clearSelectedReservation();
 
-                //예약상세스케쥴 폼 클리어
-                $('#rsvtForm').form('clear');
             });
 
             
@@ -357,6 +353,10 @@ $(document).ready(function () {
             $("a[name='btnNewChartView']").off("click").on("click", function(e) {             
                 e.preventDefault(); //remove href function
 
+				if($(this).linkbutton("options").disabled) {
+					return true;
+				}
+
                 var rsvtId = $("form[name='rsvtForm']").find("input[name='rsvtId']").val();
                 var custId = $("form[name='rsvtForm']").find("input[name='custId']").val();
                 custId = $isEmpty( custId ) ? '0' : custId;
@@ -435,6 +435,11 @@ $(document).ready(function () {
              **************************************************************/
             $("a[name='btnDeleteRsvtSch']").off("click").on("click", function (e) {
 
+				if($(this).linkbutton("options").disabled) {
+					return true;
+				}
+				
+				
                 $.messager.confirm("확인", "예약정보를 삭제하시겠습니까?", function(r) {
 
                     if(!r) return; 
@@ -452,9 +457,6 @@ $(document).ready(function () {
                             
                                 //스케쥴표에서 선택된 예약이 있으면 스타일 초기화
                                 clearSelectedReservation();
-
-                                //예약상세스케쥴 폼 클리어
-                                $('#rsvtForm').form('clear');
 
                                 isExistChangedData = false;
                             } else {
@@ -499,11 +501,12 @@ $(document).ready(function () {
                 
                 var rsvtCellNo = rsvtCellNo1 + rsvtCellNo2 + rsvtCellNo3;
 				var smsMsg = "";
+				smsMsg += "[초록건강한약국]"+"\n";
 				smsMsg += rsvtUsrNm + "님."+"\n";
 				smsMsg += rsvtDtYyyymmdd + "일 "
 				smsMsg += rsvtDtHh + "시"
 				smsMsg += rsvtDtMm + "분"
-				smsMsg += "에 초록건강한약국 상담이 예약되었습니다.";
+				smsMsg += "에 상담이 예약되었습니다.";
 				
 		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg);
 		        if( !isOk ) {
@@ -528,9 +531,10 @@ $(document).ready(function () {
 					data: JSON.stringify(formData),
 					success: function(res) {
 						if (res.status === 'success') {
-							var params = $("form[name=detailForm]").serialize();
-							refreshTimeTable();
-		                    findReservationDetail(params);
+							var params = $("form[name=rsvtForm]").serialize();
+							refreshTimeTable($("#rsvtId").val());
+							
+		                    //findReservationDetail(params);
 		                    
 							$.messager.show({ title: '예약문자 발송', msg: res.message });
 						} else {
@@ -608,22 +612,27 @@ $(document).ready(function () {
                         custId         : data.custId,
                         rsvtSmsDt      : data.rsvtSmsDt
                         });
+
+						//예약번호가 존재할 경우 문자보내기버튼 활성화
+		                var rsvtId = $("#rsvtId").val();
+		                if( $isEmpty(rsvtId)) {
+		
+		                    $("#btnSendSms").hide();
+			                $("#btnDeleteRsvtSch").linkbutton("disable");
+			                $("#btnNewChartView").linkbutton("disable");
+		                    // $("#reservation-detail").children().remove();
+		                } else {
+		                    $("#btnSendSms").show();
+			                $("#btnDeleteRsvtSch").linkbutton("enable");
+			                $("#btnNewChartView").linkbutton("enable");
+		                }
+	                    
                     } else {
                         $.messager.show({ title: 'Error', msg: result.Msg });
                         return;
                     }
 
-                    //예약번호가 존재할 경우 문자보내기버튼 활성화
-                    var rsvtId = $("#rsvtId").val();
-                    if( $isEmpty(rsvtId)) {
-                        $("#btnDeleteRsvtSch").hide();
-                        $("#btnNewChartView").hide();
-                        // $("#reservation-detail").children().remove();
-                    } else {
-                        $("#btnSendSms").show();
-                        $("#btnDeleteRsvtSch").show();
-                        $("#btnNewChartView").show();
-                    }
+
 
                 }, 'json')
                 .fail(function(xhr, status, error) {
@@ -734,8 +743,29 @@ $(document).ready(function () {
                     $(item).removeClass("btn_success_sel");
                     $(item).removeClass("btn_secondary_sel");
                 });
+
+				//예약번호가 존재할 경우 문자보내기버튼 활성화
+                $("#btnSendSms").hide();
+                $("#btnDeleteRsvtSch").linkbutton("disable");
+                $("#btnNewChartView").linkbutton("disable");
+
+
+
+                //예약상세스케쥴 폼 클리어
+                $('#rsvtForm').form('clear');
+				$('#rsvtForm').form('load', {
+                    rsvtDtHh       : "",
+                    rsvtDtMm       : "",
+                    rsvtCellNo1    : "010",
+                    picUsrNo       : ""
+                });
             }
+
+			
+			//버튼 초기화
+			clearSelectedReservation();
         }
+
     };
 
     //페이지 로딩

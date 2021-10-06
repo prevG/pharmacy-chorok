@@ -31,13 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class SMSComponent {
-	public static final String apiKey = "4PbyZIDlDUSx4SsL";
-	public static final String hostNameUrl = "https://api-sms.cloud.toast.com";
+	public static final String apiKey = "BgyjPpoZgc4tr13c";
+	public static final String hostNameUrl = "https://api-sms.cloud.toast.com/";
 	public static final String SMS_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/sender/sms";
 	public static final String MMS_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/sender/mms";
 	public static final String ATTACH_REQUEST_URL = "/sms/v2.4/appKeys/"+ apiKey +"/attachfile/binaryUpload";
 	public static final String method = "POST";
-	public static final String sendNo = "01035693756";
+	public static final String sendNo = "0553676763";
 
 	public static enum MESSAGETYPE {
 		SMSTYPE,
