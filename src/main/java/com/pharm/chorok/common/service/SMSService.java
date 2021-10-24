@@ -18,8 +18,18 @@ public class SMSService {
 	@Autowired
 	SMSRepository smsRepository;
 	
-	public void sendSms(String recipientNo, String smsContent) {
+	public void sendSms(String recipientNo, String smsContent)  throws Exception {
 		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendSms(recipientNo, smsContent);
+		for (TbPpSmsHist smsHist : tbPpSmsHists) {
+			smsRepository.insertSmsHist(smsHist);
+		}
+	}
+	
+	public void sendMms (
+			String recipientNo, 
+			String mmsTitle,
+			String mmsContent)  throws Exception {
+		List<TbPpSmsHist> tbPpSmsHists = smsComponent.sendMms(recipientNo, mmsTitle, mmsContent);
 		for (TbPpSmsHist smsHist : tbPpSmsHists) {
 			smsRepository.insertSmsHist(smsHist);
 		}

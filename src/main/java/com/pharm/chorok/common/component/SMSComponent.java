@@ -47,7 +47,7 @@ public class SMSComponent {
 	
 	static final String onlyTestRecipientNo = "01035693756";
 	
-	public List<TbPpSmsHist> sendSms(String recipientNo, String smsContent) {
+	public List<TbPpSmsHist> sendSms(String recipientNo, String smsContent)  throws Exception {
 		String apiUrl = hostNameUrl + SMS_REQUEST_URL;
 		
 		JSONObject bodyJson = new JSONObject();
@@ -66,7 +66,7 @@ public class SMSComponent {
 	    return apiMessage(apiUrl, body);
 	}
 	
-	public List<TbPpSmsHist> sendMms() {
+	public List<TbPpSmsHist> sendMms(String recipientNo, String mmsTitle, String mmsContent)  throws Exception {
 		String apiUrl = hostNameUrl + MMS_REQUEST_URL;	
 		
 		JSONObject bodyJson = new JSONObject();
@@ -74,12 +74,12 @@ public class SMSComponent {
 	    JSONArray  toArr = new JSONArray();
 		
 	    // receiver
-	    toJson.put("recipientNo", onlyTestRecipientNo);			
+	    toJson.put("recipientNo", recipientNo);			
 	    toArr.put(toJson);
 	    // body
 	  	bodyJson.put("sendNo", sendNo);
-	    bodyJson.put("title", "mms title");
-		bodyJson.put("body", "mms content");
+	  	bodyJson.put("title", mmsTitle);
+		bodyJson.put("body", mmsContent);
 	    bodyJson.put("recipientList", toArr);
 	    String body = bodyJson.toString();
 	    
@@ -93,7 +93,7 @@ public class SMSComponent {
 	 * 
 	 * @return
 	 */
-	public List<TbPpSmsHist> sendMmsTemplate() {
+	public List<TbPpSmsHist> sendMmsTemplate()  throws Exception {
 		String apiUrl = hostNameUrl + MMS_REQUEST_URL;
 		
 		JSONObject bodyJson = new JSONObject();
@@ -114,7 +114,7 @@ public class SMSComponent {
 	    return apiMessage(apiUrl, body);
 	}
 	
-	public List<TbPpSmsHist> sendMmsWithAttach() {
+	public List<TbPpSmsHist> sendMmsWithAttach()  throws Exception {
 		String apiUrl = hostNameUrl + MMS_REQUEST_URL;	
 		
 		JSONObject bodyJson = new JSONObject();
@@ -195,46 +195,43 @@ public class SMSComponent {
 		return result;
 	}
 	
-	private List<TbPpSmsHist> apiMessage(String apiUrl, String body) {
+	private List<TbPpSmsHist> apiMessage(String apiUrl, String body)  throws Exception {
 		log.info("apiUrl : "+ apiUrl);
 		log.info("body : "+ body);
 		List<TbPpSmsHist> result = new ArrayList<TbPpSmsHist>();
-		try {
-	        URL url = new URL(apiUrl);
 
-	        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-	        con.setUseCaches(false);
-	        con.setDoOutput(true);
-	        con.setDoInput(true);
-	        con.setRequestProperty("content-type", "application/json");
-	        con.setRequestMethod(method);
-	        con.setDoOutput(true);
-	        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-	        
-	        wr.write(body.getBytes());
-	        wr.flush();
-	        wr.close();
+        URL url = new URL(apiUrl);
 
-	        int responseCode = con.getResponseCode();
-	        BufferedReader br;
-	        System.out.println("responseCode" +" " + responseCode);
-	        if ( responseCode == 200 ) { // 정상 호출
-	            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-	        } else {  // 에러 발생
-	            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-	        }
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        con.setUseCaches(false);
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestProperty("content-type", "application/json");
+        con.setRequestMethod(method);
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        
+        wr.write(body.getBytes());
+        wr.flush();
+        wr.close();
 
-	        String inputLine;
-	        StringBuffer response = new StringBuffer();
-	        while ((inputLine = br.readLine()) != null) {
-	            response.append(inputLine);
-	        }
-	        br.close();
-	        
-	        result = getTbPpSmsHists(response.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        int responseCode = con.getResponseCode();
+        BufferedReader br;
+        System.out.println("responseCode" +" " + responseCode);
+        if ( responseCode == 200 ) { // 정상 호출
+            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        } else {  // 에러 발생
+            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+        }
+
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = br.readLine()) != null) {
+            response.append(inputLine);
+        }
+        br.close();
+        
+        result = getTbPpSmsHists(response.toString());
 		
 		return result;
 	}

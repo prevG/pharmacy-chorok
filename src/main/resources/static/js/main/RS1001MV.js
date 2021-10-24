@@ -78,7 +78,7 @@ $(document).ready(function () {
             $("#rsvtDtYyyymmdd").datebox().datebox('calendar').calendar({
             	validator: function(date) {
             		var now = new Date();
-                    console.log( date );
+                    //console.log( date );
                     
                     if( date.getDay()== 0 || date.getDay() == 6) {
                          return false;
@@ -490,6 +490,7 @@ $(document).ready(function () {
 		            return false;
 		        }
 
+
 				var rsvtDt         = $("input[name='rsvtDt']").val(); //예약일시
                 var rsvtDtYyyymmdd = $("input[name='rsvtDtYyyymmdd']").val(); //예약일시
                 var rsvtDtHh       = $("input[name='rsvtDtHh']").val(); //예약일시
@@ -499,27 +500,56 @@ $(document).ready(function () {
                 var rsvtCellNo2    = $("input[name='rsvtCellNo2']").val(); //예약자휴대전화번호 중간자리
                 var rsvtCellNo3    = $("input[name='rsvtCellNo3']").val(); //예약자휴대전화번호 끝자리
                 
-                var rsvtCellNo = rsvtCellNo1 + rsvtCellNo2 + rsvtCellNo3;
-				var smsMsg = "";
-				smsMsg += "[초록건강한약국]"+"\n";
-				smsMsg += rsvtUsrNm + "님."+"\n";
-				smsMsg += rsvtDtYyyymmdd + "일 "
-				smsMsg += rsvtDtHh + "시"
-				smsMsg += rsvtDtMm + "분"
-				smsMsg += "에 상담이 예약되었습니다.";
+                var rsvtCellNo = rsvtCellNo1 + rsvtCellNo2 + rsvtCellNo3;		
+				var rsvtTpCd   = $("input[name='rsvtTpCd']:checked").val();
 				
-		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg);
+				var m1 = moment(rsvtDtYyyymmdd + " " +rsvtDtHh + +":" + rsvtDtMm, 'YYYY-MM-DD HH:mm');
+				var mDate  = m1.format("MM월 DD일 dddd");
+				var mHours = m1.format("a h시 mm분");
+				
+				var smsMsg = "";
+				if( rsvtTpCd == 'C' ) { 
+					smsMsg += "[초록건강한약국] "+"\n";
+					smsMsg += rsvtUsrNm + "님"+"\n";
+					smsMsg += "전화상담 예약은"+"\n";
+					smsMsg += mDate + "\n";
+					smsMsg += mHours+ "입니다."+"\n";	
+					smsMsg += "\n";				
+					smsMsg += "★초록건강한약국 대표번호 (055-367-6763)로 전화 드리겠습니다."+"\n";
+					smsMsg += "★예약변경시 사전에 꼭 연락부탁드립니다."+"\n";
+					smsMsg += "상담이 예약제로 진행되므로 늦으실 경우 대기 또는 당일 상담이 어려울 수 있습니다. (초록건강한약국 대표전화 또는 채널로 연락 주시면 됩니다.)"+"\n";	
+					smsMsg += "\n";				
+					smsMsg += "▶영업시간: 평일 오전 9시 ~ 오후 6시"+"\n";
+					smsMsg += "▶카카오톡문의: http://pf.kakao.com/_yqrhxb";
+				} else {					
+					smsMsg += "[초록건강한약국] "+"\n";
+					smsMsg += rsvtUsrNm + "님"+"\n";
+					smsMsg += "상담 예약은"+"\n";
+					smsMsg += mDate + "\n";
+					smsMsg += mHours+ "입니다."+"\n";	
+					smsMsg += "\n";				
+					smsMsg += "★예약변경시 사전에 꼭 연락부탁드립니다."+"\n";
+					smsMsg += "상담이 예약제로 진행되므로 늦으실 경우 대기 또는 당일 상담이 어려울 수 있습니다. (초록건강한약국 대표전화 또는 채널로 연락 주시면 됩니다.)"+"\n";	
+					smsMsg += "\n";				
+					smsMsg += "★코로나19 예방을 위해 감기,발열,호흡기질환 증상이 있거나 마스크 미착용 경우 상담이 불가하오니 협조 부탁드립니다."+"\n";
+                    smsMsg += "(상담자를 제외한 동행인원은 최소화 해주세요.)"+"\n";	
+					smsMsg += "\n";				
+					smsMsg += "▶영업시간: 평일 오전 9시 ~ 오후 6시"+"\n";
+					smsMsg += "▶카카오톡문의: http://pf.kakao.com/_yqrhxb";
+					
+				}
+		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg );
 		        if( !isOk ) {
 		            return false;
-		        }
-				
+		        }				
 				var formData = {
 					criteria : {
 						"rsvtId" 		: 	$("#rsvtId").val(),
 						"rsvtCellNo" 	: 	rsvtCellNo,
 						"rsvtUsrNm" 	: 	rsvtUsrNm,
 						"rsvtDt" 		: 	rsvtDt,
-						"sndMsg" 		: 	smsMsg
+						"sndMsg" 		: 	smsMsg,
+						"sndTitle" 		: 	"[초록건강한약국]상담예약 안내문자"
 					}
 				};
 				
@@ -530,6 +560,7 @@ $(document).ready(function () {
 					dataType: 'json',
 					data: JSON.stringify(formData),
 					success: function(res) {
+							
 						if (res.status === 'success') {
 							var params = $("form[name=rsvtForm]").serialize();
 							refreshTimeTable($("#rsvtId").val());
@@ -590,7 +621,7 @@ $(document).ready(function () {
                 $.post('/api/v1/main/reservation/findByRsvtId', params, function(result) {
                     if(result.status == 'success') {
                         $('#rsvtForm').form('clear');
-
+debugger;
                         var data = result.data;
                         $('#rsvtForm').form('load', {
                         rsvtDtYyyymmdd : data.rsvtDtYyyymmdd,
@@ -631,9 +662,6 @@ $(document).ready(function () {
                         $.messager.show({ title: 'Error', msg: result.Msg });
                         return;
                     }
-
-
-
                 }, 'json')
                 .fail(function(xhr, status, error) {
                     $.messager.show({ title: 'Error', msg: xhr.responseJSON.message });

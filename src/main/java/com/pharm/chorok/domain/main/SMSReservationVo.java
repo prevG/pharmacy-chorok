@@ -17,5 +17,6 @@ public class SMSReservationVo {
     public String rsvtUsrNm;
     public String rsvtDt;
 
+    public String sndTitle;
     public String sndMsg;
 }

@@ -226,8 +226,9 @@ public class ReservationService {
 	 * 
 	 * @param rsvtVo
 	 */
-	public void sendSmsReservation(SMSReservationVo rsvtVo) {
-		smsService.sendSms(rsvtVo.getRsvtCellNo(), rsvtVo.getSndMsg());
+	public void sendSmsReservation(SMSReservationVo rsvtVo) throws Exception {
+//		smsService.sendSms(rsvtVo.getRsvtCellNo(), rsvtVo.getSndMsg());
+		smsService.sendMms(rsvtVo.getRsvtCellNo(), rsvtVo.getSndTitle(), rsvtVo.getSndMsg());
 	}
 	
 }

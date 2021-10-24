@@ -72,12 +72,19 @@ public class SMSApi {
      * @return
      */
     @PostMapping("/reservation_2")
-    public ResponseEntity<ResponseMessage> sendSmsReservation2(@RequestBody PageCriteria<SMSReservationVo> pageCriteria) {
+    public ResponseEntity<ResponseMessage> sendSmsReservation2(@RequestBody PageCriteria<SMSReservationVo> pageCriteria)  {
 		Assert.notNull(pageCriteria.getCriteria(), "상담예약문자 정보가 없습니다.");
-		
-		reservationService.sendSmsReservation( pageCriteria.getCriteria() );
+		ResponseMessage responseMessage = null;
+		try {
+			reservationService.sendSmsReservation( pageCriteria.getCriteria() );
+			responseMessage = new ResponseMessage("success", "정상적으로 상담예약문자가 발송 되었습니다.");
+		} catch(Exception ex ) {
+			
+			ex.printStackTrace();
+			responseMessage = new ResponseMessage("fail", "문자발송이 실패하였습니다.<br/>예약자 연락처를 확인해보세요.<br/><br/>또는 관리자에게 문의하세요.");
+		}
 
-		return new ResponseEntity<ResponseMessage>(new ResponseMessage("success", "정상적으로 상담예약문자가 발송 되었습니다."), HttpStatus.OK);
+		return new ResponseEntity<ResponseMessage>(responseMessage, HttpStatus.OK);
 	}
     
     @PostMapping("/dosgTpList")
