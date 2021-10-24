@@ -19,7 +19,7 @@ class SMSComponentTest {
 	private SMSComponent smsComponent;
 
 	@Test
-	void testSms() {
+	void testSms() throws Exception{
 		// given
 		String recipientNo = "01035693756";
 		String smsContent = "Say Hello!";

@@ -17,7 +17,7 @@ public class SMSServiceTest {
 	private SMSService smsService;
 
 	@Test
-	void testSms() {
+	void testSms() throws Exception {
 		// given
 		String recipientNo = "01035693756";
 		String smsContent = "Say Hello!";
