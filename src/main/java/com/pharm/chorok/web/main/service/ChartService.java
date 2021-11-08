@@ -211,6 +211,11 @@ public class ChartService {
     				.build());
     	}
     	
+    	//복용차트가 존재하는 경우 시작체중으로 감량중량을 모두 업데이트한다.
+    	if( inCnstChart.getOrgWgt() > 0 ) {
+    		dosingRepo.updateTbPpDosgChartWgt( inCnstChart );
+    	}
+    	
 		return consultingRepo.updateTbPpCnstChart(inCnstChart);
 	}
     

@@ -220,6 +220,17 @@
 	     WHERE CNST_ID = #{cnstId}
 		]]>
 	</delete>
+	
+    <update id="updateTbPpDosgChartWgt" parameterType="com.pharm.chorok.domain.table.TbPpCnstChart">
+	<![CDATA[    
+    /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChart */
+    UPDATE TB_PP_DOSG_CHART 
+       SET LOSS_WGT  = (#{orgWgt} - CURR_WGT)
+         , RMI_WGT   = (CURR_WGT  - #{tgtWgt})
+     WHERE CURR_WGT IS NOT NULL
+       AND CNST_ID   = #{cnstId}
+	]]>
+	</update>
 
     <update id="updateTbPpDosgChart" parameterType="com.pharm.chorok.domain.table.TbPpDosgChart">
 		<![CDATA[    

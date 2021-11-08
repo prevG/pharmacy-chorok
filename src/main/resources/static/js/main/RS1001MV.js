@@ -535,7 +535,8 @@ $(document).ready(function () {
                     smsMsg += "(상담자를 제외한 동행인원은 최소화 해주세요.)"+"\n";	
 					smsMsg += "\n";				
 					smsMsg += "▶영업시간: 평일 오전 9시 ~ 오후 6시"+"\n";
-					smsMsg += "▶카카오톡문의: http://pf.kakao.com/_yqrhxb";
+					smsMsg += "▶카카오톡문의: http://pf.kakao.com/_yqrhxb"+"\n";
+					smsMsg += "▶주소: 경상남도 양산시 물금읍 청운로349 305호(본건물 지하1,2층 주차장 이용가능)";
 					
 				}
 		        isOk = confirm("예약문자를 발송하시겠습니까?\n아래의 메세지가 즉시 전송됩니다.\n\n" + smsMsg );

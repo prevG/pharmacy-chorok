@@ -289,6 +289,18 @@ $( document ).ready( function() {
 		        		width: '60'
 		        	},
 		        	{
+		        		field: 'dosgDesc1', 
+		        		title: '몸상태', 
+		        		align: 'center', 
+		        		width: '120'
+		        	},
+		        	{
+		        		field: 'dosgDesc1', 
+		        		title: '약반응', 
+		        		align: 'center', 
+		        		width: '120'
+		        	},
+		        	{
 		        		field: 'callYn', 
 		        		title: '상담예약', 
 		        		align: 'center', 
@@ -340,18 +352,6 @@ $( document ).ready( function() {
 		        		title: '남은체중', 
 		        		align: 'center', 
 		        		width: '60'
-		        	},
-		        	{
-		        		field: 'dosgDesc1', 
-		        		title: '몸상태', 
-		        		align: 'center', 
-		        		width: '120'
-		        	},
-		        	{
-		        		field: 'dosgDesc1', 
-		        		title: '약반응', 
-		        		align: 'center', 
-		        		width: '120'
 		        	}
 		        ]]
 			});
@@ -753,6 +753,7 @@ $( document ).ready( function() {
 			var picUsrNoNm     	= $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
 			var pic2UsrNo 	   	= $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
 			var pic2UsrNoNm    	= $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getText');
+			
 			var orgWgt 		   	= $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
 			var tgtWgt 		   	= $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
 			var startDosgDt    	= $('#saveDosgFrm input[textboxName=startDosgDt]').datebox('getValue');
@@ -820,8 +821,8 @@ $( document ).ready( function() {
 				});
 				
 				// 상담차트 체중 업데이트
-				if (cnstPaperAttr === 'ORG_WGT') orgWgt = Number(cnstPaperVal);
-				if (cnstPaperAttr === 'TGT_WGT') tgtWgt = Number(cnstPaperVal);
+				//if (cnstPaperAttr === 'ORG_WGT') orgWgt = orgWgt != null ? orgWgt : Number(cnstPaperVal);
+				//if (cnstPaperAttr === 'TGT_WGT') tgtWgt = tgtWgt != null ? tgtWgt : Number(cnstPaperVal);
 			}
 			
 			var formData = {

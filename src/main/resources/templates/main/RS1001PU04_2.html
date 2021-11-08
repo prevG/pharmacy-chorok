@@ -65,7 +65,7 @@
 							</select>
 							<select name="cnstDtMm" class="easyui-combobox" style="width: 70px; text-align: center;">
 								<option value="" selected="selected">분</option>
-								<option th:each="i: ${#numbers.sequence(1, 60)}"
+								<option th:each="i: ${#numbers.sequence(0, 60)}"
 									    th:value="${i} lt 10 ? '0'+ ${i} : ${i}"
 									    th:text="${i}+'분'"></option>
 							</select>
@@ -236,16 +236,14 @@
 										   		labelWidth:100,
 										   		labelPosition:'left',
 												precision:2,
-												groupSeparator:',',
-										   		readonly:true">
+												groupSeparator:','">
 				 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
 										   data-options="
 										   		label:'희망체중',
 										   		labelWidth:100,
 										   		labelPosition:'left',
 												precision:2,
-												groupSeparator:',',
-										   		readonly:true">
+												groupSeparator:','">
 				 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 230px;text-align: center;"
 										   data-options="
 										   		label:'복용시작일자',
