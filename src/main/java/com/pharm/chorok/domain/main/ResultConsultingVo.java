@@ -8,6 +8,7 @@ import lombok.Data;
 public class ResultConsultingVo extends TbCommColumn {
     
     private int seq;
+    private Long num;
     private Long cnstId;
     private Long custId;
     private String cnstDt;

@@ -225,8 +225,8 @@
 	<![CDATA[    
     /** com.pharm.chorok.web.main.repository.DosingRepository.updateTbPpDosgChart */
     UPDATE TB_PP_DOSG_CHART 
-       SET LOSS_WGT  = (#{orgWgt} - CURR_WGT)
-         , RMI_WGT   = (CURR_WGT  - #{tgtWgt})
+       SET LOSS_WGT  = ROUND(#{orgWgt}, 2) - ROUND(CURR_WGT , 2)
+         , RMI_WGT   = ROUND(CURR_WGT , 2) - ROUND(#{tgtWgt}, 2)
      WHERE CURR_WGT IS NOT NULL
        AND CNST_ID   = #{cnstId}
 	]]>
