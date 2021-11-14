@@ -47,7 +47,7 @@ $( document ).ready( function() {
 			    singleSelect: true, 
 			    ctrlSelect: true,
 			    idField: 'cnstId',
-			    rownumbers: true,
+			    rownumbers: false,
 				fitColumns: false, 
 		        fit: true,
 		        emptyMsg: '검색 조건에 해당하는 자료가 없습니다.',
@@ -113,6 +113,13 @@ $( document ).ready( function() {
 		        	}
 		        },
 		        columns:[[
+					{
+						field: 'num', 
+						title: '상담차수',
+						align: 'center',  
+						width: '70',
+		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
+					},
 					{
 						field: 'cnstId', 
 						title: '상담번호',
@@ -295,7 +302,7 @@ $( document ).ready( function() {
 		        		width: '120'
 		        	},
 		        	{
-		        		field: 'dosgDesc1', 
+		        		field: 'dosgDesc2', 
 		        		title: '약반응', 
 		        		align: 'center', 
 		        		width: '120'
@@ -554,6 +561,18 @@ $( document ).ready( function() {
 					RS1001PU02.saveCustMileage();
 				//});
 			});
+			
+			
+			/**************************************************************
+		     * "마일리지 삭제" 버튼 클릭시
+		     **************************************************************/
+			$(document).off("click", "#btnDelMile").on("click", "#btnDelMile", function (e) {
+				//$.messager.confirm('Confirm', '마일리지 정보를 저장하시겠습니까?', function(r) {
+				//	if (!r) return;
+					
+					RS1001PU02.deleteCustMileage();
+				//});
+			});
 		},
 		saveCustInfo: function() {
 			
@@ -741,6 +760,7 @@ $( document ).ready( function() {
 			$('#dg2').datagrid('load', '/api/v1/main/chart/findDosingChartByCnstId');
 		},
 		saveCnstChart: function() {
+			
 			// 상담차트
 			var selectedCustId 	= $('#custCnstFrm input[textboxName=selectedCustId]').textbox('getValue');
 			var selectedCnstId 	= $('#saveCnstFrm input[textboxName=selectedCnstId]').textbox('getValue');
@@ -829,7 +849,9 @@ $( document ).ready( function() {
 				criteria: {
 					"cnstId" 		: selectedCnstId,
 					"custId" 		: selectedCustId,
-					"cnstDt" 		: moment(cnstDt + ' ' + cnstDtHh + ":" + cnstDtMm),
+					"cnstDt" 		: $isEmpty(cnstDt) ? "" : moment(cnstDt).format("YYYYMMDD"),
+					"cnstDtHh" 		: cnstDtHh,
+					"cnstDtMm" 		: cnstDtMm,
 					"presDesc" 		: presDesc,
 					"cnstDesc" 		: cnstDesc,
 					"picUsrNo"		: picUsrNo,

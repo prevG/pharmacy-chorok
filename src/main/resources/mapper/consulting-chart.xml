@@ -59,43 +59,49 @@
 	<![CDATA[    
 	/** com.pharm.chorok.web.main.repository.ConsultingRepository.selectConsultingChartByCustId */
 	/** 고객번호에 대한 차트 목록조회 */
-  SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
-       , CNST_ID
-       , CUST_ID
-       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
-       , PIC_USR_NO
-       , DEL_YN
-       , PRES_DESC
-       , CNST_DESC
-       , ORG_WGT
-       , TGT_WGT
-       , START_DOSG_DT
-       , REG_DT
-       , REG_USR_NO
-       , UPD_DT
-       , UPD_USR_NO
-       , PIC2_USR_NO
-       , CNST_HH_CD
-       , CNST_HH_MEMO
-       , CATE_TP_CD
-       , CATE_TP_VAL
-       , DOSG_TP_CD
-       , DOSG_TP_VAL
-       , PAY_TP_CD
-       , DATE_FORMAT(DLV_DT, '%Y-%m-%d') AS DLV_DT
-       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_NM
-       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_NM
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1019' AND DITC_CD = CNST_HH_CD AND USE_YN = 'Y') AS CNST_HH_CD_NM  
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1023' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS CATE_TP_CD_NM 
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1025' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS CATE_TP_VAL_NM 
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1024' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM 
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1026' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_VAL_NM 
-       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1022' AND DITC_CD = PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_NM
-    FROM TB_PP_CNST_CHART
-       , (SELECT @ROWNUM :=-1) TMP
-   WHERE CUST_ID = #{custId}
-   ORDER
-      BY CNST_DT DESC
+	SELECT SEQ AS NUM
+	     , A.*
+	  FROM (
+		  SELECT @ROWNUM := @ROWNUM + 1 AS SEQ
+		       , CNST_ID
+		       , CUST_ID
+		       , DATE_FORMAT( CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
+		       , PIC_USR_NO
+		       , DEL_YN
+		       , PRES_DESC
+		       , CNST_DESC
+		       , ORG_WGT
+		       , TGT_WGT
+		       , START_DOSG_DT
+		       , REG_DT
+		       , REG_USR_NO
+		       , UPD_DT
+		       , UPD_USR_NO
+		       , PIC2_USR_NO
+		       , CNST_HH_CD
+		       , CNST_HH_MEMO
+		       , CATE_TP_CD
+		       , CATE_TP_VAL
+		       , DOSG_TP_CD
+		       , DOSG_TP_VAL
+		       , PAY_TP_CD
+		       , DATE_FORMAT(DLV_DT, '%Y-%m-%d') AS DLV_DT
+		       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC_USR_NO) AS PIC_USR_NO_NM
+		       , (SELECT USR_NM FROM TB_COMM_USER WHERE USR_NO = PIC2_USR_NO) AS PIC2_USR_NO_NM
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1019' AND DITC_CD = CNST_HH_CD AND USE_YN = 'Y') AS CNST_HH_CD_NM  
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1023' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS CATE_TP_CD_NM 
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1025' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS CATE_TP_VAL_NM 
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1024' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM 
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1026' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_VAL_NM 
+		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1022' AND DITC_CD = PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_NM
+		    FROM TB_PP_CNST_CHART
+		       , (SELECT @ROWNUM :=0) TMP
+		   WHERE CUST_ID = #{custId}    
+		   ORDER
+              BY CNST_DT
+		  ) A
+    ORDER
+       BY A.CNST_DT DESC
 	]]>
 	</select>
 	
@@ -130,7 +136,7 @@
 	<update id="updateTbPpCnstChart">
 	/** com.pharm.chorok.web.main.repository.ConsultingRepository.updateTbPpCnstChart */
 	UPDATE TB_PP_CNST_CHART
-	   SET CNST_DT 		   = #{cnstDt}
+	   SET CNST_DT 		   = STR_TO_DATE( CONCAT(#{cnstDt},#{cnstDtHh}, #{cnstDtMm}), '%Y%m%d %H%i')
 	   	   , PRES_DESC 	   = #{presDesc}
 	   	   , CNST_DESC     = #{cnstDesc}
 		   , PIC_USR_NO    = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
