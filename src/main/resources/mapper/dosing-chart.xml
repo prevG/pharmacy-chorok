@@ -27,9 +27,9 @@
 	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1028' AND DITC_CD = DC.STOP_YN AND USE_YN = 'Y') AS STOP_YN_NM        
 	         , MEAL_TP_CD          
 	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1027' AND DITC_CD = DC.MEAL_TP_CD AND USE_YN = 'Y') AS MEAL_TP_CD_NM        
-	         , DC.CURR_WGT    
-	         , DC.LOSS_WGT     
-	         , DC.RMI_WGT
+	         , IFNULL(DC.CURR_WGT, 0) AS CURR_WGT   
+	         , IFNULL(DC.LOSS_WGT, 0) AS LOSS_WGT     
+	         , IFNULL(DC.RMI_WGT , 0) AS RMI_WGT
 	         , DC.DOSG_DESC1       
 	         , DC.DOSG_DESC2
 	         , DC.SMS_YN       

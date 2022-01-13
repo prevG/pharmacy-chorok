@@ -1,3 +1,7 @@
+
+HTML {
+	font-size: 14px !important;
+}
 .chorok-box {
     padding: 1.5rem;
     margin-right: 0;
@@ -26,23 +30,27 @@
     border-color: #6c757d;color: #fff !important;background: #6c757d !important;
 }
 
-/** jeasyui textbox background color */
-.textbox .validatebox-readonly {
-	background: #fff7e6;
-}
-.textbox .textbox-text {
-	font-size: 12px !important;
-}
 
 /********************************************
 *
 * jeasyui css
 *
 ********************************************/
+/** jeasyui textbox background color */
+.textbox .validatebox-readonly {
+	background: #fff7e6;
+}
+.textbox .textbox-text {
+	font-size: 14px !important;
+}
+.datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber  {
+	font-size: 14px !important;
+}
 .panel-tool a {
 	opacity: 1.0;
 }
 
 .datagrid-row-selected * {
+	background-color : #0081c2 !important;
 	color: #fff;
 }

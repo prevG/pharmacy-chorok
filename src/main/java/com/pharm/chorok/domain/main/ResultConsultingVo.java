@@ -17,6 +17,7 @@ public class ResultConsultingVo extends TbCommColumn {
     private String delYn;
     private String presDesc;
     private String cnstDesc;
+    private String payDesc;
     private String orgWgt;
     private String tgtWgt;
     private String startDosgDt;
@@ -38,5 +39,6 @@ public class ResultConsultingVo extends TbCommColumn {
     private String payTpCd;				// 결재유형 코드
     private String payTpCdNm;			// 결재유형 설명
     private String dlvDt;				// 택배발송일
+    private String dlvDpuYn;				// 택배방문수형여부
     
 }

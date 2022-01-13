@@ -65,6 +65,14 @@ public class CustomerController {
 	@GetMapping("/CUS1001ML_2")
 	public String CUS1001ML_2(Model model) {
 		
+		//약사목록 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        
+        //상담실장목록 조회
+        List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
+        
+		model.addAttribute("counselorList", counselorList);
+		model.addAttribute("chemistList", chemistList);
 		return "customer/CUS1001ML_2";
 	}
 
@@ -272,4 +280,34 @@ public class CustomerController {
         return "main/RS1001PU02_2 :: customer-main-table";
 	}
 	
+	/**
+	 * 택배발송스케쥴
+	 * 
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("/CUS3001ML")
+	public String CUS3001ML(Model model) throws Exception{
+
+		TbCommCalendar cal = calendarSvc.selectCurrentDate();		
+		//약사목록 조회
+        List<TbCommUser> chemistList = commUserDetailsSvc.selectChemistList();
+        
+        //상담실장목록 조회
+        List<TbCommUser> counselorList = commUserDetailsSvc.selectCounselorList();
+        
+        //통화여부 코드목록
+        List<TbCommCodeVo> pausYnList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1021", "Y"));
+
+        //결제 코드목록
+        List<TbCommCodeVo> payTpCdList = codeService.selectCodesByGrpCd(new TbCommCodeVo("C1022", "Y"));
+                
+		model.addAttribute("dlvDt", cal.getBaseDt());
+		model.addAttribute("counselorList", counselorList);
+		model.addAttribute("chemistList", chemistList);
+		model.addAttribute("pausYnList", pausYnList);
+		model.addAttribute("payTpCdList", payTpCdList);
+		return "customer/CUS3001ML";
+	}
 }

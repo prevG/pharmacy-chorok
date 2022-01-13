@@ -94,6 +94,8 @@
 		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1024' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_CD_NM 
 		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1026' AND DITC_CD = DOSG_TP_CD AND USE_YN = 'Y') AS DOSG_TP_VAL_NM 
 		       , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1022' AND DITC_CD = PAY_TP_CD AND USE_YN = 'Y') AS PAY_TP_CD_NM
+		       , PAY_DESC
+		       , DLV_DPU_YN
 		    FROM TB_PP_CNST_CHART
 		       , (SELECT @ROWNUM :=0) TMP
 		   WHERE CUST_ID = #{custId}    
@@ -139,6 +141,7 @@
 	   SET CNST_DT 		   = STR_TO_DATE( CONCAT(#{cnstDt},#{cnstDtHh}, #{cnstDtMm}), '%Y%m%d %H%i')
 	   	   , PRES_DESC 	   = #{presDesc}
 	   	   , CNST_DESC     = #{cnstDesc}
+	   	   , PAY_DESC      = #{payDesc}
 		   , PIC_USR_NO    = CASE WHEN #{picUsrNo} = '' THEN NULL ELSE #{picUsrNo} END
 		   , PIC2_USR_NO   = CASE WHEN #{pic2UsrNo} = '' THEN NULL ELSE #{pic2UsrNo} END
 		   , ORG_WGT       = #{orgWgt}
@@ -152,6 +155,7 @@
 		   , DOSG_TP_VAL   = #{dosgTpVal}
 		   , PAY_TP_CD     = #{payTpCd}
 		   , DLV_DT   	   = #{dlvDt}
+		   , DLV_DPU_YN    = #{dlvDpuYn}
 	 WHERE CNST_ID = #{cnstId}
 	</update>
 	

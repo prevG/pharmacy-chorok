@@ -24,6 +24,12 @@ public interface CustomerRepository {
     //금일 복용상담해야할 고객목록 및 복용정보
     public List<ResultDosingVo> findCustomerByDosgDt(HashMap<String, Object> params) throws Exception;
     
+    //금일 택배발송해야할 목록
+    public List<ResultDosingVo> findCustomerByDlvDt(HashMap<String, Object> params) throws Exception;
+    
+    
+    
+    
     public List<TbCustomer> findAllCustomer(TbCustomer inCustomer) throws Exception;
     public Long selectNewCustId() throws Exception;
     public int insertTbCustomer(TbCustomer custInfo) throws Exception;

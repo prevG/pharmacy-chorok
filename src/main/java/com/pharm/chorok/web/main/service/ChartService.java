@@ -220,7 +220,9 @@ public class ChartService {
 	}
     
     @Transactional
-    public int updateTbPpCnstChartWithDosgChart(TbPpCnstChart inCnstChart) {
+    public int updateTbPpCnstChartWithDosgChart(TbPpCnstChart inCnstChart) throws Exception {
+    	
+    	//return consultingRepo.updateTbPpCnstChart(inCnstChart);
     	return consultingRepo.updateTbPpCnstChartWithDosgChart(inCnstChart);
     }
 	

@@ -39,6 +39,25 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
 
+  resources:
+    static-locations: classpath:/static/
+    chain:
+      enabled: true
+      strategy:
+        content:
+          enabled: true
+#          paths: /**
+#        fixed:
+#          enabled: true
+          paths:
+          - /js/**
+          - /css/**
+#          version: test-version
+    cache:
+#      period: 3600
+      cachecontrol:
+        max-age: 31536000           
+
 ### MyBatis############################################################
 mybatis:
   mapper-locations: mapper/**/*.xml # mapper.xml 위치 지정

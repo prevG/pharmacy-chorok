@@ -32,46 +32,19 @@ $( document ).ready( function() {
 		        	{field: 'custUsrNm', title: '고객이름', align: 'center', halign: 'center', width: '80', sortable:true,
 		        		formatter: function(value, row) { return '<a href="javascript:void(0)" style="font-weight:bold;">'+ value +'</a>'; }
 		        	},
-		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox', sortable:true},
-		            {field: 'custGenTpNm', title: '성별'       , align: 'center', width: '60', sortable:true},
-		            {field: 'custAge'    , title: '나이'       , align: 'center', width: '60', sortable:true,
-		            	formatter: function(value, row) { return value > 0 ? value : ''; }
-		            }
+		            {field: 'custCellNo' , title: '핸드폰번호'  , align: 'center', width: '100', editor: 'numberbox', sortable:true}
 			    ]],
 		        columns:[[
-		            {field: 'cnstId'     , title: '상담번호'    , align: 'center', width: '80', sortable:true },
-					{field: 'dlvDt'      , title: '택배배송일'   , align: 'center', width: '80', sortable:true },
-					{field: 'dlvDpuYn'   , title: '방문수령여부' , align: 'center', width: '90', sortable:true,
-				    	formatter: function(value, row, index) {
-		                    if( value == 'Y') {
-		                        return '예';    
-		                    } else {
-		                        return '';
-		                    }
-	                	}
-					},
-		            {field: 'dosgDt'      , title: '복용일자'    , align: 'center', width: '80' , sortable:true},
-		            {field: 'nextDosgDt'  , title: '다음상담일자' , align: 'center', width: '100', sortable:true},
-					{field: 'prevDosgDt'  , title: '이전상담일자' , align: 'center', width: '100', sortable:true},
-		            {field: 'cateTpNmDesc', title: '감량/요요'   , align: 'center', width: '110', sortable:true},
-		            {field: 'dosgTpNmDesc', title: '감량종류'    , align: 'center', width: '110', sortable:true},
-		            {field: 'dosgSeq'     , title: '복용일차'    , align: 'center', width: '70' , sortable:true,
-		                formatter: function(value, row, index) {
-		                    if( value == 0 ) {
-		                        return '시작전날';    
-		                    } else {
-		                        return value +' 일차';
-		                    }
-		                }
-		            },
-		            {field: 'pausYnNm'   , title: '통화여부'    , align: 'center', width: '90', sortable:true},
-		            {field: 'callYnNm'   , title: '상담예약'    , align: 'center', width: '90', sortable:true},
-		            {field: 'picUsrNm'   , title: '담당한약사'   , align: 'center', width: '80', sortable:true},
-		            {field: 'pic2UsrNm'  , title: '담당상담실장' , align: 'center', width: '90', sortable:true},
-		            {field: 'cnstHhNm'	 , title: '상담가능시간' , align: 'center', width: '90', sortable:true},
-					{field: 'cnstHhMemo' , title: '상담시간메모' , align: 'left' , halign: 'center', width: '200', sortable:true},
-		            {field: 'zipCode'    , title: '우편번호'    , align: 'center', width: '80', sortable:true},
-		            {field: 'addr1'      , title: '주소'       , align: 'left', halign: 'center', width: '300', sortable:true}
+					{field: 'dlvDt'       , title: '택배배송일'    , align: 'center', width: '80', sortable:true },
+					{field: 'payTpNm'     , title: '결제유형'     , align: 'center', width: '140', sortable:true },		            
+		            {field: 'cateTpNmDesc', title: '감량/요요'    , align: 'center', width: '110', sortable:true},
+		            {field: 'dosgTpNmDesc', title: '감량종류'     , align: 'center', width: '110', sortable:true},
+		            {field: 'zipCode'     , title: '우편번호'    , align: 'center', width: '80', sortable:true},
+		            {field: 'addr1'       , title: '주소'       , align: 'left', halign: 'center', width: '300', sortable:true},
+		            {field: 'picUsrNm'    , title: '담당한약사'   , align: 'center', width: '80', sortable:true},
+		            {field: 'pic2UsrNm'   , title: '담당상담실장' , align: 'center', width: '90', sortable:true},
+					{field: 'cnstDt'      , title: '상담일시'     , align: 'center', width: '110', sortable:true },
+		            {field: 'cnstId'      , title: '상담번호'     , align: 'center', width: '80', sortable:true },
 		        ]]
 			});
 			
@@ -98,19 +71,14 @@ $( document ).ready( function() {
 			});
 		},
 		search: function() {
-		    var dosgDtObj = $("#dosgDt");
-		    if( $isEmpty( dosgDtObj.val() )) {
-		        alert("복용일자 입력 후 검색버튼을 클릭해 주세요.");
-		        dosgDtObj.focus();
-		        return;
-		    }
-			var queryParams = $("#table01").datagrid('options').queryParams;
-			queryParams.dosgDt 		 = $("#dosgDt").val();
+		    var dlvDtObj = $("#dlvDt");
+		    var queryParams = $("#table01").datagrid('options').queryParams;
+			queryParams.dlvDt 		 = $("#dlvDt").val();
 			queryParams.custUsrNm 	 = $("#custUsrNm").val();
 			queryParams.custCellNo 	 = $('#custCellNo').val();
 			queryParams.picUsrNo 	 = $("#picUsrNo").val();
 			queryParams.pic2UsrNo 	 = $("#pic2UsrNo").val();
-			queryParams.pausYn 		 = $("#pausYn").val();
+			queryParams.payTpCd 	 = $("#payTpCd").val();
 			
 			var dlvDpuYn        = $('#searchFrm input[checkboxname=eqGtYn]').checkbox('options').checked;
 			if( dlvDpuYn ) {
@@ -118,8 +86,8 @@ $( document ).ready( function() {
 			} else {
 				queryParams.eqGtYn   = "";
 			}
-										
-			$('#table01').datagrid('load', '/api/v1/main/customer/findCustomerByDosgDt');
+						
+			$('#table01').datagrid('load', '/api/v1/main/customer/findCustomerByDlvDt');
 		}
 	};
 	

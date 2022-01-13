@@ -93,8 +93,15 @@ $( document ).ready( function() {
 						payTpCd 		: row.payTpCd,
 						dlvDt 			: row.dlvDt,
 						presDesc 		: row.presDesc,
-						cnstDesc 		: row.cnstDesc
+						cnstDesc 		: row.cnstDesc,
+						payDesc         : row.payDesc,
 					});
+					if( row.dlvDpuYn == 'Y' ) {
+						$('#saveCnstFrm input[checkboxname=dlvDpuYn]').checkbox({checked :true});
+					} else {
+						$('#saveCnstFrm input[checkboxname=dlvDpuYn]').checkbox({checked :false});
+					}
+					
 					// 설문차트
 					$('#saveDosgFrm').form('clear');
 					$('#saveDosgFrm').form('load', {
@@ -118,21 +125,21 @@ $( document ).ready( function() {
 						title: '상담차수',
 						align: 'center',  
 						width: '70',
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
+		        		formatter: function(value, row, index) { return '<span>'+ value +'</span>'; }
 					},
 					{
 						field: 'cnstId', 
 						title: '상담번호',
 						align: 'center',  
 						width: '70',
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
+		        		formatter: function(value, row, index) { return '<span>'+ value +'</span>'; }
 					},
 		        	{
 		        		field: 'cnstDt', 
 		        		title: '상담일시', 
 		        		align: 'center', 
 		        		width: '110', 
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ value +'</span>'; }
+		        		formatter: function(value, row, index) { return '<span>'+ value +'</span>'; }
 		        	},
 		        	{
 		        		field: 'picUsrNoNm', 
@@ -179,8 +186,12 @@ $( document ).ready( function() {
 		        dragSelection: true,
 		        rowStyler: function(index, row) {
 		        	if (!$isEmpty(row.dosgDesc1) || !$isEmpty(row.dosgDesc1)) {
-		        		return 'background-color:#ffee00;';
+		        		return 'background-color:#63cc63;';
 		        	}
+					
+					if( row.daysStrKor =='토' || row.daysStrKor =='일' ) {
+						return "color:red";
+					}
 		        },
 		        onLoadSuccess: function(data) {
 		        	var merges = [];
@@ -252,6 +263,9 @@ $( document ).ready( function() {
 		        	});
 		        
 		        	$('#dosgDlg').window('open').window('center').window('setTitle', '복용차트 정보');
+
+					//팝업생성후 현재체중 입력컬럼 WIDTH가 적용이 안되서 별도 추가
+					$('#dosgDlgFrm input[textboxName=dlg_currWgt]').numberbox({width:"100%"});
 		        },
 		        columns:[[
 					{
@@ -259,21 +273,24 @@ $( document ).ready( function() {
 		        		title: '복용단계', 
 		        		align: 'center', 
 		        		width: '110', 
-		        		formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdNm +'</span>'; }
+						formatter: function(value, row, index) { return '<span>'+ row.dosgLvCdNm +'</span>'; }
+		        		//formatter: function(value, row, index) { return '<span style="font-weight:bold;">'+ row.dosgLvCdNm +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgTpCd', 
 		        		title: '감량종류', 
 		        		align: 'center', 
 		        		width: '70', 
-		        		formatter: function(value, row) { return '<span style="font-weight:bold;">'+ row.dosgTpCdNm +'</span>'; }
+		        		formatter: function(value, row) { return '<span>'+ row.dosgTpCdNm +'</span>'; }
+		        		//formatter: function(value, row) { return '<span style="font-weight:bold;">'+ row.dosgTpCdNm +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgSeq', 
 		        		title: '일수', 
 		        		align: 'center', 
 		        		width: '70', 
-		        		formatter: function(value, row) { return '<span style="font-weight:bold;text-decoration:underline;">'+ row.dosgSeqStr +'</span>'; }
+		        		formatter: function(value, row) { return '<span>'+ row.dosgSeqStr +'</span>'; }
+		        		//formatter: function(value, row) { return '<span style="font-weight:bold;text-decoration:underline;">'+ row.dosgSeqStr +'</span>'; }
 		        	},
 		        	{
 		        		field: 'dosgDt', 
@@ -315,32 +332,11 @@ $( document ).ready( function() {
 		        		formatter: function(value, row) { return row.callYnNm; }
 		        	},
 		        	{
-		        		field: 'dosgYn', 
-		        		title: '특별식', 
-		        		align: 'center', 
-		        		width: '80', 
-		        		formatter: function(value, row) { return row.dosgYnNm; }
-		        	},
-		        	{
-		        		field: 'mealTpCd', 
-		        		title: '식사', 
-		        		align: 'center', 
-		        		width: '60', 
-		        		formatter: function(value, row) { return row.mealTpCdNm; }
-		        	},
-		        	{
 		        		field: 'pausYn', 
 		        		title: '통화여부', 
 		        		align: 'center', 
 		        		width: '100', 
 		        		formatter: function(value, row) { return row.pausYnNm; }
-		        	},
-		        	{
-		        		field: 'stopYn', 
-		        		title: '보류여부', 
-		        		align: 'center', 
-		        		width: '100', 
-		        		formatter: function(value, row) { return row.stopYnNm; }
 		        	},
 		        	{
 		        		field: 'currWgt', 
@@ -359,6 +355,27 @@ $( document ).ready( function() {
 		        		title: '남은체중', 
 		        		align: 'center', 
 		        		width: '60'
+		        	},
+		        	{
+		        		field: 'dosgYn', 
+		        		title: '특별식', 
+		        		align: 'center', 
+		        		width: '80', 
+		        		formatter: function(value, row) { return row.dosgYnNm; }
+		        	},
+		        	{
+		        		field: 'mealTpCd', 
+		        		title: '식사', 
+		        		align: 'center', 
+		        		width: '60', 
+		        		formatter: function(value, row) { return row.mealTpCdNm; }
+		        	},
+		        	{
+		        		field: 'stopYn', 
+		        		title: '보류여부', 
+		        		align: 'center', 
+		        		width: '100', 
+		        		formatter: function(value, row) { return row.stopYnNm; }
 		        	}
 		        ]]
 			});
@@ -387,13 +404,16 @@ $( document ).ready( function() {
                     }
                 },
                 loader: function(param, succ) {
-                    if (!param.q) { return; }
+	
+                    //if ( $isEmpty(param.q)) { 
+					//	return; 
+					//}
                     $.ajax({
                         type: 'post',
                         url : "/api/v1/main/customer/findCustomer",
                         data: {
-                            "custUsrNm" : $('#saveCustFrm input[name=dlg_rcmdCustNm]').val(),
-                            "custCellNo": $('#saveCustFrm input[name=dlg_rcmdCellNo]').val()
+                            "custUsrNm" : $('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
+                            "custCellNo": $('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue')
                         },
                         success: function(result){
                             
@@ -525,7 +545,7 @@ $( document ).ready( function() {
 		    		var orgWgt = $('#saveDosgFrm input[textboxName=orgWgt]').numberbox('getValue');
 		    		var tgtWgt = $('#saveDosgFrm input[textboxName=tgtWgt]').numberbox('getValue');
 		    		var lossWgt = Number(orgWgt) - Number(value);
-		    		var rmiWgt = Number(value) - Number(tgtWgt);
+		    		var rmiWgt  = Number(value) - Number(tgtWgt);
 		    		
 		    		$('#dosgDlgFrm input[textboxName=dlg_lossWgt]').numberbox('setValue', lossWgt);
 		    		$('#dosgDlgFrm input[textboxName=dlg_rmiWgt]').numberbox('setValue', rmiWgt);
@@ -600,7 +620,7 @@ $( document ).ready( function() {
 				$.messager.alert('고객정보 저장', '성별을 선택하세요.');
 				return;
 			}
-		
+			
 			$.messager.confirm('Confirm', '고객정보를 저장하시겠습니까?', function(r) {
 				if (!r) return;
 				
@@ -618,8 +638,8 @@ $( document ).ready( function() {
 						"addr1" 		: 	$('#saveCustFrm input[textboxName=dlg_addr1]').textbox('getValue'),
 						"addr2" 		: 	$('#saveCustFrm input[textboxName=dlg_addr2]').textbox('getValue'),
 						"delYn" 		: 	$('#saveCustFrm input[name=dlg_delYn]').val(),
-						"custMemo" 		:	$('#saveCustFrm input[textboxName=dlg_custMemo]').textbox('getValue'),
-						"custMemo2" 	:	$('#saveCustFrm input[textboxName=dlg_custMemo2]').textbox('getValue'),
+						"custMemo" 		:	$('#saveCustFrm textarea[textboxName=dlg_custMemo]').textbox('getValue'),
+						"custMemo2" 	:	$('#saveCustFrm textarea[textboxName=dlg_custMemo2]').textbox('getValue'),
 						"rcmdCustId" 	:	$('#saveCustFrm input[name=dlg_rcmdCustId]').val(),
 						"rcmdCustNm" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCustNm]').textbox('getValue'),
 						"rcmdCellNo" 	:	$('#saveCustFrm input[textboxName=dlg_rcmdCellNo]').numberbox('getValue'),
@@ -637,14 +657,26 @@ $( document ).ready( function() {
 						if (res.status === 'success') {
 							var custId 	  = res.data;
 
-							var custUsrNm = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
+							var custUsrNm   = $('#saveCustFrm input[textboxName=dlg_custUsrNm]').textbox('getValue');
+							var custAge     = $('#saveCustFrm input[textboxName=dlg_custAge]').numberbox('getValue');
+							var custCellNo1 = $('#saveCustFrm select[textboxName=dlg_custCellNo1]').combobox('getValue');
+							var custCellNo2 = $('#saveCustFrm input[textboxName=dlg_custCellNo2]').textbox('getValue');
+							var custCellNo3 = $('#saveCustFrm input[textboxName=dlg_custCellNo3]').textbox('getValue');
+							var custCellNo  = custCellNo1 + "-" + custCellNo2 +"-" + custCellNo3;
+/*							var custGenTpNm = $('#saveCustFrm input[textboxName=dlg_custGenTpCd]').radiobutton('getValue');
+							var selectedcustRegYear = $('#saveCustFrm input[textboxName=dlg_custRegYear]').numberbox('getValue');*/
 
 							//고객차트탭의 고객번호 업데이트
 							$('#saveCustFrm input[textboxName=dlg_custId]').textbox('setValue', custId);
 
 							//차트정보탭의 고객명/고객번호 업데이트(고객테이블정보사용)
-							$('input[textboxName=selectedCustId]').textbox('setValue', custId);
-							$('input[textboxName=selectedCustUsrNm]').textbox('setValue', custUsrNm);
+							$('input[textboxName=selectedCustId]').textbox('setValue'    , custId);
+							$('input[textboxName=selectedCustUsrNm]').textbox('setValue' , custUsrNm);
+							$('input[textboxName=selectedCustAge]').textbox('setValue'   , custAge);
+							$('input[textboxName=selectedCustCellNo]').textbox('setValue', custCellNo );
+							
+							
+							
 
 							//고객번호 있는 경우 차트탭 활성화
 							$('#custTabs').tabs('enableTab', 1);
@@ -769,6 +801,7 @@ $( document ).ready( function() {
 			var cnstDtMm        = $('#saveCnstFrm select[textboxName=cnstDtMm]').combobox('getValue');
 			var presDesc 	   	= $('#saveCnstFrm textarea[textboxName=presDesc]').textbox('getValue');
 			var cnstDesc 	   	= $('#saveCnstFrm textarea[textboxName=cnstDesc]').textbox('getValue');
+			var payDesc 	   	= $('#saveCnstFrm textarea[textboxName=payDesc]').textbox('getValue');
 			var picUsrNo 	   	= $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getValue');
 			var picUsrNoNm     	= $('#saveCnstFrm select[textboxName=picUsrNo]').combobox('getText');
 			var pic2UsrNo 	   	= $('#saveCnstFrm select[textboxName=pic2UsrNo]').combobox('getValue');
@@ -785,6 +818,9 @@ $( document ).ready( function() {
 			var dosgTpVal 	   	= $('#saveCnstFrm select[textboxName=dosgTpVal]').combobox('getValue');
 			var payTpCd 	   	= $('#saveCnstFrm select[textboxName=payTpCd]').combobox('getValue');
 			var dlvDt 		   	= $('#saveCnstFrm input[textboxName=dlvDt]').datebox('getValue');
+			var dlvDpuYn        = $('#saveCnstFrm input[checkboxname=dlvDpuYn]').checkbox('options').checked;
+
+
 			if( $isEmpty(selectedCnstId) ) {
 				$.messager.alert( "상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나\n신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
@@ -866,7 +902,9 @@ $( document ).ready( function() {
 					"dosgTpCd"		: dosgTpCd,
 					"dosgTpVal"		: dosgTpVal,
 					"payTpCd" 		: payTpCd,
+					"payDesc"       : payDesc,
 					"dlvDt" 		: $isEmpty(dlvDt) ? "" : moment(dlvDt).format("YYYYMMDD"),
+					"dlvDpuYn"      : dlvDpuYn ? "Y" : "N",
 					"srvChartList" 	: cnstPaperList
 				}
 			};
@@ -931,26 +969,28 @@ $( document ).ready( function() {
 			var cateTpVal 	    = $('#saveCnstFrm select[textboxName=cateTpVal]').combobox('getValue');
 			var dosgTpCd 	    = $('#saveCnstFrm select[textboxName=dosgTpCd]').combobox('getValue');
 			var dosgTpVal 	    = $('#saveCnstFrm select[textboxName=dosgTpVal]').combobox('getValue');
+
 			if( $isEmpty(selectedCnstId) ) {
 				$.messager.alert("상담차트 선택", "상담차트 목록에서 '차트보기'를 선택하시거나<br>신규상담인 경우 '차트생성' 버튼을 클릭해 주세요.");
 				return false;
 			}
-			if( $isEmpty(cateTpCd) ) {
+			if( $isEmpty(cateTpCd) || cateTpCd == 0) {
 				$.messager.alert("복용차트 생성", "상담정보에서 '감량/요요' 유형을 선택해 주세요.");
 				return false;
 			}
-			if( $isEmpty(cateTpVal) ) {
+			if( $isEmpty(cateTpVal) || cateTpVal == 0) {
 				$.messager.alert("복용차트 생성", "상담정보에서 '감량/요요' 월을 선택해 주세요.");
 				return false;
 			}
-			if( $isEmpty(dosgTpCd) ) {
+			if( $isEmpty(dosgTpCd) || dosgTpCd == 0) {
 				$.messager.alert("복용차트 생성", "상담정보에서 '감량종류' 유형을 선택해 주세요.");
 				return false;
 			}
-			if( $isEmpty(dosgTpVal) ) {
+			if( $isEmpty(dosgTpVal) || dosgTpVal == 0) {
 				$.messager.alert("복용차트 생성", "상담정보에서 '감량종류' 일을 선택해 주세요.");
 				return false;
 			}
+			
 			if( $isEmpty(startDosgDt) ) {
 				$.messager.alert("복용시작일자 선택", "복용시작일자를 입력 후 [복용차트생성] 버튼을 클릭 해주세요.<br>복용시작일자 하루전부터 스케쥴이 자동생성됩니다.");
 				return false;

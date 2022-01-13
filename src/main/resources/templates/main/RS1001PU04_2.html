@@ -7,9 +7,42 @@
 	textarea.autosize { min-height: 50px; }
 </th:block>
 
-<div id="charts-table" th:fragment="charts-table">
+<div id="charts-table" th:fragment="charts-table"
+	th:with="
+		custCellNo1=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 3} ? ${#strings.substring(custInfo?.custCellNo,0,3)} : '',
+		custCellNo2=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 7} ? ${#strings.substring(custInfo?.custCellNo,3,7)} : '',
+		custCellNo3=${not #strings.isEmpty(custInfo?.custCellNo) and #strings.length(custInfo?.custCellNo) gt 10} ? ${#strings.substring(custInfo?.custCellNo,7,11)} : ''">
 	<div class="row">
-		<div class="col-12 d-flex justify-content-end">
+		<div class='col-8'>
+			<form id="custCnstFrm" name="custCnstFrm" method="post">
+			<input name="selectedCustId" class="easyui-textbox" style="width:120px;text-align: center;"
+				   data-options="label:'고객번호',
+							    labelWidth:60,
+							    labelAlign:'right',
+							    required:true,readonly:true"
+				   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
+			<input name="selectedCustUsrNm" class="easyui-textbox" style="width:200px;text-align: center;"
+				   data-options="label:'고객이름',
+							    labelWidth:80,
+							    labelAlign:'right',
+							    required:true,readonly:true"
+				   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
+			<input name="selectedCustAge" class="easyui-textbox" style="width:100px;text-align:center;"
+				   data-options="label:'나이',
+							    labelWidth:50,
+							    labelAlign:'right',
+							    required:true,readonly:true"
+				   th:value="${#strings.isEmpty(custInfo?.custAge)} ? 0:${custInfo?.custAge}">
+			<input name="selectedCustCellNo" class="easyui-textbox" style="width:200px;text-align:center;"
+				   data-options="label:'연락처',
+							    labelWidth:60,
+							    labelAlign:'right',
+							    required:true,readonly:true"
+				   th:value="|${custCellNo1}-${custCellNo2}-${custCellNo3}|">
+
+			</form>
+		</div>
+		<div class="col-4 d-flex justify-content-end">
 			<a href="javascript:void(0)" id="btnSaveCnstChart" class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'">차트정보 저장</a>
 			<a href="javascript:void(0)" class="easyui-linkbutton ml-2" data-options="iconCls:'icon-cancel'" onclick="javascript:$('#custDlg').dialog('close');">닫기</a>
 		</div>
@@ -19,19 +52,11 @@
 			<div class="row p-1">
 				<div class="easyui-panel" title="상담차트" style="width: 100%;"
 					 data-options="collapsible:true">
-					<form id="custCnstFrm" name="custCnstFrm" method="post">
 					<div class="row m-2">
-						<div class="col">
-							<input name="selectedCustUsrNm" class="easyui-textbox" style="width: 220px;text-align: center;"
-								   data-options="label:'고객이름/번호',labelWidth:90,required:true,readonly:true"
-								   th:value="${#strings.isEmpty(custInfo?.custUsrNm)} ? ${rsvtInfo?.rsvtUsrNm}:${custInfo?.custUsrNm}">
-							<input name="selectedCustId" class="easyui-textbox" style="width:50px;text-align: center;"
-								   data-options="required:true,readonly:true"
-								   th:value="${#strings.isEmpty(custInfo?.custId)} ? 0:${custInfo?.custId}">
+						<div class="col-12 d-flex justify-content-end">					
 							<a href="javascript:void(0);" id="btnNewCnstChart" class="easyui-linkbutton c8 ml-2" data-options="iconCls:'icon-edit'" style="width: 90px;">차트생성</a>
 						</div>
 					</div>
-					</form>
 					<div class="row m-2">
 						<table id="dg" style="width: 100%;min-height: 160px;"></table>
 					</div>
@@ -54,7 +79,7 @@
 							<input name="cnstDt" class="easyui-datebox" style="width: 190px; text-align: center;"
 								data-options="
 							   		label:'상담일시 *',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		formatter:myformatter,
 							   		parser:myparser">
 							<select name="cnstDtHh" class="easyui-combobox" style="width: 70px; text-align: center;">
@@ -76,7 +101,7 @@
 							<select name="picUsrNo" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'상담한약사',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
 								<option value="" selected="selected">선택</option>
@@ -88,7 +113,7 @@
 							<select name="pic2UsrNo" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'상담실장',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
 								<option value="" selected="selected">선택</option>
@@ -102,7 +127,7 @@
 							<select name="cateTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'감량/요요',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		panelHeight:'auto'">
 								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${cateTpCdList}"
@@ -124,7 +149,7 @@
 							<select name="dosgTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'감량종류',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		panelHeight:'auto'">
 								<option value="" selected="selected">선택</option>
 								<option th:each="data, index : ${dosgTpCdList}"
@@ -148,7 +173,7 @@
 							<select name="cnstHhCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
 							   		label:'상담가능시간',
-							   		labelPosition:'left',
+							   		labelAlign:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
 								<option value="" selected="selected">시</option>
@@ -166,8 +191,8 @@
 						<div class="col-6">
 							<select name="payTpCd" class="easyui-combobox" style="width: 100%; text-align: center;"
 								data-options="
-							   		label:'결재유형',
-							   		labelPosition:'left',
+							   		label:'결제유형',
+							   		labelAlign:'left',
 							   		required:true,
 							   		panelHeight:'auto'">
 								<option value="">선택</option>
@@ -177,26 +202,37 @@
 							</select>
 						</div>
 						<div class="col-6">
-							<input name="dlvDt" class="easyui-datebox" style="width: 100%; text-align: center;"
+							<input name="dlvDt" class="easyui-datebox" style="width:190px; text-align: center;"
 								data-options="
 							   		label:'택배발송일',
-							   		labelPosition:'left',
+							   		labelWidth:70,
+							   		labelAlign:'left',
 							   		formatter:myformatter,
 							   		parser:myparser">
+							<input name="dlvDpuYn" class="easyui-checkbox" style="text-align:center;" value="Y"  
+									data-options="label:'방문',
+							   		labelWidth:30">
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
 							<textarea name="presDesc" class="easyui-textbox"
-								style="width: 100%; height: 110px;"
-								data-options="label:'처방',labelPosition:'left',multiline:true"></textarea>
+								style="width: 100%; height: 80px;"
+								data-options="label:'처방',labelAlign:'left',multiline:true"></textarea>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="col-12">
 							<textarea name="cnstDesc" class="easyui-textbox"
-								style="width: 100%; height: 105px;"
-								data-options="label:'상담메모',labelPosition:'left',multiline:true"></textarea>
+								style="width: 100%; height: 70px;"
+								data-options="label:'상담메모',labelAlign:'left',multiline:true"></textarea>
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="col-12">
+							<textarea name="payDesc" class="easyui-textbox"
+								style="width: 100%; height: 40px;"
+								data-options="label:'결제메모',labelAlign:'left',multiline:true"></textarea>
 						</div>
 					</div>
 					</form>
@@ -234,14 +270,14 @@
 										   data-options="
 										   		label:'시작체중',
 										   		labelWidth:100,
-										   		labelPosition:'left',
+										   		labelAlign:'left',
 												precision:2,
 												groupSeparator:','">
 				 		 			<input name="tgtWgt" class="easyui-numberbox" style="width: 200px;text-align: center;"
 										   data-options="
 										   		label:'희망체중',
 										   		labelWidth:100,
-										   		labelPosition:'left',
+										   		labelAlign:'left',
 												precision:2,
 												groupSeparator:','">
 				 		 			<input name="startDosgDt" class="easyui-datebox" style="width: 230px;text-align: center;"
@@ -269,7 +305,7 @@
 	</div>
 	
 	<!-- dosg dialog -->
-	<div id="dosgDlg" class="easyui-window" style="width:700px;min-height:470px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+	<div id="dosgDlg" class="easyui-window" style="width:700px;max-width:700px;min-height:470px;padding:10px;" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
 		<form id="dosgDlgFrm" name="dosgDlgFrm" method="post" novalidate>
 		<input type="hidden" class="textbox-value" name="dlg_dosgId">
 		<input type="hidden" class="textbox-value" name="dlg_dosgSeq">
@@ -361,38 +397,41 @@
 		</div>
 		<div class="row p-1">
 			<div class="col-md-4">
-				<input name="dlg_currWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+				<input name="dlg_currWgt" class="easyui-numberbox" style="text-align:right;"
 					   data-options="label:'현재체중',
 					   				labelWidth:80,
 									precision:2,
-									groupSeparator:',',">
+									groupSeparator:',',
+									width:'100%'"/>
 			</div>
 			<div class="col-md-4">
-				<input name="dlg_lossWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+				<input name="dlg_lossWgt" class="easyui-numberbox" style="text-align:right;"
 					   data-options="label:'감량체중',
 					   				labelWidth:80,
 					   				readonly:true,
 									precision:2,
-									groupSeparator:','">
+									groupSeparator:',',
+									width:'100%'" />
 			</div>
 			<div class="col-md-4">
-				<input name="dlg_rmiWgt" class="easyui-numberbox" style="width: 100%;text-align: right;"
+				<input name="dlg_rmiWgt" class="easyui-numberbox" style="text-align:right;"
 					   data-options="label:'남은체중',
 					   				labelWidth:80,
 					   				readonly:true,
 					   				precision:2,
-					   				groupSeparator:','">
+					   				groupSeparator:',',
+									width:'100%'" />
 			</div>
 		</div>
 		<div class="row p-1">
 			<div class="col-md-12">
-				<input name="dlg_dosgDesc1" class="easyui-textbox" style="width: 100%;height:100px"
+				<input name="dlg_dosgDesc1" class="easyui-textbox" style="width:100%;height:100px"
 					   data-options="label:'몸상태',labelWidth:80,multiline:true">
 			</div>
 		</div>
 		<div class="row p-1">
 			<div class="col-md-12">
-				<input name="dlg_dosgDesc2" class="easyui-textbox" style="width: 100%;height:100px"
+				<input name="dlg_dosgDesc2" class="easyui-textbox" style="width:100%;height:100px"
 					   data-options="label:'약반응',labelWidth:80,multiline:true">
 			</div>
 		</div>

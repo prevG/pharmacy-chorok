@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+	  
+ 
 <div id="customer-table" th:fragment="customer-table"
 	th:with="
 		birthYear=${not #strings.isEmpty(custInfo?.custBirthDt) and #strings.length(custInfo?.custBirthDt) eq 8} ? ${#numbers.formatInteger(#strings.substring(custInfo?.custBirthDt,0,4),0)}:0,
@@ -159,9 +160,9 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 200px;"
+							<textarea name="dlg_custMemo" class="easyui-textbox" style="width: 100%;height: 180px;"
 								   data-options="multiline:true"
-								   th:value="${custInfo?.custMemo}">
+								   th:utext="${custInfo?.custMemo}">고객메모</textarea>
 						</div>
 					</div>
 				</div>
@@ -171,9 +172,9 @@
 					 data-options="collapsible:true">
 					<div class="row m-2">
 						<div class="col-12">
-							<input name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 180px;"
+							<textarea name="dlg_custMemo2" class="easyui-textbox" style="width: 100%;height: 180px;"
 								   data-options="multiline:true"
-								   th:value="${custInfo?.custMemo2}">
+								   th:utext="${custInfo?.custMemo2}">특이사항</textarea>
 						</div>
 					</div>
 				</div>

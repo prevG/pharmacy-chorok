@@ -53,6 +53,12 @@ public class TbCustomer extends TbCommColumn {
 	private String cbDelYn;
 	private Date startDttm;
 	private Date endDttm;
+	
+	//현재 마지막 담당한약사/담당실장
+	private String picUsrNm;
+	private String pic2UsrNm;
+	private String picUsrNo;
+	private String pic2UsrNo;
 
 	//예약정보로 고객정보 생성시
 	private long rsvtId;
@@ -64,4 +70,7 @@ public class TbCustomer extends TbCommColumn {
 	
 	//추천인 정보
 	private TbCustomerMileVo custMile;
+	
+	//마지막 상담차트에서 다음번 상담코드
+	private String nextCnstDt;
 }

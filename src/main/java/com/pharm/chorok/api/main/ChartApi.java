@@ -117,6 +117,7 @@ public class ChartApi {
     	
     	//상담정보 저장 (복용차트 생성시 필요한 상담차트 정보만 저장)
     	chartSvc.updateTbPpCnstChartWithDosgChart(pageCriteria.getCriteria());
+    	
     	//복용차트 생성
     	dosingSvc.createDosingChartByCnstId( pageCriteria.getCriteria() );
     	

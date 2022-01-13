@@ -36,6 +36,11 @@ public class AccountController {
 
 	@Autowired
 	private ADAdminService adUserService;
+	
+	@GetMapping("/toast")
+	public String toast() {
+		return "toast/grid";
+	}
 
 	// 로그인 페이지
 	@GetMapping("/login")

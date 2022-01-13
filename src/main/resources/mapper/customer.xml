@@ -115,117 +115,259 @@
 	<![CDATA[    
     /** 금일 복용상담이 잡혀있는 고객정보 조회*/
     /** com.pharm.chorok.web.main.repository.CustomerRepository.findCustomerByDosgDt */
-	SELECT CUST.CUST_ID
-         , CUST.CUST_USR_NM
-         , CASE LENGTH(CUST.CUST_CELL_NO)
-                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
-                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
-                ELSE ''
-           END AS CUST_CELL_NO
-         , CUST.ZIP_CODE
-         , CUST.ADDR1
-         , CASE WHEN CUST.CUST_GEN_TP_CD = 'F' THEN '여'
-                WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
-                ELSE ''
-           END AS CUST_GEN_TP_NM
-         , CUST.CUST_AGE
-         , CCHART.*
-         , CASE WHEN CCHART.CNST_HH_CD IS NULL THEN ''
-                WHEN CCHART.CNST_HH_CD = ''    THEN ''
-                ELSE CONCAT(CCHART.CNST_HH_CD, '시')
-           END CNST_HH_NM
-         , CCHART.CNST_ID
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = DCHART.PAUS_YN AND T.GRP_CD = 'C1021') AS PAUS_YN_NM
-         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
-         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1023') AS CATE_TP_NM
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1025') AS CATE_TP_VAL_NM
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1024') AS DOSG_TP_NM
-		 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1026') AS DOSG_TP_VAL_NM
-		 , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
-         , DCHART.DOSG_SEQ
-      FROM TB_CUSTOMER CUST
-     INNER JOIN   
-           TB_PP_CNST_CHART CCHART  
-        ON CUST.CUST_ID = CCHART.CUST_ID       
-     INNER JOIN
-           TB_PP_DOSG_CHART DCHART 
-        ON CCHART.CNST_ID = DCHART.CNST_ID
-     WHERE 1 = 1
-       AND DCHART.DOSG_DT = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
-	]]>
-	<if test="picUsrNo != null and  !''.equals(picUsrNo)">
-	   AND CCHART.PIC_USR_NO  = #{picUsrNo}
-	</if>
-	<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
-	   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
-	</if>
-	<if test="pausYn != null and  !''.equals(pausYn)">
-	   AND DCHART.PAUS_YN = #{pausYn}
-	</if>
-	<choose>
-		<when test="callYn != null and  !''.equals(callYn)">
-	   AND DCHART.CALL_YN = #{callYn}
-	    </when>
-	    <otherwise>
-	    AND DCHART.CALL_YN IN ('CHEMIST', 'COUNSELOR')
-	    </otherwise>
-	</choose>
+    SELECT T.*
+         , CASE WHEN T.CATE_TP_VAL_NM IS NULL THEN T.CATE_TP_NM
+                ELSE CONCAT(T.CATE_TP_NM, '(', CATE_TP_VAL_NM, ')' ) 
+           END CATE_TP_NM_DESC
+         , CASE WHEN T.DOSG_TP_VAL_NM IS NULL THEN T.DOSG_TP_NM
+                ELSE CONCAT(T.DOSG_TP_NM, '(', DOSG_TP_VAL_NM, ')' ) 
+           END DOSG_TP_NM_DESC
+      FROM (
+			SELECT CUST.CUST_ID
+		         , CUST.CUST_USR_NM
+		         , CASE LENGTH(CUST.CUST_CELL_NO)
+		                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+		                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+		                ELSE ''
+		           END AS CUST_CELL_NO
+		         , CUST.ZIP_CODE
+		         , CUST.ADDR1
+		         , CASE WHEN CUST.CUST_GEN_TP_CD = 'F' THEN '여'
+		                WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
+		                ELSE ''
+		           END AS CUST_GEN_TP_NM
+		         , CUST.CUST_AGE
+				 , DATE_FORMAT( STR_TO_DATE(CCHART.DLV_DT, '%Y%m%d'), '%Y-%m-%d') AS DLV_DT
+		         , CCHART.DLV_DPU_YN
+		         , CCHART.CNST_HH_MEMO
+		         , CCHART.CNST_ID
+		         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE CCHART.CNST_HH_CD = DITC_CD AND GRP_CD = 'C1019') AS CNST_HH_NM       
+		         , (CASE WHEN CCHART.CNST_HH_CD = '00' THEN 999 ELSE CCHART.CNST_HH_CD END) AS CNST_HH_NM_SORT
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = DCHART.PAUS_YN AND T.GRP_CD = 'C1021') AS PAUS_YN_NM
+		         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
+		         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.CATE_TP_CD AND T.GRP_CD = 'C1023') AS CATE_TP_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.CATE_TP_VAL AND T.GRP_CD = 'C1025') AS CATE_TP_VAL_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD AND T.GRP_CD = 'C1024') AS DOSG_TP_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_VAL AND T.GRP_CD = 'C1026') AS DOSG_TP_VAL_NM
+				 , DATE_FORMAT( STR_TO_DATE(DCHART.DOSG_DT, '%Y%m%d'), '%Y-%m-%d') AS DOSG_DT
+		         , DCHART.DOSG_SEQ
+		         , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = DCHART.CALL_YN AND T.GRP_CD = 'C1016') AS CALL_YN_NM  
+		         , (SELECT DATE_FORMAT( STR_TO_DATE( MIN(DOSG_DT), '%Y%m%d'), '%Y-%m-%d')
+		              FROM TB_PP_DOSG_CHART NEXT_DCHART 
+					 WHERE NEXT_DCHART.CNST_ID = DCHART.CNST_ID
+		               AND NEXT_DCHART.DOSG_DT > DATE_FORMAT(DCHART.DOSG_DT, '%Y%m%d')
+		               AND NEXT_DCHART.CALL_YN IN ('CHEMIST', 'COUNSELOR')
+				   ) AS NEXT_DOSG_DT
+				 , (SELECT DATE_FORMAT( STR_TO_DATE( MAX(DOSG_DT), '%Y%m%d'), '%Y-%m-%d')
+		              FROM TB_PP_DOSG_CHART PREV_DCHART 
+					 WHERE PREV_DCHART.CNST_ID = DCHART.CNST_ID
+		               AND PREV_DCHART.DOSG_DT < DATE_FORMAT(DCHART.DOSG_DT, '%Y%m%d')
+		               AND PREV_DCHART.CALL_YN IN ('CHEMIST', 'COUNSELOR')
+				   ) AS PREV_DOSG_DT
+		      FROM TB_CUSTOMER CUST
+		     INNER JOIN   
+		           TB_PP_CNST_CHART CCHART  
+		        ON CUST.CUST_ID = CCHART.CUST_ID       
+		     INNER JOIN
+		           TB_PP_DOSG_CHART DCHART 
+		        ON CCHART.CNST_ID = DCHART.CNST_ID
+		     WHERE 1 = 1
+		    ]]> 
+		    <choose>
+		    	<when test="eqGtYn != null and eqGtYn == 'Y'.toString()">	 
+		       AND DCHART.DOSG_DT >= DATE_FORMAT(#{dosgDt}, '%Y%m%d')
+				</when>
+				<otherwise>
+		       AND DCHART.DOSG_DT = DATE_FORMAT(#{dosgDt}, '%Y%m%d')
+				</otherwise>
+			</choose>
+			
+			<if test="custUsrNm != null and !''.equals(custUsrNm)">
+		        AND CUST.CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
+		    </if>
+		    <if test="custCellNo != null and !''.equals(custCellNo)">
+		        AND CUST.CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%')
+		    </if>
+			<if test="picUsrNo != null and  !''.equals(picUsrNo)">
+			   AND CCHART.PIC_USR_NO  = #{picUsrNo}
+			</if>
+			<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
+			   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+			</if>
+			<if test="pausYn != null and  !''.equals(pausYn)">
+			   AND DCHART.PAUS_YN = #{pausYn}
+			</if>
+			<choose>
+				<when test="callYn != null and  !''.equals(callYn)">
+			   AND DCHART.CALL_YN = #{callYn}
+			    </when>
+			    <otherwise>
+			    AND DCHART.CALL_YN IN ('CHEMIST', 'COUNSELOR')
+			    </otherwise>
+			</choose>
+		   ) T
      ORDER
-        BY CCHART.CNST_HH_CD ASC
+        BY T.DOSG_DT ASC
+         , T.CNST_HH_NM_SORT ASC
+         , T.CUST_USR_NM ASC
+	</select>
+	
+	<select id="findCustomerByDlvDt" parameterType="map" resultType="com.pharm.chorok.domain.main.ResultDosingVo">
+	<![CDATA[    
+    /** 금일 택배발송 목록*/
+    /** com.pharm.chorok.web.main.repository.CustomerRepository.findCustomerByDlvDt */
+    SELECT T.*
+         , CASE WHEN T.CATE_TP_VAL_NM IS NULL THEN T.CATE_TP_NM
+                ELSE CONCAT(T.CATE_TP_NM, '(', CATE_TP_VAL_NM, ')' ) 
+           END CATE_TP_NM_DESC
+         , CASE WHEN T.DOSG_TP_VAL_NM IS NULL THEN T.DOSG_TP_NM
+                ELSE CONCAT(T.DOSG_TP_NM, '(', DOSG_TP_VAL_NM, ')' ) 
+           END DOSG_TP_NM_DESC
+      FROM (
+			SELECT CUST.CUST_ID
+		         , CUST.CUST_USR_NM
+		         , CASE LENGTH(CUST.CUST_CELL_NO)
+		                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+		                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID(CUST.CUST_CELL_NO, 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+		                ELSE ''
+		           END AS CUST_CELL_NO
+		         , CUST.ZIP_CODE
+		         , CONCAT(CUST.ADDR1, ' ',  CUST.ADDR2) AS ADDR1
+		         , CASE WHEN CUST.CUST_GEN_TP_CD = 'F' THEN '여'
+		                WHEN CUST.CUST_GEN_TP_CD = 'M' THEN '남'
+		                ELSE ''
+		           END AS CUST_GEN_TP_NM
+		         , CUST.CUST_AGE
+		         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE CCHART.PAY_TP_CD = DITC_CD AND GRP_CD = 'C1022') AS PAY_TP_NM 
+                 , DATE_FORMAT( CCHART.CNST_DT, '%Y-%m-%d %H:%i' ) AS CNST_DT
+				 , DATE_FORMAT( STR_TO_DATE(CCHART.DLV_DT, '%Y%m%d'), '%Y-%m-%d') AS DLV_DT
+		         , CCHART.DLV_DPU_YN
+		         , CCHART.CNST_HH_MEMO
+		         , CCHART.CNST_ID
+		         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE CCHART.CNST_HH_CD = DITC_CD AND GRP_CD = 'C1019') AS CNST_HH_NM       
+		         , (CASE WHEN CCHART.CNST_HH_CD = '00' THEN 999 ELSE CCHART.CNST_HH_CD END) AS CNST_HH_NM_SORT
+		         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
+		         , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.CATE_TP_CD  AND T.GRP_CD = 'C1023') 	AS CATE_TP_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.CATE_TP_VAL AND T.GRP_CD = 'C1025') 	AS CATE_TP_VAL_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_CD  AND T.GRP_CD = 'C1024') 	AS DOSG_TP_NM
+				 , (SELECT T.DITC_NM FROM TB_COMM_CODE T WHERE T.DITC_CD = CCHART.DOSG_TP_VAL AND T.GRP_CD = 'C1026') 	AS DOSG_TP_VAL_NM
+		      FROM TB_CUSTOMER CUST
+		     INNER JOIN   
+		           TB_PP_CNST_CHART CCHART  
+		        ON CUST.CUST_ID = CCHART.CUST_ID    
+		     WHERE 1 = 1
+		    ]]>
+			<if test="dlvDt != null and !''.equals(dlvDt)">
+		    	<choose>
+		    		<when test="eqGtYn != null and eqGtYn == 'Y'.toString()">	 
+		       	AND CCHART.DLV_DT >= DATE_FORMAT(#{dlvDt}, '%Y%m%d')
+					</when>
+					<otherwise>
+		        AND CCHART.DLV_DT = DATE_FORMAT(#{dlvDt}, '%Y%m%d')
+					</otherwise>
+				</choose> 
+			</if>
+			<if test="custUsrNm != null and !''.equals(custUsrNm)">
+		        AND CUST.CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
+		    </if>
+		    <if test="custCellNo != null and !''.equals(custCellNo)">
+		        AND CUST.CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%')
+		    </if>
+			<if test="payTpCd != null and  !''.equals(payTpCd)">
+			   AND CCHART.PAY_TP_CD  = #{payTpCd}
+			</if>
+			<if test="picUsrNo != null and  !''.equals(picUsrNo)">
+			   AND CCHART.PIC_USR_NO  = #{picUsrNo}
+			</if>
+			<if test="pic2UsrNo != null and  !''.equals(pic2UsrNo)">
+			   AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+			</if>
+		   ) T
+     ORDER
+        BY T.DLV_DT ASC
+         , T.CNST_HH_NM_SORT ASC
+         , T.CUST_USR_NM ASC
 	</select>
     
     <select id="findAllCustomer" parameterType="com.pharm.chorok.domain.table.TbCustomer" resultType="com.pharm.chorok.domain.table.TbCustomer">
 	<![CDATA[    
     /** 고객목록 조회 */
     /** com.pharm.chorok.web.main.repository.CustomerRepository.findAllCustomer */
-    SELECT CUST_ID
-         , CUST_USR_NM
-         , CUST_CELL_NO
-         , CUST_BIRTH_DT
-         , CUST_GEN_TP_CD
-         , CUST_AGE
-         , MRG_YN
-         , PCRT_CHD_CNT
-         , LST_PCRT_YEAR
-         , BRST_FDG_YN
-         , VIST_TP_CD
-         , ZIP_CODE
-         , ADDR1
-         , ADDR2
-         , DEL_YN
-         , REG_DT
-         , REG_USR_NO
-         , UPD_DT
-         , UPD_USR_NO
-         , CUST_MEMO
-         , CUST_MEMO2
-         , RCMD_CUST_ID
-         , RCMD_CUST_NM
-         , RCMD_CELL_NO
-         , RCMD_MILE_YN
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_NM
-         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = MRG_YN AND USE_YN = 'Y') AS MRG_YN_NM
-         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = A.CUST_ID) AS RCMD_CNT
-         , MILEAGE
-         , MILEAGE_MEMO
-         , CUST_REG_YEAR
-      FROM TB_CUSTOMER A
-     WHERE 1 = 1
+    SELECT CUST.CUST_ID
+         , CUST.CUST_USR_NM
+         , CASE LENGTH(CUST.CUST_CELL_NO)
+                WHEN 11 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('***********', 4, 4), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+                WHEN 10 THEN CONCAT(LEFT(CUST.CUST_CELL_NO, 3), '-', MID('**********' , 4, 3), '-', RIGHT(CUST.CUST_CELL_NO, 4))
+                ELSE ''
+           END AS CUST_CELL_NO
+         , CUST.CUST_BIRTH_DT
+         , CUST.CUST_GEN_TP_CD
+         , CUST.CUST_AGE
+         , CUST.MRG_YN
+         , CUST.PCRT_CHD_CNT
+         , CUST.LST_PCRT_YEAR
+         , CUST.BRST_FDG_YN
+         , CUST.VIST_TP_CD
+         , CUST.ZIP_CODE
+         , CUST.ADDR1
+         , CUST.ADDR2
+         , CUST.DEL_YN
+         , CUST.REG_DT
+         , CUST.REG_USR_NO
+         , CUST.UPD_DT
+         , CUST.UPD_USR_NO
+         , CUST.CUST_MEMO
+         , CUST.CUST_MEMO2
+         , CUST.RCMD_CUST_ID
+         , CUST.RCMD_CUST_NM
+         , CUST.RCMD_CELL_NO
+         , CUST.RCMD_MILE_YN
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1008' AND DITC_CD = CUST.CUST_GEN_TP_CD AND USE_YN = 'Y') AS CUST_GEN_TP_CD_NM
+         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1020' AND DITC_CD = CUST.MRG_YN AND USE_YN = 'Y') AS MRG_YN_NM
+         , (SELECT COUNT(*) FROM TB_CUSTOMER WHERE RCMD_CUST_ID = CUST.CUST_ID) AS RCMD_CNT
+         , CUST.MILEAGE
+         , CUST.MILEAGE_MEMO
+         , CUST.CUST_REG_YEAR
+		 , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC_USR_NO  = T.USR_NO) AS PIC_USR_NM
+		 , (SELECT T.USR_NM FROM TB_COMM_USER T WHERE CCHART.PIC2_USR_NO = T.USR_NO) AS PIC2_USR_NM
+		 , (SELECT DATE_FORMAT(MIN(DOSG_DT),  '%Y-%m-%d')
+              FROM TB_PP_DOSG_CHART T1
+ 			 WHERE T1.CNST_ID = CCHART.CNST_ID
+               AND T1.DOSG_DT >= DATE_FORMAT(CURDATE(), '%Y%m%d')
+               AND T1.CALL_YN IN ('CHEMIST', 'COUNSELOR')
+			 GROUP
+                BY T1.CNST_ID
+ 		   ) AS NEXT_CNST_DT
+	  FROM TB_CUSTOMER CUST
+	 LEFT OUTER JOIN   
+			(
+			SELECT DENSE_RANK() OVER(partition by CCHART.CUST_ID ORDER BY  CCHART.CNST_DT DESC) AS RNK
+                 , CCHART.*
+			  FROM TB_PP_CNST_CHART CCHART
+			) CCHART
+		ON CUST.CUST_ID = CCHART.CUST_ID     
+	   AND CCHART.RNK = 1
+	 WHERE 1 = 1
     ]]>
     <if test="delYn != null and !''.equals(delYn)">
-       AND DEL_YN = #{delYn}
+        AND CUST.DEL_YN = #{delYn}
     </if>
     <if test="custUsrNm != null and !''.equals(custUsrNm)">
-       AND CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
+        AND CUST_USR_NM LIKE CONCAT('%', #{custUsrNm}, '%')
     </if>
     <if test="custCellNo != null and !''.equals(custCellNo)">
-       AND CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%')
+        AND CUST_CELL_NO LIKE CONCAT('%', #{custCellNo}, '%')
     </if>
-	<![CDATA[    
+    <if test="picUsrNo != null and !''.equals(picUsrNo)">
+        AND CCHART.PIC_USR_NO = #{picUsrNo}
+    </if>    
+    <if test="pic2UsrNo != null and !''.equals(pic2UsrNo)">
+        AND CCHART.PIC2_USR_NO = #{pic2UsrNo}
+    </if>    
      ORDER
-        BY CUST_USR_NM
-	]]>
+        BY CUST.CUST_USR_NM
 	</select>
 	
 	<select id="findRcmdListByCustId" resultType="com.pharm.chorok.domain.main.TbCustomerMileVo">

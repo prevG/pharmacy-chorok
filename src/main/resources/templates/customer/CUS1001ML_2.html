@@ -28,22 +28,51 @@
 				data-options="cls:'c2'">
 				<form id="searchFrm" method="post">
 				<div class="row">
-					<div class="col-md-8 form-inline">
+					<div class="col-2">
 						<input id="custUsrNm" name="custUsrNm" class="easyui-textbox"
 							   data-options="
 							   		label:'고객이름',
+							   		labelWidth:70,
 							   		labelPosition:'left'"
-							   style="width: 300px;">
-						<div style="width: 10px;"></div>
+							   style="width: 100%;">
+					</div>
+					<div class="col-2">
 						<input id="custCellNo" name="custCellNo" class="easyui-numberbox"
 							   data-options="
 							   		label:'핸드폰번호',
+							   		labelWidth:70,
 							   		labelPosition:'left'"
-							   style="width: 300px;">
+							   style="width: 100%;">
+					</div>
+					<div class="col-2">
+						<select class="easyui-combobox" id="picUsrNo" name="picUsrNo" style="width:100%;text-align: center;"
+								   data-options="
+							   		label:'담당한약사',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${chemistList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-2">
+	 		 			<select class="easyui-combobox" id="pic2UsrNo" name="pic2UsrNo" style="width: 100%;text-align: center;"
+							   data-options="
+							   		label:'담당실장',
+							   		labelPosition:'left',
+							   		panelHeight:'auto'">
+							<option value="">전체</option>
+							<option th:each="data, index : ${counselorList}"
+									th:value="${data?.usrNo}" 
+									th:text="${data?.usrNm}"></option>
+						</select>
+					</div>
+					<div class="col-2">
 						<a href="javascript:void(0)" id="btnSearchCust" class="easyui-linkbutton ml-3" style="width:100px;height:32px"
 						   data-options="iconCls:'icon-ok'">검색</a>
 					</div>
-					<div class="col-md-4 d-flex justify-content-end">
+					<div class="col-2 d-flex justify-content-end">
 						<a href="javascript:void(0)" id="btnCustInfo" class="easyui-linkbutton c1" style="width:100px;height:32px">고객상담정보</a>
 						<a href="javascript:void(0)" id="btnNewCustPop" class="easyui-linkbutton c8 ml-2" style="width:100px;height:32px">신규등록</a>
 					</div>

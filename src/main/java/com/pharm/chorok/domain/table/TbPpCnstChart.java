@@ -18,6 +18,7 @@ public class TbPpCnstChart extends TbCommColumn {
     private String delYn;
     private String presDesc;
     private String cnstDesc;
+    private String payDesc;
     
     /**
      * @deprecated orgWgt 으로 데체함.
@@ -36,6 +37,7 @@ public class TbPpCnstChart extends TbCommColumn {
     private int dosgTpVal;			// 감량종류 값
     private String payTpCd;			// 결재유형 코드
     private String dlvDt;			// 택배발송일
+    private String dlvDpuYn;		// 택배직접수령여부(Direct Pick Up
     
     private List<TbPpSrvChart> srvChartList; // 설문차트
 }

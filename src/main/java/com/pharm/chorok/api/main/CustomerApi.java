@@ -107,15 +107,49 @@ public class CustomerApi {
 		@RequestParam("dosgDt") String dosgDt,
 		@RequestParam("picUsrNo") String picUsrNo,
 		@RequestParam("pic2UsrNo") String pic2UsrNo,
-		@RequestParam("pausYn") String pausYn
+		@RequestParam("custUsrNm") String custUsrNm,
+		@RequestParam("custCellNo") String custCellNo,
+		@RequestParam("pausYn") String pausYn,
+		@RequestParam("eqGtYn") String eqGtYn
 	) throws Exception {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("dosgDt", dosgDt);
 		params.put("picUsrNo", picUsrNo);
 		params.put("pic2UsrNo", pic2UsrNo);
+		params.put("custUsrNm", custUsrNm);
+		params.put("custCellNo", custCellNo);
 		params.put("pausYn", pausYn);
+		params.put("eqGtYn", eqGtYn);
 		return customerSvc.findCustomerByDosgDt( params );
+	}
+	
+	/**
+	 * 금일택배발송 목록(타뷸레이터 그리드)
+	 * @param inCustomer
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/findCustomerByDlvDt")
+    public List<ResultDosingVo> findCustomerByDlvDt(
+		@RequestParam("dlvDt") String dlvDt,
+		@RequestParam("picUsrNo") String picUsrNo,
+		@RequestParam("pic2UsrNo") String pic2UsrNo,
+		@RequestParam("custUsrNm") String custUsrNm,
+		@RequestParam("custCellNo") String custCellNo,
+		@RequestParam("payTpCd") String payTpCd,
+		@RequestParam("eqGtYn") String eqGtYn
+	) throws Exception {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("dlvDt", dlvDt);
+		params.put("picUsrNo", picUsrNo);
+		params.put("pic2UsrNo", pic2UsrNo);
+		params.put("custUsrNm", custUsrNm);
+		params.put("custCellNo", custCellNo);
+		params.put("payTpCd", payTpCd);
+		params.put("eqGtYn", eqGtYn);
+		return customerSvc.findCustomerByDlvDt( params );
 	}
 	
 }

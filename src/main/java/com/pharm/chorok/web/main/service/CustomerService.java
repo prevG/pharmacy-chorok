@@ -166,6 +166,14 @@ public class CustomerService {
 		return resultList;
 	}
 
+	public List<ResultDosingVo> findCustomerByDlvDt(HashMap<String, Object> inParams ) throws Exception {
+		List<ResultDosingVo> resultList = customerRepo.findCustomerByDlvDt(inParams);
+		return resultList;
+	}
+	
+	
+	
+
     public List<TbCustomer> selectCustomerByUsrNmOrCellNo(TbCustomer customerParam) throws Exception {
 
 		String cstUsrNm  = customerParam.getCustUsrNm();
