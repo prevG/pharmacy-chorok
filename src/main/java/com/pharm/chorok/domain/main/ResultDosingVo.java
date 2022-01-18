@@ -61,6 +61,7 @@ public class ResultDosingVo extends TbCommColumn {
     private String dlvDpuYn;
     private String nextDosgDt;
     private String prevDosgDt;
+    private String holidayYn;
     
     
     

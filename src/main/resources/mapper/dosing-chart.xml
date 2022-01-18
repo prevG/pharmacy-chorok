@@ -11,7 +11,13 @@
 	         , DC.CNST_ID
 	    	 , DC.DOSG_SEQ
 	         , CONCAT(DC.DOSG_SEQ, '일차') AS DOSG_SEQ_STR
-	         , DATE_FORMAT(DC.DOSG_DT, '%Y-%m-%d') AS DOSG_DT
+	         , DATE_FORMAT(DC.DOSG_DT, '%Y-%m-%d') AS DOSG_DT	         
+             , (SELECT CASE WHEN HOLIDAY_YN = 'Y' THEN 'Y'
+							WHEN DAYS_NUM IN ( '1', '7') THEN 'Y'
+                            ELSE 'N'
+					   END AS HOLIDAY_YN
+				FROM TB_COMM_CALENDAR T WHERE T.BASE_DT = DC.DOSG_DT
+               ) AS HOLIDAY_YN
 	         , (SELECT DAYS_STR_KOR FROM TB_COMM_CALENDAR CAL WHERE CAL.BASE_DT_STR = DATE_FORMAT(DC.DOSG_DT, '%Y%m%d')) AS DAYS_STR_KOR
 	         , DC.DOSG_LV_CD
 	         , (SELECT DITC_NM FROM TB_COMM_CODE WHERE GRP_CD = 'C1014' AND DITC_CD = DC.DOSG_LV_CD AND USE_YN = 'Y') AS DOSG_LV_CD_NM

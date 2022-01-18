@@ -189,7 +189,7 @@ $( document ).ready( function() {
 		        		return 'background-color:#63cc63;';
 		        	}
 					
-					if( row.daysStrKor =='토' || row.daysStrKor =='일' ) {
+					if( row.holidayYn =='Y' ) {
 						return "color:red";
 					}
 		        },
